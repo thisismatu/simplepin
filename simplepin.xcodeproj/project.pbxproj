@@ -12,6 +12,7 @@
 		CCAC5E5E1C84A8A1006BA336 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */; };
 		CCAC5E601C84A8A1006BA336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */; };
 		CCAC5E631C84A8A1006BA336 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E611C84A8A1006BA336 /* LaunchScreen.storyboard */; };
+		CCAC5E901C84D5C7006BA336 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5E8F1C84D5C7006BA336 /* CustomTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CCAC5E621C84A8A1006BA336 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CCAC5E641C84A8A1006BA336 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCAC5E8F1C84D5C7006BA336 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 				CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */,
 				CCAC5E5A1C84A8A1006BA336 /* ViewController.swift */,
 				CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */,
+				CCAC5E8F1C84D5C7006BA336 /* CustomTableViewCell.swift */,
 				CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */,
 				CCAC5E611C84A8A1006BA336 /* LaunchScreen.storyboard */,
 				CCAC5E641C84A8A1006BA336 /* Info.plist */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCAC5E901C84D5C7006BA336 /* CustomTableViewCell.swift in Sources */,
 				CCAC5E5B1C84A8A1006BA336 /* ViewController.swift in Sources */,
 				CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */,
 			);
