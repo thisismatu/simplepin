@@ -22,17 +22,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="71.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Lpq-g1-8hG">
-                                            <rect key="frame" x="16" y="16" width="568" height="40"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Lpq-g1-8hG">
+                                            <rect key="frame" x="28" y="14" width="558" height="44"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yE0-JA-BAm">
-                                                    <rect key="frame" x="0.0" y="0.0" width="568" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="748" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yE0-JA-BAm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="558" height="7"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Detail" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-9t-no5">
-                                                    <rect key="frame" x="0.0" y="24" width="568" height="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-9t-no5">
+                                                    <rect key="frame" x="0.0" y="11" width="558" height="14.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LD8-Nh-Ht6">
+                                                    <rect key="frame" x="0.0" y="29.5" width="558" height="14.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -41,15 +47,17 @@
                                         </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="Lpq-g1-8hG" firstAttribute="leading" secondItem="X2J-t1-qt7" secondAttribute="leadingMargin" constant="8" id="0i9-Yy-7oM"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="Lpq-g1-8hG" secondAttribute="bottom" constant="8" id="MUD-WQ-ScW"/>
-                                        <constraint firstItem="Lpq-g1-8hG" firstAttribute="top" secondItem="X2J-t1-qt7" secondAttribute="topMargin" constant="8" id="iwB-lf-jca"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="Lpq-g1-8hG" secondAttribute="trailing" constant="8" id="pRh-Eg-JRD"/>
+                                        <constraint firstItem="Lpq-g1-8hG" firstAttribute="leading" secondItem="X2J-t1-qt7" secondAttribute="leadingMargin" constant="20" id="0i9-Yy-7oM"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="Lpq-g1-8hG" secondAttribute="bottom" constant="6" id="MUD-WQ-ScW"/>
+                                        <constraint firstItem="Lpq-g1-8hG" firstAttribute="top" secondItem="X2J-t1-qt7" secondAttribute="topMargin" constant="6" id="iwB-lf-jca"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="Lpq-g1-8hG" secondAttribute="trailing" constant="6" id="pRh-Eg-JRD"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="28" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <outlet property="detailLabel" destination="f5h-9t-no5" id="2i2-5J-BfT"/>
-                                    <outlet property="titleLabel" destination="yE0-JA-BAm" id="EFZ-RT-cs6"/>
+                                    <outlet property="descriptionLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
+                                    <outlet property="extendedLabel" destination="f5h-9t-no5" id="UkM-np-NX0"/>
+                                    <outlet property="timeLabel" destination="LD8-Nh-Ht6" id="O6z-eb-sHb"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

@@ -10,11 +10,7 @@ import UIKit
 
 class BookmarksTableViewController: UITableViewController {
     
-    var data = ["We can trace a nervous path through the links and hearts that occupy our timelines. In search of answers, we’ve peaked under the covers of Material Design and examined hundreds of pattern libraries, since one of them might be secretly withholding the principles of good design within. But why are we obsessed with typographic rules? And if we were to make guidelines for setting text on the web, what form should those rules take?", "Apricot", "Banana", "Blueberry", "Cantaloupe", "Cherry",
-        "Clementine", "Coconut", "Cranberry", "Fig", "Grape", "Grapefruit",
-        "Kiwi fruit", "Lemon", "Lime", "Lychee", "Mandarine", "Mango",
-        "Melon", "Nectarine", "Olive", "Orange", "Papaya", "Peach",
-        "Pear", "Pineapple", "Raspberry", "Strawberry"]
+    var data = ["Vanhempi, ole kuin et kuulisi kitinää lainkaan – tässä ovat kasvatuksen uudet kymmenen käskyä", "UIStackView Tutorial: Introducing Stack Views", "UITableView Tutorial: Dynamic Table View Cell Height", "The New Web Typography › Robin Rendle", "Frank Chimero - Hi, I’d Like To Add Myself to The New Yorker", "Kuvien salaisuus | SK digi ", "Designing Products That Scale — Medium", "Du ser aldrig samma sjö två gånger | Hbl.fi", "Reissumiehet (eli orjalaiva) | Image.fi", "Drowning in money: the untold story of the crazy public spending that makes flooding inevitable", "Col de Braus and Col de Turini", "Russia's new neo-Nazi sport: terrorizing gay youth online"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +38,7 @@ class BookmarksTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
-        cell.titleLabel.text = data[indexPath.row]
+        cell.descriptionLabel.text = data[indexPath.row]
         return cell
     }
 
