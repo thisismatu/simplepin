@@ -22,13 +22,27 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="71.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8g-6z-I7F">
+                                            <rect key="frame" x="10" y="19" width="10" height="10"/>
+                                            <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="10" id="Bgk-QN-pgP"/>
+                                                <constraint firstAttribute="height" constant="10" id="H7X-bF-nRv"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="self.layer.MasksToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="self.layer.CornerRadius">
+                                                    <integer key="value" value="5"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Lpq-g1-8hG">
                                             <rect key="frame" x="28" y="14" width="558" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="748" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yE0-JA-BAm">
                                                     <rect key="frame" x="0.0" y="0.0" width="558" height="7"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-9t-no5">
@@ -49,7 +63,9 @@
                                     <constraints>
                                         <constraint firstItem="Lpq-g1-8hG" firstAttribute="leading" secondItem="X2J-t1-qt7" secondAttribute="leadingMargin" constant="20" id="0i9-Yy-7oM"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="Lpq-g1-8hG" secondAttribute="bottom" constant="6" id="MUD-WQ-ScW"/>
+                                        <constraint firstItem="E8g-6z-I7F" firstAttribute="leading" secondItem="X2J-t1-qt7" secondAttribute="leadingMargin" constant="2" id="fX4-7o-NXp"/>
                                         <constraint firstItem="Lpq-g1-8hG" firstAttribute="top" secondItem="X2J-t1-qt7" secondAttribute="topMargin" constant="6" id="iwB-lf-jca"/>
+                                        <constraint firstItem="E8g-6z-I7F" firstAttribute="top" secondItem="X2J-t1-qt7" secondAttribute="topMargin" constant="11" id="kQf-U8-5Hv"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="Lpq-g1-8hG" secondAttribute="trailing" constant="6" id="pRh-Eg-JRD"/>
                                     </constraints>
                                 </tableViewCellContentView>
