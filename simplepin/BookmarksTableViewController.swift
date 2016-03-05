@@ -8,14 +8,31 @@
 
 import UIKit
 
-class BookmarksTableViewController: UITableViewController {
-    
-    var data = ["Vanhempi, ole kuin et kuulisi kitinää lainkaan – tässä ovat kasvatuksen uudet kymmenen käskyä", "UIStackView Tutorial: Introducing Stack Views", "UITableView Tutorial: Dynamic Table View Cell Height", "The New Web Typography › Robin Rendle", "Frank Chimero - Hi, I’d Like To Add Myself to The New Yorker", "Kuvien salaisuus | SK digi ", "Designing Products That Scale — Medium", "Du ser aldrig samma sjö två gånger | Hbl.fi", "Reissumiehet (eli orjalaiva) | Image.fi", "Drowning in money: the untold story of the crazy public spending that makes flooding inevitable", "Col de Braus and Col de Turini", "Russia's new neo-Nazi sport: terrorizing gay youth online"]
+class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
+
+    @IBOutlet var tableData: UITableView!
+
+    var parser = NSXMLParser()
+    var posts = NSMutableArray()
+    var elements = NSMutableDictionary()
+    var element = NSString()
+    var title1 = NSMutableString()
+    var description1 = NSMutableString()
+    var date = NSMutableString()
+
+    func beginParsing() {
+        posts = []
+        parser = NSXMLParser(contentsOfURL:(NSURL(string:"https://feeds.pinboard.in/rss/u:mlindholm/"))!)!
+        parser.delegate = self
+        parser.parse()
+        tableData!.reloadData()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.beginParsing()
 
-        tableView.estimatedRowHeight = 72.0
+        tableView.estimatedRowHeight = 96.0
         tableView.rowHeight = UITableViewAutomaticDimension
 
         // Uncomment the following line to preserve selection between presentations
@@ -30,15 +47,59 @@ class BookmarksTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-    
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+    //MARK: - XMLParser Methods
+
+    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
+        element = elementName
+        if (elementName as NSString).isEqualToString("item") {
+            elements = NSMutableDictionary()
+            elements = [:]
+            title1 = NSMutableString()
+            title1 = ""
+            description1 = NSMutableString()
+            description1 = ""
+            date = NSMutableString()
+            date = ""
+        }
     }
-    
+
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if (elementName as NSString).isEqualToString("item") {
+            if !title1.isEqual(nil) {
+                elements.setObject(title1, forKey: "title")
+            }
+            if !description1.isEqual(nil) {
+                elements.setObject(description1, forKey: "description")
+            }
+            if !date.isEqual(nil) {
+                elements.setObject(date, forKey: "date")
+            }
+
+            posts.addObject(elements)
+        }
+    }
+
+    func parser(parser: NSXMLParser, foundCharacters string: String) {
+        if element.isEqualToString("title") {
+            title1.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+        } else if element.isEqualToString("description") {
+            description1.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+        } else if element.isEqualToString("dc:date") {
+            date.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+        }
+    }
+
+    // MARK: - Table view data source
+
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return posts.count
+    }
+
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
-        cell.descriptionLabel.text = data[indexPath.row]
+        cell.descriptionLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as! NSString as String
+        cell.extendedLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("description") as! NSString as String
+        cell.timeLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as! NSString as String
         return cell
     }
 
