@@ -9,9 +9,9 @@
 import UIKit
 
 class BookmarkTableViewCell: UITableViewCell {
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
-    @IBOutlet var extendedLabel: UILabel!
-    @IBOutlet var timeLabel: UILabel!
+    @IBOutlet var dateLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()

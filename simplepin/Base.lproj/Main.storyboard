@@ -71,9 +71,9 @@
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="28" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
-                                    <outlet property="descriptionLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
-                                    <outlet property="extendedLabel" destination="f5h-9t-no5" id="UkM-np-NX0"/>
-                                    <outlet property="timeLabel" destination="LD8-Nh-Ht6" id="O6z-eb-sHb"/>
+                                    <outlet property="dateLabel" destination="LD8-Nh-Ht6" id="O6z-eb-sHb"/>
+                                    <outlet property="descriptionLabel" destination="f5h-9t-no5" id="UkM-np-NX0"/>
+                                    <outlet property="titleLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
