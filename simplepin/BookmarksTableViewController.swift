@@ -15,8 +15,8 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     struct PinboardItem {
         let title: String
         let description: String
-        let date: String
-        let link: String
+        let date: NSDate
+        let link: NSURL
     }
 
     var posts = [PinboardItem]()
@@ -81,8 +81,10 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     }
 
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
         if elementName == "item" {
-            let post = PinboardItem(title: postTitle, description: postDescription, date: postDate, link: postLink)
+            let post = PinboardItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!)
             posts.append(post)
         }
     }
@@ -94,10 +96,13 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = .ShortStyle
+        formatter.timeStyle = .NoStyle
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
         cell.descriptionLabel.text = posts[indexPath.row].title
         cell.extendedLabel.text = posts[indexPath.row].description
-        cell.timeLabel.text = posts[indexPath.row].date
+        cell.timeLabel.text = formatter.stringFromDate(posts[indexPath.row].date)
         return cell
     }
 
