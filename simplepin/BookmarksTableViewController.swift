@@ -12,20 +12,26 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
     @IBOutlet var tableData: UITableView!
 
+    struct PinboardItem {
+        let title: String
+        let description: String
+        let date: String
+        let link: String
+    }
+
+    var posts = [PinboardItem]()
     var parser = NSXMLParser()
-    var posts = NSMutableArray()
-    var elements = NSMutableDictionary()
-    var element = NSString()
-    var title1 = NSMutableString()
-    var description1 = NSMutableString()
-    var date = NSMutableString()
+    var element = String()
+    var postTitle = String()
+    var postDescription = String()
+    var postDate = String()
+    var postLink = String()
 
     func beginParsing() {
-        posts = []
-        parser = NSXMLParser(contentsOfURL:(NSURL(string:"https://feeds.pinboard.in/rss/u:mlindholm/"))!)!
+        parser = NSXMLParser(contentsOfURL: NSURL(string: "https://feeds.pinboard.in/rss/u:mlindholm/")!)!
         parser.delegate = self
         parser.parse()
-        tableData!.reloadData()
+        tableData.reloadData()
     }
 
     override func viewDidLoad() {
@@ -51,41 +57,33 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         element = elementName
-        if (elementName as NSString).isEqualToString("item") {
-            elements = NSMutableDictionary()
-            elements = [:]
-            title1 = NSMutableString()
-            title1 = ""
-            description1 = NSMutableString()
-            description1 = ""
-            date = NSMutableString()
-            date = ""
-        }
-    }
-
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        if (elementName as NSString).isEqualToString("item") {
-            if !title1.isEqual(nil) {
-                elements.setObject(title1, forKey: "title")
-            }
-            if !description1.isEqual(nil) {
-                elements.setObject(description1, forKey: "description")
-            }
-            if !date.isEqual(nil) {
-                elements.setObject(date, forKey: "date")
-            }
-
-            posts.addObject(elements)
+        if elementName == "item" {
+            postTitle = String()
+            postDescription = String()
+            postDate = String()
+            postLink = String()
         }
     }
 
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        if element.isEqualToString("title") {
-            title1.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
-        } else if element.isEqualToString("description") {
-            description1.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
-        } else if element.isEqualToString("dc:date") {
-            date.appendString(string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet()))
+        let data = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+        if (!data.isEmpty) {
+            if element == "title" {
+                postTitle += data
+            } else if element == "description" {
+                postDescription += data
+            } else if element == "dc:date" {
+                postDate += data
+            } else if element == "link" {
+                postLink += data
+            }
+        }
+    }
+
+    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+        if elementName == "item" {
+            let post = PinboardItem(title: postTitle, description: postDescription, date: postDate, link: postLink)
+            posts.append(post)
         }
     }
 
@@ -97,9 +95,9 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
-        cell.descriptionLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("title") as! NSString as String
-        cell.extendedLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("description") as! NSString as String
-        cell.timeLabel?.text = posts.objectAtIndex(indexPath.row).valueForKey("date") as! NSString as String
+        cell.descriptionLabel.text = posts[indexPath.row].title
+        cell.extendedLabel.text = posts[indexPath.row].description
+        cell.timeLabel.text = posts[indexPath.row].date
         return cell
     }
 
