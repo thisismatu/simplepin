@@ -101,7 +101,11 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         formatter.timeStyle = .NoStyle
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
         cell.titleLabel.text = posts[indexPath.row].title
-        cell.descriptionLabel.text = posts[indexPath.row].description
+        if posts[indexPath.row].description.isEmpty {
+            cell.descriptionLabel.removeFromSuperview()
+        } else {
+            cell.descriptionLabel.text = posts[indexPath.row].description
+        }
         cell.dateLabel.text = formatter.stringFromDate(posts[indexPath.row].date)
         return cell
     }
