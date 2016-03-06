@@ -17,6 +17,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let description: String
         let date: NSDate
         let link: NSURL
+        let tag: String
     }
 
     var posts = [PinboardItem]()
@@ -26,6 +27,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     var postDescription = String()
     var postDate = String()
     var postLink = String()
+    var postTag = String()
 
     func beginParsing() {
         parser = NSXMLParser(contentsOfURL: NSURL(string: "https://feeds.pinboard.in/rss/u:mlindholm/")!)!
@@ -62,6 +64,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
             postDescription = String()
             postDate = String()
             postLink = String()
+            postTag = String()
         }
     }
 
@@ -76,6 +79,8 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
                 postDate += data
             } else if element == "link" {
                 postLink += data
+            } else if element == "dc:subject" {
+                postTag += data
             }
         }
     }
@@ -84,7 +89,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
         if elementName == "item" {
-            let post = PinboardItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!)
+            let post = PinboardItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!, tag: postTag)
             posts.append(post)
         }
     }
@@ -100,6 +105,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         formatter.dateStyle = .ShortStyle
         formatter.timeStyle = .NoStyle
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
+
         cell.titleLabel.text = posts[indexPath.row].title
         if posts[indexPath.row].description.isEmpty {
             cell.descriptionLabel.removeFromSuperview()
@@ -107,6 +113,13 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
             cell.descriptionLabel.text = posts[indexPath.row].description
         }
         cell.dateLabel.text = formatter.stringFromDate(posts[indexPath.row].date)
+        if posts[indexPath.row].tag.isEmpty {
+            cell.tagLabel.removeFromSuperview()
+        } else {
+            cell.tagLabel.text = "#"+posts[indexPath.row].tag
+            // TODO: display each tag as own label
+        }
+
         return cell
     }
 
