@@ -12,7 +12,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
     @IBOutlet var tableData: UITableView!
 
-    struct PinboardItem {
+    struct BookmarkItem {
         let title: String
         let description: String
         let date: NSDate
@@ -20,7 +20,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let tag: String
     }
 
-    var posts = [PinboardItem]()
+    var posts = [BookmarkItem]()
     var parser = NSXMLParser()
     var element = String()
     var postTitle = String()
@@ -89,7 +89,7 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
         if elementName == "item" {
-            let post = PinboardItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!, tag: postTag)
+            let post = BookmarkItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!, tag: postTag)
             posts.append(post)
         }
     }
