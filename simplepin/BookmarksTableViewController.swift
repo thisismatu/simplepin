@@ -104,19 +104,20 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let formatter = NSDateFormatter()
         formatter.dateStyle = .ShortStyle
         formatter.timeStyle = .NoStyle
+        let bookmark = bookmarks[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
 
-        cell.titleLabel.text = bookmarks[indexPath.row].title
-        if bookmarks[indexPath.row].description.isEmpty {
+        cell.titleLabel.text = bookmark.title
+        if bookmark.description.isEmpty {
             cell.descriptionLabel.removeFromSuperview()
         } else {
-            cell.descriptionLabel.text = bookmarks[indexPath.row].description
+            cell.descriptionLabel.text = bookmark.description
         }
-        cell.dateLabel.text = formatter.stringFromDate(bookmarks[indexPath.row].date)
-        if bookmarks[indexPath.row].tag.isEmpty {
+        cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
+        if bookmark.tag.isEmpty {
             cell.tagLabel.removeFromSuperview()
         } else {
-            cell.tagLabel.text = "#"+bookmarks[indexPath.row].tag
+            cell.tagLabel.text = "#"+bookmark.tag
             // TODO: display each tag as own label
         }
 
