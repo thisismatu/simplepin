@@ -109,14 +109,16 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
         cell.titleLabel.text = bookmark.title
         if bookmark.description.isEmpty {
-            cell.descriptionLabel.removeFromSuperview()
+            cell.descriptionLabel.hidden = true
         } else {
+            cell.descriptionLabel.hidden = false
             cell.descriptionLabel.text = bookmark.description
         }
         cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
         if bookmark.tag.isEmpty {
-            cell.tagLabel.removeFromSuperview()
+            cell.tagLabel.hidden = true
         } else {
+            cell.tagLabel.hidden = false
             cell.tagLabel.text = "#"+bookmark.tag
             // TODO: display each tag as own label
         }
