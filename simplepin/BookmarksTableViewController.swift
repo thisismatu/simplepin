@@ -20,14 +20,14 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let tag: String
     }
 
-    var posts = [BookmarkItem]()
+    var bookmarks = [BookmarkItem]()
     var parser = NSXMLParser()
     var element = String()
-    var postTitle = String()
-    var postDescription = String()
-    var postDate = String()
-    var postLink = String()
-    var postTag = String()
+    var bookmarkTitle = String()
+    var bookmarkDescription = String()
+    var bookmarkDate = String()
+    var bookmarkLink = String()
+    var bookmarkTag = String()
 
     func beginParsing() {
         parser = NSXMLParser(contentsOfURL: NSURL(string: "https://feeds.pinboard.in/rss/u:mlindholm/")!)!
@@ -60,11 +60,11 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         element = elementName
         if elementName == "item" {
-            postTitle = String()
-            postDescription = String()
-            postDate = String()
-            postLink = String()
-            postTag = String()
+            bookmarkTitle = String()
+            bookmarkDescription = String()
+            bookmarkDate = String()
+            bookmarkLink = String()
+            bookmarkTag = String()
         }
     }
 
@@ -72,15 +72,15 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let data = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
         if (!data.isEmpty) {
             if element == "title" {
-                postTitle += data
+                bookmarkTitle += data
             } else if element == "description" {
-                postDescription += data
+                bookmarkDescription += data
             } else if element == "dc:date" {
-                postDate += data
+                bookmarkDate += data
             } else if element == "link" {
-                postLink += data
+                bookmarkLink += data
             } else if element == "dc:subject" {
-                postTag += data
+                bookmarkTag += data
             }
         }
     }
@@ -89,15 +89,15 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         let formatter = NSDateFormatter()
         formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
         if elementName == "item" {
-            let post = BookmarkItem(title: postTitle, description: postDescription, date: formatter.dateFromString(postDate)!, link: NSURL(string: postLink)!, tag: postTag)
-            posts.append(post)
+            let bookmark = BookmarkItem(title: bookmarkTitle, description: bookmarkDescription, date: formatter.dateFromString(bookmarkDate)!, link: NSURL(string: bookmarkLink)!, tag: bookmarkTag)
+            bookmarks.append(bookmark)
         }
     }
 
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return posts.count
+        return bookmarks.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -106,17 +106,17 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
         formatter.timeStyle = .NoStyle
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
 
-        cell.titleLabel.text = posts[indexPath.row].title
-        if posts[indexPath.row].description.isEmpty {
+        cell.titleLabel.text = bookmarks[indexPath.row].title
+        if bookmarks[indexPath.row].description.isEmpty {
             cell.descriptionLabel.removeFromSuperview()
         } else {
-            cell.descriptionLabel.text = posts[indexPath.row].description
+            cell.descriptionLabel.text = bookmarks[indexPath.row].description
         }
-        cell.dateLabel.text = formatter.stringFromDate(posts[indexPath.row].date)
-        if posts[indexPath.row].tag.isEmpty {
+        cell.dateLabel.text = formatter.stringFromDate(bookmarks[indexPath.row].date)
+        if bookmarks[indexPath.row].tag.isEmpty {
             cell.tagLabel.removeFromSuperview()
         } else {
-            cell.tagLabel.text = "#"+posts[indexPath.row].tag
+            cell.tagLabel.text = "#"+bookmarks[indexPath.row].tag
             // TODO: display each tag as own label
         }
 
