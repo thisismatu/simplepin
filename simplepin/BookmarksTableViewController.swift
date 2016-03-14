@@ -8,37 +8,88 @@
 
 import UIKit
 
+struct BookmarkItem {
+    let title: String
+    let description: String
+    let date: NSDate
+    let link: NSURL
+    let tags: String
+
+    init?(json: [String: AnyObject]) {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
+        let dateString = json["time"] as? String
+        let linkString = json["href"] as? String
+
+        guard let title = json["description"] as? String,
+            let description = json["extended"] as? String,
+            let date = formatter.dateFromString(dateString!),
+            let link = NSURL(string: linkString!),
+            let tags = json["tags"] as? String else {
+                return nil
+        }
+        self.title = title
+        self.description = description
+        self.date = date
+        self.link = link
+        self.tags = tags
+    }
+}
+
+struct Network {
+
+    static func fetchAllPosts(completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
+        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/all?auth_token=xxx:yyy&format=json") else {
+            completion([])
+            return nil
+        }
+
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = data where error == nil else {
+                    completion([])
+                    return
+                }
+                let optionalBookmarks = parseJSONData(data)
+                completion(optionalBookmarks)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    static func parseJSONData(data: NSData) -> [BookmarkItem] {
+        var bookmarks = [BookmarkItem]()
+        do {
+            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
+                for item in jsonObject {
+                    guard let bookmarkDict = item as? [String: AnyObject],
+                        let bookmark = BookmarkItem(json: bookmarkDict)
+                        else { continue }
+                    bookmarks.append(bookmark)
+                }
+            }
+        } catch {
+            debugPrint("Error parsing JSON")
+        }
+        return bookmarks
+    }
+}
+
 class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
+    var bookmarks = [BookmarkItem]()
+    var fetchAllPostsTask: NSURLSessionTask?
 
     @IBOutlet var tableData: UITableView!
 
-    struct BookmarkItem {
-        let title: String
-        let description: String
-        let date: NSDate
-        let link: NSURL
-        let tag: String
-    }
-
-    var bookmarks = [BookmarkItem]()
-    var parser = NSXMLParser()
-    var element = String()
-    var bookmarkTitle = String()
-    var bookmarkDescription = String()
-    var bookmarkDate = String()
-    var bookmarkLink = String()
-    var bookmarkTag = String()
-
-    func beginParsing() {
-        parser = NSXMLParser(contentsOfURL: NSURL(string: "https://feeds.pinboard.in/rss/u:mlindholm/")!)!
-        parser.delegate = self
-        parser.parse()
-        tableData.reloadData()
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.beginParsing()
+
+        fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
+            self?.bookmarks = bookmarks
+            self?.tableData.reloadData()
+        }
 
         tableView.estimatedRowHeight = 96.0
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -53,45 +104,6 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-
-    //MARK: - XMLParser Methods
-
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        element = elementName
-        if elementName == "item" {
-            bookmarkTitle = String()
-            bookmarkDescription = String()
-            bookmarkDate = String()
-            bookmarkLink = String()
-            bookmarkTag = String()
-        }
-    }
-
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
-        let data = string.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
-        if (!data.isEmpty) {
-            if element == "title" {
-                bookmarkTitle += data
-            } else if element == "description" {
-                bookmarkDescription += data
-            } else if element == "dc:date" {
-                bookmarkDate += data
-            } else if element == "link" {
-                bookmarkLink += data
-            } else if element == "dc:subject" {
-                bookmarkTag += data
-            }
-        }
-    }
-
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
-        if elementName == "item" {
-            let bookmark = BookmarkItem(title: bookmarkTitle, description: bookmarkDescription, date: formatter.dateFromString(bookmarkDate)!, link: NSURL(string: bookmarkLink)!, tag: bookmarkTag)
-            bookmarks.append(bookmark)
-        }
     }
 
     // MARK: - Table view data source
@@ -115,11 +127,11 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
             cell.descriptionLabel.text = bookmark.description
         }
         cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
-        if bookmark.tag.isEmpty {
+        if bookmark.tags.isEmpty {
             cell.tagLabel.hidden = true
         } else {
             cell.tagLabel.hidden = false
-            cell.tagLabel.text = "#"+bookmark.tag
+            cell.tagLabel.text = "#"+bookmark.tags
             // TODO: display each tag as own label
         }
 
