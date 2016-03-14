@@ -80,14 +80,20 @@ struct Network {
 class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
     var bookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
-
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     @IBOutlet var tableData: UITableView!
+    @IBOutlet var loadingPosts: UIView!
+    @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        loadingPostsSpinner.startAnimating()
+
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
             self?.bookmarks = bookmarks
+            self?.loadingPostsSpinner.stopAnimating()
+            self?.loadingPosts.hidden = true;
             self?.tableData.reloadData()
         }
 
