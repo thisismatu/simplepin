@@ -28,8 +28,6 @@
 		<dict>
 			<key>api.pinboard.in</key>
 			<dict>
-				<key>NSExceptionMinimumTLSVersion</key>
-				<string>TLSv1.1</string>
 				<key>NSExceptionRequiresForwardSecrecy</key>
 				<false/>
 			</dict>
