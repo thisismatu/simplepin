@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */; };
 		CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */; };
 		CCAC5E5E1C84A8A1006BA336 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */; };
 		CCAC5E601C84A8A1006BA336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModalViewController.swift; sourceTree = "<group>"; };
 		CCAC5E551C84A8A1006BA336 /* simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCAC5E5D1C84A8A1006BA336 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				CCAC5E611C84A8A1006BA336 /* LaunchScreen.storyboard */,
 				CCAC5E641C84A8A1006BA336 /* Info.plist */,
 				CCAC5EF81C84EC75006BA336 /* BookmarksTableViewController.swift */,
+				CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */,
 			);
 			path = simplepin;
 			sourceTree = "<group>";
@@ -141,6 +144,7 @@
 				CCAC5EF91C84EC75006BA336 /* BookmarksTableViewController.swift in Sources */,
 				CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */,
 				CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */,
+				CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

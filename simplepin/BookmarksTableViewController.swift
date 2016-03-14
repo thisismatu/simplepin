@@ -37,9 +37,12 @@ struct BookmarkItem {
 }
 
 struct Network {
-
     static func fetchAllPosts(completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
-        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/all?auth_token=xxx:yyy&format=json") else {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let userName = defaults.stringForKey("userName")! as String
+        let apiToken = defaults.stringForKey("apiToken")! as String
+
+        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/all?auth_token=\(userName):\(apiToken)&format=json") else {
             completion([])
             return nil
         }
@@ -77,24 +80,38 @@ struct Network {
     }
 }
 
-class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
+class BookmarksTableViewController: UITableViewController {
     var bookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    let defaults = NSUserDefaults.standardUserDefaults()
+
     @IBOutlet var tableData: UITableView!
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
+    func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
-
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
             self?.bookmarks = bookmarks
             self?.loadingPostsSpinner.stopAnimating()
             self?.loadingPosts.hidden = true;
             self?.tableData.reloadData()
+        }
+    }
+
+    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
+        startFetchAllPostsTask()
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if let apiToken = NSUserDefaults.standardUserDefaults().stringForKey("apiToken") {
+            startFetchAllPostsTask()
+        }
+        else {
+            performSegueWithIdentifier("openSettingsModal", sender: self)
         }
 
         tableView.estimatedRowHeight = 96.0
@@ -105,6 +122,11 @@ class BookmarksTableViewController: UITableViewController, NSXMLParserDelegate {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchAllPostsTask?.cancel()
     }
 
     override func didReceiveMemoryWarning() {
