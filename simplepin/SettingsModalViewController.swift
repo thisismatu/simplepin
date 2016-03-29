@@ -42,7 +42,7 @@ class SettingsModalViewController: UITableViewController {
             if let token = userToken {
                 self.defaults.setObject(username+":"+token, forKey: "userToken")
                 self.defaults.setObject(username, forKey: "userName")
-                self.dismissViewControllerAnimated(true, completion: {})
+                self.performSegueWithIdentifier("closeSettings", sender: self)
             } else {
                 self.loginSpinner.stopAnimating()
                 self.loginButton.enabled = true

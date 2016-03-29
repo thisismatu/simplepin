@@ -259,7 +259,7 @@
                     <navigationItem key="navigationItem" title="Settings" id="b9P-A0-Lnd">
                         <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="4sQ-1G-N0E">
                             <connections>
-                                <segue destination="fOo-bN-THj" kind="unwind" unwindAction="unwindSettingsModal:" id="Qnk-Ts-sMd"/>
+                                <segue destination="fOo-bN-THj" kind="unwind" identifier="closeSettings" unwindAction="unwindSettingsModal:" id="Qnk-Ts-sMd"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
