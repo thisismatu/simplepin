@@ -14,6 +14,7 @@ struct BookmarkItem {
     let date: NSDate
     let link: NSURL
     let tags: String
+    let toread: String
 
     init?(json: [String: AnyObject]) {
         let formatter = NSDateFormatter()
@@ -25,7 +26,8 @@ struct BookmarkItem {
             let description = json["extended"] as? String,
             let date = formatter.dateFromString(dateString!),
             let link = NSURL(string: linkString!),
-            let tags = json["tags"] as? String else {
+            let tags = json["tags"] as? String,
+            let toread = json["toread"] as? String else {
                 return nil
         }
         self.title = title
@@ -33,6 +35,7 @@ struct BookmarkItem {
         self.date = date
         self.link = link
         self.tags = tags
+        self.toread = toread
     }
 }
 
@@ -117,6 +120,11 @@ class BookmarksTableViewController: UITableViewController {
             cell.tagLabel.hidden = false
             cell.tagLabel.text = "#"+bookmark.tags
             // TODO: display each tag as own label
+        }
+        if bookmark.toread == "yes" {
+            cell.unreadIndicator.hidden = false
+        } else {
+            cell.unreadIndicator.hidden = true
         }
 
         return cell

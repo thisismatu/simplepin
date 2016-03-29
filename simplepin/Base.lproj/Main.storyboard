@@ -47,7 +47,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="95.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8g-6z-I7F">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E8g-6z-I7F">
                                             <rect key="frame" x="10" y="19" width="10" height="10"/>
                                             <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
@@ -111,6 +111,7 @@
                                     <outlet property="descriptionLabel" destination="f5h-9t-no5" id="UkM-np-NX0"/>
                                     <outlet property="tagLabel" destination="Xbs-aO-6hT" id="JYl-SJ-1dC"/>
                                     <outlet property="titleLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
+                                    <outlet property="unreadIndicator" destination="E8g-6z-I7F" id="1c5-XF-gne"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
