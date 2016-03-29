@@ -109,6 +109,7 @@
                                     <outlet property="tagsStackView" destination="Oh3-rH-dVK" id="f2F-Jx-V4b"/>
                                     <outlet property="titleLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
                                     <outlet property="unreadIndicator" destination="E8g-6z-I7F" id="1c5-XF-gne"/>
+                                    <segue destination="ODP-b4-rgA" kind="show" identifier="openBrowser" id="wAr-X1-2rE"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -133,6 +134,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9aY-8f-w8t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1224" y="-795"/>
+        </scene>
+        <!--Browser View Controller-->
+        <scene sceneID="kgk-i8-eie">
+            <objects>
+                <viewController id="ODP-b4-rgA" customClass="BrowserViewController" customModule="simplepin" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bcb-kl-q9O"/>
+                        <viewControllerLayoutGuide type="bottom" id="d47-HG-RTt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="7Lf-MB-Tg3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="7Lf-MB-Tg3" id="OZ9-8o-cR0"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mqh-9f-U0X" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-426" y="-795"/>
         </scene>
         <!--Settings-->
         <scene sceneID="dJT-b5-b4u">
