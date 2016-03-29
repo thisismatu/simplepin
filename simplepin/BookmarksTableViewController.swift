@@ -126,8 +126,9 @@ class BookmarksTableViewController: UITableViewController {
                 label.numberOfLines = 1
                 label.tag = indexPath.row
                 label.text = item
+                label.userInteractionEnabled = true
                 label.textAlignment = NSTextAlignment.Right
-                label.textColor = UIColor.lightGrayColor()
+                label.textColor = self.view.tintColor
                 cell.tagsStackView.addArrangedSubview(label)
             }
             //TODO: After scrolling subivews appear in wrong places
