@@ -14,8 +14,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" searchBarStyle="minimal" placeholder="Search" id="lq0-Q7-SpB">
+                            <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                            <connections>
+                                <outlet property="delegate" destination="Rcw-d1-E9Q" id="XUK-uM-VcQ"/>
+                            </connections>
+                        </searchBar>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Ewi-PO-CL4">
-                            <rect key="frame" x="0.0" y="188" width="600" height="96"/>
+                            <rect key="frame" x="0.0" y="548" width="600" height="96"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aJE-ST-ktU">
@@ -41,7 +49,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="96" id="gv3-va-QDX" customClass="BookmarkTableViewCell" customModule="simplepin" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="96"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gv3-va-QDX" id="X2J-t1-qt7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="95.5"/>
@@ -128,6 +136,7 @@
                     <connections>
                         <outlet property="loadingPosts" destination="Ewi-PO-CL4" id="3Ch-eQ-vlt"/>
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
+                        <outlet property="searchBar" destination="lq0-Q7-SpB" id="HlQ-ar-ET0"/>
                         <outlet property="tableData" destination="OQU-Js-E8i" id="Oij-M1-f0n"/>
                     </connections>
                 </tableViewController>

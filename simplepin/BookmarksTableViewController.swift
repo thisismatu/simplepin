@@ -46,6 +46,7 @@ class BookmarksTableViewController: UITableViewController {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
 
+    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var tableData: UITableView!
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
