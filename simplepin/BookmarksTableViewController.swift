@@ -63,7 +63,7 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let apiToken = NSUserDefaults.standardUserDefaults().stringForKey("apiToken") {
+        if let token = defaults.stringForKey("userToken") {
             startFetchAllPostsTask()
         }
         else {
@@ -168,14 +168,11 @@ class BookmarksTableViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+
     }
-    */
 
 }

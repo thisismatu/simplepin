@@ -9,20 +9,61 @@
 import UIKit
 
 class SettingsModalViewController: UITableViewController {
+    var fetchApiTokenTask: NSURLSessionTask?
     let defaults = NSUserDefaults.standardUserDefaults()
 
+    @IBOutlet var usernameLabel: UILabel!
     @IBOutlet var usernameTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
+    @IBOutlet var passwordCell: UITableViewCell!
+    @IBOutlet var loginButton: UIButton!
+    @IBOutlet var loginSpinner: UIActivityIndicatorView!
 
     @IBAction func loginButtonPressed(sender: AnyObject) {
-        defaults.setObject(usernameTextField.text, forKey: "userName")
-        defaults.setObject(passwordTextField.text, forKey: "apiToken")
+        loginSpinner.startAnimating()
+        loginButton.enabled = false
+
+        guard let password = passwordTextField.text,
+            let username = usernameTextField.text else {
+                return
+        }
+
+        if password.isEmpty || username.isEmpty {
+            loginSpinner.stopAnimating()
+            loginButton.enabled = true
+            let alert = UIAlertController(title: "Please enter your username and password", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+            print("Ei tunnareita")
+            return
+        }
+
+        fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
+            if let token = userToken {
+                self.defaults.setObject(username+":"+token, forKey: "userToken")
+                self.defaults.setObject(username, forKey: "userName")
+                self.dismissViewControllerAnimated(true, completion: {})
+            } else {
+                self.loginSpinner.stopAnimating()
+                self.loginButton.enabled = true
+                let alert = UIAlertController(title: "Incorrect username or password", message: "Please check your login credentials and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+                print("Ei ollut tokenia")
+            }
+        }
+
     }
 
     override func viewDidLoad() {
-        if let apiToken = defaults.stringForKey("apiToken") {
+        super.viewDidLoad()
+        if let token = defaults.stringForKey("userToken") {
+            usernameLabel.text = "Logged in as"
             usernameTextField.text = defaults.stringForKey("userName")! as String
-            passwordTextField.text = defaults.stringForKey("apiToken")! as String
+            usernameTextField.enabled = false
+            passwordCell.hidden = true
+            loginButton.setTitle("Log out", forState: UIControlState.Normal)
+            loginButton.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
         }
     }
 }
