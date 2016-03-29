@@ -145,9 +145,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <sections>
-                            <tableViewSection headerTitle="Login details" id="K2g-Fc-Knn">
+                            <tableViewSection headerTitle="Login" id="K2g-Fc-Knn">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="IwR-nb-I5K">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="IwR-nb-I5K">
                                         <rect key="frame" x="0.0" y="113.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="IwR-nb-I5K" id="tZM-FN-NQn">
@@ -178,7 +178,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ceo-lh-31R">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="ceo-lh-31R">
                                         <rect key="frame" x="0.0" y="157.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ceo-lh-31R" id="ovR-Mg-ftW">
@@ -188,16 +188,16 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zgf-Ya-113">
                                                     <rect key="frame" x="16" y="12" width="568" height="20"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="API Token" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bC-KR-fVK">
-                                                            <rect key="frame" x="0.0" y="0.0" width="72.5" height="20"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Password" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9bC-KR-fVK">
+                                                            <rect key="frame" x="0.0" y="0.0" width="70" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Token" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cdz-PU-6SW">
-                                                            <rect key="frame" x="72" y="0.0" width="495.5" height="20"/>
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Cdz-PU-6SW">
+                                                            <rect key="frame" x="70" y="0.0" width="498" height="20"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                                            <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                                                         </textField>
                                                     </subviews>
                                                 </stackView>
@@ -213,7 +213,7 @@
                             </tableViewSection>
                             <tableViewSection id="qnO-HY-Fro">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="pA8-kc-7fy">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pA8-kc-7fy">
                                         <rect key="frame" x="0.0" y="237.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pA8-kc-7fy" id="86s-bK-7Bd">
@@ -228,13 +228,24 @@
                                                         <action selector="loginButtonPressed:" destination="S5y-x6-W5k" eventType="touchUpInside" id="Axf-bN-kXF"/>
                                                     </connections>
                                                 </button>
+                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="QGf-4k-AMS">
+                                                    <rect key="frame" x="564" y="12" width="20" height="20"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="xgb-RS-3mt" secondAttribute="trailing" id="2C8-tN-5G6"/>
                                                 <constraint firstItem="xgb-RS-3mt" firstAttribute="top" secondItem="86s-bK-7Bd" secondAttribute="top" id="9CO-LD-EUY"/>
+                                                <constraint firstItem="QGf-4k-AMS" firstAttribute="centerY" secondItem="86s-bK-7Bd" secondAttribute="centerY" id="Eew-Uj-D96"/>
                                                 <constraint firstItem="xgb-RS-3mt" firstAttribute="leading" secondItem="86s-bK-7Bd" secondAttribute="leading" id="T5X-eR-xEq"/>
+                                                <constraint firstItem="QGf-4k-AMS" firstAttribute="trailing" secondItem="86s-bK-7Bd" secondAttribute="trailingMargin" constant="16" id="rDu-b5-D5g"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="QGf-4k-AMS" secondAttribute="trailing" constant="8" id="tSC-DQ-9oY"/>
                                                 <constraint firstAttribute="bottom" secondItem="xgb-RS-3mt" secondAttribute="bottom" id="zXf-La-tMZ"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="rDu-b5-D5g"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -254,7 +265,11 @@
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="loginButton" destination="xgb-RS-3mt" id="5rK-KI-dh2"/>
+                        <outlet property="loginSpinner" destination="QGf-4k-AMS" id="CdW-0m-PPK"/>
+                        <outlet property="passwordCell" destination="ceo-lh-31R" id="syY-q0-pYA"/>
                         <outlet property="passwordTextField" destination="Cdz-PU-6SW" id="wE6-Ai-vJH"/>
+                        <outlet property="usernameLabel" destination="YRp-ly-QmS" id="PF2-LF-LOP"/>
                         <outlet property="usernameTextField" destination="oEp-m2-JDq" id="QCQ-jW-6gI"/>
                     </connections>
                 </tableViewController>
