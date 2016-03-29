@@ -13,7 +13,7 @@ struct BookmarkItem {
     let description: String
     let date: NSDate
     let link: NSURL
-    let tags: String
+    let tags: [String]
     let toread: String
 
     init?(json: [String: AnyObject]) {
@@ -21,12 +21,13 @@ struct BookmarkItem {
         formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
         let dateString = json["time"] as? String
         let linkString = json["href"] as? String
+        let tagsString = json["tags"] as? String
 
         guard let title = json["description"] as? String,
             let description = json["extended"] as? String,
             let date = formatter.dateFromString(dateString!),
             let link = NSURL(string: linkString!),
-            let tags = json["tags"] as? String,
+            let tags = tagsString?.componentsSeparatedByString(" ").filter({$0 != ""}),
             let toread = json["toread"] as? String else {
                 return nil
         }
@@ -107,24 +108,33 @@ class BookmarksTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
 
         cell.titleLabel.text = bookmark.title
+        cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
+
         if bookmark.description.isEmpty {
             cell.descriptionLabel.hidden = true
         } else {
             cell.descriptionLabel.hidden = false
             cell.descriptionLabel.text = bookmark.description
         }
-        cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
+
         if bookmark.tags.isEmpty {
-            cell.tagLabel.hidden = true
         } else {
-            cell.tagLabel.hidden = false
-            cell.tagLabel.text = "#"+bookmark.tags
-            // TODO: display each tag as own label
+            for item in bookmark.tags {
+                let label = UILabel()
+                label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+                label.numberOfLines = 1
+                label.tag = indexPath.row
+                label.text = item
+                label.textAlignment = NSTextAlignment.Right
+                label.textColor = UIColor.lightGrayColor()
+                cell.tagsStackView.addArrangedSubview(label)
+            }
         }
-        if bookmark.toread == "yes" {
-            cell.unreadIndicator.hidden = false
-        } else {
+
+        if bookmark.toread == "no" {
             cell.unreadIndicator.hidden = true
+        } else {
+            cell.unreadIndicator.hidden = false
         }
 
         return cell

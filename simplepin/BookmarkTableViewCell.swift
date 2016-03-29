@@ -12,8 +12,8 @@ class BookmarkTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var tagLabel: UILabel!
     @IBOutlet var unreadIndicator: UIView!
+    @IBOutlet var tagsStackView: UIStackView!
 
     override func awakeFromNib() {
         super.awakeFromNib()
