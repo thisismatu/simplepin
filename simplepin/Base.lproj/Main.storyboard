@@ -27,7 +27,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aJE-ST-ktU">
-                                    <rect key="frame" x="226.5" y="38" width="148.5" height="20"/>
+                                    <rect key="frame" x="226" y="38" width="148.5" height="20"/>
                                     <subviews>
                                         <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IHb-3h-oxh">
                                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -132,6 +132,10 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="SJv-Yt-rhV">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="loadingPosts" destination="Ewi-PO-CL4" id="3Ch-eQ-vlt"/>
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
