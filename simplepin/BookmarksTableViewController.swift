@@ -120,6 +120,9 @@ class BookmarksTableViewController: UITableViewController {
 
         if bookmark.tags.isEmpty {
         } else {
+            for view in cell.tagsStackView.subviews {
+                view.removeFromSuperview()
+            }
             for item in bookmark.tags {
                 let label = UILabel()
                 label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
@@ -131,7 +134,6 @@ class BookmarksTableViewController: UITableViewController {
                 label.textColor = self.view.tintColor
                 cell.tagsStackView.addArrangedSubview(label)
             }
-            //TODO: After scrolling subivews appear in wrong places
         }
 
         if bookmark.toread == "no" {
