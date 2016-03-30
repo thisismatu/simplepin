@@ -27,7 +27,7 @@ struct BookmarkItem {
             let description = json["extended"] as? String,
             let date = formatter.dateFromString(dateString!),
             let link = NSURL(string: linkString!),
-            let tags = tagsString?.componentsSeparatedByString(" "),
+            let tags = tagsString?.componentsSeparatedByString(" ").filter({!$0.isEmpty}),
             let toread = json["toread"] as? String else {
                 return nil
         }
@@ -118,8 +118,10 @@ class BookmarksTableViewController: UITableViewController {
             cell.descriptionLabel.text = bookmark.description
         }
 
-        if bookmark.tags.isEmpty {
+        if bookmark.tags.count == 0 {
+            cell.tagsStackView.hidden = true
         } else {
+            cell.tagsStackView.hidden = false
             for view in cell.tagsStackView.subviews {
                 view.removeFromSuperview()
             }
