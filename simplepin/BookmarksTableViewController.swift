@@ -27,7 +27,7 @@ struct BookmarkItem {
             let description = json["extended"] as? String,
             let date = formatter.dateFromString(dateString!),
             let link = NSURL(string: linkString!),
-            let tags = tagsString?.componentsSeparatedByString(" ").filter({$0 != ""}),
+            let tags = tagsString?.componentsSeparatedByString(" "),
             let toread = json["toread"] as? String else {
                 return nil
         }
