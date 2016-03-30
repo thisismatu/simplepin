@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SafariServices
 
 struct BookmarkItem {
     let title: String
@@ -51,6 +52,10 @@ class BookmarksTableViewController: UITableViewController {
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
+    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
+        startFetchAllPostsTask()
+    }
+
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
@@ -61,14 +66,17 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
-        startFetchAllPostsTask()
+    func showBookmark(currentUrl: NSURL?) {
+        if let url = currentUrl {
+            let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
+            presentViewController(vc, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let token = defaults.stringForKey("userToken") {
+        if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
         }
         else {
@@ -147,16 +155,9 @@ class BookmarksTableViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - Navigation
-
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "openBrowser" {
-            if let vc = segue.destinationViewController as? BrowserViewController {
-                let indexPath = self.tableView.indexPathForSelectedRow!
-                vc.url = bookmarks[indexPath.row].link
-            }
-
-        }
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let url = bookmarks[indexPath.row].link
+        showBookmark(url)
     }
 
 }
