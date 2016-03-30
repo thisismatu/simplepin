@@ -140,11 +140,127 @@
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
                         <outlet property="searchBar" destination="lq0-Q7-SpB" id="HlQ-ar-ET0"/>
                         <outlet property="tableData" destination="OQU-Js-E8i" id="Oij-M1-f0n"/>
+                        <segue destination="gYv-09-0z0" kind="presentation" identifier="openLoginModal" animates="NO" id="y9u-Cf-4Jy"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9aY-8f-w8t" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1224" y="-795"/>
+        </scene>
+        <!--Login Modal View Controller-->
+        <scene sceneID="fEi-N7-oIw">
+            <objects>
+                <viewController id="gYv-09-0z0" customClass="LoginModalViewController" customModule="simplepin" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VQe-1y-IvS"/>
+                        <viewControllerLayoutGuide type="bottom" id="w6r-vt-JNj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="jyz-WM-Dr3">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
+                                <rect key="frame" x="180" y="151" width="240" height="299"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="72"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="72" id="mwv-bE-Zaz"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log In to Pinboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRR-v1-tco">
+                                        <rect key="frame" x="0.0" y="88" width="240" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="LbK-eW-gnq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="LbK-eW-gnq"/>
+                                            </mask>
+                                        </variation>
+                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDB-c3-dCt" userLabel="Spacer">
+                                        <rect key="frame" x="0.0" y="127" width="240" height="0.0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="E1L-cu-YEj"/>
+                                        </constraints>
+                                    </view>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
+                                        <rect key="frame" x="0.0" y="143" width="240" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="gWt-5j-BTW"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TQj-9V-dsc">
+                                        <rect key="frame" x="0.0" y="195" width="240" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="eNb-Zr-AWr"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
+                                    </textField>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z4t-J1-ZyX" userLabel="Spacer">
+                                        <rect key="frame" x="0.0" y="247" width="240" height="0.0"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" id="ygg-81-clM"/>
+                                        </constraints>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
+                                        <rect key="frame" x="0.0" y="263" width="240" height="36"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="36" id="ht5-bn-4t3"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                        <state key="normal" title="Log In"/>
+                                    </button>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
+                                        <rect key="frame" x="0.0" y="299" width="240" height="0.0"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="eMh-aI-nvZ"/>
+                                </constraints>
+                            </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
+                                <rect key="frame" x="232" y="547" width="136" height="29"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="I forgot my password"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="1BL-4o-wXd"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" id="3sv-QD-k4Q"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" id="4ZO-ge-chr"/>
+                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="MYA-0Y-3ya" secondAttribute="bottom" constant="24" id="8zJ-Wt-OAN"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
+                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="jCY-An-hEC" secondAttribute="bottom" id="V9X-F3-IjS"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" id="W8y-68-Xwf"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jyz-WM-Dr3" secondAttribute="leading" constant="16" id="nE7-JY-1nT"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="trailing" constant="16" id="tAN-bV-fsJ"/>
+                            <constraint firstItem="MYA-0Y-3ya" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="u7T-V5-Ine"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="1BL-4o-wXd"/>
+                                <exclude reference="4ZO-ge-chr"/>
+                                <exclude reference="W8y-68-Xwf"/>
+                                <exclude reference="nE7-JY-1nT"/>
+                                <exclude reference="tAN-bV-fsJ"/>
+                                <exclude reference="V9X-F3-IjS"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xcZ-lJ-G2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1224" y="-1592"/>
         </scene>
         <!--Settings-->
         <scene sceneID="dJT-b5-b4u">
@@ -267,7 +383,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Settings" id="b9P-A0-Lnd">
-                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="done" id="4sQ-1G-N0E">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="stop" id="4sQ-1G-N0E">
                             <connections>
                                 <segue destination="fOo-bN-THj" kind="unwind" identifier="closeSettings" unwindAction="unwindSettingsModal:" id="Qnk-Ts-sMd"/>
                             </connections>
@@ -323,4 +439,7 @@
             <point key="canvasLocation" x="-1224" y="-29"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="art_pin" width="72" height="72"/>
+    </resources>
 </document>
