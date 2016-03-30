@@ -34,7 +34,6 @@ class SettingsModalViewController: UITableViewController {
             let alert = UIAlertController(title: "Please enter your username and password", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
             self.presentViewController(alert, animated: true, completion: nil)
-            print("Ei tunnareita")
             return
         }
 
@@ -49,7 +48,6 @@ class SettingsModalViewController: UITableViewController {
                 let alert = UIAlertController(title: "Incorrect username or password", message: "Please check your login credentials and try again.", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
-                print("Ei ollut tokenia")
             }
         }
 
@@ -57,7 +55,7 @@ class SettingsModalViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let token = defaults.stringForKey("userToken") {
+        if defaults.stringForKey("userToken") != nil {
             usernameLabel.text = "Logged in as"
             usernameTextField.text = defaults.stringForKey("userName")! as String
             usernameTextField.enabled = false

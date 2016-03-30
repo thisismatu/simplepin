@@ -9,6 +9,8 @@
 import Foundation
 
 struct Network {
+
+    // MARK: Fetch posts
     static func fetchAllPosts(completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
@@ -50,6 +52,7 @@ struct Network {
         return bookmarks
     }
 
+    // MARK: Fetch API Token
     static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
         guard let url = NSURL(string: "https://\(username):\(password)@api.pinboard.in/v1/user/api_token/?format=json") else {
             completion(nil)
