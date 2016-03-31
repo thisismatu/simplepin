@@ -41,8 +41,8 @@ class LoginModalViewController: UIViewController {
             if let token = userToken {
                 self.defaults.setObject(username+":"+token, forKey: "userToken")
                 self.defaults.setObject(username, forKey: "userName")
-                print("Login ok")
-//                self.performSegueWithIdentifier("closeLoginModal", sender: self)
+                self.dismissViewControllerAnimated(true, completion: nil)
+                // TODO: Figure out how to run startFetchAllPostsTask
             } else {
                 self.spinner.stopAnimating()
                 self.button.enabled = true
