@@ -52,6 +52,10 @@ class BookmarksTableViewController: UITableViewController {
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
+    @IBAction func unwindLoginModal(segue: UIStoryboardSegue) {
+        startFetchAllPostsTask()
+    }
+
     @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
         startFetchAllPostsTask()
     }

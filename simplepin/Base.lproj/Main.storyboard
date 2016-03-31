@@ -221,7 +221,6 @@
                                         <state key="normal" title="Log In"/>
                                         <connections>
                                             <action selector="buttonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="55d-6M-Rh1"/>
-                                            <segue destination="sPj-i0-a1p" kind="unwind" identifier="closeLoginModal" unwindAction="unwindLoginModal:" id="2Vx-N6-Jsx"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
@@ -270,6 +269,7 @@
                         <outlet property="password" destination="TQj-9V-dsc" id="4jo-yG-130"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
                         <outlet property="username" destination="tY7-Ol-hyD" id="o23-gi-ZDg"/>
+                        <segue destination="sPj-i0-a1p" kind="unwind" identifier="closeLoginModal" unwindAction="unwindLoginModal:" id="kNy-jd-Nbd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xcZ-lJ-G2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
