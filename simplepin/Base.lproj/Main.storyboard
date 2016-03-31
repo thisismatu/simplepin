@@ -162,7 +162,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="151" width="240" height="299"/>
+                                <rect key="frame" x="180" y="92" width="240" height="299"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="72"/>
@@ -219,6 +219,10 @@
                                         </constraints>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <state key="normal" title="Log In"/>
+                                        <connections>
+                                            <action selector="buttonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="55d-6M-Rh1"/>
+                                            <segue destination="sPj-i0-a1p" kind="unwind" identifier="closeLoginModal" unwindAction="unwindLoginModal:" id="2Vx-N6-Jsx"/>
+                                        </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
                                         <rect key="frame" x="0.0" y="299" width="240" height="0.0"/>
@@ -241,6 +245,7 @@
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" id="3sv-QD-k4Q"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" id="4ZO-ge-chr"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="MYA-0Y-3ya" secondAttribute="bottom" constant="24" id="8zJ-Wt-OAN"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" constant="72" id="9yF-Xl-H36"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="jCY-An-hEC" secondAttribute="bottom" id="V9X-F3-IjS"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" id="W8y-68-Xwf"/>
@@ -251,6 +256,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="1BL-4o-wXd"/>
+                                <exclude reference="3sv-QD-k4Q"/>
                                 <exclude reference="4ZO-ge-chr"/>
                                 <exclude reference="W8y-68-Xwf"/>
                                 <exclude reference="nE7-JY-1nT"/>
@@ -259,8 +265,15 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="button" destination="7uV-At-Pnd" id="7Sd-gW-1ee"/>
+                        <outlet property="password" destination="TQj-9V-dsc" id="4jo-yG-130"/>
+                        <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
+                        <outlet property="username" destination="tY7-Ol-hyD" id="o23-gi-ZDg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xcZ-lJ-G2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="sPj-i0-a1p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-1224" y="-1592"/>
         </scene>

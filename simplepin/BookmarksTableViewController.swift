@@ -80,7 +80,7 @@ class BookmarksTableViewController: UITableViewController {
             startFetchAllPostsTask()
         }
         else {
-            performSegueWithIdentifier("openSettingsModal", sender: self)
+            performSegueWithIdentifier("openLoginModal", sender: self)
         }
 
         tableView.estimatedRowHeight = 96.0
