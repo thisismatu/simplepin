@@ -127,11 +127,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Simplepin" id="lnP-5z-Y1z">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="Gxu-1l-9LF">
+                        <barButtonItem key="leftBarButtonItem" image="ic_settings" id="Gxu-1l-9LF">
                             <connections>
                                 <segue destination="DH7-KZ-z3C" kind="presentation" identifier="openSettingsModal" id="FX0-Om-rkX"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="YM9-1Q-Tb1"/>
                     </navigationItem>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="SJv-Yt-rhV">
                         <autoresizingMask key="autoresizingMask"/>
@@ -470,5 +471,6 @@
     </scenes>
     <resources>
         <image name="art_pin" width="72" height="72"/>
+        <image name="ic_settings" width="22" height="22"/>
     </resources>
 </document>
