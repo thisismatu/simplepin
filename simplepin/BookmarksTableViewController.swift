@@ -57,7 +57,6 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
-        print("Back from settings")
     }
 
     func startFetchAllPostsTask() {
@@ -163,6 +162,16 @@ class BookmarksTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let url = bookmarks[indexPath.row].link
         showBookmark(url)
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "openSettingsModal") {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let vc = navigationController.topViewController as! SettingsModalViewController
+            let count = String(bookmarks.count)
+            vc.bookmarkCount = count+" bookmarks"
+
+        }
     }
 
 }
