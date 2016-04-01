@@ -15,7 +15,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+
+        // Set tint color
+        let simplepinBlue = UIColor(red: 0.2, green:0.4, blue:1, alpha:1)
+        self.window?.tintColor = simplepinBlue
+        UINavigationBar.appearance().tintColor = simplepinBlue
+        UITabBar.appearance().tintColor = simplepinBlue
+
+
         return true
     }
 
