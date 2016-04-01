@@ -19,7 +19,7 @@ struct BookmarkItem {
 
     init?(json: [String: AnyObject]) {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-DD'T'HH:mm:SSZ"
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
         let dateString = json["time"] as? String
         let linkString = json["href"] as? String
         let tagsString = json["tags"] as? String
