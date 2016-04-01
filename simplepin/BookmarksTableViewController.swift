@@ -138,15 +138,16 @@ class BookmarksTableViewController: UITableViewController {
                 view.removeFromSuperview()
             }
             for item in bookmark.tags {
-                let label = UILabel()
-                label.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
-                label.numberOfLines = 1
-                label.tag = indexPath.row
-                label.text = item
-                label.userInteractionEnabled = true
-                label.textAlignment = NSTextAlignment.Right
-                label.textColor = self.view.tintColor
-                cell.tagsStackView.addArrangedSubview(label)
+                let button = UIButton()
+                button.titleLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+                button.setTitleColor(self.view.tintColor, forState: .Normal)
+                button.setTitle(item, forState: .Normal)
+                button.contentHorizontalAlignment = .Right
+                button.contentEdgeInsets = UIEdgeInsetsMake(4.0, 2.0, 4.0, 2.0)
+                button.setContentHuggingPriority(252, forAxis: .Horizontal)
+                button.tag = indexPath.row
+                // button.addTarget(self, action: "tagButtonClicked", forControlEvents: .TouchUpInside)
+                cell.tagsStackView.addArrangedSubview(button)
             }
         }
 
