@@ -44,6 +44,7 @@ struct BookmarkItem {
 class BookmarksTableViewController: UITableViewController {
     var bookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
+    var checkForUpdatesTask: NSURLSessionTask?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -83,7 +84,17 @@ class BookmarksTableViewController: UITableViewController {
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
 
-        // TODO: Fetch new posts
+        checkForUpdatesTask = Network.checkForUpdates() { updateDate in
+            let lastUpdatedDate = self.bookmarks.first?.date
+            print("updateDate: \(updateDate), lastUpdatedDate: \(lastUpdatedDate)")
+            if lastUpdatedDate?.compare(updateDate!) == NSComparisonResult.OrderedAscending {
+                print("New posts available")
+                self.startFetchAllPostsTask()
+            } else {
+                print("No updates available :(")
+                return
+            }
+        }
 
         refreshControl.endRefreshing()
     }
@@ -114,6 +125,7 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         fetchAllPostsTask?.cancel()
+        checkForUpdatesTask?.cancel()
     }
 
     override func didReceiveMemoryWarning() {

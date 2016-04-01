@@ -79,4 +79,38 @@ struct Network {
         }
         return nil
     }
+
+    // MARK: Check for updates
+    static func checkForUpdates(completion: (NSDate?) -> Void) -> NSURLSessionTask? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let userToken = defaults.stringForKey("userToken")! as String
+
+        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/update?auth_token=\(userToken)&format=json") else {
+            completion(nil)
+            return nil
+        }
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = data where error == nil else {
+                    completion(nil)
+                    return
+                }
+                let updateDate = parseUpdate(data)
+                completion(updateDate)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    static func parseUpdate(data: NSData) -> NSDate? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
+            let dateString = jsonObject["update_time"] as? String
+            return formatter.dateFromString(dateString!)
+        }
+        return nil
+    }
 }
