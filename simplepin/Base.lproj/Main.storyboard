@@ -50,7 +50,7 @@
                             </constraints>
                         </view>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="96" id="gv3-va-QDX" customClass="BookmarkTableViewCell" customModule="simplepin" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="96" id="gv3-va-QDX" customClass="BookmarkTableViewCell" customModule="simplepin" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="136" width="600" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gv3-va-QDX" id="X2J-t1-qt7">
