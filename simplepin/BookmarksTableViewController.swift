@@ -109,7 +109,7 @@ class BookmarksTableViewController: UITableViewController {
             performSegueWithIdentifier("openLoginModal", sender: self)
         }
 
-        self.refreshControl?.tintColor = self.view.tintColor
+        self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
         tableView.estimatedRowHeight = 96.0
