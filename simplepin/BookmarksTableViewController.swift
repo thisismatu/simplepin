@@ -57,7 +57,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
-        startFetchAllPostsTask()
+        print("Back from settings")
     }
 
     func startFetchAllPostsTask() {
