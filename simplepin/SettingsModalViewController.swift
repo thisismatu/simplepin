@@ -18,7 +18,12 @@ class SettingsModalViewController: UITableViewController {
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alert.addAction(UIAlertAction(title: "Log Out", style: UIAlertActionStyle.Destructive, handler: nil))
+        alert.addAction(UIAlertAction(title: "Log Out", style: UIAlertActionStyle.Destructive, handler: { action in
+            self.defaults.removeObjectForKey("userName")
+            self.defaults.removeObjectForKey("userToken")
+            self.dismissViewControllerAnimated(false, completion: nil)
+            self.performSegueWithIdentifier("logOut", sender: self)
+        }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

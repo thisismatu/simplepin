@@ -375,6 +375,7 @@
                         <outlet property="logoutButton" destination="xgb-RS-3mt" id="czf-WP-gg0"/>
                         <outlet property="userDetailLabel" destination="PSW-QY-ujr" id="jwH-Zx-Jl6"/>
                         <outlet property="usernameLabel" destination="xf4-Nu-8js" id="v89-x6-V1h"/>
+                        <segue destination="fOo-bN-THj" kind="unwind" identifier="logOut" unwindAction="logOut:" id="HmM-AZ-iIQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sfd-cY-t6k" userLabel="First Responder" sceneMemberID="firstResponder"/>

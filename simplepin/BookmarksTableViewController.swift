@@ -59,6 +59,10 @@ class BookmarksTableViewController: UITableViewController {
     @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
     }
 
+    @IBAction func logOut(segue: UIStoryboardSegue) {
+        performSegueWithIdentifier("openLoginModal", sender: self)
+    }
+
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
