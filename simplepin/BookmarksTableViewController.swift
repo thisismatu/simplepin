@@ -80,6 +80,14 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        self.tableView.reloadData()
+
+        // TODO: Fetch new posts
+
+        refreshControl.endRefreshing()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -89,6 +97,9 @@ class BookmarksTableViewController: UITableViewController {
         else {
             performSegueWithIdentifier("openLoginModal", sender: self)
         }
+
+        self.refreshControl?.tintColor = self.view.tintColor
+        self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
         tableView.estimatedRowHeight = 96.0
         tableView.rowHeight = UITableViewAutomaticDimension
