@@ -112,7 +112,7 @@ class BookmarksTableViewController: UITableViewController {
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: Selector("longPress:"))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
         self.view.addGestureRecognizer(longPressRecognizer)
 
         tableView.estimatedRowHeight = 96.0
@@ -206,12 +206,17 @@ class BookmarksTableViewController: UITableViewController {
 
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
+
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
-            if tableView.indexPathForRowAtPoint(touchPoint) != nil {
-                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+
+            if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
+                let alert = UIAlertController(title: bookmarks[indexPath.row].title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil))
-                alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: nil))
+                alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
+                    let urlToDelete = self.bookmarks[indexPath.row].link.absoluteString
+                    let escapedUrlToDelete = urlToDelete.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+                }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
