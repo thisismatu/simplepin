@@ -14,6 +14,7 @@ struct Network {
     static func fetchAllPosts(completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
+        defaults.setObject(NSDate(), forKey: "lastUpdateDate")
 
         guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/all?auth_token=\(userToken)&format=json") else {
             completion([])

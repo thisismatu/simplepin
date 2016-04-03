@@ -86,13 +86,10 @@ class BookmarksTableViewController: UITableViewController {
         self.tableView.reloadData()
 
         checkForUpdatesTask = Network.checkForUpdates() { updateDate in
-            let lastUpdatedDate = self.bookmarks.first?.date
-            print("updateDate: \(updateDate), lastUpdatedDate: \(lastUpdatedDate)")
-            if lastUpdatedDate?.compare(updateDate!) == NSComparisonResult.OrderedAscending {
-                print("New posts available")
+            let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
+            if lastUpdateDate?.compare(updateDate!) == NSComparisonResult.OrderedAscending {
                 self.startFetchAllPostsTask()
             } else {
-                print("No updates available :(")
                 return
             }
         }
