@@ -232,9 +232,7 @@ class BookmarksTableViewController: UITableViewController {
 
                 alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
-                    let urlToDelete = bookmark.link.absoluteString
-                    let escapedUrlToDelete = urlToDelete.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
-                    self.deleteBookmarkTask = Network.deleteBookmark(escapedUrlToDelete!) { resultCode in
+                    self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
                         self.bookmarks.removeAtIndex(indexPath.row)
                         self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                         self.tableData.reloadData()

@@ -116,16 +116,16 @@ struct Network {
     }
 
     // MARK: Delete bookmark
-    static func deleteBookmark(bookmarkUrl: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func deleteBookmark(bookmarkUrl: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
+        let urlString = bookmarkUrl.absoluteString
 
-        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/delete?auth_token=\(userToken)&url=\(bookmarkUrl)&format=json") else {
+        guard let urlEncode = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
+            let url = NSURL(string: "https://api.pinboard.in/v1/posts/delete?auth_token=\(userToken)&url=\(urlEncode)&format=json") else {
             completion(nil)
             return nil
         }
-
-        print(url)
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
