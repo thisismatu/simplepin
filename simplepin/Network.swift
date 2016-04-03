@@ -162,13 +162,10 @@ struct Network {
         guard let urlEncode = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
             let titleEncode = title.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
             let descriptionEncode = description.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let tagsEncode = tagsString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) else {
+            let tagsEncode = tagsString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
+            let url = NSURL(string: "https://api.pinboard.in/v1/posts/add?auth_token=\(userToken)&url=\(urlEncode)&description=\(titleEncode)&extended=\(descriptionEncode)&tags=\(tagsEncode)&dt=\(dateString)&toread=\(toread)&format=json") else {
+                completion(nil)
                 return nil
-        }
-
-        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/add?auth_token=\(userToken)&url=\(urlEncode)&description=\(titleEncode)&extended=\(descriptionEncode)&tags=\(tagsEncode)&dt=\(dateString)&toread=\(toread)&format=json") else {
-            completion(nil)
-            return nil
         }
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
