@@ -148,4 +148,49 @@ struct Network {
         }
         return nil
     }
+
+    // MARK: Add bookmark
+    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String, tags: [String], dt: NSDate, toread: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let userToken = defaults.stringForKey("userToken")! as String
+        let urlString = bookmarkUrl.absoluteString
+        let tagsString = tags.joinWithSeparator(" ")
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
+        let dateString = formatter.stringFromDate(dt)
+
+        guard let urlEncode = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
+            let titleEncode = title.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
+            let descriptionEncode = description.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
+            let tagsEncode = tagsString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()) else {
+                return nil
+        }
+
+        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/add?auth_token=\(userToken)&url=\(urlEncode)&description=\(titleEncode)&extended=\(descriptionEncode)&tags=\(tagsEncode)&dt=\(dateString)&toread=\(toread)&format=json") else {
+            completion(nil)
+            return nil
+        }
+
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = data where error == nil else {
+                    completion(nil)
+                    return
+                }
+                let resultCode = parseAddBookmark(data)
+                completion(resultCode)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    static func parseAddBookmark(data: NSData) -> String? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            return jsonObject["result_code"] as? String
+        }
+        return nil
+    }
+
 }

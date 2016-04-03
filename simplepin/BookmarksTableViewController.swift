@@ -46,6 +46,7 @@ class BookmarksTableViewController: UITableViewController {
     var fetchAllPostsTask: NSURLSessionTask?
     var checkForUpdatesTask: NSURLSessionTask?
     var deleteBookmarkTask: NSURLSessionTask?
+    var addBookmarkTask: NSURLSessionTask?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -128,6 +129,7 @@ class BookmarksTableViewController: UITableViewController {
         fetchAllPostsTask?.cancel()
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
+        addBookmarkTask?.cancel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -209,11 +211,28 @@ class BookmarksTableViewController: UITableViewController {
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
 
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
-                let alert = UIAlertController(title: bookmarks[indexPath.row].title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-                alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: nil))
+                let bookmark = bookmarks[indexPath.row]
+                let alert = UIAlertController(title: bookmark.title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+
+                if bookmark.toread == "yes" {
+                    alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: { action in
+                        self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
+                            self.startFetchAllPostsTask()
+                            // TODO: Fetch updates for single post
+                        }
+                    }))
+                } else {
+                    alert.addAction(UIAlertAction(title: "Mark as Unread", style: UIAlertActionStyle.Default, handler: { action in
+                        self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
+                            self.startFetchAllPostsTask()
+                            // TODO: Fetch updates for single post
+                        }
+                    }))
+                }
+
                 alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
-                    let urlToDelete = self.bookmarks[indexPath.row].link.absoluteString
+                    let urlToDelete = bookmark.link.absoluteString
                     let escapedUrlToDelete = urlToDelete.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
                     self.deleteBookmarkTask = Network.deleteBookmark(escapedUrlToDelete!) { resultCode in
                         self.bookmarks.removeAtIndex(indexPath.row)
