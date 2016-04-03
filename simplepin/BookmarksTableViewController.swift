@@ -45,6 +45,7 @@ class BookmarksTableViewController: UITableViewController {
     var bookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
     var checkForUpdatesTask: NSURLSessionTask?
+    var deleteBookmarkTask: NSURLSessionTask?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -129,6 +130,7 @@ class BookmarksTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
         fetchAllPostsTask?.cancel()
         checkForUpdatesTask?.cancel()
+        deleteBookmarkTask?.cancel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -216,6 +218,11 @@ class BookmarksTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
                     let urlToDelete = self.bookmarks[indexPath.row].link.absoluteString
                     let escapedUrlToDelete = urlToDelete.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet())
+                    self.deleteBookmarkTask = Network.deleteBookmark(escapedUrlToDelete!) { resultCode in
+                        self.bookmarks.removeAtIndex(indexPath.row)
+                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                        self.tableData.reloadData()
+                    }
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
