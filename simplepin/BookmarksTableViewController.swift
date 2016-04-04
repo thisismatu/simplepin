@@ -18,15 +18,13 @@ struct BookmarkItem {
     let toread: String
 
     init?(json: [String: AnyObject]) {
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
         let dateString = json["time"] as? String
         let linkString = json["href"] as? String
         let tagsString = json["tags"] as? String
 
         guard let title = json["description"] as? String,
             let description = json["extended"] as? String,
-            let date = formatter.dateFromString(dateString!),
+            let date = dateString?.toDate(),
             let link = NSURL(string: linkString!),
             let tags = tagsString?.componentsSeparatedByString(" ").filter({!$0.isEmpty}),
             let toread = json["toread"] as? String else {

@@ -128,10 +128,8 @@ struct Network {
 
     static func parseUpdate(data: NSData) -> NSDate? {
         if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            let formatter = NSDateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
             let dateString = jsonObject["update_time"] as? String
-            return formatter.dateFromString(dateString!)
+            return dateString?.toDate()
         }
         return nil
     }
@@ -185,9 +183,6 @@ struct Network {
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
-        let dateString = formatter.stringFromDate(dt)
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -199,7 +194,7 @@ struct Network {
             NSURLQueryItem(name: "description", value: title),
             NSURLQueryItem(name: "extended", value: description),
             NSURLQueryItem(name: "tags", value: tagsString),
-            NSURLQueryItem(name: "dt", value: dateString),
+            NSURLQueryItem(name: "dt", value: dt.toString()),
             NSURLQueryItem(name: "toread", value: toread),
             NSURLQueryItem(name: "format", value: "json"),
         ]
