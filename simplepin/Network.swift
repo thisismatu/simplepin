@@ -16,7 +16,16 @@ struct Network {
         let userToken = defaults.stringForKey("userToken")! as String
         defaults.setObject(NSDate(), forKey: "lastUpdateDate")
 
-        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/all?auth_token=\(userToken)&format=json") else {
+        let urlQuery = NSURLComponents()
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/posts/all"
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: userToken),
+            NSURLQueryItem(name: "format", value: "json"),
+        ]
+
+        guard let url = urlQuery.URL else {
             completion([])
             return nil
         }
@@ -55,10 +64,13 @@ struct Network {
 
     // MARK: Fetch API Token
     static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+
+        // TODO: url query item for fetching
         guard let url = NSURL(string: "https://\(username):\(password)@api.pinboard.in/v1/user/api_token/?format=json") else {
             completion(nil)
             return nil
         }
+
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 guard let data = data where error == nil else {
@@ -86,7 +98,16 @@ struct Network {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
 
-        guard let url = NSURL(string: "https://api.pinboard.in/v1/posts/update?auth_token=\(userToken)&format=json") else {
+        let urlQuery = NSURLComponents()
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/posts/update"
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: userToken),
+            NSURLQueryItem(name: "format", value: "json"),
+        ]
+
+        guard let url = urlQuery.URL else {
             completion(nil)
             return nil
         }
@@ -121,8 +142,17 @@ struct Network {
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
 
-        guard let urlEncode = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let url = NSURL(string: "https://api.pinboard.in/v1/posts/delete?auth_token=\(userToken)&url=\(urlEncode)&format=json") else {
+        let urlQuery = NSURLComponents()
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/posts/delete"
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: userToken),
+            NSURLQueryItem(name: "url", value: urlString),
+            NSURLQueryItem(name: "format", value: "json"),
+        ]
+
+        guard let url = urlQuery.URL else {
             completion(nil)
             return nil
         }
@@ -159,11 +189,22 @@ struct Network {
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:SSZ"
         let dateString = formatter.stringFromDate(dt)
 
-        guard let urlEncode = urlString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let titleEncode = title.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let descriptionEncode = description.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let tagsEncode = tagsString.stringByAddingPercentEncodingWithAllowedCharacters(.URLHostAllowedCharacterSet()),
-            let url = NSURL(string: "https://api.pinboard.in/v1/posts/add?auth_token=\(userToken)&url=\(urlEncode)&description=\(titleEncode)&extended=\(descriptionEncode)&tags=\(tagsEncode)&dt=\(dateString)&toread=\(toread)&format=json") else {
+        let urlQuery = NSURLComponents()
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/posts/add"
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: userToken),
+            NSURLQueryItem(name: "url", value: urlString),
+            NSURLQueryItem(name: "description", value: title),
+            NSURLQueryItem(name: "extended", value: description),
+            NSURLQueryItem(name: "tags", value: tagsString),
+            NSURLQueryItem(name: "dt", value: dateString),
+            NSURLQueryItem(name: "toread", value: toread),
+            NSURLQueryItem(name: "format", value: "json"),
+        ]
+
+        guard let url = urlQuery.URL else {
                 completion(nil)
                 return nil
         }
