@@ -86,7 +86,7 @@ class BookmarksTableViewController: UITableViewController {
 
         checkForUpdatesTask = Network.checkForUpdates() { updateDate in
             let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
-            if lastUpdateDate?.compare(updateDate!) == NSComparisonResult.OrderedAscending {
+            if lastUpdateDate < updateDate {
                 self.startFetchAllPostsTask()
             } else {
                 return
