@@ -99,13 +99,6 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
-        }
-        else {
-            performSegueWithIdentifier("openLoginModal", sender: self)
-        }
-
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
@@ -120,6 +113,17 @@ class BookmarksTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        if defaults.stringForKey("userToken") != nil {
+            startFetchAllPostsTask()
+        }
+        else {
+            performSegueWithIdentifier("openLoginModal", sender: self)
+        }
     }
 
     override func viewDidDisappear(animated: Bool) {
