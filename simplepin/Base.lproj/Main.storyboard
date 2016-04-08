@@ -345,6 +345,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8O0-gX-MWY">
                                                             <rect key="frame" x="519" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="privateByDefaultPressed:" destination="S5y-x6-W5k" eventType="valueChanged" id="uI7-Gs-h69"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -538,6 +541,7 @@
                     <connections>
                         <outlet property="logoutButton" destination="xgb-RS-3mt" id="czf-WP-gg0"/>
                         <outlet property="markAsReadSwitch" destination="iV9-pS-oBv" id="Zio-P5-4Tw"/>
+                        <outlet property="privateByDefaultSwitch" destination="8O0-gX-MWY" id="RbX-JE-mSF"/>
                         <outlet property="userDetailLabel" destination="PSW-QY-ujr" id="jwH-Zx-Jl6"/>
                         <outlet property="usernameLabel" destination="xf4-Nu-8js" id="v89-x6-V1h"/>
                         <segue destination="fOo-bN-THj" kind="unwind" identifier="logOut" unwindAction="logOut:" id="HmM-AZ-iIQ"/>

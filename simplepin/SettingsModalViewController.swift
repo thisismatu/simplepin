@@ -16,6 +16,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var userDetailLabel: UILabel!
     @IBOutlet var logoutButton: UIButton!
     @IBOutlet var markAsReadSwitch: UISwitch!
+    @IBOutlet var privateByDefaultSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -32,10 +33,16 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func markAsReadPressed(sender: AnyObject) {
         if (markAsReadSwitch.on == true) {
             defaults.setObject(true, forKey: "markAsRead")
-            print(defaults.boolForKey("markAsRead"))
         } else if (markAsReadSwitch.on == false) {
             defaults.setObject(false, forKey: "markAsRead")
-            print(defaults.boolForKey("markAsRead"))
+        }
+    }
+
+    @IBAction func privateByDefaultPressed(sender: AnyObject) {
+        if (privateByDefaultSwitch.on == true) {
+            defaults.setObject(true, forKey: "privateByDefault")
+        } else if (privateByDefaultSwitch.on == false) {
+            defaults.setObject(false, forKey: "privateByDefault")
         }
     }
 
@@ -46,6 +53,10 @@ class SettingsModalViewController: UITableViewController {
 
         if (defaults.boolForKey("markAsRead") == true) {
             markAsReadSwitch.on = true
+        }
+
+        if (defaults.boolForKey("privateByDefault") == true) {
+            privateByDefaultSwitch.on = true
         }
     }
 }
