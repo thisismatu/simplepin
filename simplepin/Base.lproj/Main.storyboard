@@ -221,7 +221,7 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                         <state key="normal" title="Log In"/>
                                         <connections>
-                                            <action selector="buttonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="55d-6M-Rh1"/>
+                                            <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
                                         </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
@@ -237,6 +237,9 @@
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="I forgot my password"/>
+                                <connections>
+                                    <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -266,10 +269,10 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="button" destination="7uV-At-Pnd" id="7Sd-gW-1ee"/>
-                        <outlet property="password" destination="TQj-9V-dsc" id="4jo-yG-130"/>
+                        <outlet property="loginButton" destination="7uV-At-Pnd" id="CBf-rY-9s2"/>
+                        <outlet property="passwordField" destination="TQj-9V-dsc" id="w0P-ov-iEK"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
-                        <outlet property="username" destination="tY7-Ol-hyD" id="o23-gi-ZDg"/>
+                        <outlet property="usernameField" destination="tY7-Ol-hyD" id="533-35-92J"/>
                         <segue destination="sPj-i0-a1p" kind="unwind" identifier="closeLoginModal" unwindAction="unwindLoginModal:" id="kNy-jd-Nbd"/>
                     </connections>
                 </viewController>

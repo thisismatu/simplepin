@@ -7,28 +7,29 @@
 //
 
 import UIKit
+import SafariServices
 
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
     let defaults = NSUserDefaults.standardUserDefaults()
 
-    @IBOutlet var username: UITextField!
-    @IBOutlet var password: UITextField!
-    @IBOutlet var button: UIButton!
+    @IBOutlet var usernameField: UITextField!
+    @IBOutlet var passwordField: UITextField!
+    @IBOutlet var loginButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
 
-    @IBAction func buttonPressed(sender: AnyObject) {
+    @IBAction func loginButtonPressed(sender: AnyObject) {
         spinner.startAnimating()
-        button.enabled = false
+        loginButton.enabled = false
 
-        guard let password = password.text,
-            let username = username.text else {
+        guard let password = passwordField.text,
+            let username = usernameField.text else {
                 return
         }
 
         if password.isEmpty || username.isEmpty {
             spinner.stopAnimating()
-            button.enabled = true
+            loginButton.enabled = true
             self.alertError("Please enter your username and password")
             return
         }
