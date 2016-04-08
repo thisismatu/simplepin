@@ -10,8 +10,8 @@ import UIKit
 
 extension UIViewController {
 
-    func alertError(title: String, message: String = "") {
-        let alert = UIAlertController(title: title, message: message.sentencecaseString, preferredStyle: UIAlertControllerStyle.Alert)
+    func alertError(title: String, message: String?) {
+        let alert = UIAlertController(title: title, message: message?.sentencecaseString, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

@@ -30,7 +30,7 @@ class LoginModalViewController: UIViewController {
         if password.isEmpty || username.isEmpty {
             spinner.stopAnimating()
             loginButton.enabled = true
-            self.alertError("Please enter your username and password")
+            self.alertError("Please enter your username and password", message: nil)
             return
         }
 
@@ -44,7 +44,7 @@ class LoginModalViewController: UIViewController {
             } else {
                 self.spinner.stopAnimating()
                 self.loginButton.enabled = true
-                self.alertError("Incorrect username or password")
+                self.alertError("Incorrect username or password", message: nil)
                 return
             }
         }
