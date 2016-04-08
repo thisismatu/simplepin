@@ -219,14 +219,26 @@ class BookmarksTableViewController: UITableViewController {
                 if bookmark.toread == "yes" {
                     alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
-                            self.startFetchAllPostsTask()
+                            if resultCode == "done" {
+                                self.startFetchAllPostsTask()
+                            } else {
+                                let alert = UIAlertController(title: "Something went wrong", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
                             // TODO: Fetch updates for single post
                         }
                     }))
                 } else {
                     alert.addAction(UIAlertAction(title: "Mark as Unread", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
-                            self.startFetchAllPostsTask()
+                            if resultCode == "done" {
+                                self.startFetchAllPostsTask()
+                            } else {
+                                let alert = UIAlertController(title: "Something went wrong", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
                             // TODO: Fetch updates for single post
                         }
                     }))
@@ -235,9 +247,15 @@ class BookmarksTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil))
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
                     self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
-                        self.bookmarks.removeAtIndex(indexPath.row)
-                        self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                        self.tableData.reloadData()
+                        if resultCode == "done" {
+                            self.bookmarks.removeAtIndex(indexPath.row)
+                            self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
+                            self.tableData.reloadData()
+                        } else {
+                            let alert = UIAlertController(title: "Something went wrong", message: "The item you were trying to delete was not found.", preferredStyle: UIAlertControllerStyle.Alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                            self.presentViewController(alert, animated: true, completion: nil)
+                        }
                     }
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
