@@ -38,6 +38,8 @@ class LoginModalViewController: UIViewController {
             if let token = userToken {
                 self.defaults.setObject(username+":"+token, forKey: "userToken")
                 self.defaults.setObject(username, forKey: "userName")
+                self.defaults.setObject(false, forKey: "privateByDefault")
+                self.defaults.setObject(false, forKey: "markAsRead")
                 self.performSegueWithIdentifier("closeLoginModal", sender: nil)
             } else {
                 self.spinner.stopAnimating()

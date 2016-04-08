@@ -15,6 +15,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var usernameLabel: UILabel!
     @IBOutlet var userDetailLabel: UILabel!
     @IBOutlet var logoutButton: UIButton!
+    @IBOutlet var markAsReadSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -28,9 +29,23 @@ class SettingsModalViewController: UITableViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
+    @IBAction func markAsReadPressed(sender: AnyObject) {
+        if (markAsReadSwitch.on == true) {
+            defaults.setObject(true, forKey: "markAsRead")
+            print(defaults.boolForKey("markAsRead"))
+        } else if (markAsReadSwitch.on == false) {
+            defaults.setObject(false, forKey: "markAsRead")
+            print(defaults.boolForKey("markAsRead"))
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameLabel.text = defaults.stringForKey("userName")
         userDetailLabel.text = bookmarkCount
+
+        if (defaults.boolForKey("markAsRead") == true) {
+            markAsReadSwitch.on = true
+        }
     }
 }

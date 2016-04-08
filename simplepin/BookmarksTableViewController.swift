@@ -193,7 +193,19 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let url = bookmarks[indexPath.row].link
+        let bookmark = bookmarks[indexPath.row]
+
+        if (defaults.boolForKey("markAsRead") == true) {
+            self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
+                if resultCode == "done" {
+                    self.bookmarks[indexPath.row].toread = "no"
+                    self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                } else {
+                    self.alertError("Something went wrong", message: resultCode!)
+                }
+            }
+        }
+        let url = bookmark.link
         showBookmark(url)
     }
 
