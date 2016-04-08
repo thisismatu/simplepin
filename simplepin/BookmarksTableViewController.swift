@@ -15,7 +15,7 @@ struct BookmarkItem {
     let date: NSDate
     let link: NSURL
     let tags: [String]
-    let toread: String
+    var toread: String
 
     init?(json: [String: AnyObject]) {
         let dateString = json["time"] as? String
@@ -220,22 +220,22 @@ class BookmarksTableViewController: UITableViewController {
                     alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                             if resultCode == "done" {
-                                self.startFetchAllPostsTask()
+                                self.bookmarks[indexPath.row].toread = "no"
+                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode!)
                             }
-                            // TODO: Fetch updates for single post
                         }
                     }))
                 } else {
                     alert.addAction(UIAlertAction(title: "Mark as Unread", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
                             if resultCode == "done" {
-                                self.startFetchAllPostsTask()
+                                self.bookmarks[indexPath.row].toread = "yes"
+                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode!)
                             }
-                            // TODO: Fetch updates for single post
                         }
                     }))
                 }
