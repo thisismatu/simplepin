@@ -18,7 +18,7 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
 
-    @IBAction func loginButtonPressed(sender: AnyObject) {
+    @IBAction func loginButtonPressed(sender: AnyObject?) {
         spinner.startAnimating()
         loginButton.enabled = false
 
@@ -59,6 +59,20 @@ class LoginModalViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        usernameField.delegate = self
+        passwordField.delegate = self
     }
 
+}
+
+// MARK: - UITextFieldDelegate
+extension LoginModalViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == usernameField {
+            passwordField.becomeFirstResponder()
+        } else if textField == passwordField {
+            loginButtonPressed(nil)
+        }
+        return true
+    }
 }
