@@ -209,6 +209,24 @@ class BookmarksTableViewController: UITableViewController {
         showBookmark(url)
     }
 
+    override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [UITableViewRowAction]? {
+        let bookmark = bookmarks[indexPath.row]
+
+        var toread = UITableViewRowAction(style: .Normal, title: "Read") { action, index in }
+        if bookmark.toread == "yes" {
+            toread = UITableViewRowAction(style: .Normal, title: "Unread") { action, index in }
+        }
+        toread.backgroundColor = self.view.tintColor
+
+        let delete = UITableViewRowAction(style: .Normal, title: "Delete") { action, index in }
+        delete.backgroundColor = UIColor.redColor()
+
+        let edit = UITableViewRowAction(style: .Normal, title: "Edit") { action, index in }
+        edit.backgroundColor = UIColor.grayColor()
+
+        return [toread, edit, delete]
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "openSettingsModal") {
             let navigationController = segue.destinationViewController as! UINavigationController
