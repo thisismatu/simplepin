@@ -222,9 +222,7 @@ class BookmarksTableViewController: UITableViewController {
                             if resultCode == "done" {
                                 self.startFetchAllPostsTask()
                             } else {
-                                let alert = UIAlertController(title: "Something went wrong", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                self.alertError("Something went wrong", message: resultCode!)
                             }
                             // TODO: Fetch updates for single post
                         }
@@ -235,9 +233,7 @@ class BookmarksTableViewController: UITableViewController {
                             if resultCode == "done" {
                                 self.startFetchAllPostsTask()
                             } else {
-                                let alert = UIAlertController(title: "Something went wrong", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                                self.presentViewController(alert, animated: true, completion: nil)
+                                self.alertError("Something went wrong", message: resultCode!)
                             }
                             // TODO: Fetch updates for single post
                         }
@@ -252,9 +248,7 @@ class BookmarksTableViewController: UITableViewController {
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableData.reloadData()
                         } else {
-                            let alert = UIAlertController(title: "Something went wrong", message: "The item you were trying to delete was not found.", preferredStyle: UIAlertControllerStyle.Alert)
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            self.alertError("Something went wrong", message: resultCode!)
                         }
                     }
                 }))

@@ -9,11 +9,13 @@
 import Foundation
 
 extension NSDate {
+
     func toString(format: String = "yyyy-MM-dd'T'HH:mm:SSZ") -> String{
         let formatter = NSDateFormatter()
         formatter.dateFormat = format
         return formatter.stringFromDate(self)
     }
+
 }
 
 extension NSDate: Comparable {}
