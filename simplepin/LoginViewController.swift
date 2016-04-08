@@ -41,12 +41,19 @@ class LoginModalViewController: UIViewController {
                 self.performSegueWithIdentifier("closeLoginModal", sender: nil)
             } else {
                 self.spinner.stopAnimating()
-                self.button.enabled = true
+                self.loginButton.enabled = true
                 self.alertError("Incorrect username or password")
                 return
             }
         }
     }
+
+    @IBAction func forgotPasswordButtonPressed(sender: AnyObject) {
+        let url = NSURL(string: "https://m.pinboard.in/password_reset/")
+        let vc = SFSafariViewController(URL: url!, entersReaderIfAvailable: true)
+        presentViewController(vc, animated: true, completion: nil)
+    }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
