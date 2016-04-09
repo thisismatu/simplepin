@@ -25,9 +25,6 @@ struct Network {
             NSURLQueryItem(name: "format", value: "json"),
         ]
 
-        print(urlQuery.URL)
-        // TODO: Remove when debug done
-
         guard let url = urlQuery.URL else {
             completion([])
             return nil

@@ -102,6 +102,10 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if defaults.stringForKey("userToken") != nil {
+            startFetchAllPostsTask()
+        }
+
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
@@ -121,10 +125,7 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
 
-        if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
-        }
-        else {
+        if defaults.stringForKey("userToken") == nil {
             performSegueWithIdentifier("openLoginModal", sender: self)
         }
     }
