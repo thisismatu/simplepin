@@ -64,6 +64,9 @@ class BookmarksTableViewController: UITableViewController {
         performSegueWithIdentifier("openLoginModal", sender: self)
     }
 
+    @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {
+    }
+
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
