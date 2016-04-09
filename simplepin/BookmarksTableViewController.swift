@@ -171,7 +171,7 @@ class BookmarksTableViewController: UITableViewController {
             }
             for item in bookmark.tags {
                 let button = UIButton()
-                button.titleLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleFootnote)
+                button.titleLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
                 button.setTitleColor(self.view.tintColor, forState: .Normal)
                 button.setTitle(item, forState: .Normal)
                 button.contentHorizontalAlignment = .Right
