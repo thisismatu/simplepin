@@ -616,9 +616,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="107.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Description" translatesAutoresizingMaskIntoConstraints="NO" id="dDK-ix-ZkD">
+                                                <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="q7H-Dl-161">
+                                                    <rect key="frame" x="16" y="12" width="87.5" height="20"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDK-ix-ZkD">
                                                     <rect key="frame" x="11" y="4" width="578" height="101.5"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -627,6 +631,8 @@
                                                 <constraint firstAttribute="bottom" secondItem="dDK-ix-ZkD" secondAttribute="bottom" constant="2" id="HCt-0B-bce"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="dDK-ix-ZkD" secondAttribute="trailing" constant="3" id="J9T-li-rpX"/>
                                                 <constraint firstItem="dDK-ix-ZkD" firstAttribute="top" secondItem="6qf-Zv-oPY" secondAttribute="top" constant="4" id="MKH-AU-Pv9"/>
+                                                <constraint firstItem="q7H-Dl-161" firstAttribute="top" secondItem="6qf-Zv-oPY" secondAttribute="topMargin" constant="4" id="d2O-ty-qPG"/>
+                                                <constraint firstItem="q7H-Dl-161" firstAttribute="leading" secondItem="6qf-Zv-oPY" secondAttribute="leadingMargin" constant="8" id="ecw-0H-ffc"/>
                                                 <constraint firstItem="dDK-ix-ZkD" firstAttribute="leading" secondItem="6qf-Zv-oPY" secondAttribute="leadingMargin" constant="3" id="h77-QJ-YoK"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -776,6 +782,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="descriptionTextView" destination="dDK-ix-ZkD" id="oXn-8Y-pZu"/>
                         <outlet property="privateBokkmarkSwitch" destination="86r-0N-nAZ" id="hU3-Bi-AIF"/>
                         <outlet property="toreadBookmarkSwitch" destination="ecf-53-ysQ" id="n1w-Vf-tn3"/>
                     </connections>
