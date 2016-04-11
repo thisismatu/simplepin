@@ -33,7 +33,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             return
         }
 
-        self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: [], dt: NSDate(), toread: "no") { resultCode in
+        self.addBookmarkTask = Network.addBookmark(url, title: title, description: description) { resultCode in
             if resultCode == "done" {
                 print(resultCode)
             } else {

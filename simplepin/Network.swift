@@ -11,7 +11,7 @@ import Foundation
 struct Network {
 
     // MARK: Fetch posts
-    static func fetchAllPosts(completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
+    static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
         defaults.setObject(NSDate(), forKey: "lastUpdateDate")
@@ -21,9 +21,12 @@ struct Network {
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/all"
         urlQuery.queryItems = [
+            NSURLQueryItem(name: "fromdt", value: fromdt?.toString()),
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
+
+        print(urlQuery.URL)
 
         guard let url = urlQuery.URL else {
             completion([])
@@ -145,8 +148,8 @@ struct Network {
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/delete"
         urlQuery.queryItems = [
-            NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "url", value: urlString),
+            NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
 
@@ -178,7 +181,8 @@ struct Network {
     }
 
     // MARK: Add bookmark
-    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String, tags: [String], dt: NSDate, toread: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+    // TODO: Set optional values
+    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, replace: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
@@ -189,15 +193,18 @@ struct Network {
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/add"
         urlQuery.queryItems = [
-            NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "url", value: urlString),
             NSURLQueryItem(name: "description", value: title),
             NSURLQueryItem(name: "extended", value: description),
             NSURLQueryItem(name: "tags", value: tagsString),
-            NSURLQueryItem(name: "dt", value: dt.toString()),
+            NSURLQueryItem(name: "dt", value: dt?.toString()),
+            NSURLQueryItem(name: "replace", value: replace),
             NSURLQueryItem(name: "toread", value: toread),
+            NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
+
+        print(urlQuery.URL)
 
         guard let url = urlQuery.URL else {
                 completion(nil)
