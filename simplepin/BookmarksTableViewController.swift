@@ -199,17 +199,18 @@ class BookmarksTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let bookmark = bookmarks[indexPath.row]
 
-        if (defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes" {
+        if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
             self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                 if resultCode == "done" {
                     self.bookmarks[indexPath.row].toread = "no"
                     self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 } else {
                     self.alertError("Something went wrong", message: resultCode)
+                    return
                 }
             }
         }
-        // TODO: Coming back from safari removes row from list
+
         let url = bookmark.link
         showBookmark(url)
     }
@@ -238,9 +239,10 @@ class BookmarksTableViewController: UITableViewController {
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                             if resultCode == "done" {
                                 self.bookmarks[indexPath.row].toread = "no"
-                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode)
+                                return
                             }
                         }
                     }))
@@ -249,9 +251,10 @@ class BookmarksTableViewController: UITableViewController {
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
                             if resultCode == "done" {
                                 self.bookmarks[indexPath.row].toread = "yes"
-                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode)
+                                return
                             }
                         }
                     }))
@@ -266,6 +269,7 @@ class BookmarksTableViewController: UITableViewController {
                             self.tableData.reloadData()
                         } else {
                             self.alertError("Something went wrong", message: resultCode)
+                            return
                         }
                     }
                 }))
