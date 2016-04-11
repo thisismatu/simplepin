@@ -752,12 +752,19 @@
                                 <segue destination="oj9-1b-awP" kind="unwind" unwindAction="unwindAddBookmarkModal:" id="xnt-DB-Are"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Add" style="done" id="C2r-RM-8UU"/>
+                        <barButtonItem key="rightBarButtonItem" title="Add" style="done" id="C2r-RM-8UU">
+                            <connections>
+                                <action selector="addButtonPressed:" destination="awa-5G-VnH" id="hBI-mG-aF6"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addButton" destination="C2r-RM-8UU" id="tnH-Pa-QPx"/>
                         <outlet property="descriptionTextView" destination="dDK-ix-ZkD" id="oXn-8Y-pZu"/>
                         <outlet property="privateBokkmarkSwitch" destination="86r-0N-nAZ" id="hU3-Bi-AIF"/>
+                        <outlet property="titleTextField" destination="Wsc-n9-ysa" id="522-Cd-9mf"/>
                         <outlet property="toreadBookmarkSwitch" destination="ecf-53-ysQ" id="n1w-Vf-tn3"/>
+                        <outlet property="urlTextField" destination="Dng-c3-8JB" id="0kd-mR-uVQ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D4e-zP-veO" userLabel="First Responder" sceneMemberID="firstResponder"/>
