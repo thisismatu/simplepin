@@ -141,7 +141,6 @@
                         <outlet property="loadingPosts" destination="Ewi-PO-CL4" id="3Ch-eQ-vlt"/>
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
                         <outlet property="searchBar" destination="lq0-Q7-SpB" id="HlQ-ar-ET0"/>
-                        <outlet property="tableData" destination="OQU-Js-E8i" id="Oij-M1-f0n"/>
                         <segue destination="gYv-09-0z0" kind="presentation" identifier="openLoginModal" animates="NO" id="y9u-Cf-4Jy"/>
                     </connections>
                 </tableViewController>
@@ -731,8 +730,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="nAL-oq-DzO"/>
                                                     <exclude reference="D0g-t0-EJg"/>
+                                                    <exclude reference="nAL-oq-DzO"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>

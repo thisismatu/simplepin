@@ -49,7 +49,6 @@ class BookmarksTableViewController: UITableViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var searchBar: UISearchBar!
-    @IBOutlet var tableData: UITableView!
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
@@ -73,7 +72,7 @@ class BookmarksTableViewController: UITableViewController {
             self?.bookmarks = bookmarks
             self?.loadingPostsSpinner.stopAnimating()
             self?.loadingPosts.hidden = true;
-            self?.tableData.reloadData()
+            self?.tableView.reloadData()
         }
     }
 
@@ -203,7 +202,7 @@ class BookmarksTableViewController: UITableViewController {
             self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                 if resultCode == "done" {
                     self.bookmarks[indexPath.row].toread = "no"
-                    self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 } else {
                     self.alertError("Something went wrong", message: resultCode)
                     return
@@ -239,7 +238,7 @@ class BookmarksTableViewController: UITableViewController {
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                             if resultCode == "done" {
                                 self.bookmarks[indexPath.row].toread = "no"
-                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode)
                                 return
@@ -251,7 +250,7 @@ class BookmarksTableViewController: UITableViewController {
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
                             if resultCode == "done" {
                                 self.bookmarks[indexPath.row].toread = "yes"
-                                self.tableData.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                                self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
                                 self.alertError("Something went wrong", message: resultCode)
                                 return
@@ -266,7 +265,7 @@ class BookmarksTableViewController: UITableViewController {
                         if resultCode == "done" {
                             self.bookmarks.removeAtIndex(indexPath.row)
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
-                            self.tableData.reloadData()
+                            self.tableView.reloadData()
                         } else {
                             self.alertError("Something went wrong", message: resultCode)
                             return
