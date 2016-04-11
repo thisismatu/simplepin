@@ -26,19 +26,13 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
 
     }
 
-    func textViewDidBeginEditing(view: UITextView) {
-        if !descriptionTextView.text.isEmpty {
+    func textViewDidChange(textView: UITextView) {
+        if descriptionTextView.text.isEmpty {
+            descriptionTextView.backgroundColor = nil
+        } else {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
         }
     }
-
-    func textViewDidEndEditing(textView: UITextView) {
-        if descriptionTextView.text.isEmpty {
-            descriptionTextView.backgroundColor = UIColor.clearColor()
-        }
-    }
-
-    // TODO: Fix the placeholder https://grokswift.com/uitextview-placeholder/ https://codedump.io/share/Pt7eXF6JKQf/1/text-view-placeholder-swift
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

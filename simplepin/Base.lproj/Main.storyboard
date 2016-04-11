@@ -617,7 +617,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="q7H-Dl-161">
-                                                    <rect key="frame" x="16" y="12" width="87.5" height="20"/>
+                                                    <rect key="frame" x="16" y="13" width="87.5" height="20"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
@@ -631,7 +631,7 @@
                                                 <constraint firstAttribute="bottom" secondItem="dDK-ix-ZkD" secondAttribute="bottom" constant="2" id="HCt-0B-bce"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="dDK-ix-ZkD" secondAttribute="trailing" constant="3" id="J9T-li-rpX"/>
                                                 <constraint firstItem="dDK-ix-ZkD" firstAttribute="top" secondItem="6qf-Zv-oPY" secondAttribute="top" constant="4" id="MKH-AU-Pv9"/>
-                                                <constraint firstItem="q7H-Dl-161" firstAttribute="top" secondItem="6qf-Zv-oPY" secondAttribute="topMargin" constant="4" id="d2O-ty-qPG"/>
+                                                <constraint firstItem="q7H-Dl-161" firstAttribute="top" secondItem="6qf-Zv-oPY" secondAttribute="topMargin" constant="5" id="d2O-ty-qPG"/>
                                                 <constraint firstItem="q7H-Dl-161" firstAttribute="leading" secondItem="6qf-Zv-oPY" secondAttribute="leadingMargin" constant="8" id="ecw-0H-ffc"/>
                                                 <constraint firstItem="dDK-ix-ZkD" firstAttribute="leading" secondItem="6qf-Zv-oPY" secondAttribute="leadingMargin" constant="3" id="h77-QJ-YoK"/>
                                             </constraints>
