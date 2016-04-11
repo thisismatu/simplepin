@@ -609,11 +609,11 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="108" id="4MD-HZ-VB2">
-                                        <rect key="frame" x="0.0" y="187" width="600" height="108"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="112" id="4MD-HZ-VB2">
+                                        <rect key="frame" x="0.0" y="187" width="600" height="112"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4MD-HZ-VB2" id="6qf-Zv-oPY">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="107.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="111.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Description" textAlignment="natural" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="q7H-Dl-161">
@@ -622,7 +622,7 @@
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dDK-ix-ZkD">
-                                                    <rect key="frame" x="11" y="4" width="578" height="101.5"/>
+                                                    <rect key="frame" x="11" y="4" width="578" height="105.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -638,7 +638,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="1oT-HQ-15H">
-                                        <rect key="frame" x="0.0" y="295" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="299" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1oT-HQ-15H" id="Rtj-Cf-nhd">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -663,7 +663,7 @@
                             <tableViewSection id="C5M-Sp-aj5">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="FlB-Cv-fsT">
-                                        <rect key="frame" x="0.0" y="375" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="379" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FlB-Cv-fsT" id="N7b-vG-0e3">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -701,7 +701,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="0f5-YK-boc">
-                                        <rect key="frame" x="0.0" y="419" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="423" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0f5-YK-boc" id="MGx-aB-sMC">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -740,34 +740,6 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection id="5Ui-iI-ReP">
-                                <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="OY0-WV-8jm">
-                                        <rect key="frame" x="0.0" y="499" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="OY0-WV-8jm" id="qbN-OT-Wp4">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZV6-hy-eGT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <state key="normal" title="Add Bookmark"/>
-                                                    <connections>
-                                                        <action selector="logoutButtonPressed:" destination="S5y-x6-W5k" eventType="touchUpInside" id="xko-nP-hkU"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="ZV6-hy-eGT" firstAttribute="leading" secondItem="qbN-OT-Wp4" secondAttribute="leading" id="Bjc-ib-pyo"/>
-                                                <constraint firstAttribute="bottom" secondItem="ZV6-hy-eGT" secondAttribute="bottom" id="L88-rV-Lhs"/>
-                                                <constraint firstAttribute="trailing" secondItem="ZV6-hy-eGT" secondAttribute="trailing" id="T5k-Ma-kjI"/>
-                                                <constraint firstItem="ZV6-hy-eGT" firstAttribute="top" secondItem="qbN-OT-Wp4" secondAttribute="top" id="yf2-tC-MPQ"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="awa-5G-VnH" id="jiV-0Y-znu"/>
@@ -780,6 +752,7 @@
                                 <segue destination="oj9-1b-awP" kind="unwind" unwindAction="unwindAddBookmarkModal:" id="xnt-DB-Are"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Add" style="done" id="C2r-RM-8UU"/>
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionTextView" destination="dDK-ix-ZkD" id="oXn-8Y-pZu"/>
