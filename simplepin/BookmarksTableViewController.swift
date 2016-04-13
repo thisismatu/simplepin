@@ -41,12 +41,14 @@ struct BookmarkItem {
 
 class BookmarksTableViewController: UITableViewController {
     var bookmarks = [BookmarkItem]()
+    var filteredBookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
     var checkForUpdatesTask: NSURLSessionTask?
     var deleteBookmarkTask: NSURLSessionTask?
     var addBookmarkTask: NSURLSessionTask?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
+    let searchController = UISearchController(searchResultsController: nil)
 
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var loadingPosts: UIView!
@@ -102,6 +104,13 @@ class BookmarksTableViewController: UITableViewController {
         refreshControl.endRefreshing()
     }
 
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredBookmarks = bookmarks.filter { bookmark in
+            return bookmark.title.lowercaseString.containsString(searchText.lowercaseString)
+        }
+        tableView.reloadData()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -112,6 +121,13 @@ class BookmarksTableViewController: UITableViewController {
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
         }
+
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.searchBarStyle = .Minimal
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
 
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -153,15 +169,24 @@ class BookmarksTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredBookmarks.count
+        }
         return bookmarks.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
         let formatter = NSDateFormatter()
         formatter.dateStyle = .ShortStyle
         formatter.timeStyle = .NoStyle
-        let bookmark = bookmarks[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
+        let bookmark: BookmarkItem
+
+        if searchController.active && searchController.searchBar.text != "" {
+            bookmark = filteredBookmarks[indexPath.row]
+        } else {
+            bookmark = bookmarks[indexPath.row]
+        }
 
         cell.titleLabel.text = bookmark.title
         cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
@@ -204,7 +229,13 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let bookmark = bookmarks[indexPath.row]
+        let bookmark: BookmarkItem
+
+        if searchController.active && searchController.searchBar.text != "" {
+            bookmark = filteredBookmarks[indexPath.row]
+        } else {
+            bookmark = bookmarks[indexPath.row]
+        }
 
         if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
             self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
@@ -223,7 +254,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "openSettingsModal") {
+        if segue.identifier == "openSettingsModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let vc = navigationController.topViewController as! SettingsModalViewController
             let count = String(bookmarks.count)
@@ -284,5 +315,11 @@ class BookmarksTableViewController: UITableViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+    }
+}
+
+extension BookmarksTableViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
