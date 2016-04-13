@@ -86,6 +86,10 @@ class BookmarksTableViewController: UITableViewController {
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
 
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        }
+
         checkForUpdatesTask = Network.checkForUpdates() { updateDate in
             let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
             if lastUpdateDate < updateDate {
@@ -100,6 +104,10 @@ class BookmarksTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        }
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
