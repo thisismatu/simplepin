@@ -229,7 +229,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let bookmark: BookmarkItem
+        var bookmark: BookmarkItem
 
         if searchController.active && searchController.searchBar.text != "" {
             bookmark = filteredBookmarks[indexPath.row]
@@ -240,6 +240,7 @@ class BookmarksTableViewController: UITableViewController {
         if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
             self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                 if resultCode == "done" {
+                    //bookmark.toread = "no"
                     self.bookmarks[indexPath.row].toread = "no"
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                 } else {
@@ -269,13 +270,21 @@ class BookmarksTableViewController: UITableViewController {
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
 
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
-                let bookmark = bookmarks[indexPath.row]
+                var bookmark: BookmarkItem
+
+                if searchController.active && searchController.searchBar.text != "" {
+                    bookmark = filteredBookmarks[indexPath.row]
+                } else {
+                    bookmark = bookmarks[indexPath.row]
+                }
+
                 let alert = UIAlertController(title: bookmark.title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 
                 if bookmark.toread == "yes" {
                     alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "no") { resultCode in
                             if resultCode == "done" {
+                                //bookmark.toread = "no"
                                 self.bookmarks[indexPath.row].toread = "no"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
@@ -288,6 +297,7 @@ class BookmarksTableViewController: UITableViewController {
                     alert.addAction(UIAlertAction(title: "Mark as Unread", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: "yes") { resultCode in
                             if resultCode == "done" {
+                                //bookmark.toread = "yes"
                                 self.bookmarks[indexPath.row].toread = "yes"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
