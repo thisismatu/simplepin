@@ -228,15 +228,13 @@ class BookmarksTableViewController: UITableViewController {
                 if resultCode == "done" {
                     bookmark.toread = "no"
                     self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    self.showBookmark(bookmark.link)
                 } else {
                     self.alertError("Something went wrong", message: resultCode)
                     return
                 }
             }
         }
-
-        let url = bookmark.link
-        showBookmark(url)
     }
 
     // MARK: - Navigation
