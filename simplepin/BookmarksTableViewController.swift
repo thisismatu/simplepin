@@ -234,6 +234,8 @@ class BookmarksTableViewController: UITableViewController {
                     return
                 }
             }
+        } else {
+            self.showBookmark(bookmark.link)
         }
     }
 
