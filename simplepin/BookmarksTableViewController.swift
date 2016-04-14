@@ -15,6 +15,7 @@ class BookmarkItem {
     let date: NSDate
     let link: NSURL
     let tags: [String]
+    var shared: String
     var toread: String
 
     init?(json: [String: AnyObject]) {
@@ -27,6 +28,7 @@ class BookmarkItem {
             let date = dateString?.toDate(),
             let link = NSURL(string: linkString!),
             let tags = tagsString?.componentsSeparatedByString(" ").filter({!$0.isEmpty}),
+            let shared = json["shared"] as? String,
             let toread = json["toread"] as? String else {
                 return nil
         }
@@ -35,6 +37,7 @@ class BookmarkItem {
         self.date = date
         self.link = link
         self.tags = tags
+        self.shared = shared
         self.toread = toread
     }
 }
@@ -202,6 +205,11 @@ class BookmarksTableViewController: UITableViewController {
                 // button.addTarget(self, action: "tagButtonClicked", forControlEvents: .TouchUpInside)
                 cell.tagsStackView.addArrangedSubview(button)
             }
+        }
+
+        if bookmark.shared == "no" {
+            cell.titleLabel.textColor = UIColor.darkGrayColor()
+            cell.titleLabel.text = "Private: " + bookmark.title
         }
 
         if bookmark.toread == "no" {
