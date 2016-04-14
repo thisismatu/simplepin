@@ -67,7 +67,6 @@ class BookmarksTableViewController: UITableViewController {
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.searchBarStyle = .Minimal
         searchController.searchBar.backgroundColor = UIColor.whiteColor()
         definesPresentationContext = true
