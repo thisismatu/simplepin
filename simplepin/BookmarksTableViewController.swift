@@ -54,19 +54,57 @@ class BookmarksTableViewController: UITableViewController {
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
 
-    @IBAction func unwindLoginModal(segue: UIStoryboardSegue) {
-        startFetchAllPostsTask()
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        }
+
+        if defaults.stringForKey("userToken") != nil {
+            startFetchAllPostsTask()
+        }
+
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.searchBarStyle = .Minimal
+        searchController.searchBar.backgroundColor = UIColor.whiteColor()
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+
+        self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
+        self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
+        self.view.addGestureRecognizer(longPressRecognizer)
+
+        tableView.estimatedRowHeight = 96.0
+        tableView.rowHeight = UITableViewAutomaticDimension
     }
 
-    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        if defaults.stringForKey("userToken") == nil {
+            performSegueWithIdentifier("openLoginModal", sender: self)
+        }
     }
 
-    @IBAction func logOut(segue: UIStoryboardSegue) {
-        performSegueWithIdentifier("openLoginModal", sender: self)
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        fetchAllPostsTask?.cancel()
+        checkForUpdatesTask?.cancel()
+        deleteBookmarkTask?.cancel()
+        addBookmarkTask?.cancel()
     }
 
-    @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
+
+    // MARK: - Bookmark stuff
 
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
@@ -114,63 +152,7 @@ class BookmarksTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        }
-
-        if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
-        }
-
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        searchController.searchBar.searchBarStyle = .Minimal
-        searchController.searchBar.backgroundColor = UIColor.whiteColor()
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
-
-        self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
-        self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
-
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
-        self.view.addGestureRecognizer(longPressRecognizer)
-
-        tableView.estimatedRowHeight = 96.0
-        tableView.rowHeight = UITableViewAutomaticDimension
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-
-        if defaults.stringForKey("userToken") == nil {
-            performSegueWithIdentifier("openLoginModal", sender: self)
-        }
-    }
-
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        fetchAllPostsTask?.cancel()
-        checkForUpdatesTask?.cancel()
-        deleteBookmarkTask?.cancel()
-        addBookmarkTask?.cancel()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
+    // MARK: - Table view
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.active && searchController.searchBar.text != "" {
@@ -257,6 +239,8 @@ class BookmarksTableViewController: UITableViewController {
         showBookmark(url)
     }
 
+    // MARK: - Navigation
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "openSettingsModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
@@ -266,6 +250,22 @@ class BookmarksTableViewController: UITableViewController {
 
         }
     }
+
+    @IBAction func unwindLoginModal(segue: UIStoryboardSegue) {
+        startFetchAllPostsTask()
+    }
+
+    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
+    }
+
+    @IBAction func logOut(segue: UIStoryboardSegue) {
+        performSegueWithIdentifier("openLoginModal", sender: self)
+    }
+
+    @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {
+    }
+
+    // MARK: - Editing
 
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
@@ -328,6 +328,8 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 }
+
+// MARK: - Search result update
 
 extension BookmarksTableViewController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
