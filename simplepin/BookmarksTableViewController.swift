@@ -210,6 +210,8 @@ class BookmarksTableViewController: UITableViewController {
         if bookmark.shared == "no" {
             cell.titleLabel.textColor = UIColor.darkGrayColor()
             cell.titleLabel.text = "Private: " + bookmark.title
+        } else {
+            cell.titleLabel.textColor = UIColor.blackColor()
         }
 
         if bookmark.toread == "no" {
