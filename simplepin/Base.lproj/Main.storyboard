@@ -745,7 +745,7 @@
                     <navigationItem key="navigationItem" title="Add Bookmark" id="hvA-WK-tRn">
                         <barButtonItem key="leftBarButtonItem" style="done" systemItem="stop" id="cCX-Bn-5v1">
                             <connections>
-                                <segue destination="oj9-1b-awP" kind="unwind" unwindAction="unwindAddBookmarkModal:" id="xnt-DB-Are"/>
+                                <segue destination="oj9-1b-awP" kind="unwind" identifier="closeAddBookmarkModal" unwindAction="unwindAddBookmarkModal:" id="xnt-DB-Are"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Add" style="done" id="C2r-RM-8UU">

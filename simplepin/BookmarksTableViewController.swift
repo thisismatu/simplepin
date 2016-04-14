@@ -261,6 +261,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {
+        startFetchAllPostsTask()
     }
 
     // MARK: - Editing
