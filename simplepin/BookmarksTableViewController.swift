@@ -40,7 +40,7 @@ class BookmarkItem {
 }
 
 class BookmarksTableViewController: UITableViewController {
-    var bookmarks = [BookmarkItem]()
+    var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
     var checkForUpdatesTask: NSURLSessionTask?
@@ -71,7 +71,7 @@ class BookmarksTableViewController: UITableViewController {
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
         fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
-            self?.bookmarks = bookmarks
+            self?.bookmarksArray = bookmarks
             self?.loadingPostsSpinner.stopAnimating()
             self?.loadingPosts.hidden = true;
             self?.tableView.reloadData()
@@ -105,7 +105,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        filteredBookmarks = bookmarks.filter { bookmark in
+        filteredBookmarks = bookmarksArray.filter { bookmark in
             return bookmark.title.lowercaseString.containsString(searchText.lowercaseString)
         }
         tableView.reloadData()
@@ -172,7 +172,7 @@ class BookmarksTableViewController: UITableViewController {
         if searchController.active && searchController.searchBar.text != "" {
             return filteredBookmarks.count
         }
-        return bookmarks.count
+        return bookmarksArray.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -185,7 +185,7 @@ class BookmarksTableViewController: UITableViewController {
         if searchController.active && searchController.searchBar.text != "" {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
-            bookmark = bookmarks[indexPath.row]
+            bookmark = bookmarksArray[indexPath.row]
         }
 
         cell.titleLabel.text = bookmark.title
@@ -234,7 +234,7 @@ class BookmarksTableViewController: UITableViewController {
         if searchController.active && searchController.searchBar.text != "" {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
-            bookmark = bookmarks[indexPath.row]
+            bookmark = bookmarksArray[indexPath.row]
         }
 
         if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
@@ -257,7 +257,7 @@ class BookmarksTableViewController: UITableViewController {
         if segue.identifier == "openSettingsModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let vc = navigationController.topViewController as! SettingsModalViewController
-            let count = String(bookmarks.count)
+            let count = String(bookmarksArray.count)
             vc.bookmarkCount = count+" bookmarks"
 
         }
@@ -274,7 +274,7 @@ class BookmarksTableViewController: UITableViewController {
                 if searchController.active && searchController.searchBar.text != "" {
                     bookmark = filteredBookmarks[indexPath.row]
                 } else {
-                    bookmark = bookmarks[indexPath.row]
+                    bookmark = bookmarksArray[indexPath.row]
                 }
 
                 let alert = UIAlertController(title: bookmark.title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -309,7 +309,7 @@ class BookmarksTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
                     self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
                         if resultCode == "done" {
-                            self.bookmarks.removeAtIndex(indexPath.row)
+                            self.bookmarksArray.removeAtIndex(indexPath.row)
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
                         } else {
