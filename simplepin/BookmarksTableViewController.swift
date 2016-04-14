@@ -106,7 +106,10 @@ class BookmarksTableViewController: UITableViewController {
 
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filteredBookmarks = bookmarksArray.filter { bookmark in
-            return bookmark.title.lowercaseString.containsString(searchText.lowercaseString)
+            let titleMatch = bookmark.title.lowercaseString.containsString(searchText.lowercaseString)
+            let descriptionMatch = bookmark.description.lowercaseString.containsString(searchText.lowercaseString)
+            let tagMatch = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(searchText.lowercaseString)
+            return titleMatch || descriptionMatch || tagMatch
         }
         tableView.reloadData()
     }
