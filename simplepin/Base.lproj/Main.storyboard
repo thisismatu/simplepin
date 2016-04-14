@@ -15,7 +15,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <view key="tableFooterView" contentMode="scaleToFill" id="Ewi-PO-CL4">
-                            <rect key="frame" x="0.0" y="548" width="600" height="96"/>
+                            <rect key="frame" x="0.0" y="188" width="600" height="96"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" verticalCompressionResistancePriority="751" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IHb-3h-oxh">
@@ -38,7 +38,7 @@
                         </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookmarkCell" rowHeight="96" id="gv3-va-QDX" customClass="BookmarkTableViewCell" customModule="simplepin" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="136" width="600" height="96"/>
+                                <rect key="frame" x="0.0" y="92" width="600" height="96"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gv3-va-QDX" id="X2J-t1-qt7">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="95.5"/>
@@ -565,13 +565,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Dng-c3-8JB">
-                                                    <rect key="frame" x="16" y="8" width="576" height="27.5"/>
+                                                    <rect key="frame" x="16" y="8" width="568" height="27.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Dng-c3-8JB" secondAttribute="trailing" id="HKP-WT-Ucj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Dng-c3-8JB" secondAttribute="trailing" constant="8" id="HKP-WT-Ucj"/>
                                                 <constraint firstItem="Dng-c3-8JB" firstAttribute="leading" secondItem="JKK-jX-4TU" secondAttribute="leadingMargin" constant="8" id="Tju-oa-7v1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Dng-c3-8JB" secondAttribute="bottom" id="clv-6Q-GDG"/>
                                                 <constraint firstItem="Dng-c3-8JB" firstAttribute="top" secondItem="JKK-jX-4TU" secondAttribute="topMargin" id="sJm-Pg-ljA"/>
@@ -586,13 +586,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wsc-n9-ysa">
-                                                    <rect key="frame" x="16" y="8" width="576" height="27.5"/>
+                                                    <rect key="frame" x="16" y="8" width="568" height="27.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Wsc-n9-ysa" secondAttribute="trailing" id="Obe-uc-nN7"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Wsc-n9-ysa" secondAttribute="trailing" constant="8" id="Obe-uc-nN7"/>
                                                 <constraint firstItem="Wsc-n9-ysa" firstAttribute="top" secondItem="osu-rv-R6x" secondAttribute="topMargin" id="SM1-qs-FiT"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Wsc-n9-ysa" secondAttribute="bottom" id="W7i-un-pBF"/>
                                                 <constraint firstItem="Wsc-n9-ysa" firstAttribute="leading" secondItem="osu-rv-R6x" secondAttribute="leadingMargin" constant="8" id="zb3-UU-JKt"/>
@@ -670,6 +670,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="86r-0N-nAZ">
                                                             <rect key="frame" x="519" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="privateSwitchPressed:" destination="awa-5G-VnH" eventType="valueChanged" id="YVq-fI-rej"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -708,6 +711,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-53-ysQ">
                                                             <rect key="frame" x="519" y="0.0" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="toreadSwitchPressed:" destination="awa-5G-VnH" eventType="valueChanged" id="JAO-vT-WjX"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -751,9 +757,10 @@
                     <connections>
                         <outlet property="addButton" destination="C2r-RM-8UU" id="tnH-Pa-QPx"/>
                         <outlet property="descriptionTextView" destination="dDK-ix-ZkD" id="oXn-8Y-pZu"/>
-                        <outlet property="privateBokkmarkSwitch" destination="86r-0N-nAZ" id="hU3-Bi-AIF"/>
+                        <outlet property="privateSwitch" destination="86r-0N-nAZ" id="hU3-Bi-AIF"/>
+                        <outlet property="tagsTextField" destination="DIO-YG-8qa" id="821-6t-d6W"/>
                         <outlet property="titleTextField" destination="Wsc-n9-ysa" id="522-Cd-9mf"/>
-                        <outlet property="toreadBookmarkSwitch" destination="ecf-53-ysQ" id="n1w-Vf-tn3"/>
+                        <outlet property="toreadSwitch" destination="ecf-53-ysQ" id="n1w-Vf-tn3"/>
                         <outlet property="urlTextField" destination="Dng-c3-8JB" id="0kd-mR-uVQ"/>
                     </connections>
                 </tableViewController>
