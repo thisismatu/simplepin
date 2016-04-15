@@ -81,7 +81,7 @@ class BookmarksTableViewController: UITableViewController {
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
         self.view.addGestureRecognizer(longPressRecognizer)
 
-        tableView.estimatedRowHeight = 96.0
+        tableView.estimatedRowHeight = 120.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
@@ -193,14 +193,14 @@ class BookmarksTableViewController: UITableViewController {
             for view in cell.tagsStackView.subviews {
                 view.removeFromSuperview()
             }
-            for item in bookmark.tags {
+            for item in bookmark.tags.enumerate() {
                 let button = UIButton()
                 button.titleLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
+                button.titleLabel?.lineBreakMode = .ByTruncatingTail
                 button.setTitleColor(self.view.tintColor, forState: .Normal)
-                button.setTitle(item, forState: .Normal)
-                button.contentHorizontalAlignment = .Right
-                button.contentEdgeInsets = UIEdgeInsetsMake(4.0, 2.0, 4.0, 2.0)
-                button.setContentHuggingPriority(252, forAxis: .Horizontal)
+                button.setTitle(item.element, forState: .Normal)
+                button.contentHorizontalAlignment = .Left
+                button.setContentCompressionResistancePriority(750-Float(item.index), forAxis: .Horizontal)
                 button.tag = indexPath.row
                 // button.addTarget(self, action: "tagButtonClicked", forControlEvents: .TouchUpInside)
                 cell.tagsStackView.addArrangedSubview(button)
