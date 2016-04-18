@@ -70,6 +70,15 @@ class BookmarksTableViewController: UITableViewController {
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.autocapitalizationType = .None
+        searchController.searchBar.spellCheckingType = .No
+        searchController.searchBar.searchBarStyle = .Default
+        searchController.searchBar.barTintColor = .whiteColor()
+        searchController.searchBar.translucent = false
+        searchController.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
+        searchController.searchBar.layer.borderWidth = 1
+        searchController.searchBar.setSearchFieldBackgroundImage(UIImage(named: "bg_searchfield"), forState: .Normal)
+        searchController.searchBar.searchTextPositionAdjustment = UIOffset.init(horizontal: 7.0, vertical: 0.0)
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
 
