@@ -127,8 +127,12 @@ class BookmarksTableViewController: UITableViewController {
 
     func showBookmark(currentUrl: NSURL?) {
         if let url = currentUrl {
-            let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
-            presentViewController(vc, animated: true, completion: nil)
+            if defaults.boolForKey("openInSafari") == true {
+                UIApplication.sharedApplication().openURL(url)
+            } else if defaults.boolForKey("openInSafari") == false {
+                let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
+                presentViewController(vc, animated: true, completion: nil)
+            }
         }
     }
 

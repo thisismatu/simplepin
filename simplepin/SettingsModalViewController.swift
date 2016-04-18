@@ -17,6 +17,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var logoutButton: UIButton!
     @IBOutlet var markAsReadSwitch: UISwitch!
     @IBOutlet var privateByDefaultSwitch: UISwitch!
+    @IBOutlet var openInSafariSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -46,6 +47,14 @@ class SettingsModalViewController: UITableViewController {
         }
     }
 
+    @IBAction func openInSafariSwitchPressed(sender: AnyObject) {
+        if (openInSafariSwitch.on == true) {
+            defaults.setObject(true, forKey: "openInSafari")
+        } else if (openInSafariSwitch.on == false) {
+            defaults.setObject(false, forKey: "openInSafari")
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameLabel.text = defaults.stringForKey("userName")
@@ -57,6 +66,10 @@ class SettingsModalViewController: UITableViewController {
 
         if (defaults.boolForKey("privateByDefault") == true) {
             privateByDefaultSwitch.on = true
+        }
+
+        if (defaults.boolForKey("openInSafari") == true) {
+            openInSafariSwitch.on = true
         }
     }
 }
