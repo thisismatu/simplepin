@@ -194,24 +194,12 @@ class BookmarksTableViewController: UITableViewController {
         }
 
         if bookmark.tags.count == 0 {
-            cell.tagsStackView.hidden = true
+            cell.tagsLabel.hidden = true
         } else {
-            cell.tagsStackView.hidden = false
-            for view in cell.tagsStackView.subviews {
-                view.removeFromSuperview()
-            }
-            for item in bookmark.tags.enumerate() {
-                let button = UIButton()
-                button.titleLabel?.font = UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)
-                button.titleLabel?.lineBreakMode = .ByTruncatingTail
-                button.setTitleColor(self.view.tintColor, forState: .Normal)
-                button.setTitle(item.element, forState: .Normal)
-                button.contentHorizontalAlignment = .Left
-                button.setContentCompressionResistancePriority(750-Float(item.index), forAxis: .Horizontal)
-                button.tag = indexPath.row
-                // button.addTarget(self, action: "tagButtonClicked", forControlEvents: .TouchUpInside)
-                cell.tagsStackView.addArrangedSubview(button)
-            }
+            cell.tagsLabel.hidden = false
+            cell.tagsLabel.text = nil
+            cell.tagsLabel.text = bookmark.tags.joinWithSeparator("  ")
+            cell.tagsLabel.textColor = self.view.tintColor
         }
 
         if bookmark.shared == "no" {
