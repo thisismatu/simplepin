@@ -11,7 +11,38 @@ import SystemConfiguration
 
 struct Network {
 
-    // MARK: Fetch posts
+    // MARK: - Fetch API Token
+    static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+
+        // TODO: url query item for fetching
+        guard let url = NSURL(string: "https://\(username):\(password)@api.pinboard.in/v1/user/api_token/?format=json") else {
+            completion(nil)
+            return nil
+        }
+
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = data where error == nil else {
+                    completion(nil)
+                    return
+                }
+                let userToken = parseAPIToken(data)
+                completion(userToken)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    static func parseAPIToken(data: NSData) -> String? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            return jsonObject["result"] as? String
+        }
+        return nil
+    }
+
+    // MARK: - Fetch posts
     static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
@@ -66,38 +97,7 @@ struct Network {
         return bookmarks
     }
 
-    // MARK: Fetch API Token
-    static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
-
-        // TODO: url query item for fetching
-        guard let url = NSURL(string: "https://\(username):\(password)@api.pinboard.in/v1/user/api_token/?format=json") else {
-            completion(nil)
-            return nil
-        }
-
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                guard let data = data where error == nil else {
-                    completion(nil)
-                    return
-                }
-                let userToken = parseAPIToken(data)
-                completion(userToken)
-            })
-        }
-
-        task.resume()
-        return task
-    }
-
-    static func parseAPIToken(data: NSData) -> String? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            return jsonObject["result"] as? String
-        }
-        return nil
-    }
-
-    // MARK: Check for updates
+    // MARK: - Check for updates
     static func checkForUpdates(completion: (NSDate?) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
@@ -138,7 +138,7 @@ struct Network {
         return nil
     }
 
-    // MARK: Delete bookmark
+    // MARK: - Delete bookmark
     static func deleteBookmark(bookmarkUrl: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
@@ -181,7 +181,7 @@ struct Network {
         return nil
     }
 
-    // MARK: Add bookmark
+    // MARK: - Add bookmark
     static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, replace: String = "yes", shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
@@ -280,6 +280,7 @@ struct Network {
     }
 }
 
+//MARK: - Network reachability
 public class Reachability {
 
     class func isConnectedToNetwork() -> Bool {
