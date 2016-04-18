@@ -22,6 +22,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var tagsTextField: UITextField!
     @IBOutlet var addButton: UIBarButtonItem!
+    @IBOutlet var suggestedTagsStackView: UIStackView!
 
     @IBAction func toreadSwitchPressed(sender: AnyObject) {
         if (toreadSwitch.on == true) {
@@ -72,7 +73,12 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         descriptionTextView.delegate = self
 
         fetchTagsTask = Network.fetchTags() { userTags in
-            print(userTags)
+            for item in userTags! {
+                let button = UIButton()
+                button.setTitle(item, forState: .Normal)
+                button.setTitleColor(self.view.tintColor, forState: .Normal)
+                self.suggestedTagsStackView.addArrangedSubview(button)
+            }
         }
 
         if (defaults.boolForKey("privateByDefault") == true) {
