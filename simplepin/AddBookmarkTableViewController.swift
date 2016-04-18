@@ -10,6 +10,7 @@ import UIKit
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate {
     var addBookmarkTask: NSURLSessionTask?
+    var fetchTagsTask: NSURLSessionTask?
     var toreadValue = "no"
     var sharedValue = "yes"
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -69,6 +70,10 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         super.viewDidLoad()
 
         descriptionTextView.delegate = self
+
+        fetchTagsTask = Network.fetchTags() { userTags in
+            print(userTags)
+        }
 
         if (defaults.boolForKey("privateByDefault") == true) {
             privateSwitch.on = true

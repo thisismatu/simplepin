@@ -234,6 +234,50 @@ struct Network {
         return nil
     }
 
+    //MARK: - Get tags
+    static func fetchTags(completion: ([String])? -> Void) -> NSURLSessionTask? {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        let userToken = defaults.stringForKey("userToken")! as String
+
+        let urlQuery = NSURLComponents()
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/tags/get"
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: userToken),
+            NSURLQueryItem(name: "format", value: "json"),
+        ]
+
+        guard let url = urlQuery.URL else {
+            completion(nil)
+            return nil
+        }
+        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                guard let data = data where error == nil else {
+                    completion(nil)
+                    return
+                }
+                let userTags = parseTags(data)
+                completion(userTags)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    static func parseTags(data: NSData) -> [String]? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            var tagsArray: [String] = []
+            for item in jsonObject {
+                tagsArray.append(item.0)
+            }
+            tagsArray.sortInPlace()
+            return tagsArray
+        }
+        return nil
+    }
 }
 
 public class Reachability {
