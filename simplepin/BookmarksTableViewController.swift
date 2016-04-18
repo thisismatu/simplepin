@@ -211,8 +211,10 @@ class BookmarksTableViewController: UITableViewController {
 
         if bookmark.toread == "no" {
             cell.unreadIndicator.hidden = true
+            cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         } else {
             cell.unreadIndicator.hidden = false
+            cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
 
         return cell
