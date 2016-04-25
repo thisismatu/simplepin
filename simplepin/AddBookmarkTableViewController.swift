@@ -72,14 +72,19 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
 
         descriptionTextView.delegate = self
 
-        fetchTagsTask = Network.fetchTags() { userTags in
-            for item in userTags! {
-                let button = UIButton()
-                button.setTitle(item, forState: .Normal)
-                button.setTitleColor(self.view.tintColor, forState: .Normal)
-                self.suggestedTagsStackView.addArrangedSubview(button)
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        } else  {
+            fetchTagsTask = Network.fetchTags() { userTags in
+                for item in userTags! {
+                    let button = UIButton()
+                    button.setTitle(item, forState: .Normal)
+                    button.setTitleColor(self.view.tintColor, forState: .Normal)
+                    self.suggestedTagsStackView.addArrangedSubview(button)
+                }
             }
         }
+
 
         if (defaults.boolForKey("privateByDefault") == true) {
             privateSwitch.on = true
