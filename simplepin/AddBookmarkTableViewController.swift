@@ -107,6 +107,10 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             toreadValue = "yes"
         }
 
+        if !descriptionTextView.text.isEmpty {
+            descriptionTextView.backgroundColor = UIColor.whiteColor()
+        }
+
     }
 
     override func viewDidDisappear(animated: Bool) {
