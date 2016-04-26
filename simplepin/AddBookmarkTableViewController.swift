@@ -13,6 +13,10 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     var fetchTagsTask: NSURLSessionTask?
     var toreadValue = "no"
     var sharedValue = "yes"
+    var passedUrl: String?
+    var passedTitle: String?
+    var passedDescription: String?
+    var passedTags: String?
     let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var privateSwitch: UISwitch!
@@ -85,10 +89,22 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             }
         }
 
+        if passedUrl != nil {
+            urlTextField.text = passedUrl
+            titleTextField.text = passedTitle
+            descriptionTextView.text = passedDescription
+            tagsTextField.text = passedTags
+            addButton.title = "Save"
+        }
 
-        if (defaults.boolForKey("privateByDefault") == true) {
+        if (defaults.boolForKey("privateByDefault") == true) || sharedValue == "no" {
             privateSwitch.on = true
             sharedValue = "no"
+        }
+
+        if toreadValue == "yes" {
+            toreadSwitch.on = true
+            toreadValue = "yes"
         }
 
     }

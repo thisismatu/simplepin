@@ -49,6 +49,12 @@ class BookmarksTableViewController: UITableViewController {
     var checkForUpdatesTask: NSURLSessionTask?
     var deleteBookmarkTask: NSURLSessionTask?
     var addBookmarkTask: NSURLSessionTask?
+    var urlToPass: String = ""
+    var titleToPass: String = ""
+    var descriptionToPass: String = ""
+    var tagsToPass: String = ""
+    var toreadToPass: String = ""
+    var sharedToPass: String = ""
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
@@ -257,7 +263,15 @@ class BookmarksTableViewController: UITableViewController {
             let vc = navigationController.topViewController as! SettingsModalViewController
             let count = String(bookmarksArray.count)
             vc.bookmarkCount = count+" bookmarks"
-
+        } else if segue.identifier == "openEditBookmarkModal" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let vc = navigationController.topViewController as! AddBookmarkTableViewController
+            vc.passedUrl = urlToPass
+            vc.passedTitle = titleToPass
+            vc.passedDescription = descriptionToPass
+            vc.passedTags = tagsToPass
+            vc.toreadValue = toreadToPass
+            vc.sharedValue = sharedToPass
         }
     }
 
@@ -320,7 +334,15 @@ class BookmarksTableViewController: UITableViewController {
                     }))
                 }
 
-                alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { action in
+                    self.urlToPass = bookmark.link.absoluteString
+                    self.titleToPass = bookmark.title
+                    self.descriptionToPass = bookmark.description
+                    self.tagsToPass = bookmark.tags.joinWithSeparator(" ")
+                    self.toreadToPass = bookmark.toread
+                    self.sharedToPass = bookmark.shared
+                    self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
+                }))
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
                     self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
                         if resultCode == "done" {

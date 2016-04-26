@@ -102,6 +102,7 @@
                                     <outlet property="tagsLabel" destination="CeL-bO-aBr" id="Fkc-gJ-OJy"/>
                                     <outlet property="titleLabel" destination="yE0-JA-BAm" id="sWc-yY-67H"/>
                                     <outlet property="unreadIndicator" destination="E8g-6z-I7F" id="1c5-XF-gne"/>
+                                    <segue destination="fz4-Ky-RTb" kind="presentation" identifier="openEditBookmarkModal" id="Ew9-Yc-x3c"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -885,4 +886,7 @@
         <image name="art_pin" width="72" height="72"/>
         <image name="ic_settings" width="24" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="Ew9-Yc-x3c"/>
+    </inferredMetricsTieBreakers>
 </document>
