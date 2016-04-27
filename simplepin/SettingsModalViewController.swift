@@ -9,6 +9,7 @@
 import UIKit
 
 class SettingsModalViewController: UITableViewController {
+    let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let defaults = NSUserDefaults.standardUserDefaults()
     var bookmarkCount: String!
 
@@ -22,10 +23,8 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         alert.addAction(UIAlertAction(title: "Log Out", style: UIAlertActionStyle.Destructive, handler: { action in
-            self.defaults.removeObjectForKey("userName")
-            self.defaults.removeObjectForKey("userToken")
-            self.dismissViewControllerAnimated(false, completion: nil)
-            self.performSegueWithIdentifier("logOut", sender: self)
+            self.dismissViewControllerAnimated(true, completion: nil)
+            self.appDelegate?.logOut()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)

@@ -12,6 +12,9 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var storyboard: UIStoryboard?
+    var navigation: UINavigationController?
+    let defaults = NSUserDefaults.standardUserDefaults()
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -22,8 +25,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = simplepinBlue
         UITabBar.appearance().tintColor = simplepinBlue
 
+        self.storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        if defaults.stringForKey("userToken") == nil {
+            self.showLoginScreen(false)
+        }
 
         return true
+    }
+
+    func showLoginScreen(animated: Bool) {
+        self.storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
+        if let vc = self.storyboard?.instantiateViewControllerWithIdentifier("login") {
+            self.window?.makeKeyAndVisible()
+            self.window?.rootViewController?.presentViewController(vc, animated: animated, completion: nil)
+        }
+    }
+
+    func logOut() {
+        let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        defaults.removePersistentDomainForName(appDomain)
+        self.showLoginScreen(true)
     }
 
     func applicationWillResignActive(application: UIApplication) {

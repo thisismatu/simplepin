@@ -66,9 +66,10 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        }
+        NSNotificationCenter.defaultCenter().addObserverForName(
+            "loginSuccessful",
+            object: nil, queue: nil,
+            usingBlock: loginSuccessfull)
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
@@ -101,8 +102,8 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
 
-        if defaults.stringForKey("userToken") == nil {
-            performSegueWithIdentifier("openLoginModal", sender: self)
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
         }
     }
 
@@ -120,6 +121,10 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     // MARK: - Bookmark stuff
+
+    func loginSuccessfull(notification: NSNotification) {
+        startFetchAllPostsTask()
+    }
 
     func startFetchAllPostsTask() {
         loadingPostsSpinner.startAnimating()
@@ -275,15 +280,7 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func unwindLoginModal(segue: UIStoryboardSegue) {
-        startFetchAllPostsTask()
-    }
-
     @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
-    }
-
-    @IBAction func logOut(segue: UIStoryboardSegue) {
-        performSegueWithIdentifier("openLoginModal", sender: self)
     }
 
     @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {

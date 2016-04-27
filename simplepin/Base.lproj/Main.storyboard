@@ -129,7 +129,6 @@
                     <connections>
                         <outlet property="loadingPosts" destination="Ewi-PO-CL4" id="3Ch-eQ-vlt"/>
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
-                        <segue destination="gYv-09-0z0" kind="presentation" identifier="openLoginModal" animates="NO" id="y9u-Cf-4Jy"/>
                         <segue destination="fz4-Ky-RTb" kind="presentation" identifier="openEditBookmarkModal" id="cVe-US-dkN"/>
                     </connections>
                 </tableViewController>
@@ -140,7 +139,7 @@
         <!--Login Modal View Controller-->
         <scene sceneID="fEi-N7-oIw">
             <objects>
-                <viewController id="gYv-09-0z0" customClass="LoginModalViewController" customModule="simplepin" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="login" id="gYv-09-0z0" customClass="LoginModalViewController" customModule="simplepin" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VQe-1y-IvS"/>
                         <viewControllerLayoutGuide type="bottom" id="w6r-vt-JNj"/>
@@ -266,7 +265,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xcZ-lJ-G2T" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="sPj-i0-a1p" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-1224" y="-1592"/>
+            <point key="canvasLocation" x="-2842" y="-795"/>
         </scene>
         <!--Settings-->
         <scene sceneID="dJT-b5-b4u">

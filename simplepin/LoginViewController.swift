@@ -40,7 +40,8 @@ class LoginModalViewController: UIViewController {
                 self.defaults.setObject(username, forKey: "userName")
                 self.defaults.setObject(false, forKey: "privateByDefault")
                 self.defaults.setObject(false, forKey: "markAsRead")
-                self.performSegueWithIdentifier("closeLoginModal", sender: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 self.spinner.stopAnimating()
                 self.loginButton.enabled = true
