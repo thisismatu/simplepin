@@ -101,10 +101,6 @@ class BookmarksTableViewController: UITableViewController {
 
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
-
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        }
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -127,12 +123,16 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func startFetchAllPostsTask() {
-        loadingPostsSpinner.startAnimating()
-        fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
-            self?.bookmarksArray = bookmarks
-            self?.loadingPostsSpinner.stopAnimating()
-            self?.loadingPosts.hidden = true;
-            self?.tableView.reloadData()
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        } else {
+            loadingPostsSpinner.startAnimating()
+            fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
+                self?.bookmarksArray = bookmarks
+                self?.loadingPostsSpinner.stopAnimating()
+                self?.loadingPosts.hidden = true;
+                self?.tableView.reloadData()
+            }
         }
     }
 
@@ -152,14 +152,14 @@ class BookmarksTableViewController: UITableViewController {
 
         if Reachability.isConnectedToNetwork() == false {
             alertError("No Internet Connection", message: "Try again later when you're back online.")
-        }
-
-        checkForUpdatesTask = Network.checkForUpdates() { updateDate in
-            let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
-            if lastUpdateDate < updateDate {
-                self.startFetchAllPostsTask()
-            } else {
-                return
+        } else {
+            checkForUpdatesTask = Network.checkForUpdates() { updateDate in
+                let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
+                if lastUpdateDate < updateDate {
+                    self.startFetchAllPostsTask()
+                } else {
+                    return
+                }
             }
         }
 
