@@ -19,6 +19,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var markAsReadSwitch: UISwitch!
     @IBOutlet var privateByDefaultSwitch: UISwitch!
     @IBOutlet var openInSafariSwitch: UISwitch!
+    @IBOutlet var versionLabel: UILabel!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -69,6 +70,10 @@ class SettingsModalViewController: UITableViewController {
 
         if (defaults.boolForKey("openInSafari") == true) {
             openInSafariSwitch.on = true
+        }
+
+        if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionLabel.text = version
         }
     }
 }
