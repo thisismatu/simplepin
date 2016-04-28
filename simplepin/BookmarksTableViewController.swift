@@ -105,7 +105,6 @@ class BookmarksTableViewController: UITableViewController {
 
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        fetchAllPostsTask?.cancel()
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
         addBookmarkTask?.cancel()
