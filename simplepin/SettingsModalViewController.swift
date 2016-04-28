@@ -9,9 +9,11 @@
 import UIKit
 
 class SettingsModalViewController: UITableViewController {
+    var bookmarkCount: String!
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let defaults = NSUserDefaults.standardUserDefaults()
-    var bookmarkCount: String!
+    let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/ultralight-photo-editor/id972428565?mt=8")! //TODO: change url
+    let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
 
     @IBOutlet var usernameLabel: UILabel!
     @IBOutlet var userDetailLabel: UILabel!
@@ -20,6 +22,8 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var privateByDefaultSwitch: UISwitch!
     @IBOutlet var openInSafariSwitch: UISwitch!
     @IBOutlet var versionLabel: UILabel!
+    @IBOutlet var sendFeedbackCell: UITableViewCell!
+    @IBOutlet var rateAppCell: UITableViewCell!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -74,6 +78,26 @@ class SettingsModalViewController: UITableViewController {
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
+        }
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+
+        switch cell {
+        case sendFeedbackCell:
+            if UIApplication.sharedApplication().canOpenURL(emailUrl) {
+                UIApplication.sharedApplication().openURL(emailUrl)
+            } else {
+                alertError("There was an error opening Mail", message: nil)
+            }
+        case rateAppCell:
+            if UIApplication.sharedApplication().canOpenURL(appstoreUrl) {
+                UIApplication.sharedApplication().openURL(appstoreUrl)
+            } else {
+                alertError("There was an error opening App Store", message: nil)
+            }
+        default: break
         }
     }
 }

@@ -575,6 +575,8 @@
                         <outlet property="markAsReadSwitch" destination="iV9-pS-oBv" id="Zio-P5-4Tw"/>
                         <outlet property="openInSafariSwitch" destination="vXz-Bg-ZRq" id="sOI-yd-2gp"/>
                         <outlet property="privateByDefaultSwitch" destination="8O0-gX-MWY" id="RbX-JE-mSF"/>
+                        <outlet property="rateAppCell" destination="hZU-z4-d8l" id="7nW-Iq-V5P"/>
+                        <outlet property="sendFeedbackCell" destination="H5L-aY-RhG" id="Maf-Wn-As8"/>
                         <outlet property="userDetailLabel" destination="PSW-QY-ujr" id="jwH-Zx-Jl6"/>
                         <outlet property="usernameLabel" destination="xf4-Nu-8js" id="v89-x6-V1h"/>
                         <outlet property="versionLabel" destination="Vfc-Zs-ggG" id="B6G-3x-TRR"/>
