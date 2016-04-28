@@ -63,19 +63,30 @@ class BookmarksTableViewController: UITableViewController {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
+    @IBOutlet var loadingPostsLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if Reachability.isConnectedToNetwork() == false {
+            loadingPostsSpinner.hidden = true
+            loadingPostsLabel.text = "No internet connection"
+        }
+
+        if defaults.stringForKey("userToken") != nil {
+            startFetchAllPostsTask()
+            startFetchUserTagsTask()
+        }
 
         NSNotificationCenter.defaultCenter().addObserverForName(
             "loginSuccessful",
             object: nil, queue: nil,
             usingBlock: loginSuccessfull)
 
-        if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
-            startFetchUserTagsTask()
-        }
+        NSNotificationCenter.defaultCenter().addObserverForName(
+            "bookmarkAdded",
+            object: nil, queue: nil,
+            usingBlock: bookmarkAdded)
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -125,10 +136,14 @@ class BookmarksTableViewController: UITableViewController {
         startFetchUserTagsTask()
     }
 
+    func bookmarkAdded(notification: NSNotification) {
+        startFetchAllPostsTask()
+    }
+
     func startFetchAllPostsTask() {
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        } else {
+        if Reachability.isConnectedToNetwork() == true {
+            loadingPostsLabel.text = "Loading bookmarks…"
+            loadingPostsSpinner.hidden = false
             loadingPostsSpinner.startAnimating()
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
@@ -140,9 +155,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func startFetchUserTagsTask() {
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        } else {
+        if Reachability.isConnectedToNetwork() == true {
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
                 print(self.defaults.objectForKey("userTags"))
@@ -169,7 +182,9 @@ class BookmarksTableViewController: UITableViewController {
         } else {
             checkForUpdatesTask = Network.checkForUpdates() { updateDate in
                 let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
-                if lastUpdateDate < updateDate {
+                if lastUpdateDate > updateDate && self.bookmarksArray.isEmpty {
+                    self.startFetchAllPostsTask()
+                } else if lastUpdateDate < updateDate {
                     self.startFetchAllPostsTask()
                 } else {
                     return
@@ -294,12 +309,9 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
-    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
-    }
+    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) { }
 
-    @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) {
-        startFetchAllPostsTask()
-    }
+    @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) { }
 
     // MARK: - Editing
 

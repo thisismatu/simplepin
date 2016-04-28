@@ -128,6 +128,7 @@
                     </refreshControl>
                     <connections>
                         <outlet property="loadingPosts" destination="Ewi-PO-CL4" id="3Ch-eQ-vlt"/>
+                        <outlet property="loadingPostsLabel" destination="vQs-T6-zFq" id="WlN-1o-Jgt"/>
                         <outlet property="loadingPostsSpinner" destination="IHb-3h-oxh" id="D9A-Sd-D5G"/>
                         <segue destination="fz4-Ky-RTb" kind="presentation" identifier="openEditBookmarkModal" id="cVe-US-dkN"/>
                     </connections>
