@@ -120,7 +120,6 @@ class BookmarksTableViewController: UITableViewController {
         super.viewDidDisappear(animated)
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
-        addBookmarkTask?.cancel()
         fetchTagsTask?.cancel()
     }
 
@@ -273,19 +272,17 @@ class BookmarksTableViewController: UITableViewController {
         }
 
         if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
-            self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: "no") { resultCode in
-                if resultCode == "done" {
-                    bookmark.toread = "no"
-                    self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-                    self.showBookmark(bookmark.link)
-                } else {
-                    self.alertError("Something went wrong", message: resultCode)
-                    return
+            if Reachability.isConnectedToNetwork() == true {
+                self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: "no") { resultCode in
+                    if resultCode == "done" {
+                        bookmark.toread = "no"
+                        self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
+                    }
                 }
             }
-        } else {
-            self.showBookmark(bookmark.link)
         }
+
+        self.showBookmark(bookmark.link)
     }
 
     // MARK: - Navigation
