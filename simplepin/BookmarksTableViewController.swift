@@ -158,7 +158,6 @@ class BookmarksTableViewController: UITableViewController {
         if Reachability.isConnectedToNetwork() == true {
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
-                print(self.defaults.objectForKey("userTags"))
             }
         }
     }
