@@ -116,6 +116,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         addBookmarkTask?.cancel()
+        fetchTagsTask?.cancel()
     }
 
 
