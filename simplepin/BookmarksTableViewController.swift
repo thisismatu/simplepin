@@ -49,6 +49,7 @@ class BookmarksTableViewController: UITableViewController {
     var checkForUpdatesTask: NSURLSessionTask?
     var deleteBookmarkTask: NSURLSessionTask?
     var addBookmarkTask: NSURLSessionTask?
+    var fetchTagsTask: NSURLSessionTask?
     var urlToPass: String = ""
     var titleToPass: String = ""
     var descriptionToPass: String = ""
@@ -73,6 +74,7 @@ class BookmarksTableViewController: UITableViewController {
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
+            startFetchUserTagsTask()
         }
 
         searchController.searchResultsUpdater = self
@@ -108,6 +110,7 @@ class BookmarksTableViewController: UITableViewController {
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
         addBookmarkTask?.cancel()
+        fetchTagsTask?.cancel()
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,6 +122,7 @@ class BookmarksTableViewController: UITableViewController {
 
     func loginSuccessfull(notification: NSNotification) {
         startFetchAllPostsTask()
+        startFetchUserTagsTask()
     }
 
     func startFetchAllPostsTask() {
@@ -131,6 +135,17 @@ class BookmarksTableViewController: UITableViewController {
                 self?.loadingPostsSpinner.stopAnimating()
                 self?.loadingPosts.hidden = true;
                 self?.tableView.reloadData()
+            }
+        }
+    }
+
+    func startFetchUserTagsTask() {
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("No Internet Connection", message: "Try again later when you're back online.")
+        } else {
+            fetchTagsTask = Network.fetchTags() { userTags in
+                self.defaults.setObject(userTags, forKey: "userTags")
+                print(self.defaults.objectForKey("userTags"))
             }
         }
     }

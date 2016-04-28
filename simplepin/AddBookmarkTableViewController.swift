@@ -10,7 +10,6 @@ import UIKit
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate {
     var addBookmarkTask: NSURLSessionTask?
-    var fetchTagsTask: NSURLSessionTask?
     var toreadValue = "no"
     var sharedValue = "yes"
     var passedUrl: String?
@@ -26,7 +25,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     @IBOutlet var descriptionTextView: UITextView!
     @IBOutlet var tagsTextField: UITextField!
     @IBOutlet var addButton: UIBarButtonItem!
-    @IBOutlet var suggestedTagsStackView: UIStackView!
 
     @IBAction func toreadSwitchPressed(sender: AnyObject) {
         if (toreadSwitch.on == true) {
@@ -76,19 +74,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
 
         descriptionTextView.delegate = self
 
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
-        } else  {
-            fetchTagsTask = Network.fetchTags() { userTags in
-                for item in userTags! {
-                    let button = UIButton()
-                    button.setTitle(item, forState: .Normal)
-                    button.setTitleColor(self.view.tintColor, forState: .Normal)
-                    self.suggestedTagsStackView.addArrangedSubview(button)
-                }
-            }
-        }
-
         if passedUrl != nil {
             urlTextField.text = passedUrl
             titleTextField.text = passedTitle
@@ -116,13 +101,22 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         addBookmarkTask?.cancel()
-        fetchTagsTask?.cancel()
     }
 
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 0 {
+            guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
+            let title = "Top tags: "
+            return title + tags.joinWithSeparator(", ")
+        } else {
+            return nil
+        }
     }
 
     func textViewDidChange(textView: UITextView) {

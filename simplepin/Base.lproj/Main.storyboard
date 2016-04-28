@@ -690,31 +690,12 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="Gkl-60-cVr">
-                                        <rect key="frame" x="0.0" y="343" width="600" height="44"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Gkl-60-cVr" id="fTD-eG-rIT">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dIh-bG-Cva">
-                                                    <rect key="frame" x="16" y="8" width="568" height="28"/>
-                                                </stackView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="dIh-bG-Cva" firstAttribute="leading" secondItem="fTD-eG-rIT" secondAttribute="leadingMargin" constant="8" id="SBs-TU-ZdB"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="dIh-bG-Cva" secondAttribute="bottom" id="YJr-iE-Lai"/>
-                                                <constraint firstItem="dIh-bG-Cva" firstAttribute="top" secondItem="fTD-eG-rIT" secondAttribute="topMargin" id="hlm-c9-KqX"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="dIh-bG-Cva" secondAttribute="trailing" constant="8" id="nK9-69-x9H"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection id="C5M-Sp-aj5">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="FlB-Cv-fsT">
-                                        <rect key="frame" x="0.0" y="423" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="379" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FlB-Cv-fsT" id="N7b-vG-0e3">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -819,7 +800,6 @@
                         <outlet property="addButton" destination="C2r-RM-8UU" id="tnH-Pa-QPx"/>
                         <outlet property="descriptionTextView" destination="dDK-ix-ZkD" id="oXn-8Y-pZu"/>
                         <outlet property="privateSwitch" destination="86r-0N-nAZ" id="hU3-Bi-AIF"/>
-                        <outlet property="suggestedTagsStackView" destination="dIh-bG-Cva" id="4NS-Yj-T3B"/>
                         <outlet property="tagsTextField" destination="DIO-YG-8qa" id="821-6t-d6W"/>
                         <outlet property="titleTextField" destination="Wsc-n9-ysa" id="522-Cd-9mf"/>
                         <outlet property="toreadSwitch" destination="ecf-53-ysQ" id="n1w-Vf-tn3"/>
