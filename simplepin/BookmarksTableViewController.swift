@@ -60,7 +60,6 @@ class BookmarksTableViewController: UITableViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
 
-    @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var loadingPosts: UIView!
     @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
     @IBOutlet var loadingPostsLabel: UILabel!
@@ -166,7 +165,7 @@ class BookmarksTableViewController: UITableViewController {
         if let url = currentUrl {
             if defaults.boolForKey("openInSafari") == true {
                 UIApplication.sharedApplication().openURL(url)
-            } else if defaults.boolForKey("openInSafari") == false {
+            } else {
                 let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
                 presentViewController(vc, animated: true, completion: nil)
             }
