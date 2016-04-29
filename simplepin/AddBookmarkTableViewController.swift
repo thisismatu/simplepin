@@ -67,7 +67,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
                 } else {
-                    self.alertError("Something went wrong", message: resultCode)
+                    self.alertErrorWithReachability("Something went wrong", message: resultCode)
                     print(resultCode)
                 }
             }

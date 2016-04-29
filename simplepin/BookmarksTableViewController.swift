@@ -334,7 +334,7 @@ class BookmarksTableViewController: UITableViewController {
                                 bookmark.toread = "no"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
-                                self.alertError("Something went wrong", message: resultCode)
+                                self.alertErrorWithReachability("Something went wrong", message: resultCode)
                                 return
                             }
                         }
@@ -346,7 +346,7 @@ class BookmarksTableViewController: UITableViewController {
                                 bookmark.toread = "yes"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
-                                self.alertError("Something went wrong", message: resultCode)
+                                self.alertErrorWithReachability("Something went wrong", message: resultCode)
                                 return
                             }
                         }
@@ -369,7 +369,7 @@ class BookmarksTableViewController: UITableViewController {
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
                         } else {
-                            self.alertError("Something went wrong", message: resultCode)
+                            self.alertErrorWithReachability("Something went wrong", message: resultCode)
                             return
                         }
                     }

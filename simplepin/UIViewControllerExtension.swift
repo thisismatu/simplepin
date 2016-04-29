@@ -15,5 +15,14 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
+
+    func alertErrorWithReachability(title: String, message: String?) {
+        var alert = UIAlertController(title: title, message: message?.sentencecaseString, preferredStyle: UIAlertControllerStyle.Alert)
+        if Reachability.isConnectedToNetwork() == false {
+            alert = UIAlertController(title: "No Internet Connection", message: "Try again later when you're back online.", preferredStyle: UIAlertControllerStyle.Alert)
+        }
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
 }
