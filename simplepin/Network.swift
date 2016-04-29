@@ -68,6 +68,9 @@ struct Network {
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 guard let data = data where error == nil else {
+                    if error?.code ==  NSURLErrorTimedOut {
+                        NSNotificationCenter.defaultCenter().postNotificationName("fetchAllPostsTimeOut", object: nil)
+                    }
                     completion([])
                     return
                 }

@@ -68,11 +68,6 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if Reachability.isConnectedToNetwork() == false {
-            loadingPostsSpinner.hidden = true
-            loadingPostsLabel.text = "No internet connection"
-        }
-
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
             startFetchUserTagsTask()
@@ -87,6 +82,11 @@ class BookmarksTableViewController: UITableViewController {
             "bookmarkAdded",
             object: nil, queue: nil,
             usingBlock: bookmarkAdded)
+
+        NSNotificationCenter.defaultCenter().addObserverForName(
+            "fetchAllPostsTimeOut",
+            object: nil, queue: nil,
+            usingBlock: fetchAllPostsTimeOut)
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -139,15 +139,21 @@ class BookmarksTableViewController: UITableViewController {
         startFetchAllPostsTask()
     }
 
+    func fetchAllPostsTimeOut(notification: NSNotification) {
+        alertError("Connection Timed Out", message: "Try again later when you're back online.")
+    }
+
     func startFetchAllPostsTask() {
-        if Reachability.isConnectedToNetwork() == true {
-            loadingPostsLabel.text = "Loading bookmarks…"
-            loadingPostsSpinner.hidden = false
+        if Reachability.isConnectedToNetwork() == false {
+            loadingPostsSpinner.stopAnimating()
+            loadingPostsLabel.text = "No internet connection"
+        } else {
             loadingPostsSpinner.startAnimating()
+            loadingPostsLabel.text = "Loading bookmarks…"
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
-                self?.loadingPostsSpinner.stopAnimating()
                 self?.loadingPosts.hidden = true;
+                self?.loadingPostsSpinner.stopAnimating()
                 self?.tableView.reloadData()
             }
         }
