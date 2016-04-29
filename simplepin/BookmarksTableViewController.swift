@@ -70,7 +70,6 @@ class BookmarksTableViewController: UITableViewController {
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
-            startFetchUserTagsTask()
         }
 
         NSNotificationCenter.defaultCenter().addObserverForName(
@@ -132,7 +131,6 @@ class BookmarksTableViewController: UITableViewController {
 
     func loginSuccessfull(notification: NSNotification) {
         startFetchAllPostsTask()
-        startFetchUserTagsTask()
     }
 
     func bookmarkAdded(notification: NSNotification) {
@@ -150,17 +148,14 @@ class BookmarksTableViewController: UITableViewController {
         } else {
             loadingPostsSpinner.startAnimating()
             loadingPostsLabel.text = "Loading bookmarks…"
+
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
                 self?.loadingPosts.hidden = true;
                 self?.loadingPostsSpinner.stopAnimating()
                 self?.tableView.reloadData()
             }
-        }
-    }
 
-    func startFetchUserTagsTask() {
-        if Reachability.isConnectedToNetwork() == true {
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
             }
