@@ -58,8 +58,6 @@ struct Network {
             NSURLQueryItem(name: "format", value: "json"),
         ]
 
-        print(urlQuery.URL)
-
         guard let url = urlQuery.URL else {
             completion([])
             return nil
@@ -207,8 +205,6 @@ struct Network {
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
-
-        print(urlQuery.URL)
 
         guard let url = urlQuery.URL else {
                 completion(nil)

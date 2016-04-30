@@ -63,12 +63,10 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         } else {
             self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, shared: sharedValue, toread: toreadValue ) { resultCode in
                 if resultCode == "done" {
-                    print(resultCode)
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
                 } else {
                     self.alertErrorWithReachability("Something went wrong", message: resultCode)
-                    print(resultCode)
                 }
             }
         }
