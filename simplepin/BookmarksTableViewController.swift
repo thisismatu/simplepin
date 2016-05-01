@@ -137,7 +137,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func fetchAllPostsTimeOut(notification: NSNotification) {
-        alertError("Connection Timed Out", message: "Try again later when you're back online.")
+        alertError("Connection Timed Out", message: "Try again when you're back online.")
     }
 
     func startFetchAllPostsTask() {
@@ -176,7 +176,7 @@ class BookmarksTableViewController: UITableViewController {
         self.tableView.reloadData()
 
         if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
+            alertError("Couldn't Refresh Bookmarks", message: "Try again when you're back online.")
         } else {
             checkForUpdatesTask = Network.checkForUpdates() { updateDate in
                 let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
@@ -334,7 +334,7 @@ class BookmarksTableViewController: UITableViewController {
                                 bookmark.toread = "no"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
-                                self.alertErrorWithReachability("Something went wrong", message: resultCode)
+                                self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
                                 return
                             }
                         }
@@ -346,7 +346,7 @@ class BookmarksTableViewController: UITableViewController {
                                 bookmark.toread = "yes"
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
-                                self.alertErrorWithReachability("Something went wrong", message: resultCode)
+                                self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
                                 return
                             }
                         }
@@ -369,7 +369,7 @@ class BookmarksTableViewController: UITableViewController {
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
                         } else {
-                            self.alertErrorWithReachability("Something went wrong", message: resultCode)
+                            self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
                             return
                         }
                     }

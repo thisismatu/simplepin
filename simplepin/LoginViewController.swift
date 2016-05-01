@@ -28,7 +28,7 @@ class LoginModalViewController: UIViewController {
         }
 
         if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
+            alertError("Couldn't Log in", message: "Try again when you're back online.")
             spinner.stopAnimating()
             loginButton.enabled = true
         } else {
@@ -49,7 +49,7 @@ class LoginModalViewController: UIViewController {
                 } else {
                     self.spinner.stopAnimating()
                     self.loginButton.enabled = true
-                    self.alertError("Incorrect username or password", message: nil)
+                    self.alertError("Incorrect Username or Password", message: nil)
                     return
                 }
             }

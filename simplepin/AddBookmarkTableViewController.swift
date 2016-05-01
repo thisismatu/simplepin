@@ -54,19 +54,19 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         }
 
         if urlText.isEmpty || title.isEmpty {
-            self.alertError("Please provide URL and Title", message: nil)
+            self.alertError("Please Provide URL and Title", message: nil)
             return
         }
 
         if Reachability.isConnectedToNetwork() == false {
-            alertError("No Internet Connection", message: "Try again later when you're back online.")
+            alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
             self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, shared: sharedValue, toread: toreadValue ) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
                 } else {
-                    self.alertErrorWithReachability("Something went wrong", message: resultCode)
+                    self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
                 }
             }
         }

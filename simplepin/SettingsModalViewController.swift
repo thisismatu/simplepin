@@ -27,7 +27,7 @@ class SettingsModalViewController: UITableViewController {
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        alert.addAction(UIAlertAction(title: "Log Out", style: UIAlertActionStyle.Destructive, handler: { action in
+        alert.addAction(UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: { action in
             self.dismissViewControllerAnimated(true, completion: nil)
             self.appDelegate?.logOut()
         }))
@@ -89,13 +89,13 @@ class SettingsModalViewController: UITableViewController {
             if UIApplication.sharedApplication().canOpenURL(emailUrl) {
                 UIApplication.sharedApplication().openURL(emailUrl)
             } else {
-                alertError("There was an error opening Mail", message: nil)
+                alertError("There Was an Error Opening Mail", message: nil)
             }
         case rateAppCell:
             if UIApplication.sharedApplication().canOpenURL(appstoreUrl) {
                 UIApplication.sharedApplication().openURL(appstoreUrl)
             } else {
-                alertError("There was an error opening App Store", message: nil)
+                alertError("There Was an Error Opening App Store", message: nil)
             }
         default: break
         }
