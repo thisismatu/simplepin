@@ -46,7 +46,6 @@ struct Network {
     static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
-        defaults.setObject(NSDate(), forKey: "lastUpdateDate")
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"

@@ -167,6 +167,7 @@ class BookmarksTableViewController: UITableViewController {
                     self?.showEmptyState("No bookmarks.", spinner: false)
                 }
                 self?.tableView.reloadData()
+                self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
             }
 
             fetchTagsTask = Network.fetchTags() { userTags in
