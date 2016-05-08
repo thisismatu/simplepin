@@ -131,8 +131,17 @@ class BookmarksTableViewController: UITableViewController {
         startFetchAllPostsTask()
     }
 
-    func fetchAllPostsTimeOut(notification: NSNotification) {
-        alertError("Connection Timed Out", message: "Try again when you're back online.")
+    func showEmptyState(message: String, spinner: Bool) {
+        loadingPosts.hidden = false
+        loadingPostsLabel.text = message
+
+        if spinner == true {
+            loadingPostsSpinner.startAnimating()
+        } else {
+            loadingPostsSpinner.stopAnimating()
+        }
+    }
+
     func handleRequestError(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,String> {
             guard let title = info["title"],
@@ -145,11 +154,9 @@ class BookmarksTableViewController: UITableViewController {
 
     func startFetchAllPostsTask() {
         if Reachability.isConnectedToNetwork() == false {
-            loadingPostsSpinner.stopAnimating()
-            loadingPostsLabel.text = "No internet connection."
+            showEmptyState("No internet connection.", spinner: false)
         } else {
-            loadingPostsSpinner.startAnimating()
-            loadingPostsLabel.text = "Loading bookmarks…"
+            showEmptyState("Loading bookmarks…", spinner: true)
 
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
@@ -157,8 +164,7 @@ class BookmarksTableViewController: UITableViewController {
                 if self?.bookmarksArray.count > 0 {
                     self?.loadingPosts.hidden = true;
                 } else {
-                    self?.loadingPosts.hidden = false;
-                    self?.loadingPostsLabel.text = "No bookmarks saved."
+                    self?.showEmptyState("No bookmarks.", spinner: false)
                 }
                 self?.tableView.reloadData()
             }
