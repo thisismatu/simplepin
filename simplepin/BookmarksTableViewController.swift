@@ -55,9 +55,9 @@ class BookmarksTableViewController: UITableViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
 
-    @IBOutlet var loadingPosts: UIView!
-    @IBOutlet var loadingPostsSpinner: UIActivityIndicatorView!
-    @IBOutlet var loadingPostsLabel: UILabel!
+    @IBOutlet var emptyState: UIView!
+    @IBOutlet var emptyStateSpinner: UIActivityIndicatorView!
+    @IBOutlet var emptyStateLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,13 +132,13 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func showEmptyState(message: String, spinner: Bool) {
-        loadingPosts.hidden = false
-        loadingPostsLabel.text = message
+        emptyState.hidden = false
+        emptyStateLabel.text = message
 
         if spinner == true {
-            loadingPostsSpinner.startAnimating()
+            emptyStateSpinner.startAnimating()
         } else {
-            loadingPostsSpinner.stopAnimating()
+            emptyStateSpinner.stopAnimating()
         }
     }
 
@@ -160,9 +160,9 @@ class BookmarksTableViewController: UITableViewController {
 
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
-                self?.loadingPostsSpinner.stopAnimating()
+                self?.emptyStateSpinner.stopAnimating()
                 if self?.bookmarksArray.count > 0 {
-                    self?.loadingPosts.hidden = true;
+                    self?.emptyState.hidden = true;
                 } else {
                     self?.showEmptyState("No bookmarks.", spinner: false)
                 }
