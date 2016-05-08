@@ -10,8 +10,9 @@ import UIKit
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate {
     var addBookmarkTask: NSURLSessionTask?
-    var toreadValue = "no"
-    var sharedValue = "yes"
+    var toreadValue: String?
+    var sharedValue: String?
+    var passedDate: NSDate?
     var passedBookmark: BookmarkItem?
     let defaults = NSUserDefaults.standardUserDefaults()
 
@@ -23,30 +24,35 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     @IBOutlet var tagsTextField: UITextField!
     @IBOutlet var addButton: UIBarButtonItem!
 
-    @IBAction func toreadSwitchPressed(sender: AnyObject) {
+
+    @IBAction func addButtonPressed(sender: AnyObject) {
+
         if (toreadSwitch.on == true) {
             toreadValue = "yes"
         } else if (toreadSwitch.on == false) {
             toreadValue = "no"
         }
-    }
 
-    @IBAction func privateSwitchPressed(sender: AnyObject) {
         if (privateSwitch.on == true) {
             sharedValue = "no"
         } else if (privateSwitch.on == false) {
             sharedValue = "yes"
         }
 
-    }
-
-    @IBAction func addButtonPressed(sender: AnyObject) {
+        if let date = passedBookmark?.date {
+            passedDate = date
+        } else {
+            passedDate = nil
+        }
 
         guard let urlText = urlTextField.text,
             let url = NSURL(string: urlText),
             let title = titleTextField.text,
             let description = descriptionTextView.text,
-            let tags = tagsTextField.text?.componentsSeparatedByString(" ") else {
+            let tags = tagsTextField.text?.componentsSeparatedByString(" "),
+            let shared = sharedValue,
+            let toread = toreadValue
+            else {
                 return
         }
 
@@ -58,7 +64,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, shared: sharedValue, toread: toreadValue ) { resultCode in
+            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: passedDate, shared: shared, toread: toread ) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
@@ -79,20 +85,17 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             titleTextField.text = passedBookmark?.title
             descriptionTextView.text = passedBookmark?.description
             tagsTextField.text = passedBookmark?.tags.joinWithSeparator(" ")
+            sharedValue = passedBookmark?.shared
+            toreadValue = passedBookmark?.toread
             addButton.title = "Save"
-            //TODO: huutomerkit pois
-            sharedValue = passedBookmark!.shared
-            toreadValue = passedBookmark!.toread
         }
 
         if (defaults.boolForKey("privateByDefault") == true) || sharedValue == "no" {
             privateSwitch.on = true
-            sharedValue = "no"
         }
 
         if toreadValue == "yes" {
             toreadSwitch.on = true
-            toreadValue = "yes"
         }
 
         if !descriptionTextView.text.isEmpty {

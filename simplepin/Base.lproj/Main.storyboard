@@ -722,9 +722,6 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="86r-0N-nAZ">
                                                             <rect key="frame" x="519" y="0.0" width="51" height="31"/>
-                                                            <connections>
-                                                                <action selector="privateSwitchPressed:" destination="awa-5G-VnH" eventType="valueChanged" id="YVq-fI-rej"/>
-                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
@@ -763,9 +760,6 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="ecf-53-ysQ">
                                                             <rect key="frame" x="519" y="0.0" width="51" height="31"/>
-                                                            <connections>
-                                                                <action selector="toreadSwitchPressed:" destination="awa-5G-VnH" eventType="valueChanged" id="JAO-vT-WjX"/>
-                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
