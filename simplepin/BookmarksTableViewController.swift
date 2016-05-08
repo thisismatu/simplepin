@@ -79,7 +79,7 @@ class BookmarksTableViewController: UITableViewController {
         NSNotificationCenter.defaultCenter().addObserverForName(
             "fetchAllPostsTimeOut",
             object: nil, queue: nil,
-            usingBlock: fetchAllPostsTimeOut)
+            usingBlock: handleRequestError)
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -133,6 +133,14 @@ class BookmarksTableViewController: UITableViewController {
 
     func fetchAllPostsTimeOut(notification: NSNotification) {
         alertError("Connection Timed Out", message: "Try again when you're back online.")
+    func handleRequestError(notification: NSNotification) {
+        if let info = notification.userInfo as? Dictionary<String,String> {
+            guard let title = info["title"],
+                let message = info["message"] else {
+                    return
+            }
+            alertError(title, message: message)
+        }
     }
 
     func startFetchAllPostsTask() {
