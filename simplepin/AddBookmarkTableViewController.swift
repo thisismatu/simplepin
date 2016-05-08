@@ -12,10 +12,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     var addBookmarkTask: NSURLSessionTask?
     var toreadValue = "no"
     var sharedValue = "yes"
-    var passedUrl: String?
-    var passedTitle: String?
-    var passedDescription: String?
-    var passedTags: String?
+    var passedBookmark: BookmarkItem?
     let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var privateSwitch: UISwitch!
@@ -77,12 +74,15 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
 
         descriptionTextView.delegate = self
 
-        if passedUrl != nil {
-            urlTextField.text = passedUrl
-            titleTextField.text = passedTitle
-            descriptionTextView.text = passedDescription
-            tagsTextField.text = passedTags
+        if passedBookmark != nil {
+            urlTextField.text = passedBookmark?.link.absoluteString
+            titleTextField.text = passedBookmark?.title
+            descriptionTextView.text = passedBookmark?.description
+            tagsTextField.text = passedBookmark?.tags.joinWithSeparator(" ")
             addButton.title = "Save"
+            //TODO: huutomerkit pois
+            sharedValue = passedBookmark!.shared
+            toreadValue = passedBookmark!.toread
         }
 
         if (defaults.boolForKey("privateByDefault") == true) || sharedValue == "no" {
