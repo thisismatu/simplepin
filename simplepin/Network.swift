@@ -82,9 +82,11 @@ struct Network {
     }
 
     static func parseJSONData(data: NSData) -> [BookmarkItem] {
+        let defaults = NSUserDefaults.standardUserDefaults()
         var bookmarks = [BookmarkItem]()
         do {
             if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
+                defaults.setObject(jsonObject.count, forKey: "bookmarkCount")
                 for item in jsonObject {
                     guard let bookmarkDict = item as? [String: AnyObject],
                         let bookmark = BookmarkItem(json: bookmarkDict)

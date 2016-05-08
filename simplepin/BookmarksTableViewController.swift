@@ -288,12 +288,8 @@ class BookmarksTableViewController: UITableViewController {
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "openSettingsModal" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let vc = navigationController.topViewController as! SettingsModalViewController
-            let count = String(bookmarksArray.count)
-            vc.bookmarkCount = count+" bookmarks"
-        } else if segue.identifier == "openEditBookmarkModal" {
+        if segue.identifier == "openEditBookmarkModal" {
+            //TODO: Can i pass an object instead?
             let navigationController = segue.destinationViewController as! UINavigationController
             let vc = navigationController.topViewController as! AddBookmarkTableViewController
             vc.passedUrl = urlToPass
@@ -366,6 +362,7 @@ class BookmarksTableViewController: UITableViewController {
                     self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
                         if resultCode == "done" {
                             self.bookmarksArray.removeAtIndex(indexPath.row)
+                            self.defaults.setObject(self.bookmarksArray.count, forKey: "bookmarkCount")
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
                         } else {

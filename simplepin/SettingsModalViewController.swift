@@ -9,7 +9,6 @@
 import UIKit
 
 class SettingsModalViewController: UITableViewController {
-    var bookmarkCount: String!
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let defaults = NSUserDefaults.standardUserDefaults()
     let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/ultralight-photo-editor/id972428565?mt=8")! //TODO: change url
@@ -61,8 +60,17 @@ class SettingsModalViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
         usernameLabel.text = defaults.stringForKey("userName")
-        userDetailLabel.text = bookmarkCount
+
+        switch defaults.integerForKey("bookmarkCount") {
+        case 0:
+            userDetailLabel.text = "0 bookmarks"
+        case 1:
+            userDetailLabel.text = "1 bookmark"
+        default:
+            userDetailLabel.text = String(defaults.integerForKey("bookmarkCount"))+" bookmarks"
+        }
 
         if (defaults.boolForKey("markAsRead") == true) {
             markAsReadSwitch.on = true
