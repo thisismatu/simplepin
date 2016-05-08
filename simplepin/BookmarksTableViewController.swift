@@ -143,15 +143,20 @@ class BookmarksTableViewController: UITableViewController {
     func startFetchAllPostsTask() {
         if Reachability.isConnectedToNetwork() == false {
             loadingPostsSpinner.stopAnimating()
-            loadingPostsLabel.text = "No internet connection"
+            loadingPostsLabel.text = "No internet connection."
         } else {
             loadingPostsSpinner.startAnimating()
             loadingPostsLabel.text = "Loading bookmarks…"
 
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
-                self?.loadingPosts.hidden = true;
                 self?.loadingPostsSpinner.stopAnimating()
+                if self?.bookmarksArray.count > 0 {
+                    self?.loadingPosts.hidden = true;
+                } else {
+                    self?.loadingPosts.hidden = false;
+                    self?.loadingPostsLabel.text = "No bookmarks saved."
+                }
                 self?.tableView.reloadData()
             }
 
