@@ -27,7 +27,7 @@ class BookmarkItem {
             let description = json["extended"] as? String,
             let date = dateString?.toDate(),
             let link = NSURL(string: linkString!),
-            let tags = tagsString?.componentsSeparatedByString(" ").filter({!$0.isEmpty}),
+            let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
             let shared = json["shared"] as? String,
             let toread = json["toread"] as? String else {
                 return nil
@@ -148,7 +148,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func handleRequestError(notification: NSNotification) {
-        if let info = notification.userInfo as? Dictionary<String,String> {
+        if let info = notification.userInfo as? Dictionary<String, String> {
             guard let title = info["title"],
                 let message = info["message"] else {
                     return
@@ -162,7 +162,6 @@ class BookmarksTableViewController: UITableViewController {
             showEmptyState("No internet connection.", spinner: false)
         } else {
             showEmptyState("Loading bookmarks…", spinner: true)
-
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
                 if self?.bookmarksArray.count > 0 {
@@ -173,7 +172,6 @@ class BookmarksTableViewController: UITableViewController {
                 self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
                 self?.tableView.reloadData()
             }
-
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
             }
@@ -193,7 +191,6 @@ class BookmarksTableViewController: UITableViewController {
 
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.tableView.reloadData()
-
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Refresh Bookmarks", message: "Try again when you're back online.")
         } else {
@@ -208,7 +205,6 @@ class BookmarksTableViewController: UITableViewController {
                 }
             }
         }
-
         refreshControl.endRefreshing()
     }
 
@@ -219,13 +215,11 @@ class BookmarksTableViewController: UITableViewController {
             let tagMatch = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(searchText.lowercaseString)
             return titleMatch || descriptionMatch || tagMatch
         }
-        
         if searchText != "" && filteredBookmarks.count == 0 {
             showEmptyState("Couldn't find \(searchText)", spinner: false)
         } else {
             hideEmptyState()
         }
-
         tableView.reloadData()
     }
 
@@ -243,8 +237,8 @@ class BookmarksTableViewController: UITableViewController {
         let formatter = NSDateFormatter()
         formatter.dateStyle = .ShortStyle
         formatter.timeStyle = .NoStyle
-        var bookmark: BookmarkItem
 
+        var bookmark: BookmarkItem
         if searchController.active && searchController.searchBar.text != "" {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
@@ -290,7 +284,6 @@ class BookmarksTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var bookmark: BookmarkItem
-
         if searchController.active && searchController.searchBar.text != "" {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
@@ -330,12 +323,10 @@ class BookmarksTableViewController: UITableViewController {
 
     func longPress(longPressGestureRecognizer: UILongPressGestureRecognizer) {
         if longPressGestureRecognizer.state == UIGestureRecognizerState.Began {
-
             let touchPoint = longPressGestureRecognizer.locationInView(self.view)
 
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
                 var bookmark: BookmarkItem
-
                 if searchController.active && searchController.searchBar.text != "" {
                     bookmark = filteredBookmarks[indexPath.row]
                 } else {
@@ -369,7 +360,6 @@ class BookmarksTableViewController: UITableViewController {
                         }
                     }))
                 }
-
                 alert.addAction(UIAlertAction(title: "Edit", style: UIAlertActionStyle.Default, handler: { action in
                     self.bookmarkToPass = bookmark
                     self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
