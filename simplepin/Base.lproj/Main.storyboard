@@ -617,7 +617,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="URL" textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Dng-c3-8JB">
-                                                    <rect key="frame" x="16" y="8" width="568" height="27.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="568" height="43.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL"/>
                                                 </textField>
@@ -625,8 +625,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Dng-c3-8JB" secondAttribute="trailing" constant="8" id="HKP-WT-Ucj"/>
                                                 <constraint firstItem="Dng-c3-8JB" firstAttribute="leading" secondItem="JKK-jX-4TU" secondAttribute="leadingMargin" constant="8" id="Tju-oa-7v1"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Dng-c3-8JB" secondAttribute="bottom" id="clv-6Q-GDG"/>
-                                                <constraint firstItem="Dng-c3-8JB" firstAttribute="top" secondItem="JKK-jX-4TU" secondAttribute="topMargin" id="sJm-Pg-ljA"/>
+                                                <constraint firstAttribute="bottom" secondItem="Dng-c3-8JB" secondAttribute="bottom" id="clv-6Q-GDG"/>
+                                                <constraint firstItem="Dng-c3-8JB" firstAttribute="top" secondItem="JKK-jX-4TU" secondAttribute="top" id="sJm-Pg-ljA"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -638,15 +638,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Title" textAlignment="natural" minimumFontSize="15" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Wsc-n9-ysa">
-                                                    <rect key="frame" x="16" y="8" width="568" height="27.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="568" height="43.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="Wsc-n9-ysa" secondAttribute="trailing" constant="8" id="Obe-uc-nN7"/>
-                                                <constraint firstItem="Wsc-n9-ysa" firstAttribute="top" secondItem="osu-rv-R6x" secondAttribute="topMargin" id="SM1-qs-FiT"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Wsc-n9-ysa" secondAttribute="bottom" id="W7i-un-pBF"/>
+                                                <constraint firstItem="Wsc-n9-ysa" firstAttribute="top" secondItem="osu-rv-R6x" secondAttribute="top" id="SM1-qs-FiT"/>
+                                                <constraint firstAttribute="bottom" secondItem="Wsc-n9-ysa" secondAttribute="bottom" id="W7i-un-pBF"/>
                                                 <constraint firstItem="Wsc-n9-ysa" firstAttribute="leading" secondItem="osu-rv-R6x" secondAttribute="leadingMargin" constant="8" id="zb3-UU-JKt"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -687,7 +687,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tags" textAlignment="natural" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="DIO-YG-8qa">
-                                                    <rect key="frame" x="16" y="8" width="568" height="27.5"/>
+                                                    <rect key="frame" x="16" y="0.0" width="568" height="43.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                                 </textField>
@@ -695,8 +695,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="DIO-YG-8qa" secondAttribute="trailing" constant="8" id="IFx-aL-CdN"/>
                                                 <constraint firstItem="DIO-YG-8qa" firstAttribute="leading" secondItem="Rtj-Cf-nhd" secondAttribute="leadingMargin" constant="8" id="Q7l-8b-C4P"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="DIO-YG-8qa" secondAttribute="bottom" id="TKI-mP-ycS"/>
-                                                <constraint firstItem="DIO-YG-8qa" firstAttribute="top" secondItem="Rtj-Cf-nhd" secondAttribute="topMargin" id="g5e-SR-KyA"/>
+                                                <constraint firstAttribute="bottom" secondItem="DIO-YG-8qa" secondAttribute="bottom" id="TKI-mP-ycS"/>
+                                                <constraint firstItem="DIO-YG-8qa" firstAttribute="top" secondItem="Rtj-Cf-nhd" secondAttribute="top" id="g5e-SR-KyA"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
