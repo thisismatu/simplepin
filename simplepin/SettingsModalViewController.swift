@@ -11,7 +11,7 @@ import UIKit
 class SettingsModalViewController: UITableViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let defaults = NSUserDefaults.standardUserDefaults()
-    let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/ultralight-photo-editor/id972428565?mt=8")! //TODO: change url
+    let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/ultralight-photo-editor/id972428565?mt=8")! // TODO: change url
     let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
 
     @IBOutlet var usernameLabel: UILabel!
@@ -69,7 +69,7 @@ class SettingsModalViewController: UITableViewController {
         case 1:
             userDetailLabel.text = "1 bookmark"
         default:
-            userDetailLabel.text = String(defaults.integerForKey("bookmarkCount"))+" bookmarks"
+            userDetailLabel.text = String(defaults.integerForKey("bookmarkCount")) + " bookmarks"
         }
 
         if (defaults.boolForKey("markAsRead") == true) {

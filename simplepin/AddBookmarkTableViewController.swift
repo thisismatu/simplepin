@@ -24,9 +24,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
     @IBOutlet var tagsTextField: UITextField!
     @IBOutlet var addButton: UIBarButtonItem!
 
-
     @IBAction func addButtonPressed(sender: AnyObject) {
-
         if (toreadSwitch.on == true) {
             toreadValue = "yes"
         } else if (toreadSwitch.on == false) {
@@ -51,8 +49,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             let description = descriptionTextView.text,
             let tags = tagsTextField.text?.componentsSeparatedByString(" "),
             let shared = sharedValue,
-            let toread = toreadValue
-            else {
+            let toread = toreadValue else {
                 return
         }
 
@@ -64,7 +61,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: passedDate, shared: shared, toread: toread ) { resultCode in
+            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: passedDate, shared: shared, toread: toread) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
@@ -108,7 +105,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         super.viewDidDisappear(animated)
         addBookmarkTask?.cancel()
     }
-
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

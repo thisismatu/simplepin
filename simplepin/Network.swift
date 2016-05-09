@@ -65,7 +65,7 @@ struct Network {
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 guard let data = data where error == nil else {
-                    if error?.code ==  NSURLErrorTimedOut {
+                    if error?.code == NSURLErrorTimedOut {
                         NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
                     } else if error?.code == 429 {
                         NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
@@ -210,8 +210,8 @@ struct Network {
         ]
 
         guard let url = urlQuery.URL else {
-                completion(nil)
-                return nil
+            completion(nil)
+            return nil
         }
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
@@ -236,7 +236,7 @@ struct Network {
         return nil
     }
 
-    //MARK: - Get tags
+    // MARK: - Get tags
     static func fetchTags(completion: ([String])? -> Void) -> NSURLSessionTask? {
         let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String

@@ -16,11 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigation: UINavigationController?
     let defaults = NSUserDefaults.standardUserDefaults()
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        // Set tint color
-        let simplepinBlue = UIColor(red: 0.2, green:0.4, blue:1, alpha:1)
+        let simplepinBlue = UIColor(red: 0.2, green: 0.4, blue: 1, alpha: 1)
         self.window?.tintColor = simplepinBlue
         UINavigationBar.appearance().tintColor = simplepinBlue
         UITabBar.appearance().tintColor = simplepinBlue
@@ -69,6 +67,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
-
 }
-

@@ -62,7 +62,6 @@ class LoginModalViewController: UIViewController {
         presentViewController(vc, animated: true, completion: nil)
     }
 
-
     override func viewDidLoad() {
         super.viewDidLoad()
         usernameField.delegate = self
