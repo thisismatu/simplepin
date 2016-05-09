@@ -37,12 +37,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             sharedValue = "yes"
         }
 
-        if let date = passedBookmark?.date {
-            passedDate = date
-        } else {
-            passedDate = nil
-        }
-
         guard let urlText = urlTextField.text,
             let url = NSURL(string: urlText),
             let title = titleTextField.text,
@@ -74,15 +68,18 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         urlTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
-        if passedBookmark != nil {
+        if let bookmark = passedBookmark {
             navigationItem.title = "Edit Bookmark"
-            urlTextField.text = passedBookmark?.link.absoluteString
-            titleTextField.text = passedBookmark?.title
-            descriptionTextView.text = passedBookmark?.description
-            tagsTextField.text = passedBookmark?.tags.joinWithSeparator(" ")
-            sharedValue = passedBookmark?.shared
-            toreadValue = passedBookmark?.toread
             addButton.title = "Save"
+            urlTextField.text = bookmark.link.absoluteString
+            titleTextField.text = bookmark.title
+            descriptionTextView.text = bookmark.description
+            tagsTextField.text = bookmark.tags.joinWithSeparator(" ")
+            passedDate = bookmark.date
+            sharedValue = bookmark.shared
+            toreadValue = bookmark.toread
+        } else {
+            passedDate = nil
         }
 
         checkValidBookmark()
