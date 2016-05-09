@@ -75,6 +75,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
         if passedBookmark != nil {
+            navigationItem.title = "Edit Bookmark"
             urlTextField.text = passedBookmark?.link.absoluteString
             titleTextField.text = passedBookmark?.title
             descriptionTextView.text = passedBookmark?.description
