@@ -311,7 +311,7 @@ class BookmarksTableViewController: UITableViewController {
         if segue.identifier == "openEditBookmarkModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let vc = navigationController.topViewController as! AddBookmarkTableViewController
-            vc.passedBookmark = bookmarkToPass
+            vc.bookmark = bookmarkToPass
         }
     }
 

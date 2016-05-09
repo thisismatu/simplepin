@@ -12,8 +12,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     var addBookmarkTask: NSURLSessionTask?
     var toreadValue: String?
     var sharedValue: String?
-    var passedDate: NSDate?
-    var passedBookmark: BookmarkItem?
+    var bookmarkDate: NSDate?
+    var bookmark: BookmarkItem?
     let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var privateSwitch: UISwitch!
@@ -50,7 +50,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: passedDate, shared: shared, toread: toread) { resultCode in
+            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: bookmarkDate, shared: shared, toread: toread) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
@@ -68,18 +68,18 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         urlTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
-        if let bookmark = passedBookmark {
+        if let bookmark = bookmark {
             navigationItem.title = "Edit Bookmark"
             addButton.title = "Save"
             urlTextField.text = bookmark.link.absoluteString
             titleTextField.text = bookmark.title
             descriptionTextView.text = bookmark.description
             tagsTextField.text = bookmark.tags.joinWithSeparator(" ")
-            passedDate = bookmark.date
+            bookmarkDate = bookmark.date
             sharedValue = bookmark.shared
             toreadValue = bookmark.toread
         } else {
-            passedDate = nil
+            bookmarkDate = nil
         }
 
         checkValidBookmark()
