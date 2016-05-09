@@ -126,7 +126,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="YM9-1Q-Tb1">
                             <connections>
-                                <segue destination="fz4-Ky-RTb" kind="presentation" id="6OA-OC-921"/>
+                                <segue destination="fz4-Ky-RTb" kind="presentation" identifier="openAddBookmarkModal" id="6OA-OC-921"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -873,6 +873,6 @@
         <image name="ic_settings" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="cVe-US-dkN"/>
+        <segue reference="6OA-OC-921"/>
     </inferredMetricsTieBreakers>
 </document>
