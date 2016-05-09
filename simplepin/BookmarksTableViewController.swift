@@ -170,8 +170,8 @@ class BookmarksTableViewController: UITableViewController {
                 } else {
                     self?.showEmptyState("No bookmarks.", spinner: false)
                 }
-                self?.tableView.reloadData()
                 self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
+                self?.tableView.reloadData()
             }
 
             fetchTagsTask = Network.fetchTags() { userTags in
@@ -377,7 +377,12 @@ class BookmarksTableViewController: UITableViewController {
                 alert.addAction(UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
                     self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
                         if resultCode == "done" {
-                            self.bookmarksArray.removeAtIndex(indexPath.row)
+                            if self.searchController.active {
+                                self.filteredBookmarks.removeAtIndex(indexPath.row)
+                                self.bookmarksArray.removeAtIndex(indexPath.row)
+                            } else {
+                                self.bookmarksArray.removeAtIndex(indexPath.row)
+                            }
                             self.defaults.setObject(self.bookmarksArray.count, forKey: "bookmarkCount")
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
