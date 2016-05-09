@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate {
+class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
     var addBookmarkTask: NSURLSessionTask?
     var toreadValue: String?
     var sharedValue: String?
@@ -53,11 +53,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
                 return
         }
 
-        if urlText.isEmpty || title.isEmpty {
-            self.alertError("Please Provide URL and Title", message: nil)
-            return
-        }
-
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
@@ -76,6 +71,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         super.viewDidLoad()
 
         descriptionTextView.delegate = self
+        urlTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
         if passedBookmark != nil {
             urlTextField.text = passedBookmark?.link.absoluteString
@@ -86,6 +83,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
             toreadValue = passedBookmark?.toread
             addButton.title = "Save"
         }
+
+        checkValidBookmark()
 
         if (defaults.boolForKey("privateByDefault") == true) || sharedValue == "no" {
             privateSwitch.on = true
@@ -98,7 +97,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         if !descriptionTextView.text.isEmpty {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
         }
-
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -119,6 +117,20 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate 
         } else {
             return nil
         }
+    }
+
+    func checkValidBookmark() {
+        let url = urlTextField.text ?? ""
+        let title = titleTextField.text ?? ""
+        if !url.isEmpty && !title.isEmpty {
+            addButton.enabled = true
+        } else {
+            addButton.enabled = false
+        }
+    }
+
+    func textFieldDidChange(textField: UITextField) {
+        checkValidBookmark()
     }
 
     func textViewDidChange(textView: UITextView) {
