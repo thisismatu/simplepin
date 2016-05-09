@@ -310,8 +310,9 @@ class BookmarksTableViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "openEditBookmarkModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
-            let vc = navigationController.topViewController as! AddBookmarkTableViewController
-            vc.bookmark = bookmarkToPass
+            if let vc = navigationController.topViewController as? AddBookmarkTableViewController {
+                vc.bookmark = bookmarkToPass
+            }
         }
     }
 
