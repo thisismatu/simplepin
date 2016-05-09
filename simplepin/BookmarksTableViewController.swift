@@ -142,6 +142,11 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
+    func hideEmptyState() {
+        emptyState.hidden = true
+        emptyStateSpinner.stopAnimating()
+    }
+
     func handleRequestError(notification: NSNotification) {
         if let info = notification.userInfo as? Dictionary<String,String> {
             guard let title = info["title"],
@@ -160,9 +165,8 @@ class BookmarksTableViewController: UITableViewController {
 
             fetchAllPostsTask = Network.fetchAllPosts() { [weak self] bookmarks in
                 self?.bookmarksArray = bookmarks
-                self?.emptyStateSpinner.stopAnimating()
                 if self?.bookmarksArray.count > 0 {
-                    self?.emptyState.hidden = true;
+                    self?.hideEmptyState()
                 } else {
                     self?.showEmptyState("No bookmarks.", spinner: false)
                 }
@@ -215,6 +219,13 @@ class BookmarksTableViewController: UITableViewController {
             let tagMatch = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(searchText.lowercaseString)
             return titleMatch || descriptionMatch || tagMatch
         }
+        
+        if searchText != "" && filteredBookmarks.count == 0 {
+            showEmptyState("Couldn't find \(searchText)", spinner: false)
+        } else {
+            hideEmptyState()
+        }
+
         tableView.reloadData()
     }
 
