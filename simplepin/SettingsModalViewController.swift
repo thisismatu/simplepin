@@ -96,12 +96,14 @@ class SettingsModalViewController: UITableViewController {
         case sendFeedbackCell:
             if UIApplication.sharedApplication().canOpenURL(emailUrl) {
                 UIApplication.sharedApplication().openURL(emailUrl)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 alertError("There Was an Error Opening Mail", message: nil)
             }
         case rateAppCell:
             if UIApplication.sharedApplication().canOpenURL(appstoreUrl) {
                 UIApplication.sharedApplication().openURL(appstoreUrl)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
             } else {
                 alertError("There Was an Error Opening App Store", message: nil)
             }
