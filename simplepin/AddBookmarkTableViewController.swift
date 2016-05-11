@@ -12,6 +12,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     var addBookmarkTask: NSURLSessionTask?
     var toreadValue: String?
     var sharedValue: String?
+    var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
     let defaults = NSUserDefaults.standardUserDefaults()
@@ -80,6 +81,10 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             toreadValue = bookmark.toread
         } else {
             bookmarkDate = nil
+        }
+
+        if let url = passedUrl {
+            urlTextField.text = url.absoluteString
         }
 
         checkValidBookmark()

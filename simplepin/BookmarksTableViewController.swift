@@ -51,6 +51,7 @@ class BookmarksTableViewController: UITableViewController {
     var addBookmarkTask: NSURLSessionTask?
     var fetchTagsTask: NSURLSessionTask?
     var bookmarkToPass = BookmarkItem?()
+    var urlToPass: NSURL?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
@@ -61,10 +62,6 @@ class BookmarksTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
-        }
 
         NSNotificationCenter.defaultCenter().addObserverForName(
             "loginSuccessful",
@@ -81,6 +78,14 @@ class BookmarksTableViewController: UITableViewController {
             object: nil, queue: nil,
             usingBlock: handleRequestError)
 
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+
+        if defaults.stringForKey("userToken") != nil {
+            startFetchAllPostsTask()
+        }
+
+        configureSearchController()
+        checkPasteboard()
 
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -90,10 +95,6 @@ class BookmarksTableViewController: UITableViewController {
 
         tableView.estimatedRowHeight = 120.0
         tableView.rowHeight = UITableViewAutomaticDimension
-    }
-
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -106,6 +107,10 @@ class BookmarksTableViewController: UITableViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+
+    func applicationWillEnterForeground() {
+        checkPasteboard()
     }
 
     func configureSearchController() {
@@ -123,6 +128,21 @@ class BookmarksTableViewController: UITableViewController {
         definesPresentationContext = true
         tableView.tableHeaderView = searchController.searchBar
     }
+
+    func checkPasteboard() {
+        if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
+            if !bookmarksArray.contains( { $0.link == pasteboardUrl }) {
+                let alert = UIAlertController(title: "Add This Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Add", style: .Default, handler: { action in
+                    self.urlToPass = pasteboardUrl
+                    self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
+                }))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+
     // MARK: - Bookmark stuff
 
     func loginSuccessfull(notification: NSNotification) {
@@ -314,6 +334,7 @@ class BookmarksTableViewController: UITableViewController {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let vc = navigationController.topViewController as? AddBookmarkTableViewController {
                 vc.bookmark = bookmarkToPass
+                vc.passedUrl = urlToPass
             }
         }
     }
