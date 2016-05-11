@@ -55,6 +55,7 @@ class BookmarksTableViewController: UITableViewController {
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
+    let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var emptyState: UIView!
     @IBOutlet var emptyStateSpinner: UIActivityIndicatorView!
@@ -63,22 +64,10 @@ class BookmarksTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NSNotificationCenter.defaultCenter().addObserverForName(
-            "loginSuccessful",
-            object: nil, queue: nil,
-            usingBlock: loginSuccessfull)
-
-        NSNotificationCenter.defaultCenter().addObserverForName(
-            "bookmarkAdded",
-            object: nil, queue: nil,
-            usingBlock: bookmarkAdded)
-
-        NSNotificationCenter.defaultCenter().addObserverForName(
-            "fetchAllPostsTimeOut",
-            object: nil, queue: nil,
-            usingBlock: handleRequestError)
-
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        notifications.addObserverForName("loginSuccessful", object: nil, queue: nil, usingBlock: successfullAddOrLogin)
+        notifications.addObserverForName("bookmarkAdded", object: nil, queue: nil, usingBlock: successfullAddOrLogin)
+        notifications.addObserverForName("fetchAllPostsTimeOut", object: nil, queue: nil, usingBlock: handleRequestError)
+        notifications.addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPostsTask()
@@ -102,11 +91,6 @@ class BookmarksTableViewController: UITableViewController {
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
         fetchTagsTask?.cancel()
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     func applicationWillEnterForeground() {
@@ -143,16 +127,6 @@ class BookmarksTableViewController: UITableViewController {
         }
     }
 
-    // MARK: - Bookmark stuff
-
-    func loginSuccessfull(notification: NSNotification) {
-        startFetchAllPostsTask()
-    }
-
-    func bookmarkAdded(notification: NSNotification) {
-        startFetchAllPostsTask()
-    }
-
     func showEmptyState(message: String, spinner: Bool) {
         emptyState.hidden = false
         emptyStateLabel.text = message
@@ -167,6 +141,12 @@ class BookmarksTableViewController: UITableViewController {
     func hideEmptyState() {
         emptyState.hidden = true
         emptyStateSpinner.stopAnimating()
+    }
+
+    // MARK: - Bookmark stuff
+
+    func successfullAddOrLogin(notification: NSNotification) {
+        startFetchAllPostsTask()
     }
 
     func handleRequestError(notification: NSNotification) {

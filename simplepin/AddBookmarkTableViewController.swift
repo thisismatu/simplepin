@@ -102,11 +102,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         addBookmarkTask?.cancel()
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
