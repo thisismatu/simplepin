@@ -81,19 +81,6 @@ class BookmarksTableViewController: UITableViewController {
             object: nil, queue: nil,
             usingBlock: handleRequestError)
 
-        searchController.searchResultsUpdater = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.autocapitalizationType = .None
-        searchController.searchBar.spellCheckingType = .No
-        searchController.searchBar.searchBarStyle = .Default
-        searchController.searchBar.barTintColor = .whiteColor()
-        searchController.searchBar.translucent = false
-        searchController.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
-        searchController.searchBar.layer.borderWidth = 1
-        searchController.searchBar.setSearchFieldBackgroundImage(UIImage(named: "bg_searchfield"), forState: .Normal)
-        searchController.searchBar.searchTextPositionAdjustment = UIOffset.init(horizontal: 7.0, vertical: 0.0)
-        definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
 
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -121,6 +108,21 @@ class BookmarksTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    func configureSearchController() {
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.autocapitalizationType = .None
+        searchController.searchBar.spellCheckingType = .No
+        searchController.searchBar.searchBarStyle = .Default
+        searchController.searchBar.barTintColor = .whiteColor()
+        searchController.searchBar.translucent = false
+        searchController.searchBar.layer.borderColor = UIColor.whiteColor().CGColor
+        searchController.searchBar.layer.borderWidth = 1
+        searchController.searchBar.setSearchFieldBackgroundImage(UIImage(named: "bg_searchfield"), forState: .Normal)
+        searchController.searchBar.searchTextPositionAdjustment = UIOffset.init(horizontal: 7.0, vertical: 0.0)
+        definesPresentationContext = true
+        tableView.tableHeaderView = searchController.searchBar
+    }
     // MARK: - Bookmark stuff
 
     func loginSuccessfull(notification: NSNotification) {
