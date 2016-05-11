@@ -67,7 +67,6 @@ class LoginModalViewController: UIViewController {
         usernameField.delegate = self
         passwordField.delegate = self
     }
-
 }
 
 // MARK: - UITextFieldDelegate

@@ -84,13 +84,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
 
         checkValidBookmark()
 
-        if (defaults.boolForKey("privateByDefault") == true) || sharedValue == "no" {
-            privateSwitch.on = true
-        }
-
-        if toreadValue == "yes" {
-            toreadSwitch.on = true
-        }
+        privateSwitch.on = defaults.boolForKey("privateByDefault") || sharedValue == "no"
+        toreadSwitch.on = toreadValue == "yes"
 
         if !descriptionTextView.text.isEmpty {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
@@ -138,5 +133,4 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             descriptionTextView.backgroundColor = UIColor.whiteColor()
         }
     }
-
 }

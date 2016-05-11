@@ -63,26 +63,12 @@ class SettingsModalViewController: UITableViewController {
 
         usernameLabel.text = defaults.stringForKey("userName")
 
-        switch defaults.integerForKey("bookmarkCount") {
-        case 0:
-            userDetailLabel.text = "0 bookmarks"
-        case 1:
-            userDetailLabel.text = "1 bookmark"
-        default:
-            userDetailLabel.text = String(defaults.integerForKey("bookmarkCount")) + " bookmarks"
-        }
+        let count = defaults.integerForKey("bookmarkCount")
+        userDetailLabel.text = String(count) + " bookmark\(count == 1 ? "" : "s")"
 
-        if (defaults.boolForKey("markAsRead") == true) {
-            markAsReadSwitch.on = true
-        }
-
-        if (defaults.boolForKey("privateByDefault") == true) {
-            privateByDefaultSwitch.on = true
-        }
-
-        if (defaults.boolForKey("openInSafari") == true) {
-            openInSafariSwitch.on = true
-        }
+        markAsReadSwitch.on = defaults.boolForKey("markAsRead")
+        privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
+        openInSafariSwitch.on = defaults.boolForKey("openInSafari")
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
