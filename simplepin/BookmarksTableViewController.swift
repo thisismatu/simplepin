@@ -116,7 +116,7 @@ class BookmarksTableViewController: UITableViewController {
     func checkPasteboard() {
         if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
             if !bookmarksArray.contains( { $0.link == pasteboardUrl }) {
-                let alert = UIAlertController(title: "Add This Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
                 alert.addAction(UIAlertAction(title: "Add", style: .Default, handler: { action in
                     self.urlToPass = pasteboardUrl
