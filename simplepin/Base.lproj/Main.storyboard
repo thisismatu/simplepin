@@ -550,7 +550,6 @@
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xgb-RS-3mt">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                    <color key="tintColor" red="0.99607843139999996" green="0.21960784310000001" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <state key="normal" title="Log out"/>
                                                     <connections>
                                                         <action selector="logoutButtonPressed:" destination="S5y-x6-W5k" eventType="touchUpInside" id="mln-eN-N1A"/>

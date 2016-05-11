@@ -73,6 +73,8 @@ class SettingsModalViewController: UITableViewController {
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
         }
+
+        logoutButton.tintColor = UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0)
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
