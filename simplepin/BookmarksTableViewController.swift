@@ -74,7 +74,6 @@ class BookmarksTableViewController: UITableViewController {
         }
 
         configureSearchController()
-        checkPasteboard()
 
         self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
@@ -173,6 +172,7 @@ class BookmarksTableViewController: UITableViewController {
                 }
                 self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
                 self?.tableView.reloadData()
+                self?.checkPasteboard()
             }
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
