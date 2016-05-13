@@ -344,7 +344,6 @@ class BookmarksTableViewController: UITableViewController {
                 }
 
                 let alert = UIAlertController(title: bookmark.title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-
                 if bookmark.toread == "yes" {
                     alert.addAction(UIAlertAction(title: "Mark as Read", style: UIAlertActionStyle.Default, handler: { action in
                         self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: "no") { resultCode in
@@ -393,6 +392,10 @@ class BookmarksTableViewController: UITableViewController {
                     }
                 }))
                 alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                if let popoverController = alert.popoverPresentationController {
+                    popoverController.sourceView = tableView.cellForRowAtIndexPath(indexPath)
+                    popoverController.sourceRect = tableView.cellForRowAtIndexPath(indexPath)!.bounds
+                }
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }

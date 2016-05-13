@@ -67,3 +67,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
+
+enum UIUserInterfaceIdiom : Int {
+    case Unspecified
+
+    case Phone // iPhone and iPod touch style UI
+    case Pad // iPad style UI
+}

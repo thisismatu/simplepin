@@ -25,12 +25,17 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var rateAppCell: UITableViewCell!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let preferredStyle = UIDevice.currentDevice().userInterfaceIdiom == .Pad ? UIAlertControllerStyle.Alert : UIAlertControllerStyle.ActionSheet
+        let alert = UIAlertController(title: "Do You Want to Log out?", message: nil, preferredStyle: preferredStyle)
         alert.addAction(UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: { action in
             self.dismissViewControllerAnimated(true, completion: nil)
             self.appDelegate?.logOut()
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+        if let popoverController = alert.popoverPresentationController {
+            popoverController.sourceView = logoutButton
+            popoverController.sourceRect = logoutButton.bounds
+        }
         self.presentViewController(alert, animated: true, completion: nil)
     }
 
