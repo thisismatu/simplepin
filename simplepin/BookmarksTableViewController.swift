@@ -52,6 +52,7 @@ class BookmarksTableViewController: UITableViewController {
     var fetchTagsTask: NSURLSessionTask?
     var bookmarkToPass = BookmarkItem?()
     var urlToPass: NSURL?
+    var dontAddThisUrl: NSURL?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
@@ -114,9 +115,11 @@ class BookmarksTableViewController: UITableViewController {
 
     func checkPasteboard() {
         if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
-            if !bookmarksArray.contains( { $0.link == pasteboardUrl }) {
+            if !bookmarksArray.contains( { $0.link == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
                 let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                    self.dontAddThisUrl = pasteboardUrl
+                }))
                 alert.addAction(UIAlertAction(title: "Add", style: .Default, handler: { action in
                     self.urlToPass = pasteboardUrl
                     self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
@@ -313,8 +316,11 @@ class BookmarksTableViewController: UITableViewController {
         if segue.identifier == "openEditBookmarkModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let vc = navigationController.topViewController as? AddBookmarkTableViewController {
-                vc.bookmark = bookmarkToPass
-                vc.passedUrl = urlToPass
+                if bookmarkToPass != nil {
+                    vc.bookmark = bookmarkToPass
+                } else {
+                    vc.passedUrl = urlToPass
+                }
             }
         }
     }
