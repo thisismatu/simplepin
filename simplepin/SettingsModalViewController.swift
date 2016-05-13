@@ -13,6 +13,7 @@ class SettingsModalViewController: UITableViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
     let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/ultralight-photo-editor/id972428565?mt=8")! // TODO: change url
     let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
+    let device = UIDevice.currentDevice().userInterfaceIdiom
 
     @IBOutlet var usernameLabel: UILabel!
     @IBOutlet var userDetailLabel: UILabel!
@@ -25,18 +26,26 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var rateAppCell: UITableViewCell!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
-        let preferredStyle = UIDevice.currentDevice().userInterfaceIdiom == .Pad ? UIAlertControllerStyle.Alert : UIAlertControllerStyle.ActionSheet
-        let alert = UIAlertController(title: "Do You Want to Log out?", message: nil, preferredStyle: preferredStyle)
-        alert.addAction(UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: { action in
+        let alertController = UIAlertController(
+            title: device == .Pad ? "Do You Want to Log out?" : nil,
+            message: nil,
+            preferredStyle: device == .Pad ? .Alert : .ActionSheet)
+
+        let actionLogout = UIAlertAction(title: "Log out", style: UIAlertActionStyle.Destructive, handler: { action in
             self.dismissViewControllerAnimated(true, completion: nil)
             self.appDelegate?.logOut()
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        if let popoverController = alert.popoverPresentationController {
+        })
+        let actionCancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+
+        alertController.addAction(actionLogout)
+        alertController.addAction(actionCancel)
+
+        if let popoverController = alertController.popoverPresentationController {
             popoverController.sourceView = logoutButton
             popoverController.sourceRect = logoutButton.bounds
         }
-        self.presentViewController(alert, animated: true, completion: nil)
+
+        self.presentViewController(alertController, animated: true, completion: nil)
     }
 
     @IBAction func markAsReadPressed(sender: AnyObject) {
