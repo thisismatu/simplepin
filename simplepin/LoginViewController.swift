@@ -26,30 +26,25 @@ class LoginModalViewController: UIViewController {
                 return
         }
 
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("Couldn't Log in", message: "Try again when you're back online.")
+        if password.isEmpty || username.isEmpty {
             loginButton.enabled = true
-        } else {
-            if password.isEmpty || username.isEmpty {
-                loginButton.enabled = true
-                self.alertError("Please enter your username and password", message: nil)
+            self.alertError("Please enter your username and password", message: nil)
+            return
+        }
+        spinner.startAnimating()
+        fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
+            if let token = userToken {
+                self.defaults.setObject(username+":"+token, forKey: "userToken")
+                self.defaults.setObject(username, forKey: "userName")
+                self.defaults.setObject(false, forKey: "privateByDefault")
+                self.defaults.setObject(false, forKey: "markAsRead")
+                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                self.spinner.stopAnimating()
+                self.loginButton.enabled = true
+                self.alertErrorWithReachability("Incorrect Username or Password", message: nil)
                 return
-            }
-            spinner.startAnimating()
-            fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
-                if let token = userToken {
-                    self.defaults.setObject(username+":"+token, forKey: "userToken")
-                    self.defaults.setObject(username, forKey: "userName")
-                    self.defaults.setObject(false, forKey: "privateByDefault")
-                    self.defaults.setObject(false, forKey: "markAsRead")
-                    NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
-                    self.dismissViewControllerAnimated(true, completion: nil)
-                } else {
-                    self.spinner.stopAnimating()
-                    self.loginButton.enabled = true
-                    self.alertError("Incorrect Username or Password", message: nil)
-                    return
-                }
             }
         }
     }
