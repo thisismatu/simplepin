@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,6 +29,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if defaults.stringForKey("userToken") == nil {
             self.showLoginScreen(false)
         }
+
+        Fabric.with([Crashlytics.self])
 
         return true
     }

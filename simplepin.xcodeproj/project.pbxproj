@@ -19,6 +19,8 @@
 		CCAC5E631C84A8A1006BA336 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E611C84A8A1006BA336 /* LaunchScreen.storyboard */; };
 		CCAC5EF91C84EC75006BA336 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5EF81C84EC75006BA336 /* BookmarksTableViewController.swift */; };
 		CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5EFA1C84ED06006BA336 /* BookmarkTableViewCell.swift */; };
+		CCD2C4EF1CE9AA77008523CE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4ED1CE9AA77008523CE /* Fabric.framework */; };
+		CCD2C4F01CE9AA77008523CE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */; };
 		CCD6243F1CAA5731007621FC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD6243E1CAA5731007621FC /* Network.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		CCAC5E641C84A8A1006BA336 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCAC5EF81C84EC75006BA336 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		CCAC5EFA1C84ED06006BA336 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
+		CCD2C4ED1CE9AA77008523CE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		CCD6243E1CAA5731007621FC /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -45,6 +49,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCD2C4F01CE9AA77008523CE /* Crashlytics.framework in Frameworks */,
+				CCD2C4EF1CE9AA77008523CE /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -66,6 +72,8 @@
 			children = (
 				CCAC5E571C84A8A1006BA336 /* simplepin */,
 				CCAC5E561C84A8A1006BA336 /* Products */,
+				CCD2C4ED1CE9AA77008523CE /* Fabric.framework */,
+				CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -106,6 +114,7 @@
 				CCAC5E511C84A8A1006BA336 /* Sources */,
 				CCAC5E521C84A8A1006BA336 /* Frameworks */,
 				CCAC5E531C84A8A1006BA336 /* Resources */,
+				CCD2C4EC1CE9AA4C008523CE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -162,6 +171,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CCD2C4EC1CE9AA4C008523CE /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run 18b7be9fd8d6f74333326228f9b7b17beb0e6a5c 1843997cd076553a4e3df764b4d845f5f0ebee069aa40b5c31973bcde60aaefa";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CCAC5E511C84A8A1006BA336 /* Sources */ = {
@@ -292,6 +317,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = simplepin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.simplepin;
@@ -306,6 +335,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = simplepin/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.simplepin;
