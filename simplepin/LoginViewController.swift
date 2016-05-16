@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 import SafariServices
 
 class LoginModalViewController: UIViewController {
@@ -40,8 +42,9 @@ class LoginModalViewController: UIViewController {
                 self.defaults.setObject(username, forKey: "userName")
                 self.defaults.setObject(false, forKey: "privateByDefault")
                 self.defaults.setObject(false, forKey: "markAsRead")
-                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
                 self.dismissViewControllerAnimated(true, completion: nil)
+                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
             } else {
                 self.spinner.stopAnimating()
                 self.loginButton.enabled = true

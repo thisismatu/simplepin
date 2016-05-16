@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
     var addBookmarkTask: NSURLSessionTask?
@@ -95,6 +97,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         if !descriptionTextView.text.isEmpty {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
         }
+
+        Answers.logContentViewWithName("Add/edit bookmark view", contentType: "View", contentId: "addedit-1", customAttributes: [:])
     }
 
     override func viewDidDisappear(animated: Bool) {

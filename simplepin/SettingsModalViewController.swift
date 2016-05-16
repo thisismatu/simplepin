@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 
 class SettingsModalViewController: UITableViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
@@ -89,6 +91,8 @@ class SettingsModalViewController: UITableViewController {
         }
 
         logoutButton.tintColor = UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0)
+
+        Answers.logContentViewWithName("Settings view", contentType: "View", contentId: "settings-1", customAttributes: [:])
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
