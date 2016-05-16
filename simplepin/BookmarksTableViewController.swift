@@ -333,6 +333,7 @@ class BookmarksTableViewController: UITableViewController {
                 } else {
                     vc.passedUrl = urlToPass
                 }
+                bookmarkToPass = nil
             }
         }
     }
