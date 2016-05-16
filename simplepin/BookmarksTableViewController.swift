@@ -57,6 +57,7 @@ class BookmarksTableViewController: UITableViewController {
     let defaults = NSUserDefaults.standardUserDefaults()
     let searchController = UISearchController(searchResultsController: nil)
     let notifications = NSNotificationCenter.defaultCenter()
+    var searchIsActive: Bool {return searchController.active && searchController.searchBar.text != ""}
 
     @IBOutlet var emptyState: UIView!
     @IBOutlet var emptyStateSpinner: UIActivityIndicatorView!
@@ -176,6 +177,7 @@ class BookmarksTableViewController: UITableViewController {
                 self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
                 self?.tableView.reloadData()
                 self?.checkPasteboard()
+                self?.filterContentForSearchText(self?.searchController.searchBar.text ?? "")
             }
             fetchTagsTask = Network.fetchTags() { userTags in
                 self.defaults.setObject(userTags, forKey: "userTags")
@@ -231,11 +233,12 @@ class BookmarksTableViewController: UITableViewController {
     // MARK: - Table view
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.active && searchController.searchBar.text != "" {
+        if searchIsActive {
             return filteredBookmarks.count
         }
         return bookmarksArray.count
     }
+
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("BookmarkCell", forIndexPath: indexPath) as! BookmarkTableViewCell
@@ -244,7 +247,7 @@ class BookmarksTableViewController: UITableViewController {
         formatter.timeStyle = .NoStyle
 
         var bookmark: BookmarkItem
-        if searchController.active && searchController.searchBar.text != "" {
+        if searchIsActive {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
             bookmark = bookmarksArray[indexPath.row]
@@ -289,7 +292,7 @@ class BookmarksTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         var bookmark: BookmarkItem
-        if searchController.active && searchController.searchBar.text != "" {
+        if searchIsActive {
             bookmark = filteredBookmarks[indexPath.row]
         } else {
             bookmark = bookmarksArray[indexPath.row]
@@ -337,7 +340,7 @@ class BookmarksTableViewController: UITableViewController {
 
             if let indexPath = tableView.indexPathForRowAtPoint(touchPoint) {
                 var bookmark: BookmarkItem
-                if searchController.active && searchController.searchBar.text != "" {
+                if searchIsActive {
                     bookmark = filteredBookmarks[indexPath.row]
                 } else {
                     bookmark = bookmarksArray[indexPath.row]
