@@ -19,7 +19,6 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var spinner: UIActivityIndicatorView!
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
-        spinner.startAnimating()
         loginButton.enabled = false
 
         guard let password = passwordField.text,
@@ -29,15 +28,14 @@ class LoginModalViewController: UIViewController {
 
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Log in", message: "Try again when you're back online.")
-            spinner.stopAnimating()
             loginButton.enabled = true
         } else {
             if password.isEmpty || username.isEmpty {
-                spinner.stopAnimating()
                 loginButton.enabled = true
                 self.alertError("Please enter your username and password", message: nil)
                 return
             }
+            spinner.startAnimating()
             fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
                 if let token = userToken {
                     self.defaults.setObject(username+":"+token, forKey: "userToken")
