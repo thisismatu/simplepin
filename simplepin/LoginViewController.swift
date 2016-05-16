@@ -12,11 +12,13 @@ import SafariServices
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
     let defaults = NSUserDefaults.standardUserDefaults()
+    let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
+    @IBOutlet var stackBottomConstraint: NSLayoutConstraint!
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
         loginButton.enabled = false
@@ -59,6 +61,27 @@ class LoginModalViewController: UIViewController {
         super.viewDidLoad()
         usernameField.delegate = self
         passwordField.delegate = self
+        notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+
+    func keyboardWillShow(notification: NSNotification) {
+        self.stackBottomConstraint.constant = 176
+        UIView.animateWithDuration(0.1) {
+            self.view.layoutSubviews()
+        }
+    }
+
+    func keyboardWillHide(notification: NSNotification) {
+        stackBottomConstraint.constant = 16
+        UIView.animateWithDuration(0.1) {
+            self.view.layoutSubviews()
+        }
     }
 }
 
