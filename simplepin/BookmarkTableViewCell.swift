@@ -12,6 +12,6 @@ class BookmarkTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var unreadIndicator: UIView!
     @IBOutlet var tagsLabel: UILabel!
+    @IBOutlet var unreadIndicator: UIImageView!
 }
