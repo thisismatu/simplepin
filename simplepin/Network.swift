@@ -63,12 +63,17 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                let statusCode = (httpResponse as? NSHTTPURLResponse)?.statusCode
+
+                if error?.code == NSURLErrorTimedOut {
+                    NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
+                } else if statusCode == 401 {
+                    NSNotificationCenter.defaultCenter().postNotificationName("tokenChanged", object: nil)
+                } else if statusCode == 429 {
+                    NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
+                }
+
                 guard let data = data where error == nil else {
-                    if error?.code == NSURLErrorTimedOut {
-                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
-                    } else if error?.code == 429 {
-                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
-                    }
                     completion([])
                     return
                 }

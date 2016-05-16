@@ -43,6 +43,7 @@ class BookmarkItem {
 }
 
 class BookmarksTableViewController: UITableViewController {
+    let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
@@ -68,7 +69,8 @@ class BookmarksTableViewController: UITableViewController {
 
         notifications.addObserverForName("loginSuccessful", object: nil, queue: nil, usingBlock: successfullAddOrLogin)
         notifications.addObserverForName("bookmarkAdded", object: nil, queue: nil, usingBlock: successfullAddOrLogin)
-        notifications.addObserverForName("fetchAllPostsTimeOut", object: nil, queue: nil, usingBlock: handleRequestError)
+        notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
+        notifications.addObserverForName("tokenChanged", object: nil, queue: nil, usingBlock: tokenChanged)
         notifications.addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
 
         if defaults.stringForKey("userToken") != nil {
@@ -146,7 +148,7 @@ class BookmarksTableViewController: UITableViewController {
         emptyStateSpinner.stopAnimating()
     }
 
-    // MARK: - Bookmark stuff
+    // MARK: - Events
 
     func successfullAddOrLogin(notification: NSNotification) {
         startFetchAllPostsTask()
@@ -161,6 +163,13 @@ class BookmarksTableViewController: UITableViewController {
             alertError(title, message: message)
         }
     }
+
+    func tokenChanged(notification: NSNotification) {
+        dismissViewControllerAnimated(true, completion: nil)
+        appDelegate?.logOut()
+    }
+
+    // MARK: - Bookmark stuff
 
     func startFetchAllPostsTask() {
         if Reachability.isConnectedToNetwork() == false {
