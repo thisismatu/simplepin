@@ -225,17 +225,25 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        filteredBookmarks = bookmarksArray.filter { bookmark in
-            let titleMatch = bookmark.title.lowercaseString.containsString(searchText.lowercaseString)
-            let descriptionMatch = bookmark.description.lowercaseString.containsString(searchText.lowercaseString)
-            let tagMatch = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(searchText.lowercaseString)
-            return titleMatch || descriptionMatch || tagMatch
+        let searchArray = searchText.lowercaseString.componentsSeparatedByString(" ")
+
+        for (index, element) in searchArray.enumerate() where !element.isEmpty {
+            filteredBookmarks = bookmarksArray.filter { bookmark in
+                let title = bookmark.title.lowercaseString.containsString(element)
+                let description = bookmark.description.lowercaseString.containsString(element)
+                let tags = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(element)
+                return title || description || tags
+            }
+            print("\(index): \(element)")
+            print(filteredBookmarks)
         }
+
         if searchText != "" && filteredBookmarks.count == 0 {
             showEmptyState("Couldn't find \(searchText)", spinner: false)
         } else {
             hideEmptyState()
         }
+
         tableView.reloadData()
     }
 
@@ -420,4 +428,12 @@ extension BookmarksTableViewController: UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
     }
+}
+
+// implement Hashable to support Sets (and Equatable to support Hashable)
+extension BookmarkItem: Hashable, Equatable {
+    var hashValue: Int { return title.hashValue ^ description.hashValue }
+}
+func ==(lhs: BookmarkItem, rhs: BookmarkItem) -> Bool {
+    return lhs.title == rhs.title && lhs.description == rhs.description
 }
