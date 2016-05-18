@@ -228,6 +228,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
         refreshControl.endRefreshing()
     }
 
+    // MARK: - Search
+
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         let searchTextArray = searchText.lowercaseString.componentsSeparatedByString(" ")
         var searchResults: [Set<BookmarkItem>] = []
@@ -268,9 +270,10 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
     }
 
     func logSearchQuery() {
-        let search = String(searchTimer?.userInfo)
-        if search.characters.count >= 3 {
-            Answers.logSearchWithQuery(search, customAttributes: nil)
+        if let search = searchTimer?.userInfo as? String {
+            if search.characters.count > 2 {
+                Answers.logSearchWithQuery(search, customAttributes: nil)
+            }
         }
     }
 
