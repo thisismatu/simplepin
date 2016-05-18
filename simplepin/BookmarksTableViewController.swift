@@ -44,7 +44,7 @@ class BookmarkItem {
     }
 }
 
-class BookmarksTableViewController: UITableViewController {
+class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
@@ -61,6 +61,7 @@ class BookmarksTableViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
     let notifications = NSNotificationCenter.defaultCenter()
     var searchIsActive: Bool {return searchController.active && searchController.searchBar.text != ""}
+    var searchTimer: NSTimer?
 
     @IBOutlet var emptyState: UIView!
     @IBOutlet var emptyStateSpinner: UIActivityIndicatorView!
@@ -103,6 +104,7 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func configureSearchController() {
+        searchController.searchBar.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchBar.autocapitalizationType = .None
@@ -257,11 +259,19 @@ class BookmarksTableViewController: UITableViewController {
             hideEmptyState()
         }
 
-        if searchText.characters.count >= 3 {
-            Answers.logSearchWithQuery(searchText, customAttributes: nil)
-        }
-
         tableView.reloadData()
+    }
+
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        searchTimer?.invalidate()
+        searchTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(BookmarksTableViewController.logSearchQuery), userInfo: searchText, repeats: false)
+    }
+
+    func logSearchQuery() {
+        let search = String(searchTimer?.userInfo)
+        if search.characters.count >= 3 {
+            Answers.logSearchWithQuery(search, customAttributes: nil)
+        }
     }
 
     // MARK: - Table view
