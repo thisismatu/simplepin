@@ -257,7 +257,10 @@ class BookmarksTableViewController: UITableViewController {
             hideEmptyState()
         }
 
-        Answers.logSearchWithQuery(searchText, customAttributes: nil)
+        if searchText.characters.count >= 3 {
+            Answers.logSearchWithQuery(searchText, customAttributes: nil)
+        }
+
         tableView.reloadData()
     }
 
