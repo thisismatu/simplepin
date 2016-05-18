@@ -225,20 +225,32 @@ class BookmarksTableViewController: UITableViewController {
     }
 
     func filterContentForSearchText(searchText: String, scope: String = "All") {
-        let searchArray = searchText.lowercaseString.componentsSeparatedByString(" ")
+        let searchTextArray = searchText.lowercaseString.componentsSeparatedByString(" ")
+        var searchResults: [Set<BookmarkItem>] = []
 
-        for (index, element) in searchArray.enumerate() where !element.isEmpty {
-            filteredBookmarks = bookmarksArray.filter { bookmark in
-                let title = bookmark.title.lowercaseString.containsString(element)
-                let description = bookmark.description.lowercaseString.containsString(element)
-                let tags = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(element)
+        for item in searchTextArray where !item.isEmpty {
+            let searchResult = bookmarksArray.filter { bookmark in
+                let title = bookmark.title.lowercaseString.containsString(item)
+                let description = bookmark.description.lowercaseString.containsString(item)
+                let tags = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(item)
                 return title || description || tags
             }
-            print("\(index): \(element)")
-            print(filteredBookmarks)
+            searchResults.append(Set(searchResult))
+            print(searchResults)
         }
 
-        if searchText != "" && filteredBookmarks.count == 0 {
+        if let first = searchResults.first {
+            var result = first
+            for item in searchResults[1..<searchResults.count] {
+                result = result.intersect(item)
+            }
+            filteredBookmarks = Array(result)
+            print(filteredBookmarks.count)
+        } else {
+            filteredBookmarks = []
+        }
+
+        if !searchTextArray.isEmpty && filteredBookmarks.isEmpty {
             showEmptyState("Couldn't find \(searchText)", spinner: false)
         } else {
             hideEmptyState()
