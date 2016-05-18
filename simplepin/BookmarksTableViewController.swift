@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Fabric
+import Crashlytics
 import SafariServices
 
 class BookmarkItem {
@@ -255,6 +257,7 @@ class BookmarksTableViewController: UITableViewController {
             hideEmptyState()
         }
 
+        Answers.logSearchWithQuery(searchText, customAttributes: nil)
         tableView.reloadData()
     }
 
