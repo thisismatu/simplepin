@@ -236,7 +236,6 @@ class BookmarksTableViewController: UITableViewController {
                 return title || description || tags
             }
             searchResults.append(Set(searchResult))
-            print(searchResults)
         }
 
         if let first = searchResults.first {
@@ -244,8 +243,8 @@ class BookmarksTableViewController: UITableViewController {
             for item in searchResults[1..<searchResults.count] {
                 result = result.intersect(item)
             }
-            filteredBookmarks = Array(result)
-            print(filteredBookmarks.count)
+            let sortedResult = result.sort({ $0.date > $1.date })
+            filteredBookmarks = Array(sortedResult)
         } else {
             filteredBookmarks = []
         }
