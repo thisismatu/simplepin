@@ -18,7 +18,11 @@ class BookmarkTableViewCell: UITableViewCell {
 
     override func layoutSubviews() {
         super.layoutSubviews()
+
         privateIndicator.image = privateIndicator.image?.imageWithRenderingMode(.AlwaysTemplate)
         privateIndicator.tintColor = UIColor.grayColor()
+
+        unreadIndicator.image = unreadIndicator.image?.imageWithRenderingMode(.AlwaysTemplate)
+        unreadIndicator.tintColor = self.window?.tintColor
     }
 }
