@@ -149,7 +149,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -358,7 +358,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,
