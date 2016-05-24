@@ -75,6 +75,11 @@ class LoginModalViewController: UIViewController {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        usernameField.resignFirstResponder()
+        passwordField.resignFirstResponder()
+    }
+
     func keyboardWillShow(notification: NSNotification) {
         self.stackBottomConstraint.constant = 176
         UIView.animateWithDuration(0.1) {
