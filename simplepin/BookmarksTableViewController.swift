@@ -319,13 +319,6 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
             cell.tagsLabel.textColor = self.view.tintColor
         }
 
-        if bookmark.shared == "no" {
-            cell.titleLabel.textColor = UIColor.darkGrayColor()
-            cell.titleLabel.text = "Private: " + bookmark.title
-        } else {
-            cell.titleLabel.textColor = UIColor.blackColor()
-        }
-
         if bookmark.toread == "no" {
             cell.unreadIndicator.hidden = true
             cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
@@ -333,6 +326,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
             cell.unreadIndicator.hidden = false
             cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
+
+        cell.privateIndicator.hidden = bookmark.shared == "no" ? false : true
 
         return cell
     }
