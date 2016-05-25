@@ -68,6 +68,7 @@ class LoginModalViewController: UIViewController {
         passwordField.delegate = self
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
     }
 
     override func viewWillDisappear(animated: Bool) {
@@ -91,6 +92,16 @@ class LoginModalViewController: UIViewController {
         stackBottomConstraint.constant = 16
         UIView.animateWithDuration(0.1) {
             self.view.layoutSubviews()
+        }
+    }
+
+    func handleRequestError(notification: NSNotification) {
+        if let info = notification.userInfo as? Dictionary<String, String> {
+            guard let title = info["title"],
+                let message = info["message"] else {
+                    return
+            }
+            alertError(title, message: message)
         }
     }
 }

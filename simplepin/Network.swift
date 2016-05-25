@@ -21,6 +21,13 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+                if let mimeType = httpResponse?.MIMEType {
+                    if mimeType == "text/html" {
+                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Pinboard is Down", "message": "But it cannot be kept down. Try again in a while."])
+                    }
+                }
+
                 guard let data = data where error == nil else {
                     completion(nil)
                     return
@@ -64,6 +71,12 @@ struct Network {
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 let statusCode = (httpResponse as? NSHTTPURLResponse)?.statusCode
+
+                if let mimeType = httpResponse?.MIMEType {
+                    if mimeType == "text/html" {
+                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Pinboard is Down", "message": "But it cannot be kept down. Try again in a while."])
+                    }
+                }
 
                 if error?.code == NSURLErrorTimedOut {
                     NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
