@@ -26,6 +26,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var versionLabel: UILabel!
     @IBOutlet var sendFeedbackCell: UITableViewCell!
     @IBOutlet var rateAppCell: UITableViewCell!
+    @IBOutlet var boldTitleSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alertController = UIAlertController(
@@ -51,26 +52,34 @@ class SettingsModalViewController: UITableViewController {
     }
 
     @IBAction func markAsReadPressed(sender: AnyObject) {
-        if (markAsReadSwitch.on == true) {
+        if markAsReadSwitch.on == true {
             defaults.setObject(true, forKey: "markAsRead")
-        } else if (markAsReadSwitch.on == false) {
+        } else {
             defaults.setObject(false, forKey: "markAsRead")
         }
     }
 
     @IBAction func privateByDefaultPressed(sender: AnyObject) {
-        if (privateByDefaultSwitch.on == true) {
+        if privateByDefaultSwitch.on == true {
             defaults.setObject(true, forKey: "privateByDefault")
-        } else if (privateByDefaultSwitch.on == false) {
+        } else {
             defaults.setObject(false, forKey: "privateByDefault")
         }
     }
 
     @IBAction func openInSafariSwitchPressed(sender: AnyObject) {
-        if (openInSafariSwitch.on == true) {
+        if openInSafariSwitch.on == true {
             defaults.setObject(true, forKey: "openInSafari")
-        } else if (openInSafariSwitch.on == false) {
+        } else {
             defaults.setObject(false, forKey: "openInSafari")
+        }
+    }
+
+    @IBAction func boldTitleSwitchPressed(sender: AnyObject) {
+        if boldTitleSwitch.on == true {
+            defaults.setObject(true, forKey: "boldTitleFont")
+        } else {
+            defaults.setObject(false, forKey: "boldTitleFont")
         }
     }
 
@@ -85,6 +94,7 @@ class SettingsModalViewController: UITableViewController {
         markAsReadSwitch.on = defaults.boolForKey("markAsRead")
         privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
         openInSafariSwitch.on = defaults.boolForKey("openInSafari")
+        boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version

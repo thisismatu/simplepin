@@ -371,7 +371,9 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
-    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) { }
+    @IBAction func unwindSettingsModal(segue: UIStoryboardSegue) {
+        self.tableView.reloadData()
+    }
 
     @IBAction func unwindAddBookmarkModal(segue: UIStoryboardSegue) { }
 
