@@ -255,7 +255,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
             filteredBookmarks = []
         }
 
-        if !searchTextArray.isEmpty && filteredBookmarks.isEmpty {
+        if !searchText.isEmpty && filteredBookmarks.isEmpty {
             showEmptyState("Couldn't find \(searchText)", spinner: false)
         } else {
             hideEmptyState()
