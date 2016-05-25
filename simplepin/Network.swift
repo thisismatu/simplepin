@@ -11,6 +11,26 @@ import SystemConfiguration
 
 struct Network {
 
+    static func checkHttpResponse(response: NSURLResponse) {
+        let notification = NSNotificationCenter.defaultCenter()
+        let statusCode = (response as? NSHTTPURLResponse)?.statusCode
+
+        if statusCode == 401 {
+            notification.postNotificationName("tokenChanged", object: nil)
+        } else if statusCode == 429 {
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
+        } else if response.MIMEType == "text/html" {
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Something Went Wrong", "message": "Pinboard might be down. Try again in a while."])
+        }
+    }
+
+    static func checkError(error: NSError) {
+        let notification = NSNotificationCenter.defaultCenter()
+        if error.code == NSURLErrorTimedOut {
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
+        }
+    }
+
     // MARK: - Fetch API Token
     static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
 
@@ -21,17 +41,17 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-
-                if let mimeType = httpResponse?.MIMEType {
-                    if mimeType == "text/html" {
-                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Pinboard is Down", "message": "But it cannot be kept down. Try again in a while."])
-                    }
+                if let response = httpResponse {
+                    checkHttpResponse(response)
+                } else if let err = error {
+                    checkError(err)
                 }
 
                 guard let data = data where error == nil else {
                     completion(nil)
                     return
                 }
+
                 let userToken = parseAPIToken(data)
                 completion(userToken)
             })
@@ -70,26 +90,17 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                let statusCode = (httpResponse as? NSHTTPURLResponse)?.statusCode
-
-                if let mimeType = httpResponse?.MIMEType {
-                    if mimeType == "text/html" {
-                        NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Pinboard is Down", "message": "But it cannot be kept down. Try again in a while."])
-                    }
-                }
-
-                if error?.code == NSURLErrorTimedOut {
-                    NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
-                } else if statusCode == 401 {
-                    NSNotificationCenter.defaultCenter().postNotificationName("tokenChanged", object: nil)
-                } else if statusCode == 429 {
-                    NSNotificationCenter.defaultCenter().postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
+                if let response = httpResponse {
+                    checkHttpResponse(response)
+                } else if let err = error {
+                    checkError(err)
                 }
 
                 guard let data = data where error == nil else {
                     completion([])
                     return
                 }
+
                 let optionalBookmarks = parseJSONData(data)
                 completion(optionalBookmarks)
             })
@@ -139,6 +150,12 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let response = httpResponse {
+                    checkHttpResponse(response)
+                } else if let err = error {
+                    checkError(err)
+                }
+
                 guard let data = data where error == nil else {
                     completion(nil)
                     return
@@ -238,6 +255,7 @@ struct Network {
                     completion(nil)
                     return
                 }
+
                 let resultCode = parseAddBookmark(data)
                 completion(resultCode)
             })
