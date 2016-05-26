@@ -54,6 +54,7 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func markAsReadPressed(sender: AnyObject) {
         if markAsReadSwitch.on == true {
             defaults.setObject(true, forKey: "markAsRead")
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "markAsRead"])
         } else {
             defaults.setObject(false, forKey: "markAsRead")
         }
@@ -70,6 +71,7 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func openInSafariSwitchPressed(sender: AnyObject) {
         if openInSafariSwitch.on == true {
             defaults.setObject(true, forKey: "openInSafari")
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "openInSafari"])
         } else {
             defaults.setObject(false, forKey: "openInSafari")
         }
@@ -78,6 +80,7 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func boldTitleSwitchPressed(sender: AnyObject) {
         if boldTitleSwitch.on == true {
             defaults.setObject(true, forKey: "boldTitleFont")
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "boldTitleFont"])
         } else {
             defaults.setObject(false, forKey: "boldTitleFont")
         }
