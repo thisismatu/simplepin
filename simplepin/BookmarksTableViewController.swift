@@ -301,7 +301,12 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
         }
 
         cell.titleLabel.text = bookmark.title
-        cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
+
+        if defaults.boolForKey("relativeDate") == true {
+            cell.dateLabel.text = bookmark.date.timeAgo()
+        } else {
+            cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
+        }
 
         if bookmark.description.isEmpty {
             cell.descriptionLabel.hidden = true
