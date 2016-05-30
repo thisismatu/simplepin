@@ -35,14 +35,13 @@ class LoginModalViewController: UIViewController {
             self.alertError("Please enter your username and password", message: nil)
             return
         }
+
         spinner.alpha = CGFloat(1.0)
         spinner.startAnimating()
         fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
             if let token = userToken {
                 self.defaults.setObject(username+":"+token, forKey: "userToken")
                 self.defaults.setObject(username, forKey: "userName")
-                self.defaults.setObject(false, forKey: "privateByDefault")
-                self.defaults.setObject(false, forKey: "markAsRead")
                 self.dismissViewControllerAnimated(true, completion: nil)
                 NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
                 Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
