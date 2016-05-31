@@ -110,7 +110,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         if section == 0 {
             guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
             let title = "Separate tags with space.\n\n"
-            return title + tags.joinWithSeparator(", ")
+            return title + "Top tags: " + tags.joinWithSeparator(", ")
         } else {
             return nil
         }

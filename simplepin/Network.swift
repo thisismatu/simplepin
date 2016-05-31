@@ -317,10 +317,13 @@ struct Network {
     }
 
     static func parseTags(data: NSData) -> [String]? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: String] {
             var tagsArray: [String] = []
             for item in jsonObject {
-                tagsArray.append(item.0)
+                let count = Int(item.1)
+                if count >= 2 {
+                    tagsArray.append(item.0)
+                }
             }
             tagsArray.sortInPlace()
             return tagsArray
