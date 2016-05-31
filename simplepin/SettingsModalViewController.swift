@@ -27,6 +27,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var sendFeedbackCell: UITableViewCell!
     @IBOutlet var rateAppCell: UITableViewCell!
     @IBOutlet var boldTitleSwitch: UISwitch!
+    @IBOutlet var relativeDateSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alertController = UIAlertController(
@@ -86,6 +87,14 @@ class SettingsModalViewController: UITableViewController {
         }
     }
 
+    @IBAction func relativeDateSwitchPressed(sender: AnyObject) {
+        if relativeDateSwitch.on == true {
+            defaults.setBool(true, forKey: "relativeDate")
+        } else {
+            defaults.setBool(false, forKey: "relativeDate")
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -98,6 +107,7 @@ class SettingsModalViewController: UITableViewController {
         privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
         openInSafariSwitch.on = defaults.boolForKey("openInSafari")
         boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
+        relativeDateSwitch.on = defaults.boolForKey("relativeDate")
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
