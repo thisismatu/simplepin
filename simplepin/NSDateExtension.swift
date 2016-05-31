@@ -19,36 +19,44 @@ extension NSDate {
     func timeAgo() -> String {
         let calendar = NSCalendar.currentCalendar()
         let now = NSDate()
-        let unitFlags: NSCalendarUnit = [.Second, .Minute, .Hour, .Day, .WeekOfYear, .Month,]
+        let unitFlags: NSCalendarUnit = [.Minute, .Hour, .Day]
         let components = calendar.components(unitFlags, fromDate: self, toDate: now, options: [])
 
-        if components.month > 1 {
-            let formatter = NSDateFormatter()
-            formatter.dateFormat = "MMMM yyyy"
+        let componentsFormatter = NSDateComponentsFormatter()
+        componentsFormatter.calendar?.locale = NSLocale(localeIdentifier: "en")
+
+        let formatter = NSDateFormatter()
+        formatter.locale = NSLocale(localeIdentifier: "en")
+        formatter.dateFormat = "MMMM yyyy"
+
+        func formatTimeAgo(unit: NSCalendarUnit) -> String {
+            componentsFormatter.allowedUnits = unit
+            componentsFormatter.unitsStyle = .Full
+            guard let string = componentsFormatter.stringFromDate(self, toDate: now) else { return "" }
+            return string + " ago"
+        }
+
+        if components.day > 90 {
             return formatter.stringFromDate(self)
         }
 
-        if components.weekOfYear > 0 {
-            return "\(components.weekOfYear) week\(components.weekOfYear == 1 ? "" : "s") ago"
+        if components.day > 21 {
+            return formatTimeAgo(.WeekOfMonth)
         }
 
         if components.day > 0 {
-            return "\(components.day) day\(components.day == 1 ? "" : "s") ago"
+            return formatTimeAgo(.Day)
         }
 
         if components.hour > 0 {
-            return "\(components.hour) hour\(components.hour == 1 ? "" : "s") ago"
+            return formatTimeAgo(.Hour)
         }
 
         if components.minute > 0 {
-            return "\(components.minute) minute\(components.minute == 1 ? "" : "s") ago"
+            return formatTimeAgo(.Minute)
         }
 
-        if components.second > 0 {
-            return "\(components.second) second\(components.second == 1 ? "" : "s") ago"
-        }
-        
-        return "Just Now"
+        return "Just now"
     }
 
 }
