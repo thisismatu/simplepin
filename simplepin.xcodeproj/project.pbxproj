@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4A37EA111CAC616B0042796D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A37EA101CAC616B0042796D /* LoginViewController.swift */; };
+		4ACF3E141CFF5B620006A587 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */; };
 		CC1E531B1CB80A20002532FB /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */; };
 		CC1E53201CB99102002532FB /* AddBookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1E531F1CB99102002532FB /* AddBookmarkTableViewController.swift */; };
 		CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3219271CB2FAE600284118 /* NSDateExtension.swift */; };
@@ -26,6 +27,7 @@
 
 /* Begin PBXFileReference section */
 		4A37EA101CAC616B0042796D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		CC1E531F1CB99102002532FB /* AddBookmarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookmarkTableViewController.swift; sourceTree = "<group>"; };
 		CC3219271CB2FAE600284118 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
@@ -97,6 +99,7 @@
 		CCAC5E571C84A8A1006BA336 /* simplepin */ = {
 			isa = PBXGroup;
 			children = (
+				4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */,
 				CCAC5E641C84A8A1006BA336 /* Info.plist */,
 				CC32192C1CB3033F00284118 /* Extensions */,
 				4A134B201CEB84D4004A99F4 /* Storyboards */,
@@ -149,7 +152,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -211,6 +214,7 @@
 				CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */,
 				CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */,
 				CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */,
+				4ACF3E141CFF5B620006A587 /* TagCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -358,7 +362,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,

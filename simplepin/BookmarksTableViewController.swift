@@ -44,7 +44,7 @@ class BookmarkItem {
     }
 }
 
-class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
+class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
@@ -316,12 +316,10 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
         }
 
         if bookmark.tags.count == 0 {
-            cell.tagsLabel.hidden = true
+            cell.collectionView.collectionViewLayout.invalidateLayout()
+            cell.collectionView.hidden = true
         } else {
-            cell.tagsLabel.hidden = false
-            cell.tagsLabel.text = nil
-            cell.tagsLabel.text = bookmark.tags.joinWithSeparator("  ")
-            cell.tagsLabel.textColor = self.view.tintColor
+            cell.collectionView.hidden = false
         }
 
         if bookmark.toread == "no" {
@@ -335,6 +333,11 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
         cell.privateIndicator.hidden = bookmark.shared == "no" ? false : true
 
         return cell
+    }
+
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = cell as! BookmarkTableViewCell
+        cell.setCollectionViewDataSourceDelegate(self, forRow: indexPath.row)
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -358,6 +361,28 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate {
 
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
         self.showBookmark(bookmark.link)
+    }
+
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if searchIsActive {
+            return filteredBookmarks[collectionView.tag].tags.count
+        }
+        return bookmarksArray[collectionView.tag].tags.count
+    }
+
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionViewCell
+
+        var bookmark: BookmarkItem
+        if searchIsActive {
+            bookmark = filteredBookmarks[collectionView.tag]
+        } else {
+            bookmark = bookmarksArray[collectionView.tag]
+        }
+
+        cell.tagLabel.text = bookmark.tags[indexPath.row]
+
+        return cell
     }
 
     // MARK: - Navigation

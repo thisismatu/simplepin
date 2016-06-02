@@ -14,9 +14,9 @@ class BookmarkTableViewCell: UITableViewCell {
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
     @IBOutlet var dateLabel: UILabel!
-    @IBOutlet var tagsLabel: UILabel!
     @IBOutlet var unreadIndicator: UIImageView!
     @IBOutlet var privateIndicator: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
 
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -31,4 +31,15 @@ class BookmarkTableViewCell: UITableViewCell {
             titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
     }
+
+    func setCollectionViewDataSourceDelegate
+        <D: protocol<UICollectionViewDataSource, UICollectionViewDelegate>>
+        (dataSourceDelegate: D, forRow row: Int) {
+
+        collectionView.delegate = dataSourceDelegate
+        collectionView.dataSource = dataSourceDelegate
+        collectionView.tag = row
+        collectionView.reloadData()
+    }
+
 }
