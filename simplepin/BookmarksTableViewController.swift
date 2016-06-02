@@ -239,6 +239,9 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 let title = bookmark.title.lowercaseString.containsString(item)
                 let description = bookmark.description.lowercaseString.containsString(item)
                 let tags = bookmark.tags.joinWithSeparator(" ").lowercaseString.containsString(item)
+                if scope == "Tag" {
+                    return tags
+                }
                 return title || description || tags
             }
             searchResults.append(Set(searchResult))
@@ -363,6 +366,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         self.showBookmark(bookmark.link)
     }
 
+    // MARK: - Collection View
+
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if searchIsActive {
             return filteredBookmarks[collectionView.tag].tags.count
@@ -383,6 +388,18 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         cell.tagLabel.text = bookmark.tags[indexPath.row]
 
         return cell
+    }
+
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        var bookmark: BookmarkItem
+        if searchIsActive {
+            bookmark = filteredBookmarks[collectionView.tag]
+        } else {
+            bookmark = bookmarksArray[collectionView.tag]
+        }
+        searchController.active = true
+        searchController.searchBar.text = bookmark.tags[indexPath.row]
+        filterContentForSearchText(bookmark.tags[indexPath.row], scope: "Tag")
     }
 
     // MARK: - Navigation

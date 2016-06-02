@@ -10,4 +10,9 @@ import UIKit
 
 class TagCollectionViewCell: UICollectionViewCell  {
     @IBOutlet var tagLabel: UILabel!
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        tagLabel.textColor = self.window?.tintColor
+    }
 }
