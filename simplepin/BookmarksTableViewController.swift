@@ -375,6 +375,22 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         return bookmarksArray[collectionView.tag].tags.count
     }
 
+    func collectionView(collectionView: UICollectionView,layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+
+        var bookmark: BookmarkItem
+        if searchIsActive {
+            bookmark = filteredBookmarks[collectionView.tag]
+        } else {
+            bookmark = bookmarksArray[collectionView.tag]
+        }
+
+        let tag = bookmark.tags[indexPath.row]
+        let size = tag.sizeWithAttributes([NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)])
+        let finalSize = CGSize(width: size.width + 12, height: 20)
+
+        return finalSize
+    }
+
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("TagCell", forIndexPath: indexPath) as! TagCollectionViewCell
 
@@ -400,6 +416,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         searchController.active = true
         searchController.searchBar.text = bookmark.tags[indexPath.row]
         filterContentForSearchText(bookmark.tags[indexPath.row], scope: "Tag")
+        collectionView.deselectItemAtIndexPath(indexPath, animated: true)
     }
 
     // MARK: - Navigation
