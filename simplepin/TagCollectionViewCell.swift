@@ -13,7 +13,12 @@ class TagCollectionViewCell: UICollectionViewCell  {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        tagLabel.textColor = self.window?.tintColor
-        tagLabel.highlightedTextColor = self.window?.tintColor
+        tagLabel.textColor = Colors.Blue
+        tagLabel.backgroundColor = Colors.LightBlue
+        tagLabel.highlightedTextColor = Colors.Blue
+        tagLabel.layer.masksToBounds = true
+        tagLabel.layer.cornerRadius = 2
+        tagLabel.layer.borderWidth = 0.5
+        tagLabel.layer.borderColor = Colors.DarkBlue.colorWithAlphaComponent(0.12).CGColor
     }
 }

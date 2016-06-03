@@ -20,10 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        let simplepinBlue = UIColor(red: 0.0, green: 0.4, blue: 0.8, alpha:1.0)
-        self.window?.tintColor = simplepinBlue
-        UINavigationBar.appearance().tintColor = simplepinBlue
-        UITabBar.appearance().tintColor = simplepinBlue
+        self.window?.tintColor = Colors.Blue
+        UINavigationBar.appearance().tintColor = Colors.Blue
+        UITabBar.appearance().tintColor = Colors.Blue
 
         self.storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
         if defaults.stringForKey("userToken") == nil {

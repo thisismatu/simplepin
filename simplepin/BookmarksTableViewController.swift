@@ -82,13 +82,13 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
         configureSearchController()
 
-        self.refreshControl?.tintColor = UIColor(white: 0, alpha: 0.38)
+        self.refreshControl?.tintColor = UIColor.lightGrayColor()
         self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
         let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
         self.view.addGestureRecognizer(longPressRecognizer)
 
-        tableView.estimatedRowHeight = 120.0
+        tableView.estimatedRowHeight = 128.0
         tableView.rowHeight = UITableViewAutomaticDimension
     }
 
@@ -386,7 +386,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
         let tag = bookmark.tags[indexPath.row]
         let size = tag.sizeWithAttributes([NSFontAttributeName: UIFont.preferredFontForTextStyle(UIFontTextStyleSubheadline)])
-        let finalSize = CGSize(width: size.width + 12, height: 20)
+        let finalSize = CGSize(width: size.width + 12, height: 24)
 
         return finalSize
     }

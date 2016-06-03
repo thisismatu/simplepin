@@ -23,6 +23,7 @@
 		CCD2C4EF1CE9AA77008523CE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4ED1CE9AA77008523CE /* Fabric.framework */; };
 		CCD2C4F01CE9AA77008523CE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */; };
 		CCD6243F1CAA5731007621FC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD6243E1CAA5731007621FC /* Network.swift */; };
+		CCF0BCD11D021E05007802B0 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF0BCD01D021E05007802B0 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		CCD2C4ED1CE9AA77008523CE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		CCD6243E1CAA5731007621FC /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		CCF0BCD01D021E05007802B0 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				CC3219271CB2FAE600284118 /* NSDateExtension.swift */,
 				CC32192A1CB3032F00284118 /* StringExtension.swift */,
 				CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */,
+				CCF0BCD01D021E05007802B0 /* Colors.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -152,7 +155,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A37EA111CAC616B0042796D /* LoginViewController.swift in Sources */,
+				CCF0BCD11D021E05007802B0 /* Colors.swift in Sources */,
 				CC1E53201CB99102002532FB /* AddBookmarkTableViewController.swift in Sources */,
 				CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */,
 				CC1E531B1CB80A20002532FB /* UIViewControllerExtension.swift in Sources */,
@@ -362,7 +366,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,

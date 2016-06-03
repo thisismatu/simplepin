@@ -25,7 +25,7 @@ class BookmarkTableViewCell: UITableViewCell {
         privateIndicator.tintColor = UIColor.grayColor()
 
         unreadIndicator.image = unreadIndicator.image?.imageWithRenderingMode(.AlwaysTemplate)
-        unreadIndicator.tintColor = self.window?.tintColor
+        unreadIndicator.tintColor = Colors.Blue
 
         if defaults.boolForKey("boldTitleFont") == true {
             titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)

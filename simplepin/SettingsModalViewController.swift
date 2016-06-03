@@ -113,7 +113,7 @@ class SettingsModalViewController: UITableViewController {
             versionLabel.text = version
         }
 
-        logoutButton.tintColor = UIColor(red:1.00, green:0.23, blue:0.19, alpha:1.0)
+        logoutButton.tintColor = Colors.Red
 
         Answers.logContentViewWithName("Settings view", contentType: "View", contentId: "settings-1", customAttributes: [:])
     }
