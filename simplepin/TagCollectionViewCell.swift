@@ -14,5 +14,6 @@ class TagCollectionViewCell: UICollectionViewCell  {
     override func layoutSubviews() {
         super.layoutSubviews()
         tagLabel.textColor = self.window?.tintColor
+        tagLabel.highlightedTextColor = self.window?.tintColor
     }
 }
