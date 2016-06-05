@@ -90,6 +90,7 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func relativeDateSwitchPressed(sender: AnyObject) {
         if relativeDateSwitch.on == true {
             defaults.setBool(true, forKey: "relativeDate")
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "relativeDate"])
         } else {
             defaults.setBool(false, forKey: "relativeDate")
         }
