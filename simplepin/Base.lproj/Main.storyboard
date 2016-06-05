@@ -522,6 +522,9 @@
                                                         </label>
                                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6Ry-E1-ZFB">
                                                             <rect key="frame" x="519" y="0.5" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="relativeDateSwitchPressed:" destination="S5y-x6-W5k" eventType="valueChanged" id="gQm-Vi-g6M"/>
+                                                            </connections>
                                                         </switch>
                                                     </subviews>
                                                 </stackView>
