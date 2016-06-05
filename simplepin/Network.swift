@@ -11,24 +11,33 @@ import SystemConfiguration
 
 struct Network {
 
-    static func checkHttpResponse(response: NSURLResponse) {
+    static func checkHttpResponse(response: NSURLResponse) -> Bool {
         let notification = NSNotificationCenter.defaultCenter()
         let statusCode = (response as? NSHTTPURLResponse)?.statusCode
+        let defaults = NSUserDefaults.standardUserDefaults()
 
         if statusCode == 401 {
-            notification.postNotificationName("tokenChanged", object: nil)
+            if defaults.stringForKey("userToken") != nil {
+                notification.postNotificationName("tokenChanged", object: nil)
+            }
+            return false
         } else if statusCode == 429 {
-            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["message": "Too Many Requests", "message": "Try again in a couple of minutes"])
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Too Many Requests", "message": "Try again in a couple of minutes"])
+            return false
         } else if response.MIMEType == "text/html" {
             notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Something Went Wrong", "message": "Pinboard might be down. Try again in a while."])
+            return false
         }
+        return true
     }
 
-    static func checkError(error: NSError) {
+    static func checkError(error: NSError) -> Bool {
         let notification = NSNotificationCenter.defaultCenter()
         if error.code == NSURLErrorTimedOut {
             notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
+            return false
         }
+        return true
     }
 
     // MARK: - Fetch API Token
@@ -51,10 +60,19 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 if let response = httpResponse {
-                    checkHttpResponse(response)
-                } else if let err = error {
-                    checkError(err)
+                    if checkHttpResponse(response) == false {
+                        completion(nil)
+                        return
+                    }
+                }
+
+                if let err = error {
+                    if checkError(err) == false {
+                        completion(nil)
+                        return
+                    }
                 }
 
                 guard let data = data where error == nil else {
@@ -100,10 +118,19 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 if let response = httpResponse {
-                    checkHttpResponse(response)
-                } else if let err = error {
-                    checkError(err)
+                    if checkHttpResponse(response) == false {
+                        completion([])
+                        return
+                    }
+                }
+
+                if let err = error {
+                    if checkError(err) == false {
+                        completion([])
+                        return
+                    }
                 }
 
                 guard let data = data where error == nil else {
@@ -160,10 +187,19 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 if let response = httpResponse {
-                    checkHttpResponse(response)
-                } else if let err = error {
-                    checkError(err)
+                    if checkHttpResponse(response) == false {
+                        completion(nil)
+                        return
+                    }
+                }
+
+                if let err = error {
+                    if checkError(err) == false {
+                        completion(nil)
+                        return
+                    }
                 }
 
                 guard let data = data where error == nil else {
