@@ -14,6 +14,7 @@ import SafariServices
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
     let defaults = NSUserDefaults.standardUserDefaults()
+    var tokenLogin = false
     let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var usernameField: UITextField!
@@ -21,6 +22,8 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var stackBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var loginTokenButton: UIButton!
+    @IBOutlet var forgotPasswordButton: UIButton!
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
         loginButton.enabled = false
@@ -32,13 +35,14 @@ class LoginModalViewController: UIViewController {
 
         if password.isEmpty || username.isEmpty {
             loginButton.enabled = true
-            self.alertError("Please Enter Your Username and Password", message: nil)
+            let title = "Please Enter Your Username and \(tokenLogin == false ? "Password" : "API Key")"
+            self.alertError(title, message: nil)
             return
         }
 
         spinner.alpha = CGFloat(1.0)
         spinner.startAnimating()
-        fetchApiTokenTask = Network.fetchApiToken(username, password) { userToken in
+        fetchApiTokenTask = Network.fetchApiToken(username, password, loginWithToken: tokenLogin) { userToken in
             if let token = userToken {
                 self.defaults.setObject(username+":"+token, forKey: "userToken")
                 self.defaults.setObject(username, forKey: "userName")
@@ -49,16 +53,34 @@ class LoginModalViewController: UIViewController {
                 self.spinner.alpha = CGFloat(0.0)
                 self.spinner.stopAnimating()
                 self.loginButton.enabled = true
-                self.alertErrorWithReachability("Incorrect Username or Password", message: nil)
+                let title = "Incorrect Username or \(self.tokenLogin == false ? "Password" : "API Key")"
+                self.alertErrorWithReachability(title, message: nil)
                 return
             }
         }
     }
 
     @IBAction func forgotPasswordButtonPressed(sender: AnyObject) {
-        let url = NSURL(string: "https://m.pinboard.in/password_reset/")
+        let urlString = self.tokenLogin == false ? "https://m.pinboard.in/password_reset/" : "https://m.pinboard.in/settings/password"
+        let url = NSURL(string: urlString)
         let vc = SFSafariViewController(URL: url!, entersReaderIfAvailable: true)
         presentViewController(vc, animated: true, completion: nil)
+    }
+
+    @IBAction func loginTokenButtonPressed(sender: AnyObject) {
+        if tokenLogin == false {
+            tokenLogin = true
+            loginTokenButton.setTitle("Login With Password", forState: .Normal)
+            forgotPasswordButton.setTitle("Show API Token", forState: .Normal)
+            passwordField.placeholder = "API Token"
+            passwordField.text = ""
+        } else {
+            tokenLogin = false
+            loginTokenButton.setTitle("Login With API Token", forState: .Normal)
+            forgotPasswordButton.setTitle("I Forgot My Password", forState: .Normal)
+            passwordField.placeholder = "Password"
+            passwordField.text = ""
+        }
     }
 
     override func viewDidLoad() {

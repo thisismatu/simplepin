@@ -41,7 +41,7 @@ struct Network {
     }
 
     // MARK: - Fetch API Token
-    static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
 
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         let userPasswordString = username + ":" + password
@@ -55,9 +55,17 @@ struct Network {
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/user/api_token"
-        urlQuery.queryItems = [
-            NSURLQueryItem(name: "format", value: "json")
-        ]
+
+        if loginWithToken == true {
+            urlQuery.queryItems = [
+                NSURLQueryItem(name: "auth_token", value: username + ":" + password),
+                NSURLQueryItem(name: "format", value: "json")
+            ]
+        } else {
+            urlQuery.queryItems = [
+                NSURLQueryItem(name: "format", value: "json")
+            ]
+        }
 
         guard let url = urlQuery.URL else {
             completion(nil)

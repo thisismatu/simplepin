@@ -60,13 +60,13 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-9t-no5">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalCompressionResistancePriority="751" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-9t-no5">
                                                     <rect key="frame" x="0.0" y="27" width="560" height="17"/>
                                                     <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-wd-mOp">
+                                                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hPe-wd-mOp">
                                                     <rect key="frame" x="0.0" y="52" width="560" height="24"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -250,11 +250,32 @@
                                     <constraint firstAttribute="width" constant="240" id="eMh-aI-nvZ"/>
                                 </constraints>
                             </stackView>
+<<<<<<< 925b1a7ef45648f38041ea365cc335712b41b733
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
                                 <rect key="frame" x="230.5" y="547" width="139" height="29"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="I Forgot My Password"/>
+=======
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KQb-Qt-9g5">
+                                <rect key="frame" x="231" y="510" width="137" height="29"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="Login With API Token">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginTokenButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="UAE-8F-9jG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
+                                <rect key="frame" x="230" y="547" width="139" height="29"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <state key="normal" title="I Forgot My Password">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+>>>>>>> Add login with api token feature
                                 <connections>
                                     <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
                                 </connections>
@@ -266,6 +287,8 @@
                             <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" constant="72" id="9yF-Xl-H36"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" constant="16" id="Krd-ab-bfN"/>
+                            <constraint firstItem="MYA-0Y-3ya" firstAttribute="top" secondItem="KQb-Qt-9g5" secondAttribute="bottom" constant="8" id="XBw-pL-wJn"/>
+                            <constraint firstItem="KQb-Qt-9g5" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="kgC-3e-se3"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.75" priority="750" id="sf1-BP-Efn"/>
                             <constraint firstItem="MYA-0Y-3ya" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="u7T-V5-Ine"/>
                         </constraints>
@@ -276,7 +299,9 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="forgotPasswordButton" destination="MYA-0Y-3ya" id="wPp-91-oXF"/>
                         <outlet property="loginButton" destination="7uV-At-Pnd" id="CBf-rY-9s2"/>
+                        <outlet property="loginTokenButton" destination="KQb-Qt-9g5" id="0yD-gf-lJC"/>
                         <outlet property="passwordField" destination="TQj-9V-dsc" id="w0P-ov-iEK"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
                         <outlet property="stackBottomConstraint" destination="Krd-ab-bfN" id="QA7-eu-kJF"/>
