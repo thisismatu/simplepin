@@ -251,10 +251,10 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
-                                <rect key="frame" x="232" y="547" width="136" height="29"/>
+                                <rect key="frame" x="230.5" y="547" width="139" height="29"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="I forgot my password"/>
+                                <state key="normal" title="I Forgot My Password"/>
                                 <connections>
                                     <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
                                 </connections>

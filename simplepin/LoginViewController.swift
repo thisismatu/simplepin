@@ -32,7 +32,7 @@ class LoginModalViewController: UIViewController {
 
         if password.isEmpty || username.isEmpty {
             loginButton.enabled = true
-            self.alertError("Please enter your username and password", message: nil)
+            self.alertError("Please Enter Your Username and Password", message: nil)
             return
         }
 
