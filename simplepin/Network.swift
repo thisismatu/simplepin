@@ -43,12 +43,18 @@ struct Network {
     // MARK: - Fetch API Token
     static func fetchApiToken(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
 
+        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+        let userPasswordString = username + ":" + password
+        let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
+        let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions([])
+        let authString = "Basic \(base64EncodedCredential)"
+        config.HTTPAdditionalHeaders = ["Authorization" : authString]
+        let session = NSURLSession(configuration: config)
+
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/user/api_token"
-        urlQuery.user = username
-        urlQuery.password = password
         urlQuery.queryItems = [
             NSURLQueryItem(name: "format", value: "json")
         ]
@@ -58,7 +64,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = session.dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                 if let response = httpResponse {
