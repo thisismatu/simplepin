@@ -45,11 +45,15 @@ struct Network {
     static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
 
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        let userPasswordString = username + ":" + password
-        let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
-        let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions([])
-        let authString = "Basic \(base64EncodedCredential)"
-        config.HTTPAdditionalHeaders = ["Authorization" : authString]
+
+        if loginWithToken == false {
+            let userPasswordString = username + ":" + password
+            let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
+            let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions([])
+            let authString = "Basic \(base64EncodedCredential)"
+            config.HTTPAdditionalHeaders = ["Authorization" : authString]
+        }
+
         let session = NSURLSession(configuration: config)
 
         let urlQuery = NSURLComponents()
