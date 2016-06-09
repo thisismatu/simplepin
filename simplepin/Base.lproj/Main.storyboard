@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="64" width="240" height="323"/>
+                                <rect key="frame" x="180" y="42" width="240" height="367"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="64"/>
@@ -201,20 +201,30 @@
                                             <constraint firstAttribute="height" constant="64" id="mwv-bE-Zaz"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to Pinboard" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRR-v1-tco">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to Pinboard Using" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRR-v1-tco">
                                         <rect key="frame" x="0.0" y="80" width="240" height="23"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5fE-0r-5h1">
+                                        <rect key="frame" x="0.0" y="119" width="240" height="29"/>
+                                        <segments>
+                                            <segment title="Password"/>
+                                            <segment title="API Token"/>
+                                        </segments>
+                                        <connections>
+                                            <action selector="loginMethodSegmentPressed:" destination="gYv-09-0z0" eventType="valueChanged" id="BxF-X3-BgZ"/>
+                                        </connections>
+                                    </segmentedControl>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDB-c3-dCt" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="119" width="240" height="0.0"/>
+                                        <rect key="frame" x="0.0" y="163" width="240" height="0.0"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="E1L-cu-YEj"/>
                                         </constraints>
                                     </view>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
-                                        <rect key="frame" x="0.0" y="135" width="240" height="36"/>
+                                        <rect key="frame" x="0.0" y="179" width="240" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="gWt-5j-BTW"/>
                                         </constraints>
@@ -223,7 +233,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TQj-9V-dsc">
-                                        <rect key="frame" x="0.0" y="187" width="240" height="36"/>
+                                        <rect key="frame" x="0.0" y="231" width="240" height="36"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="36" id="eNb-Zr-AWr"/>
                                         </constraints>
@@ -232,7 +242,7 @@
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
-                                        <rect key="frame" x="0.0" y="239" width="240" height="48"/>
+                                        <rect key="frame" x="0.0" y="283" width="240" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
                                         </constraints>
@@ -243,29 +253,22 @@
                                         </connections>
                                     </button>
                                     <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
-                                        <rect key="frame" x="0.0" y="303" width="240" height="20"/>
+                                        <rect key="frame" x="0.0" y="347" width="240" height="20"/>
                                     </activityIndicatorView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="eMh-aI-nvZ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
-                                <rect key="frame" x="230.5" y="547" width="139" height="29"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
+                                <rect key="frame" x="230" y="547" width="139" height="29"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="I Forgot My Password"/>
+                                <state key="normal" title="I Forgot My Password">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3c-lt-7A2">
-                                <rect key="frame" x="232" y="510" width="137" height="29"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Login With API Token"/>
-                                <connections>
-                                    <action selector="loginTokenButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="8yn-fC-JO0"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -275,8 +278,6 @@
                             <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" constant="72" id="9yF-Xl-H36"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" constant="16" id="Krd-ab-bfN"/>
-                            <constraint firstItem="MYA-0Y-3ya" firstAttribute="top" secondItem="r3c-lt-7A2" secondAttribute="bottom" constant="8" id="Vsa-e5-o0k"/>
-                            <constraint firstItem="r3c-lt-7A2" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="glt-rV-NfN"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.75" priority="750" id="sf1-BP-Efn"/>
                             <constraint firstItem="MYA-0Y-3ya" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="u7T-V5-Ine"/>
                         </constraints>
@@ -289,7 +290,7 @@
                     <connections>
                         <outlet property="forgotPasswordButton" destination="MYA-0Y-3ya" id="Z8n-4z-nMz"/>
                         <outlet property="loginButton" destination="7uV-At-Pnd" id="CBf-rY-9s2"/>
-                        <outlet property="loginTokenButton" destination="r3c-lt-7A2" id="4gr-Ye-y5G"/>
+                        <outlet property="loginMethodSegment" destination="5fE-0r-5h1" id="KJT-W6-9CQ"/>
                         <outlet property="passwordField" destination="TQj-9V-dsc" id="w0P-ov-iEK"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
                         <outlet property="stackBottomConstraint" destination="Krd-ab-bfN" id="QA7-eu-kJF"/>

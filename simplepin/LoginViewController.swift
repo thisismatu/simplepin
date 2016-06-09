@@ -13,8 +13,8 @@ import SafariServices
 
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
-    let defaults = NSUserDefaults.standardUserDefaults()
     var tokenLogin = false
+    let defaults = NSUserDefaults.standardUserDefaults()
     let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var usernameField: UITextField!
@@ -22,8 +22,8 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var loginButton: UIButton!
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var stackBottomConstraint: NSLayoutConstraint!
-    @IBOutlet var loginTokenButton: UIButton!
     @IBOutlet var forgotPasswordButton: UIButton!
+    @IBOutlet var loginMethodSegment: UISegmentedControl!
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
         loginButton.enabled = false
@@ -67,19 +67,20 @@ class LoginModalViewController: UIViewController {
         presentViewController(vc, animated: true, completion: nil)
     }
 
-    @IBAction func loginTokenButtonPressed(sender: AnyObject) {
-        if tokenLogin == false {
-            tokenLogin = true
-            loginTokenButton.setTitle("Login With Password", forState: .Normal)
-            forgotPasswordButton.setTitle("Show API Token", forState: .Normal)
-            passwordField.placeholder = "API Token"
-            passwordField.text = ""
-        } else {
+    @IBAction func loginMethodSegmentPressed(sender: AnyObject) {
+        passwordField.text = ""
+
+        switch loginMethodSegment.selectedSegmentIndex {
+        case 0:
             tokenLogin = false
-            loginTokenButton.setTitle("Login With API Token", forState: .Normal)
             forgotPasswordButton.setTitle("I Forgot My Password", forState: .Normal)
             passwordField.placeholder = "Password"
-            passwordField.text = ""
+        case 1:
+            tokenLogin = true
+            forgotPasswordButton.setTitle("Show API Token", forState: .Normal)
+            passwordField.placeholder = "API Token"
+        default:
+            break
         }
     }
 
