@@ -9,6 +9,7 @@
 import Foundation
 import SystemConfiguration
 
+//MARK: - Network
 struct Network {
 
     static func checkHttpResponse(response: NSURLResponse) -> Bool {
@@ -94,20 +95,13 @@ struct Network {
                     return
                 }
 
-                let userToken = parseAPIToken(data)
+                let userToken = ParseJSON.string(data, key: "result")
                 completion(userToken)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseAPIToken(data: NSData) -> String? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            return jsonObject["result"] as? String
-        }
-        return nil
     }
 
     // MARK: - Fetch posts
@@ -220,21 +214,13 @@ struct Network {
                     completion(nil)
                     return
                 }
-                let updateDate = parseUpdate(data)
+                let updateDate = ParseJSON.date(data, key: "update_time")
                 completion(updateDate)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseUpdate(data: NSData) -> NSDate? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            let dateString = jsonObject["update_time"] as? String
-            return dateString?.toDate()
-        }
-        return nil
     }
 
     // MARK: - Delete bookmark
@@ -264,20 +250,13 @@ struct Network {
                     completion(nil)
                     return
                 }
-                let resultCode = parseDeleteBookmark(data)
+                let resultCode = ParseJSON.string(data, key: "result_code")
                 completion(resultCode)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseDeleteBookmark(data: NSData) -> String? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            return jsonObject["result_code"] as? String
-        }
-        return nil
     }
 
     // MARK: - Add bookmark
@@ -316,20 +295,13 @@ struct Network {
                     return
                 }
 
-                let resultCode = parseAddBookmark(data)
+                let resultCode = ParseJSON.string(data, key: "result_code")
                 completion(resultCode)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseAddBookmark(data: NSData) -> String? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
-            return jsonObject["result_code"] as? String
-        }
-        return nil
     }
 
     // MARK: - Get tags
@@ -377,6 +349,25 @@ struct Network {
             }
             tagsArray.sortInPlace()
             return tagsArray
+        }
+        return nil
+    }
+}
+
+//MARK: - Parse JSON
+struct ParseJSON {
+
+    static func string(data: NSData, key: String) -> String? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            return jsonObject["\(key)"] as? String
+        }
+        return nil
+    }
+
+    static func date(data: NSData, key: String) -> NSDate? {
+        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
+            let dateString = jsonObject["\(key)"] as? String
+            return dateString?.toDate()
         }
         return nil
     }
