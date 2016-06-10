@@ -63,8 +63,7 @@ class LoginModalViewController: UIViewController {
     @IBAction func forgotPasswordButtonPressed(sender: AnyObject) {
         let urlString = self.tokenLogin == false ? "https://m.pinboard.in/password_reset/" : "https://m.pinboard.in/settings/password"
         let url = NSURL(string: urlString)
-        let vc = SFSafariViewController(URL: url!, entersReaderIfAvailable: true)
-        presentViewController(vc, animated: true, completion: nil)
+        UIApplication.sharedApplication().openURL(url!)
     }
 
     @IBAction func loginMethodSegmentPressed(sender: AnyObject) {
@@ -94,8 +93,8 @@ class LoginModalViewController: UIViewController {
     }
 
     override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        notifications.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -104,7 +103,11 @@ class LoginModalViewController: UIViewController {
     }
 
     func keyboardWillShow(notification: NSNotification) {
-        self.stackBottomConstraint.constant = 176
+        guard let userInfo = notification.userInfo else { return }
+        let keyboardEndFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let convertedKeyboardEndFrame = view.convertRect(keyboardEndFrame, fromView: view.window)
+
+        self.stackBottomConstraint.constant = CGRectGetMaxY(view.bounds) - CGRectGetMinY(convertedKeyboardEndFrame) + 8
         UIView.animateWithDuration(0.1) {
             self.view.layoutSubviews()
         }

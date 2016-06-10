@@ -192,8 +192,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="42" width="240" height="367"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
+                                <rect key="frame" x="180" y="94.5" width="240" height="351"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="64"/>
@@ -241,27 +241,32 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
-                                        <rect key="frame" x="0.0" y="283" width="240" height="48"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                        <state key="normal" title="Log in"/>
-                                        <connections>
-                                            <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
-                                        </connections>
-                                    </button>
-                                    <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
-                                        <rect key="frame" x="0.0" y="347" width="240" height="20"/>
-                                    </activityIndicatorView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AIW-ZB-gf9">
+                                        <rect key="frame" x="0.0" y="283" width="240" height="68"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                <state key="normal" title="Log in"/>
+                                                <connections>
+                                                    <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
+                                                </connections>
+                                            </button>
+                                            <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
+                                                <rect key="frame" x="0.0" y="48" width="240" height="20"/>
+                                            </activityIndicatorView>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="240" id="eMh-aI-nvZ"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
-                                <rect key="frame" x="230" y="547" width="139" height="29"/>
+                                <rect key="frame" x="230" y="555" width="139" height="29"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <state key="normal" title="I Forgot My Password">
@@ -274,18 +279,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="MYA-0Y-3ya" secondAttribute="bottom" constant="24" id="8zJ-Wt-OAN"/>
-                            <constraint firstItem="jCY-An-hEC" firstAttribute="top" secondItem="VQe-1y-IvS" secondAttribute="bottom" constant="72" id="9yF-Xl-H36"/>
+                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="MYA-0Y-3ya" secondAttribute="bottom" constant="16" id="8zJ-Wt-OAN"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" constant="16" id="Krd-ab-bfN"/>
-                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.75" priority="750" id="sf1-BP-Efn"/>
+                            <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.9" priority="750" id="sf1-BP-Efn"/>
                             <constraint firstItem="MYA-0Y-3ya" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="u7T-V5-Ine"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="9yF-Xl-H36"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="forgotPasswordButton" destination="MYA-0Y-3ya" id="Z8n-4z-nMz"/>
