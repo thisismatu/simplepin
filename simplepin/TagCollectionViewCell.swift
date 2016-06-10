@@ -13,12 +13,24 @@ class TagCollectionViewCell: UICollectionViewCell  {
 
     override func layoutSubviews() {
         super.layoutSubviews()
-        tagLabel.textColor = Colors.Blue
-        tagLabel.backgroundColor = Colors.LightBlue
-        tagLabel.highlightedTextColor = Colors.Blue
+
+        guard let string = tagLabel.text else { return }
+        let index = string.startIndex.advancedBy(0)
+
         tagLabel.layer.masksToBounds = true
         tagLabel.layer.cornerRadius = 2
         tagLabel.layer.borderWidth = 0.5
-        tagLabel.layer.borderColor = Colors.DarkBlue.colorWithAlphaComponent(0.12).CGColor
+        if string[index] == "." {
+            tagLabel.textColor = UIColor.darkGrayColor()
+            tagLabel.highlightedTextColor = UIColor.darkGrayColor()
+            tagLabel.backgroundColor = UIColor.groupTableViewBackgroundColor()
+            tagLabel.layer.borderColor = UIColor.blueColor().colorWithAlphaComponent(0.12).CGColor
+
+        } else {
+            tagLabel.textColor = Colors.Blue
+            tagLabel.highlightedTextColor = Colors.Blue
+            tagLabel.backgroundColor = Colors.LightBlue
+            tagLabel.layer.borderColor = Colors.DarkBlue.colorWithAlphaComponent(0.12).CGColor
+        }
     }
 }
