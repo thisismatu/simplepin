@@ -192,51 +192,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="95" width="240" height="351"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
+                                <rect key="frame" x="180" y="105" width="240" height="331"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="64"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="64" id="mwv-bE-Zaz"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to Pinboard Using" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRR-v1-tco">
-                                        <rect key="frame" x="0.0" y="80" width="240" height="23"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5fE-0r-5h1">
-                                        <rect key="frame" x="0.0" y="119" width="240" height="29"/>
-                                        <segments>
-                                            <segment title="Password"/>
-                                            <segment title="API Token"/>
-                                        </segments>
-                                        <connections>
-                                            <action selector="loginMethodSegmentPressed:" destination="gYv-09-0z0" eventType="valueChanged" id="BxF-X3-BgZ"/>
-                                        </connections>
-                                    </segmentedControl>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDB-c3-dCt" userLabel="Spacer">
-                                        <rect key="frame" x="0.0" y="163" width="240" height="0.0"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" id="E1L-cu-YEj"/>
-                                        </constraints>
-                                    </view>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
-                                        <rect key="frame" x="0.0" y="179" width="240" height="36"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="gWt-5j-BTW"/>
-                                        </constraints>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
-                                    </textField>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JwW-tQ-HiW">
-                                        <rect key="frame" x="0.0" y="231" width="240" height="36"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4XB-V2-Zzm">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="123"/>
                                         <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="40"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="mwv-bE-Zaz"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log in to Pinboard Using" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRR-v1-tco">
+                                                <rect key="frame" x="0.0" y="56" width="240" height="23"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="5fE-0r-5h1">
+                                                <rect key="frame" x="0.0" y="95" width="240" height="29"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="28" id="gPU-Sm-GcW"/>
+                                                </constraints>
+                                                <segments>
+                                                    <segment title="Password"/>
+                                                    <segment title="API Token"/>
+                                                </segments>
+                                                <connections>
+                                                    <action selector="loginMethodSegmentPressed:" destination="gYv-09-0z0" eventType="valueChanged" id="BxF-X3-BgZ"/>
+                                                </connections>
+                                            </segmentedControl>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Jpc-JX-ZDD">
+                                        <rect key="frame" x="0.0" y="155" width="240" height="176"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="gWt-5j-BTW"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
+                                            </textField>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TQj-9V-dsc">
-                                                <rect key="frame" x="0.0" y="0.0" width="196" height="36"/>
+                                                <rect key="frame" x="0.0" y="52" width="240" height="36"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="36" id="eNb-Zr-AWr"/>
                                                 </constraints>
@@ -244,48 +246,31 @@
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                                             </textField>
-                                            <button opaque="NO" tag="6" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Akb-lq-nRF">
-                                                <rect key="frame" x="204" y="0.0" width="36" height="36"/>
-                                                <color key="backgroundColor" red="0.0" green="0.40000000000000002" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="36" id="CfA-Br-bNG"/>
-                                                    <constraint firstAttribute="width" constant="36" id="Hhs-D2-W0R"/>
-                                                </constraints>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <inset key="imageEdgeInsets" minX="6" minY="6" maxX="6" maxY="6"/>
-                                                <state key="normal" image="onepassword-button"/>
-                                                <state key="selected" backgroundImage="btn_onepassword_pressed"/>
-                                                <state key="highlighted" backgroundImage="btn_onepassword_pressed"/>
-                                                <state key="focused" backgroundImage="btn_onepassword_pressed"/>
-                                                <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                        <integer key="value" value="5"/>
-                                                    </userDefinedRuntimeAttribute>
-                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                                </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <action selector="findLoginFrom1Password:" destination="gYv-09-0z0" eventType="touchDown" id="gGy-AC-Jy0"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AIW-ZB-gf9">
-                                        <rect key="frame" x="0.0" y="283" width="240" height="68"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
-                                                <rect key="frame" x="0.0" y="0.0" width="240" height="48"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                                <state key="normal" title="Log in"/>
-                                                <connections>
-                                                    <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
-                                                </connections>
-                                            </button>
-                                            <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
-                                                <rect key="frame" x="0.0" y="48" width="240" height="20"/>
-                                            </activityIndicatorView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5qR-Pf-4Ov">
+                                                <rect key="frame" x="0.0" y="104" width="240" height="72"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
+                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="48"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                        <state key="normal" title="Log in"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
+                                                        </connections>
+                                                    </button>
+                                                    <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
+                                                        <rect key="frame" x="0.0" y="52" width="240" height="20"/>
+                                                    </activityIndicatorView>
+                                                </subviews>
+                                            </stackView>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -293,25 +278,61 @@
                                     <constraint firstAttribute="width" constant="240" id="eMh-aI-nvZ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
-                                <rect key="frame" x="230" y="555" width="139" height="29"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="I Forgot My Password">
-                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
-                                </connections>
-                            </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="6QE-JM-nmE">
+                                <rect key="frame" x="60" y="552" width="480" height="32"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Akb-lq-nRF">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="CfA-Br-bNG"/>
+                                            <constraint firstAttribute="width" constant="36" id="Hhs-D2-W0R"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="8" maxX="8" maxY="8"/>
+                                        <state key="normal" title="1Password" image="onepassword-button"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Hhs-D2-W0R"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="findLoginFrom1Password:" destination="gYv-09-0z0" eventType="touchDown" id="gGy-AC-Jy0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MYA-0Y-3ya">
+                                        <rect key="frame" x="240" y="0.0" width="240" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="DrK-vf-YMS"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                        <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <state key="normal" title="Forgot Password?"/>
+                                        <connections>
+                                            <action selector="forgotPasswordButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="ywJ-da-cPd"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" priority="750" constant="480" id="LDe-22-zwz"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="MYA-0Y-3ya" secondAttribute="bottom" constant="16" id="8zJ-Wt-OAN"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" constant="16" id="Krd-ab-bfN"/>
+                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="6QE-JM-nmE" secondAttribute="bottom" constant="16" id="LJk-rm-pqY"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6QE-JM-nmE" secondAttribute="trailing" constant="8" id="bnE-vv-5IU"/>
+                            <constraint firstItem="6QE-JM-nmE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jyz-WM-Dr3" secondAttribute="leading" constant="8" id="llk-6d-4Ah"/>
+                            <constraint firstItem="6QE-JM-nmE" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="rAk-Tt-vs8"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.9" priority="750" id="sf1-BP-Efn"/>
-                            <constraint firstItem="MYA-0Y-3ya" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="u7T-V5-Ine"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1005,8 +1026,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="art_pin" width="72" height="72"/>
-        <image name="btn_onepassword_pressed" width="36" height="36"/>
+        <image name="art_pin" width="48" height="48"/>
         <image name="ic_lock" width="16" height="16"/>
         <image name="ic_read" width="10" height="10"/>
         <image name="ic_settings" width="24" height="24"/>

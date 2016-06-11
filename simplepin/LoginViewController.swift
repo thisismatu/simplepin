@@ -73,7 +73,7 @@ class LoginModalViewController: UIViewController {
         switch loginMethodSegment.selectedSegmentIndex {
         case 0:
             tokenLogin = false
-            forgotPasswordButton.setTitle("I Forgot My Password", forState: .Normal)
+            forgotPasswordButton.setTitle("Forgot Password?", forState: .Normal)
             passwordField.placeholder = "Password"
         case 1:
             tokenLogin = true
@@ -105,7 +105,8 @@ class LoginModalViewController: UIViewController {
         usernameField.delegate = self
         passwordField.delegate = self
 
-        self.onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
+        onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
+        onepasswordButton.imageView?.contentMode = .ScaleAspectFit
 
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
