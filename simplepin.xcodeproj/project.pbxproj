@@ -14,6 +14,8 @@
 		CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3219271CB2FAE600284118 /* NSDateExtension.swift */; };
 		CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC32192A1CB3032F00284118 /* StringExtension.swift */; };
 		CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */; };
+		CC7735101D0C378D00B85F31 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC77350D1D0C378D00B85F31 /* 1Password.xcassets */; };
+		CC7735111D0C378D00B85F31 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */; };
 		CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */; };
 		CCAC5E5E1C84A8A1006BA336 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */; };
 		CCAC5E601C84A8A1006BA336 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */; };
@@ -34,6 +36,10 @@
 		CC3219271CB2FAE600284118 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		CC32192A1CB3032F00284118 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModalViewController.swift; sourceTree = "<group>"; };
+		CC77350C1D0C378C00B85F31 /* simplepin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "simplepin-Bridging-Header.h"; sourceTree = "<group>"; };
+		CC77350D1D0C378D00B85F31 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
+		CC77350E1D0C378D00B85F31 /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
+		CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
 		CCAC5E551C84A8A1006BA336 /* simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCAC5E5D1C84A8A1006BA336 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -81,6 +87,17 @@
 			name = Extensions;
 			sourceTree = "<group>";
 		};
+		CC77350B1D0C374800B85F31 /* Plugins */ = {
+			isa = PBXGroup;
+			children = (
+				CC77350D1D0C378D00B85F31 /* 1Password.xcassets */,
+				CC77350E1D0C378D00B85F31 /* OnePasswordExtension.h */,
+				CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */,
+				CC77350C1D0C378C00B85F31 /* simplepin-Bridging-Header.h */,
+			);
+			name = Plugins;
+			sourceTree = "<group>";
+		};
 		CCAC5E4C1C84A8A1006BA336 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +119,7 @@
 		CCAC5E571C84A8A1006BA336 /* simplepin */ = {
 			isa = PBXGroup;
 			children = (
+				CC77350B1D0C374800B85F31 /* Plugins */,
 				4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */,
 				CCAC5E641C84A8A1006BA336 /* Info.plist */,
 				CC32192C1CB3033F00284118 /* Extensions */,
@@ -145,7 +163,7 @@
 		CCAC5E4D1C84A8A1006BA336 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mathias Lindholm";
 				TargetAttributes = {
@@ -180,6 +198,7 @@
 			files = (
 				CCAC5E631C84A8A1006BA336 /* LaunchScreen.storyboard in Resources */,
 				CCAC5E601C84A8A1006BA336 /* Assets.xcassets in Resources */,
+				CC7735101D0C378D00B85F31 /* 1Password.xcassets in Resources */,
 				CCAC5E5E1C84A8A1006BA336 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +236,7 @@
 				CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */,
 				CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */,
 				CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */,
+				CC7735111D0C378D00B85F31 /* OnePasswordExtension.m in Sources */,
 				CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */,
 				4ACF3E141CFF5B620006A587 /* TagCollectionViewCell.swift in Sources */,
 			);
@@ -331,6 +351,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -342,6 +363,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.simplepin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "simplepin/simplepin-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -349,6 +372,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = NO;
@@ -360,6 +384,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ml.simplepin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "simplepin/simplepin-Bridging-Header.h";
 			};
 			name = Release;
 		};

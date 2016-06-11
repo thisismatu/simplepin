@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="94.5" width="240" height="351"/>
+                                <rect key="frame" x="180" y="95" width="240" height="351"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="art_pin" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-fL-tuh">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="64"/>
@@ -232,15 +232,58 @@
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TQj-9V-dsc">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fif-QS-Wer">
                                         <rect key="frame" x="0.0" y="231" width="240" height="36"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TQj-9V-dsc">
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="eNb-Zr-AWr"/>
+                                                </constraints>
+                                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="eNb-Zr-AWr"/>
+                                                    </mask>
+                                                </variation>
+                                            </textField>
+                                            <button opaque="NO" tag="6" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Akb-lq-nRF">
+                                                <rect key="frame" x="204" y="0.0" width="36" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="36" id="CfA-Br-bNG"/>
+                                                    <constraint firstAttribute="width" constant="36" id="Hhs-D2-W0R"/>
+                                                </constraints>
+                                                <state key="normal" backgroundImage="btn_onepassword"/>
+                                                <state key="selected" backgroundImage="btn_onepassword_pressed"/>
+                                                <state key="highlighted" backgroundImage="btn_onepassword_pressed"/>
+                                                <state key="focused" backgroundImage="btn_onepassword_pressed"/>
+                                                <connections>
+                                                    <action selector="findLoginFrom1Password:" destination="gYv-09-0z0" eventType="touchDown" id="gGy-AC-Jy0"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="eNb-Zr-AWr"/>
+                                            <constraint firstItem="TQj-9V-dsc" firstAttribute="centerY" secondItem="Fif-QS-Wer" secondAttribute="centerY" id="0ar-x0-p8l"/>
+                                            <constraint firstAttribute="bottom" secondItem="TQj-9V-dsc" secondAttribute="bottom" id="4SS-KL-DH5"/>
+                                            <constraint firstAttribute="trailing" secondItem="Akb-lq-nRF" secondAttribute="trailing" id="6Hh-FI-TWc"/>
+                                            <constraint firstItem="Akb-lq-nRF" firstAttribute="top" secondItem="Fif-QS-Wer" secondAttribute="top" id="JDD-8g-Yq6"/>
+                                            <constraint firstItem="Akb-lq-nRF" firstAttribute="top" secondItem="TQj-9V-dsc" secondAttribute="bottom" id="RYp-Hj-kBX"/>
+                                            <constraint firstItem="TQj-9V-dsc" firstAttribute="leading" secondItem="Fif-QS-Wer" secondAttribute="leading" id="SqF-xU-RXc"/>
+                                            <constraint firstAttribute="trailing" secondItem="TQj-9V-dsc" secondAttribute="trailing" id="WPd-qA-NVB"/>
+                                            <constraint firstItem="TQj-9V-dsc" firstAttribute="centerX" secondItem="Fif-QS-Wer" secondAttribute="centerX" id="ac4-bh-kXf"/>
+                                            <constraint firstAttribute="height" constant="36" id="ldA-SU-J9T"/>
+                                            <constraint firstItem="TQj-9V-dsc" firstAttribute="top" secondItem="Fif-QS-Wer" secondAttribute="top" id="rN2-I5-k5e"/>
                                         </constraints>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
-                                    </textField>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="0ar-x0-p8l"/>
+                                                <exclude reference="ac4-bh-kXf"/>
+                                                <exclude reference="RYp-Hj-kBX"/>
+                                            </mask>
+                                        </variation>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="AIW-ZB-gf9">
                                         <rect key="frame" x="0.0" y="283" width="240" height="68"/>
                                         <subviews>
@@ -290,6 +333,7 @@
                         <outlet property="forgotPasswordButton" destination="MYA-0Y-3ya" id="Z8n-4z-nMz"/>
                         <outlet property="loginButton" destination="7uV-At-Pnd" id="CBf-rY-9s2"/>
                         <outlet property="loginMethodSegment" destination="5fE-0r-5h1" id="KJT-W6-9CQ"/>
+                        <outlet property="onepasswordButton" destination="Akb-lq-nRF" id="imd-Iv-8n7"/>
                         <outlet property="passwordField" destination="TQj-9V-dsc" id="w0P-ov-iEK"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
                         <outlet property="stackBottomConstraint" destination="Krd-ab-bfN" id="QA7-eu-kJF"/>
@@ -977,6 +1021,8 @@
     </scenes>
     <resources>
         <image name="art_pin" width="72" height="72"/>
+        <image name="btn_onepassword" width="36" height="36"/>
+        <image name="btn_onepassword_pressed" width="36" height="36"/>
         <image name="ic_lock" width="16" height="16"/>
         <image name="ic_read" width="10" height="10"/>
         <image name="ic_settings" width="24" height="24"/>

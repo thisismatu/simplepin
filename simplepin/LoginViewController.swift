@@ -24,6 +24,7 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var stackBottomConstraint: NSLayoutConstraint!
     @IBOutlet var forgotPasswordButton: UIButton!
     @IBOutlet var loginMethodSegment: UISegmentedControl!
+    @IBOutlet var onepasswordButton: UIButton!
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
         loginButton.enabled = false
@@ -83,10 +84,29 @@ class LoginModalViewController: UIViewController {
         }
     }
 
+    @IBAction func findLoginFrom1Password(sender: AnyObject) -> Void {
+        OnePasswordExtension.sharedExtension().findLoginForURLString("https://pinboard.in", forViewController: self, sender: sender, completion: { (loginDictionary, error) -> Void in
+            if loginDictionary == nil {
+                if error!.code != Int(AppExtensionErrorCodeCancelledByUser) {
+                    print("Error invoking 1Password App Extension for find login: \(error)")
+                }
+                return
+            }
+
+            self.usernameField.text = loginDictionary?[AppExtensionUsernameKey] as? String
+            self.passwordField.text = loginDictionary?[AppExtensionPasswordKey] as? String
+        })
+
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
         usernameField.delegate = self
         passwordField.delegate = self
+
+        self.onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
+
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
         notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
