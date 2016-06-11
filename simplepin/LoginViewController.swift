@@ -36,25 +36,39 @@ class LoginModalViewController: UIViewController {
 
         if password.isEmpty || username.isEmpty {
             loginButton.enabled = true
-            let title = "Please Enter Your Username and \(tokenLogin == false ? "Password" : "API Key")"
-            self.alertError(title, message: nil)
-            return
+
+            if tokenLogin == true {
+                if password.isEmpty {
+                    self.alertError("Please Enter Your API Token", message: nil)
+                    return
+                }
+            } else {
+                self.alertError("Please Enter Your Username and Password", message: nil)
+                return
+            }
         }
 
         spinner.alpha = CGFloat(1.0)
         spinner.startAnimating()
         fetchApiTokenTask = Network.fetchApiToken(username, password, loginWithToken: tokenLogin) { userToken in
             if let token = userToken {
-                self.defaults.setObject(username+":"+token, forKey: "userToken")
-                self.defaults.setObject(username, forKey: "userName")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                if self.tokenLogin == true {
+                    let tokenArray = password.componentsSeparatedByString(":")
+                    self.defaults.setObject(password, forKey: "userToken")
+                    self.defaults.setObject(tokenArray[0], forKey: "userName")
+                    Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
+                } else {
+                    self.defaults.setObject(username+":"+token, forKey: "userToken")
+                    self.defaults.setObject(username, forKey: "userName")
+                    Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
+                }
                 NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
-                Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
+                self.dismissViewControllerAnimated(true, completion: nil)
             } else {
                 self.spinner.alpha = CGFloat(0.0)
                 self.spinner.stopAnimating()
                 self.loginButton.enabled = true
-                let title = "Incorrect Username or \(self.tokenLogin == false ? "Password" : "API Key")"
+                let title = "Incorrect \(self.tokenLogin == true ? "API Token" : "Username or Password")"
                 self.alertErrorWithReachability(title, message: nil)
                 return
             }
@@ -62,7 +76,7 @@ class LoginModalViewController: UIViewController {
     }
 
     @IBAction func forgotPasswordButtonPressed(sender: AnyObject) {
-        let urlString = self.tokenLogin == false ? "https://m.pinboard.in/password_reset/" : "https://m.pinboard.in/settings/password"
+        let urlString = self.tokenLogin == true ? "https://m.pinboard.in/settings/password" : "https://m.pinboard.in/password_reset/"
         let url = NSURL(string: urlString)
         UIApplication.sharedApplication().openURL(url!)
     }
@@ -74,11 +88,13 @@ class LoginModalViewController: UIViewController {
         case 0:
             tokenLogin = false
             forgotPasswordButton.setTitle("Forgot Password?", forState: .Normal)
+            usernameField.hidden = false
             passwordField.placeholder = "Password"
         case 1:
             tokenLogin = true
             forgotPasswordButton.setTitle("Show API Token", forState: .Normal)
-            passwordField.placeholder = "API Token"
+            usernameField.hidden = true
+            passwordField.placeholder = "Username:Token"
         default:
             break
         }

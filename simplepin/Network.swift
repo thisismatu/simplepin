@@ -63,7 +63,7 @@ struct Network {
 
         if loginWithToken == true {
             urlQuery.queryItems = [
-                NSURLQueryItem(name: "auth_token", value: username + ":" + password),
+                NSURLQueryItem(name: "auth_token", value: password),
                 NSURLQueryItem(name: "format", value: "json")
             ]
         } else {
