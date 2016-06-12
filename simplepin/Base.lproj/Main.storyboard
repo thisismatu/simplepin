@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="105" width="240" height="331"/>
+                                <rect key="frame" x="180" y="106.5" width="240" height="327"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4XB-V2-Zzm">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="123"/>
@@ -226,7 +226,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Jpc-JX-ZDD">
-                                        <rect key="frame" x="0.0" y="155" width="240" height="176"/>
+                                        <rect key="frame" x="0.0" y="155" width="240" height="172"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="36"/>
@@ -246,8 +246,8 @@
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="5qR-Pf-4Ov">
-                                                <rect key="frame" x="0.0" y="104" width="240" height="72"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5qR-Pf-4Ov">
+                                                <rect key="frame" x="0.0" y="104" width="240" height="68"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="48"/>
@@ -267,7 +267,7 @@
                                                         </connections>
                                                     </button>
                                                     <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
-                                                        <rect key="frame" x="0.0" y="52" width="240" height="20"/>
+                                                        <rect key="frame" x="0.0" y="48" width="240" height="20"/>
                                                     </activityIndicatorView>
                                                 </subviews>
                                             </stackView>
@@ -327,9 +327,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="I9E-JE-TCB"/>
-                            <constraint firstItem="w6r-vt-JNj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" constant="16" id="Krd-ab-bfN"/>
                             <constraint firstItem="w6r-vt-JNj" firstAttribute="top" secondItem="6QE-JM-nmE" secondAttribute="bottom" constant="16" id="LJk-rm-pqY"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="6QE-JM-nmE" secondAttribute="trailing" constant="8" id="bnE-vv-5IU"/>
+                            <constraint firstItem="6QE-JM-nmE" firstAttribute="top" relation="greaterThanOrEqual" secondItem="jCY-An-hEC" secondAttribute="bottom" id="dQ0-JG-NwR"/>
                             <constraint firstItem="6QE-JM-nmE" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="jyz-WM-Dr3" secondAttribute="leading" constant="8" id="llk-6d-4Ah"/>
                             <constraint firstItem="6QE-JM-nmE" firstAttribute="centerX" secondItem="jyz-WM-Dr3" secondAttribute="centerX" id="rAk-Tt-vs8"/>
                             <constraint firstItem="jCY-An-hEC" firstAttribute="centerY" secondItem="jyz-WM-Dr3" secondAttribute="centerY" multiplier="0.9" priority="750" id="sf1-BP-Efn"/>
@@ -342,7 +342,7 @@
                         <outlet property="onepasswordButton" destination="Akb-lq-nRF" id="imd-Iv-8n7"/>
                         <outlet property="passwordField" destination="TQj-9V-dsc" id="w0P-ov-iEK"/>
                         <outlet property="spinner" destination="hga-A4-JsU" id="iz3-YA-Zyg"/>
-                        <outlet property="stackBottomConstraint" destination="Krd-ab-bfN" id="QA7-eu-kJF"/>
+                        <outlet property="stackBottomConstraint" destination="LJk-rm-pqY" id="gMJ-yF-gRU"/>
                         <outlet property="usernameField" destination="tY7-Ol-hyD" id="533-35-92J"/>
                         <segue destination="sPj-i0-a1p" kind="unwind" identifier="closeLoginModal" unwindAction="unwindLoginModal:" id="kNy-jd-Nbd"/>
                     </connections>
