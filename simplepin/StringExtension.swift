@@ -22,4 +22,9 @@ extension String {
         return lowercaseString.stringByReplacingCharactersInRange(lowercaseString.startIndex...lowercaseString.startIndex, withString: String(lowercaseString[lowercaseString.startIndex]).uppercaseString)
     }
 
+    var removeExcessiveSpaces: String {
+        let components = self.componentsSeparatedByCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+        let filtered = components.filter({!$0.isEmpty})
+        return filtered.joinWithSeparator(" ")
+    }
 }

@@ -53,8 +53,9 @@ class LoginModalViewController: UIViewController {
         fetchApiTokenTask = Network.fetchApiToken(username, password, loginWithToken: tokenLogin) { userToken in
             if let token = userToken {
                 if self.tokenLogin == true {
-                    let tokenArray = password.componentsSeparatedByString(":")
-                    self.defaults.setObject(password, forKey: "userToken")
+                    let token = password.removeExcessiveSpaces
+                    let tokenArray = token.componentsSeparatedByString(":")
+                    self.defaults.setObject(token, forKey: "userToken")
                     self.defaults.setObject(tokenArray[0], forKey: "userName")
                     Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
                 } else {
