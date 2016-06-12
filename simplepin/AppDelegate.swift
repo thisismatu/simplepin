@@ -44,7 +44,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func logOut() {
         let appDomain = NSBundle.mainBundle().bundleIdentifier!
+        let root = self.window?.rootViewController as! UINavigationController
+
+        if let vc = root.topViewController as? BookmarksTableViewController {
+            vc.bookmarksArray.removeAll()
+            vc.filteredBookmarks.removeAll()
+            vc.tableView.reloadData()
+        }
+
         defaults.removePersistentDomainForName(appDomain)
+        Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)
     }
 
