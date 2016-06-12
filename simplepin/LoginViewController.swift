@@ -54,9 +54,9 @@ class LoginModalViewController: UIViewController {
             if let token = userToken {
                 if self.tokenLogin == true {
                     let token = password.removeExcessiveSpaces
-                    let tokenArray = token.componentsSeparatedByString(":")
+                    let username = token.componentsSeparatedByString(":")
                     self.defaults.setObject(token, forKey: "userToken")
-                    self.defaults.setObject(tokenArray[0], forKey: "userName")
+                    self.defaults.setObject(username[0], forKey: "userName")
                     Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
                 } else {
                     self.defaults.setObject(username+":"+token, forKey: "userToken")
