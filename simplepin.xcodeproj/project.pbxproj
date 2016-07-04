@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		4A37EA111CAC616B0042796D /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A37EA101CAC616B0042796D /* LoginViewController.swift */; };
+		4ABD20AC1D2AE99D000190DE /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABD20AB1D2AE99D000190DE /* ShareViewController.swift */; };
+		4ABD20AF1D2AE99D000190DE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4ABD20AD1D2AE99D000190DE /* MainInterface.storyboard */; };
+		4ABD20B31D2AE99D000190DE /* Add Bookmark.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		4ACF3E141CFF5B620006A587 /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */; };
 		CC1E531B1CB80A20002532FB /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */; };
 		CC1E53201CB99102002532FB /* AddBookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1E531F1CB99102002532FB /* AddBookmarkTableViewController.swift */; };
@@ -28,8 +31,37 @@
 		CCF0BCD11D021E05007802B0 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCF0BCD01D021E05007802B0 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4ABD20B11D2AE99D000190DE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CCAC5E4D1C84A8A1006BA336 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4ABD20A81D2AE99D000190DE;
+			remoteInfo = "Add Bookmark";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4ABD20B71D2AE99D000190DE /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				4ABD20B31D2AE99D000190DE /* Add Bookmark.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		4A37EA101CAC616B0042796D /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Add Bookmark.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4ABD20AB1D2AE99D000190DE /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		4ABD20AE1D2AE99D000190DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		4ABD20B01D2AE99D000190DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ABD20B81D2AF037000190DE /* Add Bookmark.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Add Bookmark.entitlements"; sourceTree = "<group>"; };
 		4ACF3E131CFF5B620006A587 /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
 		CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		CC1E531F1CB99102002532FB /* AddBookmarkTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBookmarkTableViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +87,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4ABD20A61D2AE99D000190DE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CCAC5E521C84A8A1006BA336 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -74,6 +113,17 @@
 				CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */,
 			);
 			name = Storyboards;
+			sourceTree = "<group>";
+		};
+		4ABD20AA1D2AE99D000190DE /* Add Bookmark */ = {
+			isa = PBXGroup;
+			children = (
+				4ABD20B81D2AF037000190DE /* Add Bookmark.entitlements */,
+				4ABD20AB1D2AE99D000190DE /* ShareViewController.swift */,
+				4ABD20AD1D2AE99D000190DE /* MainInterface.storyboard */,
+				4ABD20B01D2AE99D000190DE /* Info.plist */,
+			);
+			path = "Add Bookmark";
 			sourceTree = "<group>";
 		};
 		CC32192C1CB3033F00284118 /* Extensions */ = {
@@ -102,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				CCAC5E571C84A8A1006BA336 /* simplepin */,
+				4ABD20AA1D2AE99D000190DE /* Add Bookmark */,
 				CCAC5E561C84A8A1006BA336 /* Products */,
 				CCD2C4ED1CE9AA77008523CE /* Fabric.framework */,
 				CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */,
@@ -112,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				CCAC5E551C84A8A1006BA336 /* simplepin.app */,
+				4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,6 +191,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4ABD20A81D2AE99D000190DE /* Add Bookmark */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4ABD20B61D2AE99D000190DE /* Build configuration list for PBXNativeTarget "Add Bookmark" */;
+			buildPhases = (
+				4ABD20A51D2AE99D000190DE /* Sources */,
+				4ABD20A61D2AE99D000190DE /* Frameworks */,
+				4ABD20A71D2AE99D000190DE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Add Bookmark";
+			productName = "Add Bookmark";
+			productReference = 4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		CCAC5E541C84A8A1006BA336 /* simplepin */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CCAC5E671C84A8A1006BA336 /* Build configuration list for PBXNativeTarget "simplepin" */;
@@ -147,10 +216,12 @@
 				CCAC5E521C84A8A1006BA336 /* Frameworks */,
 				CCAC5E531C84A8A1006BA336 /* Resources */,
 				CCD2C4EC1CE9AA4C008523CE /* ShellScript */,
+				4ABD20B71D2AE99D000190DE /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				4ABD20B21D2AE99D000190DE /* PBXTargetDependency */,
 			);
 			name = simplepin;
 			productName = simplepin;
@@ -167,13 +238,22 @@
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = "Mathias Lindholm";
 				TargetAttributes = {
+					4ABD20A81D2AE99D000190DE = {
+						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = 7Q878QDTU9;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
+					};
 					CCAC5E541C84A8A1006BA336 = {
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = 7Q878QDTU9;
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -187,11 +267,20 @@
 			projectRoot = "";
 			targets = (
 				CCAC5E541C84A8A1006BA336 /* simplepin */,
+				4ABD20A81D2AE99D000190DE /* Add Bookmark */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4ABD20A71D2AE99D000190DE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ABD20AF1D2AE99D000190DE /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CCAC5E531C84A8A1006BA336 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +311,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4ABD20A51D2AE99D000190DE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ABD20AC1D2AE99D000190DE /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CCAC5E511C84A8A1006BA336 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -244,7 +341,23 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4ABD20B21D2AE99D000190DE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4ABD20A81D2AE99D000190DE /* Add Bookmark */;
+			targetProxy = 4ABD20B11D2AE99D000190DE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		4ABD20AD1D2AE99D000190DE /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4ABD20AE1D2AE99D000190DE /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		CCAC5E5C1C84A8A1006BA336 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -264,6 +377,39 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4ABD20B41D2AE99D000190DE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_ENTITLEMENTS = "Add Bookmark/Add Bookmark.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = "Add Bookmark/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ml.simplepin.Add-Bookmark";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4ABD20B51D2AE99D000190DE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NONNULL = YES;
+				CODE_SIGN_ENTITLEMENTS = "Add Bookmark/Add Bookmark.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				INFOPLIST_FILE = "Add Bookmark/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "ml.simplepin.Add-Bookmark";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		CCAC5E651C84A8A1006BA336 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -355,6 +501,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COMPRESS_PNG_FILES = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -376,6 +523,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COMPRESS_PNG_FILES = NO;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -391,7 +539,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
+		4ABD20B61D2AE99D000190DE /* Build configuration list for PBXNativeTarget "Add Bookmark" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4ABD20B41D2AE99D000190DE /* Debug */,
+				4ABD20B51D2AE99D000190DE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,
