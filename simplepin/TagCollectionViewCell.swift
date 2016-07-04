@@ -20,12 +20,12 @@ class TagCollectionViewCell: UICollectionViewCell  {
         tagLabel.layer.masksToBounds = true
         tagLabel.layer.cornerRadius = 2
         tagLabel.layer.borderWidth = 0.5
+
         if string[index] == "." {
             tagLabel.textColor = UIColor.darkGrayColor()
             tagLabel.highlightedTextColor = UIColor.darkGrayColor()
             tagLabel.backgroundColor = UIColor.groupTableViewBackgroundColor()
             tagLabel.layer.borderColor = UIColor.blueColor().colorWithAlphaComponent(0.12).CGColor
-
         } else {
             tagLabel.textColor = Colors.Blue
             tagLabel.highlightedTextColor = Colors.Blue
