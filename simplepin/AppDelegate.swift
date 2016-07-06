@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var storyboard: UIStoryboard?
     var navigation: UINavigationController?
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 

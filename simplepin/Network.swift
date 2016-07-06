@@ -10,12 +10,14 @@ import Foundation
 import SystemConfiguration
 
 //MARK: - Network
+
+let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+
 struct Network {
 
     static func checkHttpResponse(response: NSURLResponse) -> Bool {
         let notification = NSNotificationCenter.defaultCenter()
         let statusCode = (response as? NSHTTPURLResponse)?.statusCode
-        let defaults = NSUserDefaults.standardUserDefaults()
 
         if statusCode == 401 {
             if defaults.stringForKey("userToken") != nil {
@@ -105,7 +107,6 @@ struct Network {
 
     // MARK: - Fetch posts
     static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
 
         let urlQuery = NSURLComponents()
@@ -155,7 +156,6 @@ struct Network {
     }
 
     static func parseJSONData(data: NSData) -> [BookmarkItem] {
-        let defaults = NSUserDefaults.standardUserDefaults()
         var bookmarks = [BookmarkItem]()
         do {
             if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
@@ -175,7 +175,6 @@ struct Network {
 
     // MARK: - Check for updates
     static func checkForUpdates(completion: (NSDate?) -> Void) -> NSURLSessionTask? {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
 
         let urlQuery = NSURLComponents()
@@ -224,7 +223,6 @@ struct Network {
 
     // MARK: - Delete bookmark
     static func deleteBookmark(bookmarkUrl: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
 
@@ -260,7 +258,6 @@ struct Network {
 
     // MARK: - Add bookmark
     static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, replace: String = "yes", shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
@@ -305,7 +302,6 @@ struct Network {
 
     // MARK: - Get tags
     static func fetchTags(completion: ([String])? -> Void) -> NSURLSessionTask? {
-        let defaults = NSUserDefaults.standardUserDefaults()
         let userToken = defaults.stringForKey("userToken")! as String
 
         let urlQuery = NSURLComponents()
