@@ -54,9 +54,9 @@ class ShareViewController: SLComposeServiceViewController {
         addBookmarkTask?.cancel()
     }
 
-    func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, replace: String = "yes", shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
+    func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
-        let urlString = bookmarkUrl.absoluteString
+        let urlString = url.absoluteString
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -73,8 +73,6 @@ class ShareViewController: SLComposeServiceViewController {
             completion(nil)
             return nil
         }
-
-        print(urlQuery.URL)
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
