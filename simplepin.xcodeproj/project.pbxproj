@@ -16,6 +16,7 @@
 		CC1E53201CB99102002532FB /* AddBookmarkTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC1E531F1CB99102002532FB /* AddBookmarkTableViewController.swift */; };
 		CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3219271CB2FAE600284118 /* NSDateExtension.swift */; };
 		CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC32192A1CB3032F00284118 /* StringExtension.swift */; };
+		CC3C02C21D2E69570067B236 /* OptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C02C11D2E69570067B236 /* OptionsTableViewController.swift */; };
 		CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */; };
 		CC7735101D0C378D00B85F31 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC77350D1D0C378D00B85F31 /* 1Password.xcassets */; };
 		CC7735111D0C378D00B85F31 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */; };
@@ -68,6 +69,7 @@
 		CC3219271CB2FAE600284118 /* NSDateExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDateExtension.swift; sourceTree = "<group>"; };
 		CC32192A1CB3032F00284118 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CC3C02BA1D2BC37D0067B236 /* simplepin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = simplepin.entitlements; sourceTree = "<group>"; };
+		CC3C02C11D2E69570067B236 /* OptionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsTableViewController.swift; sourceTree = "<group>"; };
 		CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModalViewController.swift; sourceTree = "<group>"; };
 		CC77350C1D0C378C00B85F31 /* simplepin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "simplepin-Bridging-Header.h"; sourceTree = "<group>"; };
 		CC77350D1D0C378D00B85F31 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
@@ -123,6 +125,7 @@
 				4ABD20AB1D2AE99D000190DE /* ShareViewController.swift */,
 				4ABD20AD1D2AE99D000190DE /* MainInterface.storyboard */,
 				4ABD20B01D2AE99D000190DE /* Info.plist */,
+				CC3C02C11D2E69570067B236 /* OptionsTableViewController.swift */,
 			);
 			path = "Add Bookmark";
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC3C02C21D2E69570067B236 /* OptionsTableViewController.swift in Sources */,
 				4ABD20AC1D2AE99D000190DE /* ShareViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

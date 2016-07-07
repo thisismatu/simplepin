@@ -45,8 +45,19 @@ class ShareViewController: SLComposeServiceViewController {
         }
     }
 
+    lazy var colorConfigurationItem: SLComposeSheetConfigurationItem = {
+        let item = SLComposeSheetConfigurationItem()
+        item.title = "Settings"
+        item.value = ""
+        item.tapHandler = {
+            let vc = OptionsTableViewController(style: .Plain)
+            self.pushConfigurationViewController(vc)
+        }
+        return item
+    }()
+
     override func configurationItems() -> [AnyObject]! {
-        return []
+        return [colorConfigurationItem]
     }
 
     override func viewDidDisappear(animated: Bool) {
