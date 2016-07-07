@@ -29,7 +29,6 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
     var bookmark = Bookmark()
-    let asd = "moi"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +54,6 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
 
         self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: sharedValue, toread: toreadValue) { resultCode in
             if resultCode == "done" {
-                NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                 self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
             } else {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
