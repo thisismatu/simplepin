@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         defaults.removePersistentDomainForName(appDomain)
+        defaults.removeObjectForKey("userToken")
         Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)
     }
