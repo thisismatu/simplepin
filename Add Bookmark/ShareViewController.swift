@@ -101,7 +101,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     }
 
     func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")! as String
+        guard let userToken = defaults.stringForKey("userToken") else { return nil }
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
 
