@@ -109,8 +109,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
             guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
-            let title = "Separate tags with space.\n\n"
-            return title + "Top tags: " + tags.joinWithSeparator(", ")
+            let title = "Top tags: " + tags.joinWithSeparator(", ")
+            return title
         } else {
             return nil
         }
