@@ -49,20 +49,6 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         return true
     }
 
-    func getUrl() {
-        if let item = extensionContext?.inputItems.first as? NSExtensionItem {
-            if let itemProvider = item.attachments?.first as? NSItemProvider {
-                if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
-                    itemProvider.loadItemForTypeIdentifier("public.url", options: nil, completionHandler: { (url, error) -> Void in
-                        if let shareURL = url as? NSURL {
-                            self.bookmark.url = shareURL
-                        }
-                    })
-                }
-            }
-        }
-    }
-
     override func didSelectPost() {
         let sharedValue = self.bookmark.shared == true ? "no" : "yes"
         let toreadValue = self.bookmark.toread == true ? "yes" : "no"
@@ -79,6 +65,10 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         }
     }
 
+    override func configurationItems() -> [AnyObject]! {
+        return [optionsConfigurationItem]
+    }
+
     lazy var optionsConfigurationItem: SLComposeSheetConfigurationItem = {
         let item = SLComposeSheetConfigurationItem()
         item.title = "Options"
@@ -93,8 +83,18 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         self.pushConfigurationViewController(vc)
     }
 
-    override func configurationItems() -> [AnyObject]! {
-        return [optionsConfigurationItem]
+    func getUrl() {
+        if let item = extensionContext?.inputItems.first as? NSExtensionItem {
+            if let itemProvider = item.attachments?.first as? NSItemProvider {
+                if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
+                    itemProvider.loadItemForTypeIdentifier("public.url", options: nil, completionHandler: { (url, error) -> Void in
+                        if let shareURL = url as? NSURL {
+                            self.bookmark.url = shareURL
+                        }
+                    })
+                }
+            }
+        }
     }
 
     func didEnterInformation(data: Bookmark) {
