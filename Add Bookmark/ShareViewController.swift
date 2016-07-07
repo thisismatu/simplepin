@@ -9,10 +9,38 @@
 import UIKit
 import Social
 
-class ShareViewController: SLComposeServiceViewController {
+struct Bookmark {
+    var url: NSURL
+    var description: String
+    var tags: [String]
+    var shared: Bool
+    var toread: Bool
+
+    init() {
+        self.url = NSURL()
+        self.description = ""
+        self.tags = []
+        self.shared = NSUserDefaults(suiteName: "group.ml.simplepin")!.boolForKey("privateByDefault")
+        self.toread = false
+    }
+}
+
+class ShareViewController: SLComposeServiceViewController, OptionsTableViewDelegate {
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
-    var bookmark: Bookmark?
+    var bookmark = Bookmark()
+    let asd = "moi"
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        getUrl()
+        bookmark.shared = defaults.boolForKey("privateByDefault")
+    }
+
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        addBookmarkTask?.cancel()
+    }
 
     override func isContentValid() -> Bool {
         if contentText.isEmpty {
@@ -21,24 +49,13 @@ class ShareViewController: SLComposeServiceViewController {
         return true
     }
 
-    override func didSelectPost() {
+    func getUrl() {
         if let item = extensionContext?.inputItems.first as? NSExtensionItem {
             if let itemProvider = item.attachments?.first as? NSItemProvider {
                 if itemProvider.hasItemConformingToTypeIdentifier("public.url") {
                     itemProvider.loadItemForTypeIdentifier("public.url", options: nil, completionHandler: { (url, error) -> Void in
                         if let shareURL = url as? NSURL {
-
-                            self.addBookmarkTask = self.addBookmark(shareURL, title: self.contentText) { resultCode in
-                                if resultCode == "done" {
-                                    NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
-                                    self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
-                                } else {
-                                    let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
-                                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-                                    self.presentViewController(alert, animated: true, completion: nil)
-                                }
-                            }
-
+                            self.bookmark.url = shareURL
                         }
                     })
                 }
@@ -46,24 +63,43 @@ class ShareViewController: SLComposeServiceViewController {
         }
     }
 
-    lazy var colorConfigurationItem: SLComposeSheetConfigurationItem = {
-        let item = SLComposeSheetConfigurationItem()
-        item.title = "Settings"
-        item.value = ""
-        item.tapHandler = {
-            let vc = OptionsTableViewController(style: .Plain)
-            self.pushConfigurationViewController(vc)
+    override func didSelectPost() {
+        let sharedValue = self.bookmark.shared == true ? "no" : "yes"
+        let toreadValue = self.bookmark.toread == true ? "yes" : "no"
+
+        self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: sharedValue, toread: toreadValue) { resultCode in
+            if resultCode == "done" {
+                NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
+                self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
+            } else {
+                let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
+    }
+
+    lazy var optionsConfigurationItem: SLComposeSheetConfigurationItem = {
+        let item = SLComposeSheetConfigurationItem()
+        item.title = "Options"
+        item.tapHandler = self.showOptions
         return item
     }()
 
-    override func configurationItems() -> [AnyObject]! {
-        return [colorConfigurationItem]
+    func showOptions() {
+        let vc = OptionsTableViewController(style: .Plain)
+        vc.passedBookmark = bookmark
+        vc.delegate = self
+        self.pushConfigurationViewController(vc)
     }
 
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        addBookmarkTask?.cancel()
+    override func configurationItems() -> [AnyObject]! {
+        return [optionsConfigurationItem]
+    }
+
+    func didEnterInformation(data: Bookmark) {
+        bookmark = data
+        self.popConfigurationViewController()
     }
 
     func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
@@ -97,7 +133,6 @@ class ShareViewController: SLComposeServiceViewController {
                     completion(nil)
                     return
                 }
-
                 let resultCode = self.parseJSON(data, key: "result_code")
                 completion(resultCode)
             })

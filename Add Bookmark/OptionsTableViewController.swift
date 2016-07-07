@@ -8,24 +8,21 @@
 
 import UIKit
 
-struct Bookmark {
-    var description: String
-    var tags: [String]
-    var shared: String
-    var toread: String
+protocol OptionsTableViewDelegate: class {
+    func didEnterInformation(data: Bookmark)
 }
 
 class OptionsTableViewController: UITableViewController {
+    weak var delegate: OptionsTableViewDelegate? = nil
+    var passedBookmark = Bookmark()
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     var descriptionCell: UITableViewCell = UITableViewCell()
     var tagsCell: UITableViewCell = UITableViewCell()
     var shareCell: UITableViewCell = UITableViewCell()
     var toreadCell: UITableViewCell = UITableViewCell()
-
     var descriptionLabel: UITextField = UITextField()
     var tagsLabel: UITextField = UITextField()
-
     var shareSwitch: UISwitch = UISwitch()
     var toreadSwitch: UISwitch = UISwitch()
 
@@ -59,11 +56,29 @@ class OptionsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = nil
-        //self.clearsSelectionOnViewWillAppear = false
+
+        descriptionLabel.text = passedBookmark.description
+        tagsLabel.text = passedBookmark.tags.joinWithSeparator(" ")
+        shareSwitch.on = passedBookmark.shared
+        toreadSwitch.on = passedBookmark.toread
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+
+        guard let description = descriptionLabel.text,
+            let tags = tagsLabel.text?.componentsSeparatedByString(" ") else { return }
+
+        passedBookmark.description = description
+        passedBookmark.tags = tags
+        passedBookmark.shared = shareSwitch.on
+        passedBookmark.toread = toreadSwitch.on
+
+        delegate?.didEnterInformation(passedBookmark)
     }
 
     // MARK: - Table view data source
@@ -93,19 +108,5 @@ class OptionsTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, shouldHighlightRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return false
     }
-
-    // MARK: - Navigation
-
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if let vc = segue.destinationViewController as? ShareViewController {
-//            let shareString = shareSwitch.on == true ? "no" : "yes"
-//            let toreadString = toreadSwitch.on == true ? "yes" : "no"
-//
-//            guard let description = descriptionLabel.text,
-//                let tags = tagsLabel.text?.componentsSeparatedByString(" ") else { return }
-//
-//            vc.bookmark = Bookmark.init(description: description, tags: tags, shared: shareString, toread: toreadString)
-//        }
-//    }
 
 }
