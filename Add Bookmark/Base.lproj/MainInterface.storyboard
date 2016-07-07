@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--Add Bookmark-->
+        <!--Simplepin-->
         <scene sceneID="ceB-am-kn3">
             <objects>
-                <viewController title="Add Bookmark" id="j1y-V4-xli" customClass="ShareViewController" customModule="Add_Bookmark" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Simplepin" id="j1y-V4-xli" customClass="ShareViewController" customModule="Add_Bookmark" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8bI-gs-bmD"/>
                         <viewControllerLayoutGuide type="bottom" id="d5i-Ba-RvD"/>
