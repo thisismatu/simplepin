@@ -8,6 +8,13 @@
 
 import UIKit
 
+struct Bookmark {
+    var description: String
+    var tags: [String]
+    var shared: String
+    var toread: String
+}
+
 class OptionsTableViewController: UITableViewController {
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
@@ -87,14 +94,18 @@ class OptionsTableViewController: UITableViewController {
         return false
     }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if let vc = segue.destinationViewController as? ShareViewController {
+//            let shareString = shareSwitch.on == true ? "no" : "yes"
+//            let toreadString = toreadSwitch.on == true ? "yes" : "no"
+//
+//            guard let description = descriptionLabel.text,
+//                let tags = tagsLabel.text?.componentsSeparatedByString(" ") else { return }
+//
+//            vc.bookmark = Bookmark.init(description: description, tags: tags, shared: shareString, toread: toreadString)
+//        }
+//    }
 
 }

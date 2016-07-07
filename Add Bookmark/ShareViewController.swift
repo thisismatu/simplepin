@@ -12,6 +12,7 @@ import Social
 class ShareViewController: SLComposeServiceViewController {
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
+    var bookmark: Bookmark?
 
     override func isContentValid() -> Bool {
         if contentText.isEmpty {
@@ -68,6 +69,7 @@ class ShareViewController: SLComposeServiceViewController {
     func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = url.absoluteString
+        let tagsString = tags.joinWithSeparator(" ")
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -76,6 +78,10 @@ class ShareViewController: SLComposeServiceViewController {
         urlQuery.queryItems = [
             NSURLQueryItem(name: "url", value: urlString),
             NSURLQueryItem(name: "description", value: title),
+            NSURLQueryItem(name: "extended", value: description),
+            NSURLQueryItem(name: "tags", value: tagsString),
+            NSURLQueryItem(name: "shared", value: shared),
+            NSURLQueryItem(name: "toread", value: toread),
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
