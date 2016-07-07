@@ -155,7 +155,7 @@
 		CCAC5E4C1C84A8A1006BA336 = {
 			isa = PBXGroup;
 			children = (
-				CCAC5E571C84A8A1006BA336 /* simplepin */,
+				CCAC5E571C84A8A1006BA336 /* Simplepin */,
 				4ABD20AA1D2AE99D000190DE /* Add Bookmark */,
 				CCAC5E561C84A8A1006BA336 /* Products */,
 				CCD2C4ED1CE9AA77008523CE /* Fabric.framework */,
@@ -172,7 +172,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CCAC5E571C84A8A1006BA336 /* simplepin */ = {
+		CCAC5E571C84A8A1006BA336 /* Simplepin */ = {
 			isa = PBXGroup;
 			children = (
 				CC3C02BA1D2BC37D0067B236 /* simplepin.entitlements */,
@@ -190,6 +190,7 @@
 				CCD6243E1CAA5731007621FC /* Network.swift */,
 				CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */,
 			);
+			name = Simplepin;
 			path = simplepin;
 			sourceTree = "<group>";
 		};
@@ -263,7 +264,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -561,7 +562,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,
