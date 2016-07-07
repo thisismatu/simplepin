@@ -9,6 +9,7 @@
 import UIKit
 
 class OptionsTableViewController: UITableViewController {
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     var descriptionCell: UITableViewCell = UITableViewCell()
     var tagsCell: UITableViewCell = UITableViewCell()
@@ -28,13 +29,18 @@ class OptionsTableViewController: UITableViewController {
 
         self.descriptionLabel = UITextField(frame: CGRectInset(self.descriptionCell.contentView.bounds, 15, 0))
         self.descriptionLabel.placeholder = "Description"
+        self.descriptionLabel.autocorrectionType = .Default
+        self.descriptionLabel.autocapitalizationType = .Sentences
         self.descriptionCell.addSubview(self.descriptionLabel)
 
         self.tagsLabel = UITextField(frame: CGRectInset(self.tagsCell.contentView.bounds, 15, 0))
-        self.tagsLabel.placeholder = "Tags"
+        self.tagsLabel.placeholder = "Tags (separated by space)"
+        self.tagsLabel.autocorrectionType = .Default
+        self.tagsLabel.autocapitalizationType = .None
         self.tagsCell.addSubview(self.tagsLabel)
 
         self.shareCell.textLabel?.text = "Private"
+        self.shareSwitch.on = defaults.boolForKey("privateByDefault")
         self.shareCell.accessoryView = shareSwitch
         self.shareCell.addSubview(self.shareSwitch)
 
