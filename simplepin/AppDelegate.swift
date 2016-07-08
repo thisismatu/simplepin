@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var storyboard: UIStoryboard?
     var navigation: UINavigationController?
     let defaults = NSUserDefaults.standardUserDefaults()
-    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let groupDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
@@ -54,8 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         defaults.removePersistentDomainForName(appDomain)
-        for key in sharedDefaults.dictionaryRepresentation() {
-            sharedDefaults.removeObjectForKey(key.0)
+        for key in groupDefaults.dictionaryRepresentation() {
+            groupDefaults.removeObjectForKey(key.0)
         }
         Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)

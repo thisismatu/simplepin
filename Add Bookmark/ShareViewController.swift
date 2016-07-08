@@ -26,14 +26,14 @@ struct Bookmark {
 }
 
 class ShareViewController: SLComposeServiceViewController, OptionsTableViewDelegate {
-    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let groupDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
     var bookmark = Bookmark()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         getUrl()
-        bookmark.shared = sharedDefaults.boolForKey("privateByDefault")
+        bookmark.shared = groupDefaults.boolForKey("privateByDefault")
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -101,7 +101,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     }
 
     func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
-        guard let userToken = sharedDefaults.stringForKey("userToken") else { return nil }
+        guard let userToken = groupDefaults.stringForKey("userToken") else { return nil }
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
 
