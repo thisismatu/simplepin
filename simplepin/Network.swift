@@ -11,7 +11,7 @@ import SystemConfiguration
 
 //MARK: - Network
 
-private let defaults = NSUserDefaults.standardUserDefaults()
+private let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
 struct Network {
 

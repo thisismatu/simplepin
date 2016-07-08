@@ -18,6 +18,7 @@
 		CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3219271CB2FAE600284118 /* NSDateExtension.swift */; };
 		CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC32192A1CB3032F00284118 /* StringExtension.swift */; };
 		CC3C02C21D2E69570067B236 /* OptionsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C02C11D2E69570067B236 /* OptionsTableViewController.swift */; };
+		CC3C02D01D2FB1C50067B236 /* MigrateDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3C02CF1D2FB1C50067B236 /* MigrateDefaults.swift */; };
 		CC56D2771C96F61A004D0896 /* SettingsModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */; };
 		CC7735101D0C378D00B85F31 /* 1Password.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC77350D1D0C378D00B85F31 /* 1Password.xcassets */; };
 		CC7735111D0C378D00B85F31 /* OnePasswordExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */; };
@@ -71,6 +72,7 @@
 		CC32192A1CB3032F00284118 /* StringExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 		CC3C02BA1D2BC37D0067B236 /* simplepin.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = simplepin.entitlements; sourceTree = "<group>"; };
 		CC3C02C11D2E69570067B236 /* OptionsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionsTableViewController.swift; sourceTree = "<group>"; };
+		CC3C02CF1D2FB1C50067B236 /* MigrateDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MigrateDefaults.swift; sourceTree = "<group>"; };
 		CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsModalViewController.swift; sourceTree = "<group>"; };
 		CC77350C1D0C378C00B85F31 /* simplepin-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "simplepin-Bridging-Header.h"; sourceTree = "<group>"; };
 		CC77350D1D0C378D00B85F31 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 				4A37EA101CAC616B0042796D /* LoginViewController.swift */,
 				CCD6243E1CAA5731007621FC /* Network.swift */,
 				CC56D2761C96F61A004D0896 /* SettingsModalViewController.swift */,
+				CC3C02CF1D2FB1C50067B236 /* MigrateDefaults.swift */,
 			);
 			name = Simplepin;
 			path = simplepin;
@@ -265,7 +268,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */;
+			buildConfigurationList = CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -344,6 +347,7 @@
 				CC1E531B1CB80A20002532FB /* UIViewControllerExtension.swift in Sources */,
 				CCD6243F1CAA5731007621FC /* Network.swift in Sources */,
 				CCAC5EF91C84EC75006BA336 /* BookmarksTableViewController.swift in Sources */,
+				CC3C02D01D2FB1C50067B236 /* MigrateDefaults.swift in Sources */,
 				CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */,
 				CCAC5E591C84A8A1006BA336 /* AppDelegate.swift in Sources */,
 				CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */,
@@ -564,7 +568,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "Simplepin" */ = {
+		CCAC5E501C84A8A1006BA336 /* Build configuration list for PBXProject "simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E651C84A8A1006BA336 /* Debug */,

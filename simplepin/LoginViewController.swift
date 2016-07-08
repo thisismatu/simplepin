@@ -14,7 +14,7 @@ import SafariServices
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
     var tokenLogin = false
-    let defaults = NSUserDefaults.standardUserDefaults()
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var usernameField: UITextField!

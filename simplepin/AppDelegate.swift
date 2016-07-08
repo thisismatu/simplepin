@@ -16,10 +16,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var storyboard: UIStoryboard?
     var navigation: UINavigationController?
-    let defaults = NSUserDefaults.standardUserDefaults()
-    let groupDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+        migrateUserDefaultsToAppGroups()
 
         self.window?.tintColor = Colors.Blue
         UINavigationBar.appearance().tintColor = Colors.Blue
@@ -53,9 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             vc.tableView.reloadData()
         }
 
-        defaults.removePersistentDomainForName(appDomain)
-        for key in groupDefaults.dictionaryRepresentation() {
-            groupDefaults.removeObjectForKey(key.0)
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
+        for key in defaults.dictionaryRepresentation() {
+            defaults.removeObjectForKey(key.0)
         }
         Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)
