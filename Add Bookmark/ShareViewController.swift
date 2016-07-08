@@ -35,7 +35,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         getUrl()
         bookmark.shared = groupDefaults.boolForKey("privateByDefault")
 
-        let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Please open Simplepin, log in and try again 🙏", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Please open Simplepin, log in and try again. Sorry for the inconvenience.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { _ in self.cancel() }))
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -60,8 +60,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         let toreadValue = self.bookmark.toread == true ? "yes" : "no"
 
         self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: sharedValue, toread: toreadValue) { resultCode in
-            if resultCode == "done" {
-            } else {
+            if resultCode != "done" {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -108,7 +107,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     }
 
     func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
-        guard let userToken = groupDefaults.stringForKey("userToken") else { return nil }
+        let userToken = groupDefaults.stringForKey("userToken")
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
 
