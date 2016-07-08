@@ -35,9 +35,11 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         getUrl()
         bookmark.shared = groupDefaults.boolForKey("privateByDefault")
 
-        let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Open Simplepin, log in and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { _ in self.cancel() }))
-        self.presentViewController(alert, animated: true, completion: nil)
+        if groupDefaults.stringForKey("userToken") == nil {
+            let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Open Simplepin, log in and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { _ in self.cancel() }))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
 
     override func viewDidDisappear(animated: Bool) {
