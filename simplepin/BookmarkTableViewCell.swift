@@ -9,7 +9,7 @@
 import UIKit
 
 class BookmarkTableViewCell: UITableViewCell {
-    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!

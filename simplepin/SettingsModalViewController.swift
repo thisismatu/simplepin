@@ -12,7 +12,8 @@ import Crashlytics
 
 class SettingsModalViewController: UITableViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/simplepin/id1107506693?ls=1&mt=8")!
     let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
     let device = UIDevice.currentDevice().userInterfaceIdiom
@@ -64,8 +65,10 @@ class SettingsModalViewController: UITableViewController {
     @IBAction func privateByDefaultPressed(sender: AnyObject) {
         if privateByDefaultSwitch.on == true {
             defaults.setObject(true, forKey: "privateByDefault")
+            sharedDefaults.setObject(true, forKey: "privateByDefault")
         } else {
             defaults.setObject(false, forKey: "privateByDefault")
+            sharedDefaults.setObject(false, forKey: "privateByDefault")
         }
     }
 

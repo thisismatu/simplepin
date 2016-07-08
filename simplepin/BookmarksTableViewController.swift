@@ -57,7 +57,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     var urlToPass: NSURL?
     var dontAddThisUrl: NSURL?
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let searchController = UISearchController(searchResultsController: nil)
     let notifications = NSNotificationCenter.defaultCenter()
     var searchIsActive: Bool {return searchController.active && searchController.searchBar.text != ""}

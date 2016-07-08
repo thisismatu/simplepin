@@ -14,7 +14,8 @@ import SafariServices
 class LoginModalViewController: UIViewController {
     var fetchApiTokenTask: NSURLSessionTask?
     var tokenLogin = false
-    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults.standardUserDefaults()
+    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let notifications = NSNotificationCenter.defaultCenter()
 
     @IBOutlet var usernameField: UITextField!
@@ -57,10 +58,12 @@ class LoginModalViewController: UIViewController {
                     let username = token.componentsSeparatedByString(":")
                     self.defaults.setObject(token, forKey: "userToken")
                     self.defaults.setObject(username[0], forKey: "userName")
+                    self.sharedDefaults.setObject(token, forKey: "userToken")
                     Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
                 } else {
                     self.defaults.setObject(username+":"+token, forKey: "userToken")
                     self.defaults.setObject(username, forKey: "userName")
+                    self.sharedDefaults.setObject(username+":"+token, forKey: "userToken")
                     Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)

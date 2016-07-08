@@ -17,7 +17,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
-    let defaults = NSUserDefaults.init(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults.standardUserDefaults()
 
     @IBOutlet var privateSwitch: UISwitch!
     @IBOutlet var toreadSwitch: UISwitch!

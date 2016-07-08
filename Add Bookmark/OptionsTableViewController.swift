@@ -15,7 +15,7 @@ protocol OptionsTableViewDelegate: class {
 class OptionsTableViewController: UITableViewController {
     weak var delegate: OptionsTableViewDelegate? = nil
     var passedBookmark = Bookmark()
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let sharedDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     var descriptionCell: UITableViewCell = UITableViewCell()
     var tagsCell: UITableViewCell = UITableViewCell()
@@ -44,7 +44,7 @@ class OptionsTableViewController: UITableViewController {
         self.tagsCell.addSubview(self.tagsLabel)
 
         self.shareCell.textLabel?.text = "Private"
-        self.shareSwitch.on = defaults.boolForKey("privateByDefault")
+        self.shareSwitch.on = sharedDefaults.boolForKey("privateByDefault")
         self.shareCell.accessoryView = shareSwitch
         self.shareCell.addSubview(self.shareSwitch)
 
