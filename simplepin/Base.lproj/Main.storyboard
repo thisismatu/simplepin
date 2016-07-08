@@ -608,12 +608,53 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="p2a-st-vkf">
+                                        <rect key="frame" x="0.0" y="455.5" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="p2a-st-vkf" id="xHE-QE-KbO">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2we-jM-R3J">
+                                                    <rect key="frame" x="16" y="7" width="568" height="31"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Check Clipboard for Links" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dw-VD-jym">
+                                                            <rect key="frame" x="0.0" y="0.0" width="519" height="31"/>
+                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="l42-Cs-WBt">
+                                                            <rect key="frame" x="519" y="0.5" width="51" height="31"/>
+                                                            <connections>
+                                                                <action selector="addClipboardSwitchPressed:" destination="S5y-x6-W5k" eventType="valueChanged" id="YJA-m6-ao9"/>
+                                                            </connections>
+                                                        </switch>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2we-jM-R3J" firstAttribute="leading" secondItem="xHE-QE-KbO" secondAttribute="leadingMargin" constant="8" id="3dY-ke-v0A"/>
+                                                <constraint firstItem="2we-jM-R3J" firstAttribute="centerY" secondItem="xHE-QE-KbO" secondAttribute="centerY" id="Uua-He-939"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="2we-jM-R3J" secondAttribute="bottom" id="Wdy-Uq-NGy"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="2we-jM-R3J" secondAttribute="trailing" constant="8" id="ZHa-3v-vvQ"/>
+                                                <constraint firstItem="2we-jM-R3J" firstAttribute="top" secondItem="xHE-QE-KbO" secondAttribute="topMargin" id="x8T-Pg-iDb"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="x8T-Pg-iDb"/>
+                                                    <exclude reference="Wdy-Uq-NGy"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Info" id="OWP-zc-kKS">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="H5L-aY-RhG">
-                                        <rect key="frame" x="0.0" y="505.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="549.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="H5L-aY-RhG" id="IF2-aY-GgN">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -636,7 +677,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="hZU-z4-d8l">
-                                        <rect key="frame" x="0.0" y="549.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="593.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hZU-z4-d8l" id="khY-d8-VrJ">
                                             <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
@@ -659,7 +700,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="sPF-Px-adq">
-                                        <rect key="frame" x="0.0" y="593.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="637.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sPF-Px-adq" id="Pw5-zz-hRH">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -697,7 +738,7 @@
                             <tableViewSection id="qnO-HY-Fro">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="pA8-kc-7fy">
-                                        <rect key="frame" x="0.0" y="673.5" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="717.5" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pA8-kc-7fy" id="86s-bK-7Bd">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -736,6 +777,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="addClipboardSwitch" destination="l42-Cs-WBt" id="ezy-UI-hA3"/>
                         <outlet property="boldTitleSwitch" destination="14h-a5-j0Y" id="dLs-m7-WHw"/>
                         <outlet property="logoutButton" destination="xgb-RS-3mt" id="czf-WP-gg0"/>
                         <outlet property="markAsReadSwitch" destination="iV9-pS-oBv" id="Zio-P5-4Tw"/>

@@ -124,17 +124,19 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     func checkPasteboard() {
-        if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
-            if !bookmarksArray.contains( { $0.link == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
-                let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
-                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-                    self.dontAddThisUrl = pasteboardUrl
-                }))
-                alert.addAction(UIAlertAction(title: "Add", style: .Default, handler: { action in
-                    self.urlToPass = pasteboardUrl
-                    self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
-                }))
-                self.presentViewController(alert, animated: true, completion: nil)
+        if defaults.boolForKey("addClipboard") == true {
+            if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
+                if !bookmarksArray.contains( { $0.link == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
+                    let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
+                    alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+                        self.dontAddThisUrl = pasteboardUrl
+                    }))
+                    alert.addAction(UIAlertAction(title: "Add", style: .Default, handler: { action in
+                        self.urlToPass = pasteboardUrl
+                        self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
+                    }))
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
             }
         }
     }

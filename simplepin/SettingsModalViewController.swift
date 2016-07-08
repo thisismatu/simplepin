@@ -28,6 +28,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var rateAppCell: UITableViewCell!
     @IBOutlet var boldTitleSwitch: UISwitch!
     @IBOutlet var relativeDateSwitch: UISwitch!
+    @IBOutlet var addClipboardSwitch: UISwitch!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alertController = UIAlertController(
@@ -87,6 +88,13 @@ class SettingsModalViewController: UITableViewController {
         defaults.setBool(relativeDateSwitch.on, forKey: "relativeDate")
     }
 
+    @IBAction func addClipboardSwitchPressed(sender: AnyObject) {
+        if addClipboardSwitch.on == true {
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "addClipboard"])
+        }
+        defaults.setBool(addClipboardSwitch.on, forKey: "addClipboard")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -100,6 +108,7 @@ class SettingsModalViewController: UITableViewController {
         openInSafariSwitch.on = defaults.boolForKey("openInSafari")
         boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
         relativeDateSwitch.on = defaults.boolForKey("relativeDate")
+        addClipboardSwitch.on = defaults.boolForKey("addClipboard")
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
