@@ -34,6 +34,10 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         super.viewDidLoad()
         getUrl()
         bookmark.shared = groupDefaults.boolForKey("privateByDefault")
+
+        let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Please open Simplepin, log in and try again 🙏", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { _ in self.cancel() }))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -45,6 +49,9 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         if contentText.isEmpty {
             return false
         }
+        if groupDefaults.stringForKey("userToken") == nil {
+            return false
+        }
         return true
     }
 
@@ -54,12 +61,12 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
 
         self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: sharedValue, toread: toreadValue) { resultCode in
             if resultCode == "done" {
-                self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
             } else {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
             }
+            self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
         }
     }
 
