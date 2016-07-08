@@ -27,4 +27,8 @@ extension String {
         let filtered = components.filter({!$0.isEmpty})
         return filtered.joinWithSeparator(" ")
     }
+
+    var boolValue: Bool {
+        return NSString(string: self).boolValue
+    }
 }
