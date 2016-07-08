@@ -54,8 +54,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         defaults.removePersistentDomainForName(appDomain)
-        sharedDefaults.removeObjectForKey("userToken")
-        sharedDefaults.removeObjectForKey("privateByDefault")
+        for key in sharedDefaults.dictionaryRepresentation() {
+            sharedDefaults.removeObjectForKey(key.0)
+        }
         Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)
     }
