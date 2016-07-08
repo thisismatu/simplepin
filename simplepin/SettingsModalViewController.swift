@@ -54,46 +54,37 @@ class SettingsModalViewController: UITableViewController {
 
     @IBAction func markAsReadPressed(sender: AnyObject) {
         if markAsReadSwitch.on == true {
-            defaults.setObject(true, forKey: "markAsRead")
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "markAsRead"])
-        } else {
-            defaults.setObject(false, forKey: "markAsRead")
         }
+        defaults.setObject(markAsReadSwitch.on, forKey: "markAsRead")
     }
 
     @IBAction func privateByDefaultPressed(sender: AnyObject) {
         if privateByDefaultSwitch.on == true {
-            defaults.setObject(true, forKey: "privateByDefault")
-        } else {
-            defaults.setObject(false, forKey: "privateByDefault")
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "privateByDefault"])
         }
+        defaults.setObject(privateByDefaultSwitch.on, forKey: "privateByDefault")
     }
 
     @IBAction func openInSafariSwitchPressed(sender: AnyObject) {
         if openInSafariSwitch.on == true {
-            defaults.setObject(true, forKey: "openInSafari")
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "openInSafari"])
-        } else {
-            defaults.setObject(false, forKey: "openInSafari")
         }
+        defaults.setObject(openInSafariSwitch.on, forKey: "openInSafari")
     }
 
     @IBAction func boldTitleSwitchPressed(sender: AnyObject) {
         if boldTitleSwitch.on == true {
-            defaults.setObject(true, forKey: "boldTitleFont")
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "boldTitleFont"])
-        } else {
-            defaults.setObject(false, forKey: "boldTitleFont")
         }
+        defaults.setObject(boldTitleSwitch.on, forKey: "boldTitleFont")
     }
 
     @IBAction func relativeDateSwitchPressed(sender: AnyObject) {
         if relativeDateSwitch.on == true {
-            defaults.setBool(true, forKey: "relativeDate")
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "relativeDate"])
-        } else {
-            defaults.setBool(false, forKey: "relativeDate")
         }
+        defaults.setBool(relativeDateSwitch.on, forKey: "relativeDate")
     }
 
     override func viewDidLoad() {
