@@ -25,13 +25,7 @@ func migrateUserDefaultsToAppGroups() {
                 groupDefaults.setObject(userDefaults.dictionaryRepresentation()[key], forKey: key)
             }
             groupDefaults.setBool(true, forKey: didMigrateToAppGroups)
-            groupDefaults.synchronize()
-            print("Successfully migrated defaults")
-        } else {
-            print("No need to migrate defaults")
         }
-    } else {
-        print("Unable to create NSUserDefaults with given app group")
     }
     
 }
