@@ -101,6 +101,9 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     func applicationWillEnterForeground() {
         checkPasteboard()
+        if let refresh = refreshControl {
+            handleRefresh(refresh)
+        }
     }
 
     func configureSearchController() {
