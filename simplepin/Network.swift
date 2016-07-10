@@ -28,7 +28,7 @@ struct Network {
             notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Too Many Requests", "message": "Try again in a couple of minutes"])
             return false
         } else if response.MIMEType == "text/html" {
-            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Something Went Wrong", "message": "Pinboard might be down. Try again in a while."])
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Trouble Connecting to Pinboard", "message": "Pinboard might be down. Try again in a while."])
             return false
         }
         return true
