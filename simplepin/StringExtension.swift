@@ -28,7 +28,7 @@ extension String {
         return filtered.joinWithSeparator(" ")
     }
 
-    var boolValue: Bool {
+    var stringToBool: Bool {
         return NSString(string: self).boolValue
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 extension Bool {
 
-    var stringValue: String {
+    var boolToString: String {
         if self == true {
             return "yes"
         } else {
