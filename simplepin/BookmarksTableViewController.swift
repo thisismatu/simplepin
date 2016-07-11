@@ -17,21 +17,23 @@ class BookmarkItem {
     let date: NSDate
     let link: NSURL
     let tags: [String]
-    var shared: String
-    var toread: String
+    var shared: Bool
+    var toread: Bool
 
     init?(json: [String: AnyObject]) {
         let dateString = json["time"] as? String
         let linkString = json["href"] as? String
         let tagsString = json["tags"] as? String
+        let sharedString = json["shared"] as? String
+        let toreadString = json["toread"] as? String
 
         guard let title = json["description"] as? String,
             let description = json["extended"] as? String,
             let date = dateString?.stringToDate(),
             let link = NSURL(string: linkString!),
             let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
-            let shared = json["shared"] as? String,
-            let toread = json["toread"] as? String else {
+            let shared = sharedString?.stringToBool,
+            let toread = toreadString?.stringToBool else {
                 return nil
         }
         self.title = title
@@ -330,7 +332,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             cell.collectionView.hidden = false
         }
 
-        if bookmark.toread == "no" {
+        if bookmark.toread == false {
             cell.unreadIndicator.hidden = true
             cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleBody)
         } else {
@@ -338,7 +340,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
 
-        cell.privateIndicator.hidden = bookmark.shared == "no" ? false : true
+        cell.privateIndicator.hidden = bookmark.shared == true
 
         return cell
     }
@@ -356,11 +358,11 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             bookmark = bookmarksArray[indexPath.row]
         }
 
-        if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == "yes") {
+        if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == true) {
             if Reachability.isConnectedToNetwork() == true {
-                self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: "no") { resultCode in
+                self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: false) { resultCode in
                     if resultCode == "done" {
-                        bookmark.toread = "no"
+                        bookmark.toread = false
                         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                     }
                 }
@@ -462,13 +464,12 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
                 let alertController = UIAlertController(title: bookmark.title, message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
 
-                func actionReadUnread(status: String) -> UIAlertAction {
-                    let title = status == "yes" ? "Read" : "Unread"
-                    let toread = status == "yes" ? "no" : "yes"
+                func actionReadUnread(toread: Bool) -> UIAlertAction {
+                    let title = toread == true ? "Read" : "Unread"
                     let action = UIAlertAction(title: "Mark as \(title)", style: UIAlertActionStyle.Default, handler: { action in
-                        self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: toread) { resultCode in
+                        self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: !toread) { resultCode in
                             if resultCode == "done" {
-                                bookmark.toread = toread
+                                bookmark.toread = !toread
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
                             } else {
                                 self.alertErrorWithReachability("Something Went Wrong", message: resultCode)

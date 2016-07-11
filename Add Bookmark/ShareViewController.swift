@@ -58,10 +58,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     }
 
     override func didSelectPost() {
-        let sharedValue = self.bookmark.shared == true ? "no" : "yes"
-        let toreadValue = self.bookmark.toread == true ? "yes" : "no"
-
-        self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: sharedValue, toread: toreadValue) { resultCode in
+        self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: !self.bookmark.shared, toread: self.bookmark.toread) { resultCode in
             if resultCode != "done" {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -108,7 +105,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         self.popConfigurationViewController()
     }
 
-    func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
+    func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: Bool = true, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = groupDefaults.stringForKey("userToken")
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
@@ -122,8 +119,8 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
             NSURLQueryItem(name: "description", value: title),
             NSURLQueryItem(name: "extended", value: description),
             NSURLQueryItem(name: "tags", value: tagsString),
-            NSURLQueryItem(name: "shared", value: shared),
-            NSURLQueryItem(name: "toread", value: toread),
+            NSURLQueryItem(name: "shared", value: shared.boolToString),
+            NSURLQueryItem(name: "toread", value: toread.boolToString),
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]

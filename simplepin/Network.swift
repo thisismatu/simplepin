@@ -257,7 +257,7 @@ struct Network {
     }
 
     // MARK: - Add bookmark
-    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, shared: String = "yes", toread: String = "no", completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, shared: Bool = true, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
@@ -272,8 +272,8 @@ struct Network {
             NSURLQueryItem(name: "extended", value: description),
             NSURLQueryItem(name: "tags", value: tagsString),
             NSURLQueryItem(name: "dt", value: dt?.dateToString()),
-            NSURLQueryItem(name: "shared", value: shared),
-            NSURLQueryItem(name: "toread", value: toread),
+            NSURLQueryItem(name: "shared", value: shared.boolToString),
+            NSURLQueryItem(name: "toread", value: toread.boolToString),
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]

@@ -13,8 +13,6 @@ import Crashlytics
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
-    var toreadValue: String?
-    var sharedValue: String?
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
@@ -28,32 +26,21 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     @IBOutlet var addButton: UIBarButtonItem!
 
     @IBAction func addButtonPressed(sender: AnyObject) {
-        if (toreadSwitch.on == true) {
-            toreadValue = "yes"
-        } else if (toreadSwitch.on == false) {
-            toreadValue = "no"
-        }
-
-        if (privateSwitch.on == true) {
-            sharedValue = "no"
-        } else if (privateSwitch.on == false) {
-            sharedValue = "yes"
-        }
 
         guard let urlText = urlTextField.text,
             let url = NSURL(string: urlText),
             let title = titleTextField.text,
             let description = descriptionTextView.text,
             let tags = tagsTextField.text?.componentsSeparatedByString(" "),
-            let shared = sharedValue,
-            let toread = toreadValue else {
+            let shared = privateSwitch?.on,
+            let toread = toreadSwitch?.on else {
                 return
         }
 
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: bookmarkDate, shared: shared, toread: toread) { resultCode in
+            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: bookmarkDate, shared: !shared, toread: toread) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
@@ -71,6 +58,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         urlTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
+        privateSwitch.on = defaults.boolForKey("privateByDefault")
+
         if let bookmark = bookmark {
             navigationItem.title = "Edit Bookmark"
             addButton.title = "Save"
@@ -79,8 +68,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             descriptionTextView.text = bookmark.description
             tagsTextField.text = bookmark.tags.joinWithSeparator(" ")
             bookmarkDate = bookmark.date
-            sharedValue = bookmark.shared
-            toreadValue = bookmark.toread
+            privateSwitch.on = !bookmark.shared
+            toreadSwitch.on = bookmark.toread
         } else {
             bookmarkDate = nil
         }
@@ -91,8 +80,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
 
         checkValidBookmark()
 
-        privateSwitch.on = defaults.boolForKey("privateByDefault") || sharedValue == "no"
-        toreadSwitch.on = toreadValue == "yes"
 
         if !descriptionTextView.text.isEmpty {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
