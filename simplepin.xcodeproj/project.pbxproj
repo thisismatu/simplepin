@@ -28,6 +28,7 @@
 		CCAC5E631C84A8A1006BA336 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CCAC5E611C84A8A1006BA336 /* LaunchScreen.storyboard */; };
 		CCAC5EF91C84EC75006BA336 /* BookmarksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5EF81C84EC75006BA336 /* BookmarksTableViewController.swift */; };
 		CCAC5EFB1C84ED06006BA336 /* BookmarkTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAC5EFA1C84ED06006BA336 /* BookmarkTableViewCell.swift */; };
+		CCADA2581D338DB400C65FB3 /* BoolExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCADA2571D338DB400C65FB3 /* BoolExtension.swift */; };
 		CCD2C4EF1CE9AA77008523CE /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4ED1CE9AA77008523CE /* Fabric.framework */; };
 		CCD2C4F01CE9AA77008523CE /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */; };
 		CCD6243F1CAA5731007621FC /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD6243E1CAA5731007621FC /* Network.swift */; };
@@ -86,6 +87,7 @@
 		CCAC5E641C84A8A1006BA336 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCAC5EF81C84EC75006BA336 /* BookmarksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarksTableViewController.swift; sourceTree = "<group>"; };
 		CCAC5EFA1C84ED06006BA336 /* BookmarkTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkTableViewCell.swift; sourceTree = "<group>"; };
+		CCADA2571D338DB400C65FB3 /* BoolExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolExtension.swift; sourceTree = "<group>"; };
 		CCD2C4ED1CE9AA77008523CE /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		CCD2C4EE1CE9AA77008523CE /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		CCD6243E1CAA5731007621FC /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				CC32192A1CB3032F00284118 /* StringExtension.swift */,
 				CC1E531A1CB80A20002532FB /* UIViewControllerExtension.swift */,
 				CCF0BCD01D021E05007802B0 /* Colors.swift */,
+				CCADA2571D338DB400C65FB3 /* BoolExtension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				CC3219281CB2FAE600284118 /* NSDateExtension.swift in Sources */,
 				CC1E531B1CB80A20002532FB /* UIViewControllerExtension.swift in Sources */,
 				CCD6243F1CAA5731007621FC /* Network.swift in Sources */,
+				CCADA2581D338DB400C65FB3 /* BoolExtension.swift in Sources */,
 				CCAC5EF91C84EC75006BA336 /* BookmarksTableViewController.swift in Sources */,
 				CC3C02D01D2FB1C50067B236 /* MigrateDefaults.swift in Sources */,
 				CC32192B1CB3032F00284118 /* StringExtension.swift in Sources */,

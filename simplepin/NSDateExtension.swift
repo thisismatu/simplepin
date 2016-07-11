@@ -1,5 +1,5 @@
 //
-//  DateExtension.swift
+//  NSDateExtension.swift
 //  simplepin
 //
 //  Created by Mathias Lindholm on 4.4.2016.
