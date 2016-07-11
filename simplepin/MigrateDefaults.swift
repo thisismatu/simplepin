@@ -9,14 +9,8 @@
 import Foundation
 
 func migrateUserDefaultsToAppGroups() {
-
-    // User Defaults - Old
     let userDefaults = NSUserDefaults.standardUserDefaults()
-
-    // App Groups Default - New
     let groupDefaults = NSUserDefaults(suiteName: "group.ml.simplepin")
-
-    // Key to track if we migrated
     let didMigrateToAppGroups = "DidMigrateToAppGroups"
 
     if let groupDefaults = groupDefaults {
@@ -27,5 +21,4 @@ func migrateUserDefaultsToAppGroups() {
             groupDefaults.setBool(true, forKey: didMigrateToAppGroups)
         }
     }
-    
 }

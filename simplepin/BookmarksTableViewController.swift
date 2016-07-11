@@ -46,6 +46,10 @@ class BookmarkItem {
 
 class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let searchController = UISearchController(searchResultsController: nil)
+    let notifications = NSNotificationCenter.defaultCenter()
     var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
     var fetchAllPostsTask: NSURLSessionTask?
@@ -56,10 +60,6 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     var bookmarkToPass = BookmarkItem?()
     var urlToPass: NSURL?
     var dontAddThisUrl: NSURL?
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
-    let searchController = UISearchController(searchResultsController: nil)
-    let notifications = NSNotificationCenter.defaultCenter()
     var searchIsActive: Bool {return searchController.active && searchController.searchBar.text != ""}
     var searchTimer: NSTimer?
 

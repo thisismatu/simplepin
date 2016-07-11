@@ -11,13 +11,13 @@ import Fabric
 import Crashlytics
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
     var toreadValue: String?
     var sharedValue: String?
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     @IBOutlet var privateSwitch: UISwitch!
     @IBOutlet var toreadSwitch: UISwitch!

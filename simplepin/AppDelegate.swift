@@ -12,11 +12,10 @@ import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var window: UIWindow?
     var storyboard: UIStoryboard?
     var navigation: UINavigationController?
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 

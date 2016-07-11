@@ -12,10 +12,10 @@ import Crashlytics
 import SafariServices
 
 class LoginModalViewController: UIViewController {
-    var fetchApiTokenTask: NSURLSessionTask?
-    var tokenLogin = false
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let notifications = NSNotificationCenter.defaultCenter()
+    var fetchApiTokenTask: NSURLSessionTask?
+    var tokenLogin = false
 
     @IBOutlet var usernameField: UITextField!
     @IBOutlet var passwordField: UITextField!
