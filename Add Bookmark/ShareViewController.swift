@@ -13,14 +13,14 @@ struct Bookmark {
     var url: NSURL
     var description: String
     var tags: [String]
-    var shared: Bool
+    var personal: Bool
     var toread: Bool
 
     init() {
         self.url = NSURL()
         self.description = ""
         self.tags = []
-        self.shared = false
+        self.personal = false
         self.toread = false
     }
 }
@@ -33,7 +33,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         getUrl()
-        bookmark.shared = groupDefaults.boolForKey("privateByDefault")
+        bookmark.personal = groupDefaults.boolForKey("privateByDefault")
 
         if groupDefaults.stringForKey("userToken") == nil {
             let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Open Simplepin, log in and try again.", preferredStyle: UIAlertControllerStyle.Alert)
@@ -58,7 +58,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
     }
 
     override func didSelectPost() {
-        self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, description: self.bookmark.description, tags: self.bookmark.tags, shared: !self.bookmark.shared, toread: self.bookmark.toread) { resultCode in
+        self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, shared: self.bookmark.personal, description: self.bookmark.description, tags: self.bookmark.tags, toread: self.bookmark.toread) { resultCode in
             if resultCode != "done" {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
@@ -105,10 +105,11 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         self.popConfigurationViewController()
     }
 
-    func addBookmark(url: NSURL, title: String, description: String = "", tags: [String] = [], shared: Bool = true, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = groupDefaults.stringForKey("userToken")
-        let urlString = url.absoluteString
+    func addBookmark(bookmarkUrl: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
+        let userToken = groupDefaults.stringForKey("userToken")! as String
+        let urlString = bookmarkUrl.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
+        let shared = !shared
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"

@@ -257,10 +257,11 @@ struct Network {
     }
 
     // MARK: - Add bookmark
-    static func addBookmark(bookmarkUrl: NSURL, title: String, description: String = "", tags: [String] = [], dt: NSDate? = nil, shared: Bool = true, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func addBookmark(bookmarkUrl: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], dt: NSDate? = nil, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
         let urlString = bookmarkUrl.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
+        let shared = !shared
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"

@@ -12,36 +12,36 @@ import Crashlytics
 import SafariServices
 
 class BookmarkItem {
+    let url: NSURL
     let title: String
     let description: String
     let date: NSDate
-    let link: NSURL
     let tags: [String]
-    var shared: Bool
+    var personal: Bool
     var toread: Bool
 
     init?(json: [String: AnyObject]) {
         let dateString = json["time"] as? String
         let linkString = json["href"] as? String
         let tagsString = json["tags"] as? String
-        let sharedString = json["shared"] as? String
+        let personalString = json["shared"] as? String
         let toreadString = json["toread"] as? String
 
-        guard let title = json["description"] as? String,
+        guard let url = NSURL(string: linkString!),
+            let title = json["description"] as? String,
             let description = json["extended"] as? String,
             let date = dateString?.stringToDate(),
-            let link = NSURL(string: linkString!),
             let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
-            let shared = sharedString?.stringToBool,
+            let personal = personalString?.stringToBool,
             let toread = toreadString?.stringToBool else {
                 return nil
         }
+        self.url = url
         self.title = title
         self.description = description
         self.date = date
-        self.link = link
         self.tags = tags
-        self.shared = shared
+        self.personal = !personal
         self.toread = toread
     }
 }
@@ -128,7 +128,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     func checkPasteboard() {
         if defaults.boolForKey("addClipboard") == true {
             if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
-                if !bookmarksArray.contains( { $0.link == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
+                if !bookmarksArray.contains( { $0.url == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
                     let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
                         self.dontAddThisUrl = pasteboardUrl
@@ -340,7 +340,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             cell.titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
 
-        cell.privateIndicator.hidden = bookmark.shared == true
+        cell.privateIndicator.hidden = bookmark.personal == false
 
         return cell
     }
@@ -360,7 +360,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
         if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == true) {
             if Reachability.isConnectedToNetwork() == true {
-                self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: false) { resultCode in
+                self.addBookmarkTask = Network.addBookmark(bookmark.url, title: bookmark.title, shared: bookmark.personal, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: false) { resultCode in
                     if resultCode == "done" {
                         bookmark.toread = false
                         self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
@@ -370,7 +370,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         }
 
         self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.showBookmark(bookmark.link)
+        self.showBookmark(bookmark.url)
     }
 
     // MARK: - Collection View
@@ -467,7 +467,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 func actionReadUnread(toread: Bool) -> UIAlertAction {
                     let title = toread == true ? "Read" : "Unread"
                     let action = UIAlertAction(title: "Mark as \(title)", style: UIAlertActionStyle.Default, handler: { action in
-                        self.addBookmarkTask = Network.addBookmark(bookmark.link, title: bookmark.title, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, shared: bookmark.shared, toread: !toread) { resultCode in
+                        self.addBookmarkTask = Network.addBookmark(bookmark.url, title: bookmark.title, shared: bookmark.personal, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: !toread) { resultCode in
                             if resultCode == "done" {
                                 bookmark.toread = !toread
                                 self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
@@ -484,7 +484,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                     self.performSegueWithIdentifier("openEditBookmarkModal", sender: self)
                 })
                 let actionDelete = UIAlertAction(title: "Delete", style: UIAlertActionStyle.Destructive, handler: { action in
-                    self.deleteBookmarkTask = Network.deleteBookmark(bookmark.link) { resultCode in
+                    self.deleteBookmarkTask = Network.deleteBookmark(bookmark.url) { resultCode in
                         if resultCode == "done" {
                             if self.searchController.active {
                                 self.filteredBookmarks.removeAtIndex(indexPath.row)

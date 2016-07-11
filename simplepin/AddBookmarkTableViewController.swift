@@ -31,16 +31,14 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             let url = NSURL(string: urlText),
             let title = titleTextField.text,
             let description = descriptionTextView.text,
-            let tags = tagsTextField.text?.componentsSeparatedByString(" "),
-            let shared = privateSwitch?.on,
-            let toread = toreadSwitch?.on else {
+            let tags = tagsTextField.text?.componentsSeparatedByString(" ") else {
                 return
         }
 
         if Reachability.isConnectedToNetwork() == false {
             alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
         } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, description: description, tags: tags, dt: bookmarkDate, shared: !shared, toread: toread) { resultCode in
+            self.addBookmarkTask = Network.addBookmark(url, title: title, shared: privateSwitch.on, description: description, tags: tags, dt: bookmarkDate, toread: toreadSwitch.on) { resultCode in
                 if resultCode == "done" {
                     NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
                     self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
@@ -63,12 +61,12 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         if let bookmark = bookmark {
             navigationItem.title = "Edit Bookmark"
             addButton.title = "Save"
-            urlTextField.text = bookmark.link.absoluteString
+            urlTextField.text = bookmark.url.absoluteString
             titleTextField.text = bookmark.title
             descriptionTextView.text = bookmark.description
             tagsTextField.text = bookmark.tags.joinWithSeparator(" ")
             bookmarkDate = bookmark.date
-            privateSwitch.on = !bookmark.shared
+            privateSwitch.on = bookmark.personal
             toreadSwitch.on = bookmark.toread
         } else {
             bookmarkDate = nil

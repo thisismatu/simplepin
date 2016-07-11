@@ -23,7 +23,7 @@ class OptionsTableViewController: UITableViewController {
     var toreadCell: UITableViewCell = UITableViewCell()
     var descriptionLabel: UITextField = UITextField()
     var tagsLabel: UITextField = UITextField()
-    var shareSwitch: UISwitch = UISwitch()
+    var privateSwitch: UISwitch = UISwitch()
     var toreadSwitch: UISwitch = UISwitch()
 
     override func loadView() {
@@ -44,9 +44,9 @@ class OptionsTableViewController: UITableViewController {
         self.tagsCell.addSubview(self.tagsLabel)
 
         self.shareCell.textLabel?.text = "Private"
-        self.shareSwitch.on = groupDefaults.boolForKey("privateByDefault")
-        self.shareCell.accessoryView = shareSwitch
-        self.shareCell.addSubview(self.shareSwitch)
+        self.privateSwitch.on = groupDefaults.boolForKey("privateByDefault")
+        self.shareCell.accessoryView = privateSwitch
+        self.shareCell.addSubview(self.privateSwitch)
 
         self.toreadCell.textLabel?.text = "Read Later"
         self.toreadCell.accessoryView = toreadSwitch
@@ -59,7 +59,7 @@ class OptionsTableViewController: UITableViewController {
 
         descriptionLabel.text = passedBookmark.description
         tagsLabel.text = passedBookmark.tags.joinWithSeparator(" ")
-        shareSwitch.on = passedBookmark.shared
+        privateSwitch.on = passedBookmark.personal
         toreadSwitch.on = passedBookmark.toread
     }
 
@@ -75,7 +75,7 @@ class OptionsTableViewController: UITableViewController {
 
         passedBookmark.description = description
         passedBookmark.tags = tags
-        passedBookmark.shared = shareSwitch.on
+        passedBookmark.personal = privateSwitch.on
         passedBookmark.toread = toreadSwitch.on
 
         delegate?.didEnterInformation(passedBookmark)
