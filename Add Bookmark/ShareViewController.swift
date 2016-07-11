@@ -105,9 +105,9 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         self.popConfigurationViewController()
     }
 
-    func addBookmark(bookmarkUrl: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
+    func addBookmark(url: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = groupDefaults.stringForKey("userToken")! as String
-        let urlString = bookmarkUrl.absoluteString
+        let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
         let shared = !shared
 

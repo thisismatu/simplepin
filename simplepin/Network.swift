@@ -222,9 +222,9 @@ struct Network {
     }
 
     // MARK: - Delete bookmark
-    static func deleteBookmark(bookmarkUrl: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func deleteBookmark(url: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
-        let urlString = bookmarkUrl.absoluteString
+        let urlString = url.absoluteString
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -257,9 +257,9 @@ struct Network {
     }
 
     // MARK: - Add bookmark
-    static func addBookmark(bookmarkUrl: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], dt: NSDate? = nil, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
+    static func addBookmark(url: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], dt: NSDate? = nil, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
-        let urlString = bookmarkUrl.absoluteString
+        let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
         let shared = !shared
 
