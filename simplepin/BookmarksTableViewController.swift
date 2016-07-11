@@ -27,7 +27,7 @@ class BookmarkItem {
 
         guard let title = json["description"] as? String,
             let description = json["extended"] as? String,
-            let date = dateString?.toDate(),
+            let date = dateString?.stringToDate(),
             let link = NSURL(string: linkString!),
             let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
             let shared = json["shared"] as? String,
