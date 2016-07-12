@@ -80,7 +80,7 @@
 		CC77350D1D0C378D00B85F31 /* 1Password.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = 1Password.xcassets; sourceTree = "<group>"; };
 		CC77350E1D0C378D00B85F31 /* OnePasswordExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnePasswordExtension.h; sourceTree = "<group>"; };
 		CC77350F1D0C378D00B85F31 /* OnePasswordExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnePasswordExtension.m; sourceTree = "<group>"; };
-		CCAC5E551C84A8A1006BA336 /* simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CCAC5E551C84A8A1006BA336 /* Simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCAC5E581C84A8A1006BA336 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CCAC5E5D1C84A8A1006BA336 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CCAC5E5F1C84A8A1006BA336 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		CCAC5E561C84A8A1006BA336 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CCAC5E551C84A8A1006BA336 /* simplepin.app */,
+				CCAC5E551C84A8A1006BA336 /* Simplepin.app */,
 				4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */,
 			);
 			name = Products;
@@ -222,9 +222,9 @@
 			productReference = 4ABD20A91D2AE99D000190DE /* Add Bookmark.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		CCAC5E541C84A8A1006BA336 /* simplepin */ = {
+		CCAC5E541C84A8A1006BA336 /* Simplepin */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CCAC5E671C84A8A1006BA336 /* Build configuration list for PBXNativeTarget "simplepin" */;
+			buildConfigurationList = CCAC5E671C84A8A1006BA336 /* Build configuration list for PBXNativeTarget "Simplepin" */;
 			buildPhases = (
 				CCAC5E511C84A8A1006BA336 /* Sources */,
 				CCAC5E521C84A8A1006BA336 /* Frameworks */,
@@ -237,9 +237,9 @@
 			dependencies = (
 				4ABD20B21D2AE99D000190DE /* PBXTargetDependency */,
 			);
-			name = simplepin;
+			name = Simplepin;
 			productName = simplepin;
-			productReference = CCAC5E551C84A8A1006BA336 /* simplepin.app */;
+			productReference = CCAC5E551C84A8A1006BA336 /* Simplepin.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,7 +285,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CCAC5E541C84A8A1006BA336 /* simplepin */,
+				CCAC5E541C84A8A1006BA336 /* Simplepin */,
 				4ABD20A81D2AE99D000190DE /* Add Bookmark */,
 			);
 		};
@@ -583,7 +583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CCAC5E671C84A8A1006BA336 /* Build configuration list for PBXNativeTarget "simplepin" */ = {
+		CCAC5E671C84A8A1006BA336 /* Build configuration list for PBXNativeTarget "Simplepin" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CCAC5E681C84A8A1006BA336 /* Debug */,
