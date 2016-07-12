@@ -82,6 +82,20 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             startFetchAllPostsTask()
         }
 
+        if let openShareExtension = defaults.objectForKey("openShareExtension") as? [Int] {
+            for _ in openShareExtension {
+                Answers.logContentViewWithName("Open Share Extension", contentType: "Extension", contentId: "extension-1", customAttributes: [:])
+            }
+            defaults.removeObjectForKey("openShareExtension")
+        }
+
+        if let postToPinboard = defaults.objectForKey("postToPinboard") as? [Int] {
+            for _ in postToPinboard {
+                Answers.logContentViewWithName("Post to Pinboard", contentType: "Extension", contentId: "extension-2", customAttributes: [:])
+            }
+            defaults.removeObjectForKey("postToPinboard")
+        }
+
         configureSearchController()
 
         self.refreshControl?.tintColor = UIColor.lightGrayColor()

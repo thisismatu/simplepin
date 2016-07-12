@@ -40,6 +40,10 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: { _ in self.cancel() }))
             self.presentViewController(alert, animated: true, completion: nil)
         }
+
+        var openExtensionCount = groupDefaults.objectForKey("openShareExtension") as? [Int] ?? [Int]()
+        openExtensionCount.append(1)
+        groupDefaults.setObject(openExtensionCount, forKey: "openShareExtension")
     }
 
     override func viewDidDisappear(animated: Bool) {
@@ -59,11 +63,18 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
 
     override func didSelectPost() {
         self.addBookmarkTask = self.addBookmark(self.bookmark.url, title: self.contentText, shared: self.bookmark.personal, description: self.bookmark.description, tags: self.bookmark.tags, toread: self.bookmark.toread) { resultCode in
+
             if resultCode != "done" {
                 let alert = UIAlertController(title: "Something Went Wrong", message: resultCode, preferredStyle: UIAlertControllerStyle.Alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
                 self.presentViewController(alert, animated: true, completion: nil)
+                return
             }
+
+            var postToPinboardCount = self.groupDefaults.objectForKey("postToPinboard") as? [Int] ?? [Int]()
+            postToPinboardCount.append(1)
+            self.groupDefaults.setObject(postToPinboardCount, forKey: "postToPinboard")
+
             self.extensionContext?.completeRequestReturningItems([], completionHandler:nil)
         }
     }
