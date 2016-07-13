@@ -11,41 +11,6 @@ import Fabric
 import Crashlytics
 import SafariServices
 
-class BookmarkItem {
-    let url: NSURL
-    let title: String
-    let description: String
-    let date: NSDate
-    let tags: [String]
-    var personal: Bool
-    var toread: Bool
-
-    init?(json: [String: AnyObject]) {
-        let dateString = json["time"] as? String
-        let linkString = json["href"] as? String
-        let tagsString = json["tags"] as? String
-        let personalString = json["shared"] as? String
-        let toreadString = json["toread"] as? String
-
-        guard let url = NSURL(string: linkString!),
-            let title = json["description"] as? String,
-            let description = json["extended"] as? String,
-            let date = dateString?.stringToDate(),
-            let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
-            let personal = personalString?.stringToBool,
-            let toread = toreadString?.stringToBool else {
-                return nil
-        }
-        self.url = url
-        self.title = title
-        self.description = description
-        self.date = date
-        self.tags = tags
-        self.personal = !personal
-        self.toread = toread
-    }
-}
-
 class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -54,6 +19,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     let notifications = NSNotificationCenter.defaultCenter()
     var bookmarksArray = [BookmarkItem]()
     var filteredBookmarks = [BookmarkItem]()
+    var tagsArray = [TagItem]()
     var fetchAllPostsTask: NSURLSessionTask?
     var checkForUpdatesTask: NSURLSessionTask?
     var deleteBookmarkTask: NSURLSessionTask?
@@ -214,7 +180,9 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 self?.filterContentForSearchText(self?.searchController.searchBar.text ?? "")
             }
             fetchTagsTask = Network.fetchTags() { userTags in
-                self.defaults.setObject(userTags, forKey: "userTags")
+                self.tagsArray = userTags!
+                print(self.tagsArray)
+//                self.defaults.setObject(userTags, forKey: "userTags")
             }
         }
     }
@@ -451,7 +419,15 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 } else {
                     vc.passedUrl = urlToPass
                 }
+                vc.array = self.tagsArray
+                print(self.tagsArray)
                 bookmarkToPass = nil
+            }
+        }
+        if segue.identifier == "openSettingsModal" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            if let vc = navigationController.topViewController as? SettingsModalViewController {
+                vc.array = self.bookmarksArray
             }
         }
     }

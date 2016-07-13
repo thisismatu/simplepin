@@ -301,7 +301,7 @@ struct Network {
     }
 
     // MARK: - Get tags
-    static func fetchTags(completion: ([String])? -> Void) -> NSURLSessionTask? {
+    static func fetchTags(completion: ([TagItem])? -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
 
         let urlQuery = NSURLComponents()
@@ -320,10 +320,12 @@ struct Network {
 
         let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
                 guard let data = data where error == nil else {
-                    completion(nil)
+                    completion([])
                     return
                 }
+
                 let userTags = parseTags(data)
                 completion(userTags)
             })
@@ -333,20 +335,38 @@ struct Network {
         return task
     }
 
-    static func parseTags(data: NSData) -> [String]? {
-        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: String] {
-            var tagsArray: [String] = []
-            for item in jsonObject {
-                let count = Int(item.1)
-                if count >= 2 {
-                    tagsArray.append(item.0)
+    static func parseTags(data: NSData) -> [TagItem] {
+        var tags = [TagItem]()
+        do {
+            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: String] {
+                for item in jsonObject {
+                    guard let tag = TagItem(key: item.0, value: item.1) else {
+                        print("error in network")
+                        continue
+                    }
+                    tags.append(tag)
                 }
             }
-            tagsArray.sortInPlace()
-            return tagsArray
+        } catch {
+            debugPrint("Error parsing JSON")
         }
-        return nil
+        return tags
     }
+
+//    static func parseTags(data: NSData) -> [TagItem]? {
+//        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: String] {
+//            var tagsArray: [String] = []
+//            for item in jsonObject {
+//                let count = Int(item.1)
+//                if count >= 2 {
+//                    tagsArray.append(item.0)
+//                }
+//            }
+//            tagsArray.sortInPlace()
+//            return tagsArray
+//        }
+//        return nil
+//    }
 }
 
 //MARK: - Parse JSON

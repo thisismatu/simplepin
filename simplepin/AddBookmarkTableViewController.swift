@@ -16,6 +16,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
+    var array: [TagItem]?
 
     @IBOutlet var privateSwitch: UISwitch!
     @IBOutlet var toreadSwitch: UISwitch!
@@ -95,6 +96,11 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         if section == 0 {
             guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
             let title = "Top tags: " + tags.joinWithSeparator(", ")
+
+            if let jotain = array {
+                print(jotain)
+            }
+
             return title
         } else {
             return nil
