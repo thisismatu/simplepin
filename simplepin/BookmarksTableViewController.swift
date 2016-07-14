@@ -409,7 +409,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     // MARK: - Navigation
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "openEditBookmarkModal" {
+        if segue.identifier == "openEditBookmarkModal" || segue.identifier == "openAddBookmarkModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let vc = navigationController.topViewController as? AddBookmarkTableViewController {
                 if bookmarkToPass != nil {
@@ -417,15 +417,15 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 } else {
                     vc.passedUrl = urlToPass
                 }
-                vc.array = self.tagsArray
-                print(self.tagsArray)
                 bookmarkToPass = nil
+                vc.tagsArray = self.tagsArray
             }
         }
+
         if segue.identifier == "openSettingsModal" {
             let navigationController = segue.destinationViewController as! UINavigationController
             if let vc = navigationController.topViewController as? SettingsModalViewController {
-                vc.array = self.bookmarksArray
+                vc.bookmarksArray = self.bookmarksArray
             }
         }
     }

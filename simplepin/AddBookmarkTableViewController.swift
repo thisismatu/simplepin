@@ -16,7 +16,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
     var bookmark: BookmarkItem?
-    var array: [TagItem]?
+    var tagsArray: [TagItem]?
 
     @IBOutlet var privateSwitch: UISwitch!
     @IBOutlet var toreadSwitch: UISwitch!
@@ -79,7 +79,6 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
 
         checkValidBookmark()
 
-
         if !descriptionTextView.text.isEmpty {
             descriptionTextView.backgroundColor = UIColor.whiteColor()
         }
@@ -94,13 +93,9 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
 
     override func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         if section == 0 {
-            guard let tags = defaults.stringArrayForKey("userTags") else { return nil }
-            let title = "Top tags: " + tags.joinWithSeparator(", ")
-
-            if let jotain = array {
-                print(jotain)
-            }
-
+            guard let tags = tagsArray else { return nil }
+            let popular = tags.filter{ $0.count > 1 }.map{ $0.tag }
+            let title = "Top tags: " + popular.joinWithSeparator(", ")
             return title
         } else {
             return nil
