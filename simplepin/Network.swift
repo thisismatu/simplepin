@@ -146,31 +146,13 @@ struct Network {
                     return
                 }
 
-                let optionalBookmarks = parseJSONData(data)
+                let optionalBookmarks = ParseJSON.bookmarks(data)
                 completion(optionalBookmarks)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseJSONData(data: NSData) -> [BookmarkItem] {
-        var bookmarks = [BookmarkItem]()
-        do {
-            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
-                defaults.setObject(jsonObject.count, forKey: "bookmarkCount")
-                for item in jsonObject {
-                    guard let bookmarkDict = item as? [String: AnyObject],
-                        let bookmark = BookmarkItem(json: bookmarkDict)
-                        else { continue }
-                    bookmarks.append(bookmark)
-                }
-            }
-        } catch {
-            debugPrint("Error parsing JSON")
-        }
-        return bookmarks
     }
 
     // MARK: - Check for updates
@@ -326,31 +308,13 @@ struct Network {
                     return
                 }
 
-                let optionalTags = parseTags(data)
+                let optionalTags = ParseJSON.tags(data)
                 completion(optionalTags)
             })
         }
 
         task.resume()
         return task
-    }
-
-    static func parseTags(data: NSData) -> [TagItem] {
-        var tags = [TagItem]()
-        do {
-            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: String] {
-                for item in jsonObject {
-                    guard let tag = TagItem(key: item.0, value: item.1) else {
-                        print("error in network")
-                        continue
-                    }
-                    tags.append(tag)
-                }
-            }
-        } catch {
-            debugPrint("Error parsing JSON")
-        }
-        return tags
     }
 }
 
@@ -370,6 +334,39 @@ struct ParseJSON {
             return dateString?.stringToDate()
         }
         return nil
+    }
+
+    static func tags(data: NSData) -> [TagItem] {
+        var tags = [TagItem]()
+        do {
+            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [String: String] {
+                for item in jsonObject {
+                    guard let tag = TagItem(key: item.0, value: item.1) else { continue }
+                    tags.append(tag)
+                }
+            }
+        } catch {
+            debugPrint("Error parsing tags JSON")
+        }
+        return tags
+    }
+
+    static func bookmarks(data: NSData) -> [BookmarkItem] {
+        var bookmarks = [BookmarkItem]()
+        do {
+            if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
+                defaults.setObject(jsonObject.count, forKey: "bookmarkCount")
+                for item in jsonObject {
+                    guard let bookmarkDict = item as? [String: AnyObject],
+                        let bookmark = BookmarkItem(json: bookmarkDict)
+                        else { continue }
+                    bookmarks.append(bookmark)
+                }
+            }
+        } catch {
+            debugPrint("Error parsing bookmarks JSON")
+        }
+        return bookmarks
     }
 }
 
