@@ -370,34 +370,36 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="71.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="hfp-fO-3tQ">
-                                                    <rect key="frame" x="15" y="12" width="570" height="48"/>
-                                                    <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="749" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xf4-Nu-8js">
-                                                            <rect key="frame" x="0.0" y="0.0" width="570" height="27.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Bookmarks" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSW-QY-ujr">
-                                                            <rect key="frame" x="0.0" y="27.5" width="570" height="20.5"/>
-                                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
-                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="48" id="Yox-KN-yMn"/>
-                                                    </constraints>
-                                                </stackView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xf4-Nu-8js">
+                                                    <rect key="frame" x="15" y="14" width="570" height="19.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" text="Bookmarks" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PSW-QY-ujr">
+                                                    <rect key="frame" x="15" y="37.5" width="570" height="14.5"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="hfp-fO-3tQ" firstAttribute="leading" secondItem="tZM-FN-NQn" secondAttribute="leadingMargin" id="I2s-IV-mdL"/>
-                                                <constraint firstItem="hfp-fO-3tQ" firstAttribute="centerY" secondItem="tZM-FN-NQn" secondAttribute="centerY" id="fAw-tI-tvf"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="hfp-fO-3tQ" secondAttribute="trailing" id="kX8-wb-em4"/>
+                                                <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="PSW-QY-ujr" secondAttribute="bottom" constant="4" id="BPr-rF-onj"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="PSW-QY-ujr" secondAttribute="trailing" id="E7n-Q2-uZ9"/>
+                                                <constraint firstItem="xf4-Nu-8js" firstAttribute="top" secondItem="tZM-FN-NQn" secondAttribute="topMargin" constant="4" id="KzI-g9-o22"/>
+                                                <constraint firstItem="xf4-Nu-8js" firstAttribute="leading" secondItem="tZM-FN-NQn" secondAttribute="leadingMargin" id="N2a-jn-G2s"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xf4-Nu-8js" secondAttribute="bottom" constant="4" id="Us1-tw-Nc2"/>
+                                                <constraint firstItem="PSW-QY-ujr" firstAttribute="top" secondItem="xf4-Nu-8js" secondAttribute="bottom" constant="4" id="t4O-lA-2ZM"/>
+                                                <constraint firstItem="PSW-QY-ujr" firstAttribute="leading" secondItem="tZM-FN-NQn" secondAttribute="leadingMargin" id="vPt-xY-KjN"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="xf4-Nu-8js" secondAttribute="trailing" id="ycE-SL-AKj"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Us1-tw-Nc2"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -1040,6 +1042,6 @@
         <image name="onepassword-button" width="27" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6OA-OC-921"/>
+        <segue reference="cVe-US-dkN"/>
     </inferredMetricsTieBreakers>
 </document>

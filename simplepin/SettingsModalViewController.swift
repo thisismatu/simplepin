@@ -16,7 +16,7 @@ class SettingsModalViewController: UITableViewController {
     let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/simplepin/id1107506693?ls=1&mt=8")!
     let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
     let device = UIDevice.currentDevice().userInterfaceIdiom
-    var array: [BookmarkItem]?
+    var bookmarksArray: [BookmarkItem]?
 
     @IBOutlet var usernameLabel: UILabel!
     @IBOutlet var userDetailLabel: UILabel!
@@ -101,19 +101,15 @@ class SettingsModalViewController: UITableViewController {
 
         usernameLabel.text = defaults.stringForKey("userName")
 
-        let count = defaults.integerForKey("bookmarkCount")
+        if let bookmarks = bookmarksArray {
+            let total = bookmarks.count
+            let unread = bookmarks.filter{ $0.toread }.count
+            let personal = bookmarks.filter{ $0.personal }.count
 
-        if let array = array {
-            let total = array.count
-            let unread = array.filter{ $0.toread }.count
-            let personal = array.filter{ $0.personal }.count
-
-            userDetailLabel.text = String(total) + " bookmark\(total == 1 ? "" : "s")"
-
-            print("Bookmarks: \(total)")
-            print("Public: \(total - (personal + unread))")
-            print("Private: \(personal)")
-            print("Unread: \(unread)")
+            userDetailLabel.text =
+                "\(total) bookmark\(total == 1 ? "" : "s") \n"
+                + "\(unread) unread \n"
+                + "\(personal) private"
         }
 
         markAsReadSwitch.on = defaults.boolForKey("markAsRead")
@@ -126,6 +122,9 @@ class SettingsModalViewController: UITableViewController {
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version
         }
+
+        tableView.estimatedRowHeight = 72.0
+        tableView.rowHeight = UITableViewAutomaticDimension
 
         logoutButton.tintColor = Colors.Red
 
@@ -152,5 +151,9 @@ class SettingsModalViewController: UITableViewController {
             }
         default: break
         }
+    }
+
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
 }
