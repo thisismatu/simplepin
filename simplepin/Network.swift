@@ -301,7 +301,7 @@ struct Network {
     }
 
     // MARK: - Get tags
-    static func fetchTags(completion: ([TagItem])? -> Void) -> NSURLSessionTask? {
+    static func fetchTags(completion: ([TagItem]) -> Void) -> NSURLSessionTask? {
         let userToken = defaults.stringForKey("userToken")! as String
 
         let urlQuery = NSURLComponents()
@@ -314,7 +314,7 @@ struct Network {
         ]
 
         guard let url = urlQuery.URL else {
-            completion(nil)
+            completion([])
             return nil
         }
 
@@ -326,8 +326,8 @@ struct Network {
                     return
                 }
 
-                let userTags = parseTags(data)
-                completion(userTags)
+                let optionalTags = parseTags(data)
+                completion(optionalTags)
             })
         }
 
@@ -352,21 +352,6 @@ struct Network {
         }
         return tags
     }
-
-//    static func parseTags(data: NSData) -> [TagItem]? {
-//        if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: String] {
-//            var tagsArray: [String] = []
-//            for item in jsonObject {
-//                let count = Int(item.1)
-//                if count >= 2 {
-//                    tagsArray.append(item.0)
-//                }
-//            }
-//            tagsArray.sortInPlace()
-//            return tagsArray
-//        }
-//        return nil
-//    }
 }
 
 //MARK: - Parse JSON

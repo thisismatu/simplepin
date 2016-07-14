@@ -179,10 +179,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 self?.checkPasteboard()
                 self?.filterContentForSearchText(self?.searchController.searchBar.text ?? "")
             }
-            fetchTagsTask = Network.fetchTags() { userTags in
-                self.tagsArray = userTags!
-                print(self.tagsArray)
-//                self.defaults.setObject(userTags, forKey: "userTags")
+            fetchTagsTask = Network.fetchTags() { [weak self] tags in
+                self?.tagsArray = tags
             }
         }
     }
