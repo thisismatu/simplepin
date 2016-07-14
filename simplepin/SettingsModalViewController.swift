@@ -30,6 +30,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var boldTitleSwitch: UISwitch!
     @IBOutlet var relativeDateSwitch: UISwitch!
     @IBOutlet var addClipboardSwitch: UISwitch!
+    @IBOutlet var headerCell: UITableViewCell!
 
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alertController = UIAlertController(
@@ -123,9 +124,6 @@ class SettingsModalViewController: UITableViewController {
             versionLabel.text = version
         }
 
-        tableView.estimatedRowHeight = 72.0
-        tableView.rowHeight = UITableViewAutomaticDimension
-
         logoutButton.tintColor = Colors.Red
 
         Answers.logContentViewWithName("Settings view", contentType: "View", contentId: "settings-1", customAttributes: [:])
@@ -151,9 +149,5 @@ class SettingsModalViewController: UITableViewController {
             }
         default: break
         }
-    }
-
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
     }
 }
