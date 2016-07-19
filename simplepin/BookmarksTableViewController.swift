@@ -45,7 +45,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         notifications.addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
 
         if defaults.stringForKey("userToken") != nil {
-            startFetchAllPostsTask()
+            startFetchAllPosts()
         }
 
         if let openShareExtension = defaults.objectForKey("openShareExtension") as? [Int] {
@@ -83,9 +83,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     func applicationWillEnterForeground() {
         checkPasteboard()
-        if let refresh = refreshControl {
-            handleRefresh(refresh)
-        }
+        startCheckForUpdates()
     }
 
     func configureSearchController() {
@@ -142,7 +140,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     // MARK: - Events
 
     func successfullAddOrLogin(notification: NSNotification) {
-        startFetchAllPostsTask()
+        startFetchAllPosts()
     }
 
     func handleRequestError(notification: NSNotification) {
@@ -162,7 +160,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     // MARK: - Bookmark stuff
 
-    func startFetchAllPostsTask() {
+    func startFetchAllPosts() {
         if Reachability.isConnectedToNetwork() == false {
             showEmptyState("No internet connection.", spinner: false)
         } else {
@@ -185,6 +183,23 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         }
     }
 
+    func startCheckForUpdates() {
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("Couldn't Refresh Bookmarks", message: "Try again when you're back online.")
+        } else {
+            checkForUpdatesTask = Network.checkForUpdates() { updateDate in
+                let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
+                if lastUpdateDate > updateDate && self.bookmarksArray.isEmpty {
+                    self.startFetchAllPosts()
+                } else if lastUpdateDate < updateDate {
+                    self.startFetchAllPosts()
+                } else {
+                    return
+                }
+            }
+        }
+    }
+
     func showBookmark(currentUrl: NSURL?) {
         if let url = currentUrl {
             if defaults.boolForKey("openInSafari") == true {
@@ -197,21 +212,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     func handleRefresh(refreshControl: UIRefreshControl) {
-        self.tableView.reloadData()
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("Couldn't Refresh Bookmarks", message: "Try again when you're back online.")
-        } else {
-            checkForUpdatesTask = Network.checkForUpdates() { updateDate in
-                let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
-                if lastUpdateDate > updateDate && self.bookmarksArray.isEmpty {
-                    self.startFetchAllPostsTask()
-                } else if lastUpdateDate < updateDate {
-                    self.startFetchAllPostsTask()
-                } else {
-                    return
-                }
-            }
-        }
+        startCheckForUpdates()
         refreshControl.endRefreshing()
     }
 
