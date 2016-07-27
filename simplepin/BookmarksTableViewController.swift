@@ -65,9 +65,9 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         configureSearchController()
 
         self.refreshControl?.tintColor = UIColor.lightGrayColor()
-        self.refreshControl?.addTarget(self, action: #selector(BookmarksTableViewController.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl?.addTarget(self, action: #selector(self.handleRefresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
 
-        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(BookmarksTableViewController.longPress(_:)))
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(_:)))
         self.view.addGestureRecognizer(longPressRecognizer)
 
         tableView.estimatedRowHeight = 128.0
@@ -257,7 +257,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         searchTimer?.invalidate()
-        searchTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(BookmarksTableViewController.logSearchQuery), userInfo: searchText, repeats: false)
+        searchTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: #selector(self.logSearchQuery), userInfo: searchText, repeats: false)
     }
 
     func logSearchQuery() {

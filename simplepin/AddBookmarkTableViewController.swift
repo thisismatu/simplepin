@@ -54,8 +54,8 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         super.viewDidLoad()
 
         descriptionTextView.delegate = self
-        urlTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
-        titleTextField.addTarget(self, action: #selector(AddBookmarkTableViewController.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        urlTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
+        titleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
         privateSwitch.on = defaults.boolForKey("privateByDefault")
 

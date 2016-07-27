@@ -125,8 +125,8 @@ class LoginModalViewController: UIViewController {
         onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
         onepasswordButton.imageView?.contentMode = .ScaleAspectFit
 
-        notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        notifications.addObserver(self, selector: #selector(LoginModalViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        notifications.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        notifications.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
         notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
     }
 
