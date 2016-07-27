@@ -42,7 +42,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         notifications.addObserverForName("bookmarkAdded", object: nil, queue: nil, usingBlock: successfullAddOrLogin)
         notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
         notifications.addObserverForName("tokenChanged", object: nil, queue: nil, usingBlock: tokenChanged)
-        notifications.addObserver(self, selector: #selector(BookmarksTableViewController.applicationWillEnterForeground), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        notifications.addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
 
         if defaults.stringForKey("userToken") != nil {
             startFetchAllPosts()
@@ -81,7 +81,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         fetchTagsTask?.cancel()
     }
 
-    func applicationWillEnterForeground() {
+    func didBecomeActive() {
         checkPasteboard()
         startCheckForUpdates()
     }
