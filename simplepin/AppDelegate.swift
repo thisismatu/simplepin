@@ -12,7 +12,7 @@ import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var window: UIWindow?
     var storyboard: UIStoryboard?
     var navigation: UINavigationController?
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBar.appearance().tintColor = Colors.Blue
 
         self.storyboard = UIStoryboard(name: "Main", bundle: NSBundle.mainBundle())
-        if defaults?.stringForKey("userToken") == nil {
+        if defaults.stringForKey("userToken") == nil {
             self.showLoginScreen(false)
         }
 
@@ -54,10 +54,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
 
         NSUserDefaults.standardUserDefaults().removePersistentDomainForName(appDomain)
-        if let defaults = defaults {
-            for key in defaults.dictionaryRepresentation() {
-                defaults.removeObjectForKey(key.0)
-            }
+        for key in defaults.dictionaryRepresentation() {
+            defaults.removeObjectForKey(key.0)
         }
         Answers.logCustomEventWithName("Log Out", customAttributes: nil)
         self.showLoginScreen(true)

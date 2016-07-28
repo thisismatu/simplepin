@@ -12,7 +12,7 @@ import Crashlytics
 
 class SettingsModalViewController: UITableViewController {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let appstoreUrl = NSURL(string: "itms://itunes.apple.com/us/app/simplepin/id1107506693?ls=1&mt=8")!
     let emailUrl = NSURL(string: "mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback")!
     let device = UIDevice.currentDevice().userInterfaceIdiom
@@ -59,48 +59,48 @@ class SettingsModalViewController: UITableViewController {
         if markAsReadSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "markAsRead"])
         }
-        defaults?.setObject(markAsReadSwitch.on, forKey: "markAsRead")
+        defaults.setObject(markAsReadSwitch.on, forKey: "markAsRead")
     }
 
     @IBAction func privateByDefaultPressed(sender: AnyObject) {
         if privateByDefaultSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "privateByDefault"])
         }
-        defaults?.setObject(privateByDefaultSwitch.on, forKey: "privateByDefault")
+        defaults.setObject(privateByDefaultSwitch.on, forKey: "privateByDefault")
     }
 
     @IBAction func openInSafariSwitchPressed(sender: AnyObject) {
         if openInSafariSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "openInSafari"])
         }
-        defaults?.setObject(openInSafariSwitch.on, forKey: "openInSafari")
+        defaults.setObject(openInSafariSwitch.on, forKey: "openInSafari")
     }
 
     @IBAction func boldTitleSwitchPressed(sender: AnyObject) {
         if boldTitleSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "boldTitleFont"])
         }
-        defaults?.setObject(boldTitleSwitch.on, forKey: "boldTitleFont")
+        defaults.setObject(boldTitleSwitch.on, forKey: "boldTitleFont")
     }
 
     @IBAction func relativeDateSwitchPressed(sender: AnyObject) {
         if relativeDateSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "relativeDate"])
         }
-        defaults?.setBool(relativeDateSwitch.on, forKey: "relativeDate")
+        defaults.setBool(relativeDateSwitch.on, forKey: "relativeDate")
     }
 
     @IBAction func addClipboardSwitchPressed(sender: AnyObject) {
         if addClipboardSwitch.on == true {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "addClipboard"])
         }
-        defaults?.setBool(addClipboardSwitch.on, forKey: "addClipboard")
+        defaults.setBool(addClipboardSwitch.on, forKey: "addClipboard")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        usernameLabel.text = defaults?.stringForKey("userName")
+        usernameLabel.text = defaults.stringForKey("userName")
 
         if let bookmarks = bookmarksArray {
             let total = bookmarks.count
@@ -113,14 +113,12 @@ class SettingsModalViewController: UITableViewController {
                 + "\(personal) private"
         }
 
-        if let defaults = defaults {
-            markAsReadSwitch.on = defaults.boolForKey("markAsRead")
-            privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
-            openInSafariSwitch.on = defaults.boolForKey("openInSafari")
-            boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
-            relativeDateSwitch.on = defaults.boolForKey("relativeDate")
-            addClipboardSwitch.on = defaults.boolForKey("addClipboard")
-        }
+        markAsReadSwitch.on = defaults.boolForKey("markAsRead")
+        privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
+        openInSafariSwitch.on = defaults.boolForKey("openInSafari")
+        boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
+        relativeDateSwitch.on = defaults.boolForKey("relativeDate")
+        addClipboardSwitch.on = defaults.boolForKey("addClipboard")
 
         if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
             versionLabel.text = version

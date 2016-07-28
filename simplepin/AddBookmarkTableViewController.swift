@@ -11,7 +11,7 @@ import Fabric
 import Crashlytics
 
 class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate, UITextFieldDelegate {
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     var addBookmarkTask: NSURLSessionTask?
     var passedUrl: NSURL?
     var bookmarkDate: NSDate?
@@ -57,9 +57,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         urlTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
         titleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
-        if let defaults = defaults {
-            privateSwitch.on = defaults.boolForKey("privateByDefault")
-        }
+        privateSwitch.on = defaults.boolForKey("privateByDefault")
 
         if let bookmark = bookmark {
             navigationItem.title = "Edit Bookmark"

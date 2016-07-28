@@ -14,7 +14,7 @@ import SafariServices
 class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     let appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let searchController = UISearchController(searchResultsController: nil)
     let notifications = NSNotificationCenter.defaultCenter()
     var bookmarksArray = [BookmarkItem]()
@@ -44,7 +44,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         notifications.addObserverForName("tokenChanged", object: nil, queue: nil, usingBlock: tokenChanged)
         notifications.addObserver(self, selector: #selector(self.didBecomeActive), name: UIApplicationDidBecomeActiveNotification, object: nil)
 
-        if defaults?.stringForKey("userToken") != nil {
+        if defaults.stringForKey("userToken") != nil {
             startFetchAllPosts()
         }
 
@@ -75,18 +75,18 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     func sendExtensionAnalyticsToFabric() {
-        if let openShareExtension = defaults?.objectForKey("openShareExtension") as? [Int] {
+        if let openShareExtension = defaults.objectForKey("openShareExtension") as? [Int] {
             for _ in openShareExtension {
                 Answers.logContentViewWithName("Open Share Extension", contentType: "Extension", contentId: "extension-1", customAttributes: [:])
             }
-            defaults?.removeObjectForKey("openShareExtension")
+            defaults.removeObjectForKey("openShareExtension")
         }
 
-        if let postToPinboard = defaults?.objectForKey("postToPinboard") as? [Int] {
+        if let postToPinboard = defaults.objectForKey("postToPinboard") as? [Int] {
             for _ in postToPinboard {
                 Answers.logContentViewWithName("Post to Pinboard", contentType: "Extension", contentId: "extension-2", customAttributes: [:])
             }
-            defaults?.removeObjectForKey("postToPinboard")
+            defaults.removeObjectForKey("postToPinboard")
         }
     }
 
@@ -108,7 +108,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     func checkPasteboard() {
-        if defaults?.boolForKey("addClipboard") == true {
+        if defaults.boolForKey("addClipboard") == true {
             if let pasteboardUrl = UIPasteboard.generalPasteboard().URL {
                 if !bookmarksArray.contains( { $0.url == pasteboardUrl }) && self.dontAddThisUrl != pasteboardUrl {
                     let alert = UIAlertController(title: "Add Link to Pinboard?", message: "\(pasteboardUrl)", preferredStyle: UIAlertControllerStyle.Alert)
@@ -176,7 +176,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 } else {
                     self?.showEmptyState("No bookmarks.", spinner: false)
                 }
-                self?.defaults?.setObject(NSDate(), forKey: "lastUpdateDate")
+                self?.defaults.setObject(NSDate(), forKey: "lastUpdateDate")
                 self?.tableView.reloadData()
                 self?.checkPasteboard()
                 self?.filterContentForSearchText(self?.searchController.searchBar.text ?? "")
@@ -192,7 +192,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             alertError("Couldn't Refresh Bookmarks", message: "Try again when you're back online.")
         } else {
             checkForUpdatesTask = Network.checkForUpdates() { updateDate in
-                let lastUpdateDate = self.defaults?.objectForKey("lastUpdateDate") as? NSDate
+                let lastUpdateDate = self.defaults.objectForKey("lastUpdateDate") as? NSDate
                 if lastUpdateDate > updateDate && self.bookmarksArray.isEmpty {
                     self.startFetchAllPosts()
                 } else if lastUpdateDate < updateDate {
@@ -206,7 +206,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     func showBookmark(currentUrl: NSURL?) {
         if let url = currentUrl {
-            if defaults?.boolForKey("openInSafari") == true {
+            if defaults.boolForKey("openInSafari") == true {
                 UIApplication.sharedApplication().openURL(url)
             } else {
                 let vc = SFSafariViewController(URL: url, entersReaderIfAvailable: true)
@@ -297,7 +297,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
         cell.titleLabel.text = bookmark.title
 
-        if defaults?.boolForKey("relativeDate") == true {
+        if defaults.boolForKey("relativeDate") == true {
             cell.dateLabel.text = bookmark.date.timeAgo()
         } else {
             cell.dateLabel.text = formatter.stringFromDate(bookmark.date)
@@ -343,7 +343,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
             bookmark = bookmarksArray[indexPath.row]
         }
 
-        if ((defaults?.boolForKey("markAsRead") == true) && bookmark.toread == true) {
+        if ((defaults.boolForKey("markAsRead") == true) && bookmark.toread == true) {
             if Reachability.isConnectedToNetwork() == true {
                 self.addBookmarkTask = Network.addBookmark(bookmark.url, title: bookmark.title, shared: bookmark.personal, description: bookmark.description, tags: bookmark.tags, dt: bookmark.date, toread: false) { resultCode in
                     if resultCode == "done" {
@@ -485,7 +485,7 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                             } else {
                                 self.bookmarksArray.removeAtIndex(indexPath.row)
                             }
-                            self.defaults?.setObject(self.bookmarksArray.count, forKey: "bookmarkCount")
+                            self.defaults.setObject(self.bookmarksArray.count, forKey: "bookmarkCount")
                             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Left)
                             self.tableView.reloadData()
                         } else {

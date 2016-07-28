@@ -11,7 +11,7 @@ import SystemConfiguration
 
 //MARK: - Network
 
-private let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
+private let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
 struct Network {
 
@@ -20,7 +20,7 @@ struct Network {
         let statusCode = (response as? NSHTTPURLResponse)?.statusCode
 
         if statusCode == 401 {
-            if defaults?.stringForKey("userToken") != nil {
+            if defaults.stringForKey("userToken") != nil {
                 notification.postNotificationName("tokenChanged", object: nil)
             }
             return false
@@ -107,7 +107,7 @@ struct Network {
 
     // MARK: - Fetch posts
     static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults?.stringForKey("userToken")
+        let userToken = defaults.stringForKey("userToken")
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -157,7 +157,7 @@ struct Network {
 
     // MARK: - Check for updates
     static func checkForUpdates(completion: (NSDate?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults?.stringForKey("userToken")
+        let userToken = defaults.stringForKey("userToken")
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -205,7 +205,7 @@ struct Network {
 
     // MARK: - Delete bookmark
     static func deleteBookmark(url: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults?.stringForKey("userToken")
+        let userToken = defaults.stringForKey("userToken")
         let urlString = url.absoluteString
 
         let urlQuery = NSURLComponents()
@@ -240,7 +240,7 @@ struct Network {
 
     // MARK: - Add bookmark
     static func addBookmark(url: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], dt: NSDate? = nil, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults?.stringForKey("userToken")
+        let userToken = defaults.stringForKey("userToken")
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
         let shared = !shared
@@ -284,7 +284,7 @@ struct Network {
 
     // MARK: - Get tags
     static func fetchTags(completion: ([TagItem]) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults?.stringForKey("userToken")
+        let userToken = defaults.stringForKey("userToken")
 
         let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
@@ -355,7 +355,7 @@ struct ParseJSON {
         var bookmarks = [BookmarkItem]()
         do {
             if let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: []) as? [AnyObject] {
-                defaults?.setObject(jsonObject.count, forKey: "bookmarkCount")
+                defaults.setObject(jsonObject.count, forKey: "bookmarkCount")
                 for item in jsonObject {
                     guard let bookmarkDict = item as? [String: AnyObject],
                         let bookmark = BookmarkItem(json: bookmarkDict)
