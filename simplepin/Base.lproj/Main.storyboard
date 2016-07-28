@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="jCY-An-hEC">
-                                <rect key="frame" x="180" y="106.5" width="240" height="327"/>
+                                <rect key="frame" x="180" y="117" width="240" height="307"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="4XB-V2-Zzm">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="123"/>
@@ -226,7 +226,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Jpc-JX-ZDD">
-                                        <rect key="frame" x="0.0" y="155" width="240" height="172"/>
+                                        <rect key="frame" x="0.0" y="155" width="240" height="152"/>
                                         <subviews>
                                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Username" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tY7-Ol-hyD">
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="36"/>
@@ -246,14 +246,14 @@
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="go" secureTextEntry="YES"/>
                                             </textField>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="5qR-Pf-4Ov">
-                                                <rect key="frame" x="0.0" y="104" width="240" height="68"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EN9-Ej-0B0">
+                                                <rect key="frame" x="0.0" y="104" width="240" height="48"/>
                                                 <subviews>
+                                                    <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
+                                                        <rect key="frame" x="220" y="0.0" width="20" height="48"/>
+                                                    </activityIndicatorView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7uV-At-Pnd">
                                                         <rect key="frame" x="0.0" y="0.0" width="240" height="48"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="height" constant="48" id="ht5-bn-4t3"/>
-                                                        </constraints>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                         <state key="normal" title="Log in"/>
                                                         <userDefinedRuntimeAttributes>
@@ -266,11 +266,18 @@
                                                             <action selector="loginButtonPressed:" destination="gYv-09-0z0" eventType="touchUpInside" id="rJr-Wc-E0C"/>
                                                         </connections>
                                                     </button>
-                                                    <activityIndicatorView opaque="NO" alpha="0.0" contentMode="scaleToFill" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="hga-A4-JsU">
-                                                        <rect key="frame" x="0.0" y="48" width="240" height="20"/>
-                                                    </activityIndicatorView>
                                                 </subviews>
-                                            </stackView>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="7uV-At-Pnd" secondAttribute="bottom" id="9yw-aY-M9S"/>
+                                                    <constraint firstAttribute="trailing" secondItem="hga-A4-JsU" secondAttribute="trailing" id="Pd7-GS-plh"/>
+                                                    <constraint firstItem="hga-A4-JsU" firstAttribute="top" secondItem="7uV-At-Pnd" secondAttribute="top" id="QKp-Nq-oRI"/>
+                                                    <constraint firstItem="7uV-At-Pnd" firstAttribute="top" secondItem="EN9-Ej-0B0" secondAttribute="top" id="Y1o-Mp-IXM"/>
+                                                    <constraint firstAttribute="height" constant="48" id="eo5-sb-Rx6"/>
+                                                    <constraint firstAttribute="trailing" secondItem="7uV-At-Pnd" secondAttribute="trailing" id="mUM-Io-RVz"/>
+                                                    <constraint firstAttribute="bottom" secondItem="hga-A4-JsU" secondAttribute="bottom" id="qnI-f1-NsY"/>
+                                                    <constraint firstItem="7uV-At-Pnd" firstAttribute="leading" secondItem="EN9-Ej-0B0" secondAttribute="leading" id="rFf-zT-3T0"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
