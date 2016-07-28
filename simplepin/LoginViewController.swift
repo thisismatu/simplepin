@@ -12,7 +12,7 @@ import Crashlytics
 import SafariServices
 
 class LoginModalViewController: UIViewController {
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
     let notifications = NSNotificationCenter.defaultCenter()
     var fetchApiTokenTask: NSURLSessionTask?
     var tokenLogin = false
@@ -55,12 +55,12 @@ class LoginModalViewController: UIViewController {
                 if self.tokenLogin == true {
                     let token = password.removeExcessiveSpaces
                     let username = token.componentsSeparatedByString(":")
-                    self.defaults.setObject(token, forKey: "userToken")
-                    self.defaults.setObject(username[0], forKey: "userName")
+                    self.defaults?.setObject(token, forKey: "userToken")
+                    self.defaults?.setObject(username[0], forKey: "userName")
                     Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
                 } else {
-                    self.defaults.setObject(username+":"+token, forKey: "userToken")
-                    self.defaults.setObject(username, forKey: "userName")
+                    self.defaults?.setObject(username+":"+token, forKey: "userToken")
+                    self.defaults?.setObject(username, forKey: "userName")
                     Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
                 }
                 NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)

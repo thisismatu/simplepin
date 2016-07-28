@@ -9,7 +9,7 @@
 import UIKit
 
 class BookmarkTableViewCell: UITableViewCell {
-    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
+    let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")
 
     @IBOutlet var titleLabel: UILabel!
     @IBOutlet var descriptionLabel: UILabel!
@@ -27,7 +27,7 @@ class BookmarkTableViewCell: UITableViewCell {
         unreadIndicator.image = unreadIndicator.image?.imageWithRenderingMode(.AlwaysTemplate)
         unreadIndicator.tintColor = Colors.Blue
 
-        if defaults.boolForKey("boldTitleFont") == true {
+        if defaults?.boolForKey("boldTitleFont") == true {
             titleLabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline)
         }
     }
