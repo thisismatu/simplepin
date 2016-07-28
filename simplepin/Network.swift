@@ -15,6 +15,8 @@ private let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
 struct Network {
     static let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+    static let urlQuery = NSURLComponents()
+    static let userToken = defaults.stringForKey("userToken")
 
     static func session() -> NSURLSession {
         config.timeoutIntervalForRequest = 5.0
@@ -37,6 +39,7 @@ struct Network {
             notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Trouble Connecting to Pinboard", "message": "Pinboard might be down. Try again in a while."])
             return false
         }
+
         return true
     }
 
@@ -51,8 +54,6 @@ struct Network {
 
     // MARK: - Fetch API Token
     static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let urlQuery = NSURLComponents()
-
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/user/api_token"
@@ -113,9 +114,6 @@ struct Network {
 
     // MARK: - Fetch posts
     static func fetchAllPosts(fromdt: NSDate? = nil, completion: ([BookmarkItem]) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")
-
-        let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/all"
@@ -163,9 +161,6 @@ struct Network {
 
     // MARK: - Check for updates
     static func checkForUpdates(completion: (NSDate?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")
-
-        let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/update"
@@ -211,10 +206,8 @@ struct Network {
 
     // MARK: - Delete bookmark
     static func deleteBookmark(url: NSURL, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")
         let urlString = url.absoluteString
 
-        let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/delete"
@@ -246,12 +239,10 @@ struct Network {
 
     // MARK: - Add bookmark
     static func addBookmark(url: NSURL, title: String, shared: Bool, description: String = "", tags: [String] = [], dt: NSDate? = nil, toread: Bool = false, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")
         let urlString = url.absoluteString
         let tagsString = tags.joinWithSeparator(" ")
         let shared = !shared
 
-        let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/add"
@@ -290,9 +281,6 @@ struct Network {
 
     // MARK: - Get tags
     static func fetchTags(completion: ([TagItem]) -> Void) -> NSURLSessionTask? {
-        let userToken = defaults.stringForKey("userToken")
-
-        let urlQuery = NSURLComponents()
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/tags/get"
@@ -325,8 +313,8 @@ struct Network {
 }
 
 //MARK: - Parse JSON
-struct ParseJSON {
 
+struct ParseJSON {
     static func string(data: NSData, key: String) -> String? {
         if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
             return jsonObject["\(key)"] as? String
