@@ -27,7 +27,7 @@ class BookmarkItem {
         guard let url = NSURL(string: linkString!),
             let title = json["description"] as? String,
             let description = json["extended"] as? String,
-            let date = dateString?.stringToDate(),
+            let date = dateString?.stringToDate,
             let tags = tagsString?.componentsSeparatedByString(" ").filter({ !$0.isEmpty }),
             let personal = personalString?.stringToBool,
             let toread = toreadString?.stringToBool else {

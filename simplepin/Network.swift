@@ -114,7 +114,7 @@ struct Network {
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/posts/all"
         urlQuery.queryItems = [
-            NSURLQueryItem(name: "fromdt", value: fromdt?.dateToString()),
+            NSURLQueryItem(name: "fromdt", value: fromdt?.dateToString),
             NSURLQueryItem(name: "auth_token", value: userToken),
             NSURLQueryItem(name: "format", value: "json"),
         ]
@@ -254,7 +254,7 @@ struct Network {
             NSURLQueryItem(name: "description", value: title),
             NSURLQueryItem(name: "extended", value: description),
             NSURLQueryItem(name: "tags", value: tagsString),
-            NSURLQueryItem(name: "dt", value: dt?.dateToString()),
+            NSURLQueryItem(name: "dt", value: dt?.dateToString),
             NSURLQueryItem(name: "shared", value: shared.boolToString),
             NSURLQueryItem(name: "toread", value: toread.boolToString),
             NSURLQueryItem(name: "auth_token", value: userToken),
@@ -331,7 +331,7 @@ struct ParseJSON {
     static func date(data: NSData, key: String) -> NSDate? {
         if let jsonObject = (try? NSJSONSerialization.JSONObjectWithData(data, options: [])) as? [String: AnyObject] {
             let dateString = jsonObject["\(key)"] as? String
-            return dateString?.stringToDate()
+            return dateString?.stringToDate
         }
         return nil
     }

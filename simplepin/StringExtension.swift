@@ -9,11 +9,10 @@
 import Foundation
 
 extension String {
-
-    func stringToDate(format: String = "yyyy-MM-dd'T'HH:mm:ssZ") -> NSDate {
+    var stringToDate: NSDate? {
         let formatter = NSDateFormatter()
-        formatter.dateFormat = format
-        return formatter.dateFromString(self)!
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        return formatter.dateFromString(self)
     }
 
     var sentencecaseString: String {
