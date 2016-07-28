@@ -14,6 +14,12 @@ import SystemConfiguration
 private let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
 
 struct Network {
+    static let config = NSURLSessionConfiguration.defaultSessionConfiguration()
+
+    static func session() -> NSURLSession {
+        config.timeoutIntervalForRequest = 5.0
+        return NSURLSession(configuration: config)
+    }
 
     static func checkHttpResponse(response: NSURLResponse) -> Bool {
         let notification = NSNotificationCenter.defaultCenter()
@@ -37,7 +43,7 @@ struct Network {
     static func checkError(error: NSError) -> Bool {
         let notification = NSNotificationCenter.defaultCenter()
         if error.code == NSURLErrorTimedOut {
-            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again when you're back online."])
+            notification.postNotificationName("handleRequestError", object: nil, userInfo: ["title": "Connection Timed Out", "message": "Try again later."])
             return false
         }
         return true
@@ -45,8 +51,8 @@ struct Network {
 
     // MARK: - Fetch API Token
     static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
         let urlQuery = NSURLComponents()
+
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/user/api_token"
@@ -67,14 +73,14 @@ struct Network {
             ]
         }
 
-        let session = NSURLSession(configuration: config)
-
         guard let url = urlQuery.URL else {
             completion(nil)
             return nil
         }
 
-        let task = session.dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        print(Network.session().description)
+
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                 if let response = httpResponse {
@@ -124,7 +130,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                 if let response = httpResponse {
@@ -173,7 +179,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                 if let response = httpResponse {
@@ -223,7 +229,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 guard let data = data where error == nil else {
                     completion(nil)
@@ -266,7 +272,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 guard let data = data where error == nil else {
                     completion(nil)
@@ -300,7 +306,7 @@ struct Network {
             return nil
         }
 
-        let task = NSURLSession.sharedSession().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
 
                 guard let data = data where error == nil else {
