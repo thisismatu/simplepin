@@ -112,6 +112,8 @@ class LoginModalViewController: UIViewController {
 
             self.usernameField.text = loginDictionary?[AppExtensionUsernameKey] as? String
             self.passwordField.text = loginDictionary?[AppExtensionPasswordKey] as? String
+
+            self.loginButtonPressed(nil)
         })
 
     }
