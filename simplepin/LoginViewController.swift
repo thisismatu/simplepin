@@ -47,6 +47,15 @@ class LoginViewController: UIViewController {
         notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
 
+    // MARK: - Login
+
+    func loginFailed(title: String) {
+        self.spinner.alpha = CGFloat(0.0)
+        self.spinner.stopAnimating()
+        self.loginButton.enabled = true
+        self.alertErrorWithReachability(title, message: nil)
+    }
+
     // MARK: - Actions
 
     @IBAction func loginButtonPressed(sender: AnyObject?) {
@@ -73,28 +82,36 @@ class LoginViewController: UIViewController {
 
         spinner.alpha = CGFloat(1.0)
         spinner.startAnimating()
-        fetchApiTokenTask = Network.fetchApiToken(username, password, loginWithToken: tokenLogin) { userToken in
-            if let token = userToken {
-                if self.tokenLogin == true {
+
+        switch tokenLogin {
+        case true:
+            fetchApiTokenTask = Network.loginWithApiToken(password) { result in
+                if result != nil {
                     let token = password.removeExcessiveSpaces
-                    let username = token.componentsSeparatedByString(":")
+                    let username = token.componentsSeparatedByString(":").first
                     self.defaults.setObject(token, forKey: "userToken")
-                    self.defaults.setObject(username[0], forKey: "userName")
+                    self.defaults.setObject(username, forKey: "userName")
+                    NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                    self.dismissViewControllerAnimated(true, completion: nil)
                     Answers.logLoginWithMethod("API Token", success: true, customAttributes: [:])
                 } else {
-                    self.defaults.setObject(username+":"+token, forKey: "userToken")
-                    self.defaults.setObject(username, forKey: "userName")
-                    Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
+                    self.loginFailed("Incorrect API Token")
+                    return
                 }
-                NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
-                self.dismissViewControllerAnimated(true, completion: nil)
-            } else {
-                self.spinner.alpha = CGFloat(0.0)
-                self.spinner.stopAnimating()
-                self.loginButton.enabled = true
-                let title = "Incorrect \(self.tokenLogin == true ? "API Token" : "Username or Password")"
-                self.alertErrorWithReachability(title, message: nil)
-                return
+            }
+        default:
+            fetchApiTokenTask = Network.loginWithUsernamePassword(username, password) { result in
+                if let token = result {
+                    let token = username + ":" + token
+                    self.defaults.setObject(token, forKey: "userToken")
+                    self.defaults.setObject(username, forKey: "userName")
+                    NSNotificationCenter.defaultCenter().postNotificationName("loginSuccessful", object: nil)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    Answers.logLoginWithMethod("Username and Password", success: true, customAttributes: [:])
+                } else {
+                    self.loginFailed("Incorrect Username or Password")
+                    return
+                }
             }
         }
     }

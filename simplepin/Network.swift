@@ -52,27 +52,67 @@ struct Network {
         return true
     }
 
-    // MARK: - Fetch API Token
-    static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
+    // MARK: - Login with Username and Password
+    static func loginWithUsernamePassword(username: String, _ password: String, completion: (String?) -> Void) -> NSURLSessionTask? {
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
         urlQuery.path = "/v1/user/api_token/"
 
-        if loginWithToken == true {
-            urlQuery.queryItems = [
-                NSURLQueryItem(name: "auth_token", value: password.removeExcessiveSpaces),
-                NSURLQueryItem(name: "format", value: "json")
-            ]
-        } else {
-            let userPasswordString = username + ":" + password
-            let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
-            let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions([])
-            let authString = "Basic \(base64EncodedCredential)"
-            config.HTTPAdditionalHeaders = ["Authorization" : authString]
-            urlQuery.queryItems = [
-                NSURLQueryItem(name: "format", value: "json")
-            ]
+        let userPasswordString = username + ":" + password
+        let userPasswordData = userPasswordString.dataUsingEncoding(NSUTF8StringEncoding)
+        let base64EncodedCredential = userPasswordData!.base64EncodedStringWithOptions([])
+        let authString = "Basic \(base64EncodedCredential)"
+        config.HTTPAdditionalHeaders = ["Authorization" : authString]
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "format", value: "json")
+        ]
+
+        guard let url = urlQuery.URL else {
+            completion(nil)
+            return nil
         }
+
+        let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+
+                if let response = httpResponse {
+                    if checkHttpResponse(response) == false {
+                        completion(nil)
+                        return
+                    }
+                }
+
+                if let err = error {
+                    if checkError(err) == false {
+                        completion(nil)
+                        return
+                    }
+                }
+
+                guard let data = data where error == nil else {
+                    completion(nil)
+                    return
+                }
+
+                let userToken = ParseJSON.string(data, key: "result")
+                completion(userToken)
+            })
+        }
+
+        task.resume()
+        return task
+    }
+
+    // MARK: - Login with API Token
+    static func loginWithApiToken(token: String, completion: (String?) -> Void) -> NSURLSessionTask? {
+        urlQuery.scheme = "https"
+        urlQuery.host = "api.pinboard.in"
+        urlQuery.path = "/v1/user/api_token/"
+
+        urlQuery.queryItems = [
+            NSURLQueryItem(name: "auth_token", value: token.removeExcessiveSpaces),
+            NSURLQueryItem(name: "format", value: "json")
+        ]
 
         guard let url = urlQuery.URL else {
             completion(nil)

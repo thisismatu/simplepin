@@ -140,7 +140,6 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
 
     // MARK: - Events
 
-
     func didBecomeActive() {
         checkPasteboard()
         startCheckForUpdates()
