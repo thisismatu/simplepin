@@ -141,8 +141,10 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     // MARK: - Events
 
     func didBecomeActive() {
-        checkPasteboard()
-        startCheckForUpdates()
+        if defaults.stringForKey("userToken") != nil {
+            checkPasteboard()
+            startCheckForUpdates()
+        }
     }
 
     func successfullAddOrLogin(notification: NSNotification) {
@@ -514,7 +516,11 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     deinit {
-        notifications.removeObserver(self)
+        notifications.removeObserver(self, name: "loginSuccessful", object: nil)
+        notifications.removeObserver(self, name: "bookmarkAdded", object: nil)
+        notifications.removeObserver(self, name: "handleRequestError", object: nil)
+        notifications.removeObserver(self, name: "tokenChanged", object: nil)
+        notifications.removeObserver(self, name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
 }
 

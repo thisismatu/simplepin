@@ -42,11 +42,6 @@ class LoginViewController: UIViewController {
         notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
     }
 
-    override func viewWillDisappear(animated: Bool) {
-        notifications.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
-
     // MARK: - Login
 
     func loginFailed(title: String) {
@@ -195,7 +190,9 @@ class LoginViewController: UIViewController {
     }
 
     deinit {
-        notifications.removeObserver(self)
+        notifications.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        notifications.removeObserver(self, name: "handleRequestError", object: nil)
     }
 }
 
