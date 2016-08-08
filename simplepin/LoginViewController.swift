@@ -11,7 +11,7 @@ import Fabric
 import Crashlytics
 import SafariServices
 
-class LoginModalViewController: UIViewController {
+class LoginViewController: UIViewController {
     let defaults = NSUserDefaults(suiteName: "group.ml.simplepin")!
     let notifications = NSNotificationCenter.defaultCenter()
     var fetchApiTokenTask: NSURLSessionTask?
@@ -183,7 +183,7 @@ class LoginModalViewController: UIViewController {
 }
 
 // MARK: - UITextFieldDelegate
-extension LoginModalViewController: UITextFieldDelegate {
+extension LoginViewController: UITextFieldDelegate {
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField == usernameField {
             passwordField.becomeFirstResponder()
