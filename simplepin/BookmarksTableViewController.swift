@@ -35,6 +35,8 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     @IBOutlet var emptyStateSpinner: UIActivityIndicatorView!
     @IBOutlet var emptyStateLabel: UILabel!
 
+    //MARK: - Lifecycle
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -67,11 +69,6 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
         checkForUpdatesTask?.cancel()
         deleteBookmarkTask?.cancel()
         fetchTagsTask?.cancel()
-    }
-
-    func didBecomeActive() {
-        checkPasteboard()
-        startCheckForUpdates()
     }
 
     func sendExtensionAnalyticsToFabric() {
@@ -142,6 +139,12 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
     }
 
     // MARK: - Events
+
+
+    func didBecomeActive() {
+        checkPasteboard()
+        startCheckForUpdates()
+    }
 
     func successfullAddOrLogin(notification: NSNotification) {
         startFetchAllPosts()
@@ -509,6 +512,10 @@ class BookmarksTableViewController: UITableViewController, UISearchBarDelegate, 
                 self.presentViewController(alertController, animated: true, completion: nil)
             }
         }
+    }
+
+    deinit {
+        notifications.removeObserver(self)
     }
 }
 

@@ -26,29 +26,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
     @IBOutlet var tagsTextField: UITextField!
     @IBOutlet var addButton: UIBarButtonItem!
 
-    @IBAction func addButtonPressed(sender: AnyObject) {
-
-        guard let urlText = urlTextField.text,
-            let url = NSURL(string: urlText),
-            let title = titleTextField.text,
-            let description = descriptionTextView.text,
-            let tags = tagsTextField.text?.componentsSeparatedByString(" ") else {
-                return
-        }
-
-        if Reachability.isConnectedToNetwork() == false {
-            alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
-        } else {
-            self.addBookmarkTask = Network.addBookmark(url, title: title, shared: privateSwitch.on, description: description, tags: tags, dt: bookmarkDate, toread: toreadSwitch.on) { resultCode in
-                if resultCode == "done" {
-                    NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
-                    self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
-                } else {
-                    self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
-                }
-            }
-        }
-    }
+    //MARK: - Lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +79,34 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
             return nil
         }
     }
+
+    //MARK: - Actions
+
+    @IBAction func addButtonPressed(sender: AnyObject) {
+
+        guard let urlText = urlTextField.text,
+            let url = NSURL(string: urlText),
+            let title = titleTextField.text,
+            let description = descriptionTextView.text,
+            let tags = tagsTextField.text?.componentsSeparatedByString(" ") else {
+                return
+        }
+
+        if Reachability.isConnectedToNetwork() == false {
+            alertError("Couldn't Add Bookmark", message: "Try again when you're back online.")
+        } else {
+            self.addBookmarkTask = Network.addBookmark(url, title: title, shared: privateSwitch.on, description: description, tags: tags, dt: bookmarkDate, toread: toreadSwitch.on) { resultCode in
+                if resultCode == "done" {
+                    NSNotificationCenter.defaultCenter().postNotificationName("bookmarkAdded", object: nil)
+                    self.performSegueWithIdentifier("closeAddBookmarkModal", sender: self)
+                } else {
+                    self.alertErrorWithReachability("Something Went Wrong", message: resultCode)
+                }
+            }
+        }
+    }
+
+    //MARK: - Functions
 
     func checkValidBookmark() {
         let url = urlTextField.text ?? ""

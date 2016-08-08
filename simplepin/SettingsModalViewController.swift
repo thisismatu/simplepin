@@ -32,6 +32,64 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var addClipboardSwitch: UISwitch!
     @IBOutlet var headerCell: UITableViewCell!
 
+    //MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        usernameLabel.text = defaults.stringForKey("userName")
+
+        if let bookmarks = bookmarksArray {
+            let total = bookmarks.count
+            let unread = bookmarks.filter{ $0.toread }.count
+            let personal = bookmarks.filter{ $0.personal }.count
+
+            userDetailLabel.text =
+                "\(total) bookmark\(total == 1 ? "" : "s") \n"
+                + "\(unread) unread \n"
+                + "\(personal) private"
+        }
+
+        markAsReadSwitch.on = defaults.boolForKey("markAsRead")
+        privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
+        openInSafariSwitch.on = defaults.boolForKey("openInSafari")
+        boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
+        relativeDateSwitch.on = defaults.boolForKey("relativeDate")
+        addClipboardSwitch.on = defaults.boolForKey("addClipboard")
+
+        if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
+            versionLabel.text = version
+        }
+
+        logoutButton.tintColor = Colors.Red
+
+        Answers.logContentViewWithName("Settings view", contentType: "View", contentId: "settings-1", customAttributes: [:])
+    }
+
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
+
+        switch cell {
+        case sendFeedbackCell:
+            if UIApplication.sharedApplication().canOpenURL(emailUrl) {
+                UIApplication.sharedApplication().openURL(emailUrl)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            } else {
+                alertError("There Was an Error Opening Mail", message: nil)
+            }
+        case rateAppCell:
+            if UIApplication.sharedApplication().canOpenURL(appstoreUrl) {
+                UIApplication.sharedApplication().openURL(appstoreUrl)
+                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            } else {
+                alertError("There Was an Error Opening App Store", message: nil)
+            }
+        default: break
+        }
+    }
+
+    //MARK: - Actions
+
     @IBAction func logoutButtonPressed(sender: AnyObject) {
         let alertController = UIAlertController(
             title: device == .Pad ? "Do You Want to Log out?" : nil,
@@ -95,59 +153,5 @@ class SettingsModalViewController: UITableViewController {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "addClipboard"])
         }
         defaults.setBool(addClipboardSwitch.on, forKey: "addClipboard")
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        usernameLabel.text = defaults.stringForKey("userName")
-
-        if let bookmarks = bookmarksArray {
-            let total = bookmarks.count
-            let unread = bookmarks.filter{ $0.toread }.count
-            let personal = bookmarks.filter{ $0.personal }.count
-
-            userDetailLabel.text =
-                "\(total) bookmark\(total == 1 ? "" : "s") \n"
-                + "\(unread) unread \n"
-                + "\(personal) private"
-        }
-
-        markAsReadSwitch.on = defaults.boolForKey("markAsRead")
-        privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
-        openInSafariSwitch.on = defaults.boolForKey("openInSafari")
-        boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
-        relativeDateSwitch.on = defaults.boolForKey("relativeDate")
-        addClipboardSwitch.on = defaults.boolForKey("addClipboard")
-
-        if let version = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String {
-            versionLabel.text = version
-        }
-
-        logoutButton.tintColor = Colors.Red
-
-        Answers.logContentViewWithName("Settings view", contentType: "View", contentId: "settings-1", customAttributes: [:])
-    }
-
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let cell = tableView.cellForRowAtIndexPath(indexPath) else { return }
-
-        switch cell {
-        case sendFeedbackCell:
-            if UIApplication.sharedApplication().canOpenURL(emailUrl) {
-                UIApplication.sharedApplication().openURL(emailUrl)
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            } else {
-                alertError("There Was an Error Opening Mail", message: nil)
-            }
-        case rateAppCell:
-            if UIApplication.sharedApplication().canOpenURL(appstoreUrl) {
-                UIApplication.sharedApplication().openURL(appstoreUrl)
-                self.tableView.deselectRowAtIndexPath(indexPath, animated: true)
-            } else {
-                alertError("There Was an Error Opening App Store", message: nil)
-            }
-        default: break
-        }
     }
 }

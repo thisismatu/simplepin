@@ -26,6 +26,29 @@ class LoginModalViewController: UIViewController {
     @IBOutlet var loginMethodSegment: UISegmentedControl!
     @IBOutlet var onepasswordButton: UIButton!
 
+    //MARK: - Lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        usernameField.delegate = self
+        passwordField.delegate = self
+
+        onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
+        onepasswordButton.imageView?.contentMode = .ScaleAspectFit
+
+        notifications.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        notifications.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        notifications.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+
+    // MARK: - Actions
+
     @IBAction func loginButtonPressed(sender: AnyObject?) {
         loginButton.enabled = false
 
@@ -118,24 +141,8 @@ class LoginModalViewController: UIViewController {
 
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    //MARK: - Events
 
-        usernameField.delegate = self
-        passwordField.delegate = self
-
-        onepasswordButton.hidden = (false == OnePasswordExtension.sharedExtension().isAppExtensionAvailable())
-        onepasswordButton.imageView?.contentMode = .ScaleAspectFit
-
-        notifications.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        notifications.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
-        notifications.addObserverForName("handleRequestError", object: nil, queue: nil, usingBlock: handleRequestError)
-    }
-
-    override func viewWillDisappear(animated: Bool) {
-        notifications.removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        notifications.removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-    }
 
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         usernameField.resignFirstResponder()
@@ -168,6 +175,10 @@ class LoginModalViewController: UIViewController {
             }
             alertError(title, message: message)
         }
+    }
+
+    deinit {
+        notifications.removeObserver(self)
     }
 }
 
