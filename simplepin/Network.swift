@@ -19,7 +19,7 @@ struct Network {
     static let userToken = defaults.stringForKey("userToken")
 
     static func session() -> NSURLSession {
-        config.timeoutIntervalForRequest = 5.0
+        config.timeoutIntervalForRequest = 15.0
         return NSURLSession(configuration: config)
     }
 
