@@ -56,7 +56,7 @@ struct Network {
     static func fetchApiToken(username: String, _ password: String, loginWithToken: Bool, completion: (String?) -> Void) -> NSURLSessionTask? {
         urlQuery.scheme = "https"
         urlQuery.host = "api.pinboard.in"
-        urlQuery.path = "/v1/user/api_token"
+        urlQuery.path = "/v1/user/api_token/"
 
         if loginWithToken == true {
             urlQuery.queryItems = [
@@ -78,8 +78,6 @@ struct Network {
             completion(nil)
             return nil
         }
-
-        print(Network.session().description)
 
         let task = Network.session().dataTaskWithURL(url) { (data, httpResponse, error) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
