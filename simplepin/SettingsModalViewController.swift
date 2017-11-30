@@ -23,6 +23,7 @@ class SettingsModalViewController: UITableViewController {
     @IBOutlet var logoutButton: UIButton!
     @IBOutlet var markAsReadSwitch: UISwitch!
     @IBOutlet var privateByDefaultSwitch: UISwitch!
+    @IBOutlet var toreadByDefaultSwitch: UISwitch!
     @IBOutlet var openInSafariSwitch: UISwitch!
     @IBOutlet var versionLabel: UILabel!
     @IBOutlet var sendFeedbackCell: UITableViewCell!
@@ -52,6 +53,7 @@ class SettingsModalViewController: UITableViewController {
 
         markAsReadSwitch.on = defaults.boolForKey("markAsRead")
         privateByDefaultSwitch.on = defaults.boolForKey("privateByDefault")
+        toreadByDefaultSwitch.on = defaults.boolForKey("toreadByDefault")
         openInSafariSwitch.on = defaults.boolForKey("openInSafari")
         boldTitleSwitch.on = defaults.boolForKey("boldTitleFont")
         relativeDateSwitch.on = defaults.boolForKey("relativeDate")
@@ -125,6 +127,13 @@ class SettingsModalViewController: UITableViewController {
             Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "privateByDefault"])
         }
         defaults.setObject(privateByDefaultSwitch.on, forKey: "privateByDefault")
+    }
+
+    @IBAction func toreadByDefaultPressed(sender: AnyObject) {
+        if toreadByDefaultSwitch.on == true {
+            Answers.logCustomEventWithName("Switch Pressed", customAttributes: ["Switch": "toreadByDefault"])
+        }
+        defaults.setObject(toreadByDefaultSwitch.on, forKey: "toreadByDefault")
     }
 
     @IBAction func openInSafariSwitchPressed(sender: AnyObject) {

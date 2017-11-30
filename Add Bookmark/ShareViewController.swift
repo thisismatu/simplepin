@@ -34,6 +34,7 @@ class ShareViewController: SLComposeServiceViewController, OptionsTableViewDeleg
         super.viewDidLoad()
         getUrl()
         bookmark.personal = groupDefaults.boolForKey("privateByDefault")
+        bookmark.toread = groupDefaults.boolForKey("toreadByDefault")
 
         if groupDefaults.stringForKey("userToken") == nil {
             let alert = UIAlertController(title: "Please Log In", message: "Sharing requires you to be logged in. Open Simplepin, log in and try again.", preferredStyle: UIAlertControllerStyle.Alert)

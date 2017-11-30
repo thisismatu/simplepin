@@ -36,6 +36,7 @@ class AddBookmarkTableViewController: UITableViewController, UITextViewDelegate,
         titleTextField.addTarget(self, action: #selector(self.textFieldDidChange(_:)), forControlEvents: UIControlEvents.EditingChanged)
 
         privateSwitch.on = defaults.boolForKey("privateByDefault")
+        toreadSwitch.on = defaults.boolForKey("toreadByDefault")
 
         if let bookmark = bookmark {
             navigationItem.title = "Edit Bookmark"

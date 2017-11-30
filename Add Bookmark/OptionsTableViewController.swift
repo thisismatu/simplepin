@@ -49,6 +49,7 @@ class OptionsTableViewController: UITableViewController {
         self.shareCell.addSubview(self.privateSwitch)
 
         self.toreadCell.textLabel?.text = "Read Later"
+        self.toreadSwitch.on = groupDefaults.boolForKey("toreadByDefault")
         self.toreadCell.accessoryView = toreadSwitch
         self.toreadCell.addSubview(self.toreadSwitch)
     }
