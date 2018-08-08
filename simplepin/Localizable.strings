@@ -1,4 +1,14 @@
 "welcome.title" = "Welcome!";
 "welcome.subtitle" = "Simplepin makes reading and managing your Pinboard bookmarks easy";
-"welcome.login.password" = "Log in using password";
-"welcome.login.api" = "Log in using API token";
+"welcome.button.password" = "Log in using password";
+"welcome.button.api" = "Log in using API token";
+
+"login.title" = "Log in to Pinboard";
+"login.button" = "Log in";
+"login.footer" = "Your password is never stored, it’s only used for retrieving your API token.";
+"login.forgot-password" = "Forgot password?";
+"login.show-api" = "Show API token";
+"login.placeholder.username" = "Username";
+"login.placeholder.password" = "Password";
+"login.placeholder.api" = "API Token";
+

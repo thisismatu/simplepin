@@ -41,22 +41,18 @@ class LoginViewController: UIViewController {
         subtitleLabel.text = NSLocalizedString("welcome.subtitle", comment: "")
         subtitleLabel.font = .preferredFont(forTextStyle: .body)
 
-        let spacerView = UIView()
-        stackView.addArrangedSubview(spacerView)
-        spacerView.snp.makeConstraints { make in
-            make.height.equalTo(0)
-        }
+        stackView.addArrangedSubview(UIView(frame: .zero))
 
         let passwordButton = RoundedButton()
         stackView.addArrangedSubview(passwordButton)
-        passwordButton.setTitle(NSLocalizedString("welcome.login.password", comment: ""), for: .normal)
+        passwordButton.setTitle(NSLocalizedString("welcome.button.password", comment: ""), for: .normal)
         passwordButton.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
 
         let apiButton = RoundedButton(style: .outline)
         stackView.addArrangedSubview(apiButton)
-        apiButton.setTitle(NSLocalizedString("welcome.login.api", comment: ""), for: .normal)
+        apiButton.setTitle(NSLocalizedString("welcome.button.api", comment: ""), for: .normal)
         apiButton.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }

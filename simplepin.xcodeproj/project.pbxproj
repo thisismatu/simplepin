@@ -17,6 +17,9 @@
 		CCE3F081211B024800E50242 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCE3F080211B024800E50242 /* Localizable.strings */; };
 		CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F084211B0B9600E50242 /* UIColors.swift */; };
 		CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F086211B0E3A00E50242 /* RoundedButton.swift */; };
+		CCE3F089211B1C5800E50242 /* LoginPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F088211B1C5800E50242 /* LoginPasswordViewController.swift */; };
+		CCE3F08B211B205300E50242 /* LoginApiViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F08A211B205300E50242 /* LoginApiViewController.swift */; };
+		CCE3F08D211B20FF00E50242 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F08C211B20FF00E50242 /* InputField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +36,9 @@
 		CCE3F080211B024800E50242 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		CCE3F084211B0B9600E50242 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
 		CCE3F086211B0E3A00E50242 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
+		CCE3F088211B1C5800E50242 /* LoginPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPasswordViewController.swift; sourceTree = "<group>"; };
+		CCE3F08A211B205300E50242 /* LoginApiViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApiViewController.swift; sourceTree = "<group>"; };
+		CCE3F08C211B20FF00E50242 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		E8FF4A3E004EB9956BF8392F /* Pods_simplepin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simplepin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -105,6 +111,8 @@
 				CC2A00FC211AF4D700B8A97C /* ViewController.swift */,
 				CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */,
 				CC2A0112211AFF4500B8A97C /* MainViewController.swift */,
+				CCE3F088211B1C5800E50242 /* LoginPasswordViewController.swift */,
+				CCE3F08A211B205300E50242 /* LoginApiViewController.swift */,
 			);
 			path = "view-controllers";
 			sourceTree = "<group>";
@@ -113,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				CCE3F086211B0E3A00E50242 /* RoundedButton.swift */,
+				CCE3F08C211B20FF00E50242 /* InputField.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -268,6 +277,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */,
+				CCE3F08B211B205300E50242 /* LoginApiViewController.swift in Sources */,
+				CCE3F08D211B20FF00E50242 /* InputField.swift in Sources */,
+				CCE3F089211B1C5800E50242 /* LoginPasswordViewController.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
 				CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */,
