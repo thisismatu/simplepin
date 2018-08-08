@@ -13,6 +13,7 @@
 		CC2A0102211AF4D800B8A97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0101211AF4D800B8A97C /* Assets.xcassets */; };
 		CC2A0105211AF4D800B8A97C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0103211AF4D800B8A97C /* LaunchScreen.storyboard */; };
 		CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */; };
+		CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0112211AFF4500B8A97C /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		CC2A0104211AF4D800B8A97C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC2A0106211AF4D800B8A97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		CC2A0112211AFF4500B8A97C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		E8FF4A3E004EB9956BF8392F /* Pods_simplepin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simplepin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 			children = (
 				CC2A00FC211AF4D700B8A97C /* ViewController.swift */,
 				CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */,
+				CC2A0112211AFF4500B8A97C /* MainViewController.swift */,
 			);
 			path = "view-controllers";
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 				CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
+				CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

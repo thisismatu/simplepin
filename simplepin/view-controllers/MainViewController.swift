@@ -2,20 +2,17 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class LoginViewController: UIViewController {
-
-    private let disposeBag = DisposeBag()
+class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        view.backgroundColor = .yellow
 
         let label = UILabel()
         view.addSubview(label)
-        label.text = "LoginViewController"
+        label.text = "MainViewController"
         label.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
     }
 }
-
