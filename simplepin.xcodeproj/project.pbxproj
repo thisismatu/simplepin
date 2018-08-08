@@ -14,6 +14,9 @@
 		CC2A0105211AF4D800B8A97C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0103211AF4D800B8A97C /* LaunchScreen.storyboard */; };
 		CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */; };
 		CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0112211AFF4500B8A97C /* MainViewController.swift */; };
+		CCE3F081211B024800E50242 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCE3F080211B024800E50242 /* Localizable.strings */; };
+		CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F084211B0B9600E50242 /* UIColors.swift */; };
+		CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F086211B0E3A00E50242 /* RoundedButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		CC2A0106211AF4D800B8A97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CC2A0112211AFF4500B8A97C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CCE3F080211B024800E50242 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		CCE3F084211B0B9600E50242 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
+		CCE3F086211B0E3A00E50242 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		E8FF4A3E004EB9956BF8392F /* Pods_simplepin.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_simplepin.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -87,6 +93,7 @@
 				CC2A00FA211AF4D700B8A97C /* AppDelegate.swift */,
 				CC2A0101211AF4D800B8A97C /* Assets.xcassets */,
 				CC2A0103211AF4D800B8A97C /* LaunchScreen.storyboard */,
+				CCE3F080211B024800E50242 /* Localizable.strings */,
 				CC2A0106211AF4D800B8A97C /* Info.plist */,
 			);
 			path = simplepin;
@@ -105,6 +112,7 @@
 		CC2A010D211AF85F00B8A97C /* views */ = {
 			isa = PBXGroup;
 			children = (
+				CCE3F086211B0E3A00E50242 /* RoundedButton.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -112,6 +120,7 @@
 		CC2A010E211AF87D00B8A97C /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				CCE3F084211B0B9600E50242 /* UIColors.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -185,6 +194,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC2A0105211AF4D800B8A97C /* LaunchScreen.storyboard in Resources */,
+				CCE3F081211B024800E50242 /* Localizable.strings in Resources */,
 				CC2A0102211AF4D800B8A97C /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -260,7 +270,9 @@
 				CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
+				CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */,
 				CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */,
+				CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

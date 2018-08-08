@@ -1,0 +1,4 @@
+"welcome.title" = "Welcome!";
+"welcome.subtitle" = "Simplepin makes reading and managing your Pinboard bookmarks easy";
+"welcome.login.password" = "Log in using password";
+"welcome.login.api" = "Log in using API token";
