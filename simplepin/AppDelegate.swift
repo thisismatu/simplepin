@@ -24,13 +24,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
 
+        let navigationController = UINavigationController()
+        navigationController.viewControllers = [newRootViewController]
+
         let snapshot = window?.snapshotView(afterScreenUpdates: true)
 
         if let snapshot = snapshot {
             newRootViewController.view.addSubview(snapshot)
         }
 
-        window?.rootViewController = newRootViewController
+        window?.rootViewController = navigationController
 
         UIView.animate(withDuration: 0.2, animations: {
             snapshot?.layer.opacity = 0

@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 import SnapKit
 
 class LoginViewController: UIViewController {
@@ -8,6 +9,8 @@ class LoginViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        view.backgroundColor = .white
 
         let stackView = UIStackView()
         view.addSubview(stackView)
@@ -56,5 +59,19 @@ class LoginViewController: UIViewController {
         apiButton.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
+
+        passwordButton.rx.tap.bind {
+            self.navigationController?.pushViewController(LoginPasswordViewController(), animated: true)
+        }.disposed(by: disposeBag)
+
+        apiButton.rx.tap.bind {
+            self.navigationController?.pushViewController(LoginApiViewController(), animated: true)
+        }.disposed(by: disposeBag)
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+
 }

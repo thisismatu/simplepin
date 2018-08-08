@@ -9,6 +9,7 @@ class LoginApiViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .white
         self.title = NSLocalizedString("login.title", comment: "")
 
         let stackView = UIStackView()
@@ -18,7 +19,7 @@ class LoginApiViewController: UIViewController {
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(24)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(24)
             make.centerX.equalToSuperview()
             make.width.equalToSuperview().inset(24)
         }
@@ -46,5 +47,10 @@ class LoginApiViewController: UIViewController {
         forgotButton.setTitle(NSLocalizedString("login.show-api", comment: ""), for: .normal)
         forgotButton.setTitleColor(.simplepin_gray2, for: .normal)
         forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 }

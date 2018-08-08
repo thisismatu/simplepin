@@ -110,9 +110,9 @@
 			children = (
 				CC2A00FC211AF4D700B8A97C /* ViewController.swift */,
 				CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */,
-				CC2A0112211AFF4500B8A97C /* MainViewController.swift */,
 				CCE3F088211B1C5800E50242 /* LoginPasswordViewController.swift */,
 				CCE3F08A211B205300E50242 /* LoginApiViewController.swift */,
+				CC2A0112211AFF4500B8A97C /* MainViewController.swift */,
 			);
 			path = "view-controllers";
 			sourceTree = "<group>";
