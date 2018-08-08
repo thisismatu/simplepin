@@ -2,15 +2,15 @@ import UIKit
 
 extension UIColor {
     @nonobjc class var simplepin_blue1: UIColor {
-        return UIColor(red: 0.00, green: 0.40, blue: 0.80, alpha: 1.0)
+        return UIColor(red: 224/255, green: 240/255, blue: 255/255, alpha: 1)
     }
 
     @nonobjc class var simplepin_blue2: UIColor {
-        return UIColor(red: 0.00, green: 0.40, blue: 0.80, alpha: 1.0)
+        return UIColor(red: 0/255, green: 102/255, blue: 204/255, alpha: 1)
     }
 
     @nonobjc class var simplepin_blue3: UIColor {
-        return UIColor(red: 0.00, green: 0.40, blue: 0.80, alpha: 1.0)
+        return UIColor(red: 0/255, green: 77/255, blue: 153/255, alpha: 1)
     }
 
     @nonobjc class var simplepin_gray1: UIColor {
