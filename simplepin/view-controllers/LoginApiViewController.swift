@@ -8,6 +8,7 @@ class LoginApiViewController: UIViewController {
     private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
     private let apiTokenUrl = "https://m.pinboard.in/settings/password"
+    private let pasteboardString: String = UIPasteboard.general.string ?? ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,7 @@ class LoginApiViewController: UIViewController {
         apiTokenField.returnKeyType = .done
         apiTokenField.enablesReturnKeyAutomatically = true
         apiTokenField.becomeFirstResponder()
+        apiTokenField.text = pasteboardString.isApiToken ? pasteboardString : nil
         apiTokenField.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
@@ -119,5 +121,12 @@ class LoginApiViewController: UIViewController {
             style: UIAlertActionStyle.default,
             handler: nil))
         self.present(alertView, animated: true, completion: nil)
+    }
+}
+
+extension String {
+    var isApiToken: Bool {
+        if self.range(of: "\\w+:([A-Za-z])\\w{19}", options: .regularExpression, range: nil, locale: nil) != nil { return true }
+        return false
     }
 }
