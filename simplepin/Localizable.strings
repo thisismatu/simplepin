@@ -10,5 +10,9 @@
 "login.show-api" = "Show API token";
 "login.placeholder.username" = "Username";
 "login.placeholder.password" = "Password";
-"login.placeholder.api" = "API Token";
+"login.placeholder.api" = "API token";
+"login.incorrect.api" = "Incorrect API token";
+"login.incorrect.password" = "Incorrect username or password";
 
+"common.ok" = "OK";
+"common.cancel" = "Cancel";

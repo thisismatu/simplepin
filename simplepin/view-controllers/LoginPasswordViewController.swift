@@ -4,6 +4,7 @@ import SnapKit
 
 class LoginPasswordViewController: UIViewController {
 
+    private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     private let forgotUrl = "https://m.pinboard.in/password_reset"
 
@@ -69,6 +70,11 @@ class LoginPasswordViewController: UIViewController {
         forgotButton.setTitleColor(.simplepin_gray3, for: .normal)
         forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
+        stackView.addArrangedSubview(activityIndicator)
+        activityIndicator.activityIndicatorViewStyle = .gray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.isHidden = true
+
         let usernameValid = usernameField.rx.text.orEmpty
             .map { $0.count >= 1 }
             .share(replay: 1, scope: .forever)
@@ -110,7 +116,21 @@ class LoginPasswordViewController: UIViewController {
     }
 
     private func login() {
-        self.view.endEditing(true)
-        print("todo: log in")
+        self.activityIndicator.startAnimating()
+        view.endEditing(true)
+//        showAlert()
+//        AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
+    }
+
+    private func showAlert() {
+        let alertView = UIAlertController(
+            title: NSLocalizedString("login.incorrect.password", comment: ""),
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.alert)
+        alertView.addAction(UIAlertAction.init(
+            title: NSLocalizedString("common.ok", comment: ""),
+            style: UIAlertActionStyle.default,
+            handler: nil))
+        self.present(alertView, animated: true, completion: nil)
     }
 }

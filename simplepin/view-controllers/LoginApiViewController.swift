@@ -4,6 +4,7 @@ import SnapKit
 
 class LoginApiViewController: UIViewController {
 
+    private let activityIndicator = UIActivityIndicatorView()
     private let disposeBag = DisposeBag()
     private let apiTokenUrl = "https://m.pinboard.in/settings/password"
 
@@ -52,6 +53,11 @@ class LoginApiViewController: UIViewController {
         apiTokenButton.setTitleColor(.simplepin_gray3, for: .normal)
         apiTokenButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
+        stackView.addArrangedSubview(activityIndicator)
+        activityIndicator.activityIndicatorViewStyle = .gray
+        activityIndicator.hidesWhenStopped = true
+        activityIndicator.isHidden = true
+
         let apitokenValid = apitokenField.rx.text.orEmpty
             .map { $0.count >= 1 }
             .share(replay: 1, scope: .forever)
@@ -82,7 +88,21 @@ class LoginApiViewController: UIViewController {
     }
 
     private func login() {
-        self.view.endEditing(true)
-        print("todo: log in")
+        self.activityIndicator.startAnimating()
+        view.endEditing(true)
+//        showAlert()
+//        AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
+    }
+
+    private func showAlert() {
+        let alertView = UIAlertController(
+            title: NSLocalizedString("login.incorrect.api", comment: ""),
+            message: nil,
+            preferredStyle: UIAlertControllerStyle.alert)
+        alertView.addAction(UIAlertAction.init(
+            title: NSLocalizedString("common.ok", comment: ""),
+            style: UIAlertActionStyle.default,
+            handler: nil))
+        self.present(alertView, animated: true, completion: nil)
     }
 }
