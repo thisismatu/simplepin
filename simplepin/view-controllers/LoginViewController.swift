@@ -46,26 +46,26 @@ class LoginViewController: UIViewController {
 
         stackView.addArrangedSubview(UIView(frame: .zero))
 
-        let passwordButton = RoundedButton()
-        stackView.addArrangedSubview(passwordButton)
-        passwordButton.setTitle(NSLocalizedString("welcome.button.password", comment: ""), for: .normal)
-        passwordButton.snp.makeConstraints { make in
-            make.width.equalToSuperview()
-        }
-
-        let apiButton = RoundedButton(style: .outline)
+        let apiButton = RoundedButton()
         stackView.addArrangedSubview(apiButton)
         apiButton.setTitle(NSLocalizedString("welcome.button.api", comment: ""), for: .normal)
         apiButton.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
 
-        passwordButton.rx.tap.bind {
-            self.navigationController?.pushViewController(LoginPasswordViewController(), animated: true)
-        }.disposed(by: disposeBag)
+        let passwordButton = RoundedButton(style: .outline)
+        stackView.addArrangedSubview(passwordButton)
+        passwordButton.setTitle(NSLocalizedString("welcome.button.password", comment: ""), for: .normal)
+        passwordButton.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+        }
 
         apiButton.rx.tap.bind {
             self.navigationController?.pushViewController(LoginApiViewController(), animated: true)
+        }.disposed(by: disposeBag)
+
+        passwordButton.rx.tap.bind {
+            self.navigationController?.pushViewController(LoginPasswordViewController(), animated: true)
         }.disposed(by: disposeBag)
     }
 

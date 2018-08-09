@@ -5,6 +5,7 @@ import SnapKit
 class LoginPasswordViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
+    private let forgotUrl = "https://m.pinboard.in/password_reset"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,6 +63,12 @@ class LoginPasswordViewController: UIViewController {
         forgotButton.setTitle(NSLocalizedString("login.forgot-password", comment: ""), for: .normal)
         forgotButton.setTitleColor(.simplepin_gray2, for: .normal)
         forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+
+        forgotButton.rx.tap.bind {
+            if let url = URL(string: self.forgotUrl) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        }.disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {

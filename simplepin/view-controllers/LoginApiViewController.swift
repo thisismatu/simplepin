@@ -5,6 +5,7 @@ import SnapKit
 class LoginApiViewController: UIViewController {
 
     private let disposeBag = DisposeBag()
+    private let apiTokenUrl = "https://m.pinboard.in/settings/password"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,11 +43,17 @@ class LoginApiViewController: UIViewController {
 
         stackView.addArrangedSubview(UIView(frame: .zero))
 
-        let forgotButton = UIButton()
-        stackView.addArrangedSubview(forgotButton)
-        forgotButton.setTitle(NSLocalizedString("login.show-api", comment: ""), for: .normal)
-        forgotButton.setTitleColor(.simplepin_gray2, for: .normal)
-        forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+        let apiTokenButton = UIButton()
+        stackView.addArrangedSubview(apiTokenButton)
+        apiTokenButton.setTitle(NSLocalizedString("login.show-api", comment: ""), for: .normal)
+        apiTokenButton.setTitleColor(.simplepin_gray2, for: .normal)
+        apiTokenButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
+
+        apiTokenButton.rx.tap.bind {
+            if let url = URL(string: self.apiTokenUrl) {
+                UIApplication.shared.open(url, options: [:])
+            }
+        }.disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
