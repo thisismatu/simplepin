@@ -14,6 +14,10 @@
 		CC2A0105211AF4D800B8A97C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0103211AF4D800B8A97C /* LaunchScreen.storyboard */; };
 		CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */; };
 		CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A0112211AFF4500B8A97C /* MainViewController.swift */; };
+		CCA508FD211C5BDD00282009 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA508FC211C5BDD00282009 /* ApiClient.swift */; };
+		CCA508FF211C5BE800282009 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA508FE211C5BE800282009 /* ApiRequest.swift */; };
+		CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50901211C5C5700282009 /* ApiTokenModel.swift */; };
+		CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */; };
 		CCE3F081211B024800E50242 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCE3F080211B024800E50242 /* Localizable.strings */; };
 		CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F084211B0B9600E50242 /* UIColors.swift */; };
 		CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F086211B0E3A00E50242 /* RoundedButton.swift */; };
@@ -33,6 +37,10 @@
 		CC2A0106211AF4D800B8A97C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2A0110211AFC5C00B8A97C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CC2A0112211AFF4500B8A97C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		CCA508FC211C5BDD00282009 /* ApiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		CCA508FE211C5BE800282009 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
+		CCA50901211C5C5700282009 /* ApiTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenModel.swift; sourceTree = "<group>"; };
+		CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenRequest.swift; sourceTree = "<group>"; };
 		CCE3F080211B024800E50242 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		CCE3F084211B0B9600E50242 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
 		CCE3F086211B0E3A00E50242 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -92,7 +100,8 @@
 		CC2A00F9211AF4D700B8A97C /* simplepin */ = {
 			isa = PBXGroup;
 			children = (
-				CC2A010F211AF88200B8A97C /* models */,
+				CCA50900211C5C4700282009 /* models */,
+				CCA508FB211C5BC700282009 /* api */,
 				CC2A010E211AF87D00B8A97C /* utils */,
 				CC2A010D211AF85F00B8A97C /* views */,
 				CC2A010C211AF85000B8A97C /* view-controllers */,
@@ -134,9 +143,20 @@
 			path = utils;
 			sourceTree = "<group>";
 		};
-		CC2A010F211AF88200B8A97C /* models */ = {
+		CCA508FB211C5BC700282009 /* api */ = {
 			isa = PBXGroup;
 			children = (
+				CCA508FC211C5BDD00282009 /* ApiClient.swift */,
+				CCA508FE211C5BE800282009 /* ApiRequest.swift */,
+				CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */,
+			);
+			path = api;
+			sourceTree = "<group>";
+		};
+		CCA50900211C5C4700282009 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				CCA50901211C5C5700282009 /* ApiTokenModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -279,10 +299,14 @@
 				CC2A0111211AFC5C00B8A97C /* LoginViewController.swift in Sources */,
 				CCE3F08B211B205300E50242 /* LoginApiViewController.swift in Sources */,
 				CCE3F08D211B20FF00E50242 /* InputField.swift in Sources */,
+				CCA508FD211C5BDD00282009 /* ApiClient.swift in Sources */,
 				CCE3F089211B1C5800E50242 /* LoginPasswordViewController.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
+				CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
+				CCA508FF211C5BE800282009 /* ApiRequest.swift in Sources */,
 				CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */,
+				CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */,
 				CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */,
 				CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */,
 			);

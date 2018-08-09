@@ -5,6 +5,7 @@ import SnapKit
 class LoginApiViewController: UIViewController {
 
     private let activityIndicator = UIActivityIndicatorView()
+    private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
     private let apiTokenUrl = "https://m.pinboard.in/settings/password"
 
@@ -26,13 +27,13 @@ class LoginApiViewController: UIViewController {
             make.width.equalToSuperview().inset(24)
         }
 
-        let apitokenField = InputField()
-        stackView.addArrangedSubview(apitokenField)
-        apitokenField.placeholder = NSLocalizedString("login.placeholder.api", comment: "")
-        apitokenField.returnKeyType = .done
-        apitokenField.enablesReturnKeyAutomatically = true
-        apitokenField.becomeFirstResponder()
-        apitokenField.snp.makeConstraints { make in
+        let apiTokenField = InputField()
+        stackView.addArrangedSubview(apiTokenField)
+        apiTokenField.placeholder = NSLocalizedString("login.placeholder.api", comment: "")
+        apiTokenField.returnKeyType = .done
+        apiTokenField.enablesReturnKeyAutomatically = true
+        apiTokenField.becomeFirstResponder()
+        apiTokenField.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
 
@@ -58,20 +59,22 @@ class LoginApiViewController: UIViewController {
         activityIndicator.hidesWhenStopped = true
         activityIndicator.isHidden = true
 
-        let apitokenValid = apitokenField.rx.text.orEmpty
+        let apiTokenString = apiTokenField.rx.text.orEmpty.asObservable()
+
+        let apiTokenValid = apiTokenString
             .map { $0.count >= 1 }
             .share(replay: 1, scope: .forever)
 
-        apitokenValid
+        apiTokenValid
             .bind(to: loginButton.rx.isEnabled)
             .disposed(by: disposeBag)
 
-        loginButton.rx.tap
-            .bind { self.login() }
+        apiTokenField.rx.controlEvent(.editingDidEndOnExit)
+            .bind { self.login(apiTokenString) }
             .disposed(by: disposeBag)
 
-        apitokenField.rx.controlEvent(.editingDidEndOnExit)
-            .subscribe(onNext: { self.login() })
+        loginButton.rx.tap
+            .bind { self.login(apiTokenString) }
             .disposed(by: disposeBag)
 
         apiTokenButton.rx.tap
@@ -87,17 +90,29 @@ class LoginApiViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
-    private func login() {
+    private func login(_ token: Observable<String>) {
         self.activityIndicator.startAnimating()
         view.endEditing(true)
-//        showAlert()
-//        AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
+        token
+            .map { ApiTokenRequest($0) }
+            .flatMap { request -> Observable<ApiTokenModel> in
+                return self.apiClient.send(apiRequest: request)
+            }
+            .observeOn(MainScheduler.instance)
+            .subscribe(onNext: { [weak self] _ in
+                self?.activityIndicator.stopAnimating()
+                AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
+            }, onError: { [weak self] error in
+                self?.activityIndicator.stopAnimating()
+                self?.showAlert(error.localizedDescription)
+            })
+            .disposed(by: disposeBag)
     }
 
-    private func showAlert() {
+    private func showAlert(_ message: String = "") {
         let alertView = UIAlertController(
             title: NSLocalizedString("login.incorrect.api", comment: ""),
-            message: nil,
+            message: message,
             preferredStyle: UIAlertControllerStyle.alert)
         alertView.addAction(UIAlertAction.init(
             title: NSLocalizedString("common.ok", comment: ""),
