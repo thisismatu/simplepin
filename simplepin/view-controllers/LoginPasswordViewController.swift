@@ -17,7 +17,7 @@ class LoginPasswordViewController: UIViewController {
         let stackView = UIStackView()
         view.addSubview(stackView)
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 12
         stackView.distribution = .fill
         stackView.alignment = .center
         stackView.snp.makeConstraints { make in
