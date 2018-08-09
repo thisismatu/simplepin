@@ -59,14 +59,14 @@ class LoginPasswordViewController: UIViewController {
         stackView.addArrangedSubview(footerLabel)
         footerLabel.numberOfLines = 0
         footerLabel.textAlignment = .center
-        footerLabel.textColor = .simplepin_gray2
+        footerLabel.textColor = .simplepin_gray3
         footerLabel.text = NSLocalizedString("login.footer", comment: "")
         footerLabel.font = .preferredFont(forTextStyle: .subheadline)
 
         let forgotButton = UIButton()
         stackView.addArrangedSubview(forgotButton)
         forgotButton.setTitle(NSLocalizedString("login.forgot-password", comment: ""), for: .normal)
-        forgotButton.setTitleColor(.simplepin_gray2, for: .normal)
+        forgotButton.setTitleColor(.simplepin_gray3, for: .normal)
         forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
         let usernameValid = usernameField.rx.text.orEmpty

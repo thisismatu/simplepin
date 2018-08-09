@@ -10,7 +10,7 @@ class InputField: UITextField {
         self.layer.borderWidth = 1
         self.layer.borderColor = UIColor.simplepin_border.cgColor
         self.backgroundColor = .white
-        self.textColor = .simplepin_gray3
+        self.textColor = .simplepin_gray4
         self.tintColor = .simplepin_blue2
         self.font = .preferredFont(forTextStyle: .body)
     }

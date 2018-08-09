@@ -18,10 +18,14 @@ extension UIColor {
     }
 
     @nonobjc class var simplepin_gray2: UIColor {
-        return UIColor(red: 117/255, green: 117/255, blue: 117/255, alpha: 1)
+        return UIColor(red: 158/255, green: 158/255, blue: 158/255, alpha: 1)
     }
 
     @nonobjc class var simplepin_gray3: UIColor {
+        return UIColor(red: 117/255, green: 117/255, blue: 117/255, alpha: 1)
+    }
+
+    @nonobjc class var simplepin_gray4: UIColor {
         return UIColor(red: 17/255, green: 17/255, blue: 17/255, alpha: 1)
     }
 

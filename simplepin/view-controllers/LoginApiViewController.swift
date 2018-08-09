@@ -49,7 +49,7 @@ class LoginApiViewController: UIViewController {
         let apiTokenButton = UIButton()
         stackView.addArrangedSubview(apiTokenButton)
         apiTokenButton.setTitle(NSLocalizedString("login.show-api", comment: ""), for: .normal)
-        apiTokenButton.setTitleColor(.simplepin_gray2, for: .normal)
+        apiTokenButton.setTitleColor(.simplepin_gray3, for: .normal)
         apiTokenButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
         let apitokenValid = apitokenField.rx.text.orEmpty

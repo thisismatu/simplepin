@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
         stackView.addArrangedSubview(titleLabel)
         titleLabel.numberOfLines = 0
         titleLabel.textAlignment = .center
-        titleLabel.textColor = .simplepin_gray3
+        titleLabel.textColor = .simplepin_gray4
         titleLabel.text = NSLocalizedString("welcome.title", comment: "")
         titleLabel.font = .systemFont(ofSize: 21, weight: .semibold)
 
@@ -40,7 +40,7 @@ class LoginViewController: UIViewController {
         stackView.addArrangedSubview(subtitleLabel)
         subtitleLabel.numberOfLines = 0
         subtitleLabel.textAlignment = .center
-        subtitleLabel.textColor = .simplepin_gray2
+        subtitleLabel.textColor = .simplepin_gray3
         subtitleLabel.text = NSLocalizedString("welcome.subtitle", comment: "")
         subtitleLabel.font = .preferredFont(forTextStyle: .body)
 
