@@ -10,7 +10,7 @@ class MainViewController: UIViewController {
 
         let label = UILabel()
         view.addSubview(label)
-        label.text = "MainViewController"
+        label.text = UserDefaults.standard.string(forKey: "apiToken")
         label.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }

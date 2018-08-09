@@ -93,16 +93,23 @@ class LoginApiViewController: UIViewController {
     }
 
     private func login(_ token: Observable<String>) {
+        var enteredToken = String()
+
         self.activityIndicator.startAnimating()
         view.endEditing(true)
+
         token
-            .map { ApiTokenRequest($0) }
+            .map {
+                enteredToken = $0
+                return ApiTokenRequest($0)
+            }
             .flatMap { request -> Observable<ApiTokenModel> in
                 return self.apiClient.send(apiRequest: request)
             }
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.activityIndicator.stopAnimating()
+                UserDefaults.standard.set(enteredToken, forKey: "apiToken")
                 AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
             }, onError: { [weak self] error in
                 self?.activityIndicator.stopAnimating()
