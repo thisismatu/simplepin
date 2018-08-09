@@ -28,6 +28,8 @@ class LoginPasswordViewController: UIViewController {
         let usernameField = InputField()
         stackView.addArrangedSubview(usernameField)
         usernameField.placeholder = NSLocalizedString("login.placeholder.username", comment: "")
+        usernameField.returnKeyType = .next
+        usernameField.becomeFirstResponder()
         usernameField.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
@@ -35,6 +37,9 @@ class LoginPasswordViewController: UIViewController {
         let passwordField = InputField()
         stackView.addArrangedSubview(passwordField)
         passwordField.placeholder = NSLocalizedString("login.placeholder.password", comment: "")
+        passwordField.isSecureTextEntry = true
+        passwordField.returnKeyType = .done
+        passwordField.enablesReturnKeyAutomatically = true
         passwordField.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
@@ -64,15 +69,48 @@ class LoginPasswordViewController: UIViewController {
         forgotButton.setTitleColor(.simplepin_gray2, for: .normal)
         forgotButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
-        forgotButton.rx.tap.bind {
-            if let url = URL(string: self.forgotUrl) {
+        let usernameValid = usernameField.rx.text.orEmpty
+            .map { $0.count >= 1 }
+            .share(replay: 1, scope: .forever)
+
+        let passwordValid = passwordField.rx.text.orEmpty
+            .map { $0.count >= 1 }
+            .share(replay: 1, scope: .forever)
+
+        let everythingValid = Observable.combineLatest(usernameValid, passwordValid) { $0 && $1}
+            .share(replay: 1, scope: .forever)
+
+        everythingValid
+            .bind(to: loginButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        usernameField.rx.controlEvent(.editingDidEndOnExit)
+            .subscribe(onNext: { passwordField.becomeFirstResponder() })
+            .disposed(by: disposeBag)
+
+        passwordField.rx.controlEvent(.editingDidEndOnExit)
+            .subscribe(onNext: { self.login() })
+            .disposed(by: disposeBag)
+
+        loginButton.rx.tap
+            .bind { self.login() }
+            .disposed(by: disposeBag)
+
+        forgotButton.rx.tap
+            .bind {
+                guard let url = URL(string: self.forgotUrl) else { return }
                 UIApplication.shared.open(url, options: [:])
             }
-        }.disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
+    private func login() {
+        self.view.endEditing(true)
+        print("todo: log in")
     }
 }

@@ -28,6 +28,9 @@ class LoginApiViewController: UIViewController {
         let apitokenField = InputField()
         stackView.addArrangedSubview(apitokenField)
         apitokenField.placeholder = NSLocalizedString("login.placeholder.api", comment: "")
+        apitokenField.returnKeyType = .done
+        apitokenField.enablesReturnKeyAutomatically = true
+        apitokenField.becomeFirstResponder()
         apitokenField.snp.makeConstraints { make in
             make.width.equalToSuperview()
         }
@@ -49,15 +52,37 @@ class LoginApiViewController: UIViewController {
         apiTokenButton.setTitleColor(.simplepin_gray2, for: .normal)
         apiTokenButton.titleLabel?.font = .preferredFont(forTextStyle: .subheadline)
 
-        apiTokenButton.rx.tap.bind {
-            if let url = URL(string: self.apiTokenUrl) {
+        let apitokenValid = apitokenField.rx.text.orEmpty
+            .map { $0.count >= 1 }
+            .share(replay: 1, scope: .forever)
+
+        apitokenValid
+            .bind(to: loginButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+
+        loginButton.rx.tap
+            .bind { self.login() }
+            .disposed(by: disposeBag)
+
+        apitokenField.rx.controlEvent(.editingDidEndOnExit)
+            .subscribe(onNext: { self.login() })
+            .disposed(by: disposeBag)
+
+        apiTokenButton.rx.tap
+            .bind {
+                guard let url = URL(string: self.apiTokenUrl) else { return }
                 UIApplication.shared.open(url, options: [:])
             }
-        }.disposed(by: disposeBag)
+            .disposed(by: disposeBag)
     }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+
+    private func login() {
+        self.view.endEditing(true)
+        print("todo: log in")
     }
 }
