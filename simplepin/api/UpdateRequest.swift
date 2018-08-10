@@ -6,7 +6,7 @@ class UpdateRequest: ApiRequest {
     var parameters = [String: String]()
 
     init() {
-        parameters["auth_token"] = UserDefaults.standard.string(forKey: "apiToken")
+        parameters["auth_token"] = Environment.apiToken
         parameters["format"] = "json"
     }
 }

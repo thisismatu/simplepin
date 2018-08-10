@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.tintColor = .simplepin_blue2
         window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
-        UserDefaults.standard.removeObject(forKey: "lastUpdate")
+        Environment.defaults.removeObject(forKey: "lastUpdate")
         return true
     }
 

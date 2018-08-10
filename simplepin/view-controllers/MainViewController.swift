@@ -57,8 +57,8 @@ class MainViewController: UIViewController {
             }
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] result in
-                if result.updateTime != UserDefaults.standard.string(forKey: "lastUpdate") {
-                    UserDefaults.standard.set(result.updateTime, forKey: "lastUpdate")
+                if result.updateTime != Environment.defaults.string(forKey: "lastUpdate") {
+                    Environment.defaults.set(result.updateTime, forKey: "lastUpdate")
                     self?.fetchBookmarks()
                 }
             })

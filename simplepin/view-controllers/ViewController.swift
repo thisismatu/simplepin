@@ -8,7 +8,7 @@ class ViewController: UIViewController {
     }
 
     private func showMainApp() {
-        if UserDefaults.standard.string(forKey: "apiToken") != nil {
+        if Environment.apiToken != "" {
             DispatchQueue.main.async {
                 AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
             }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		840F1F0AE35725BF9ABD25FD /* Pods_simplepin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF4A3E004EB9956BF8392F /* Pods_simplepin.framework */; };
+		CC0A0061211DF593008B5279 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A0060211DF593008B5279 /* Environment.swift */; };
 		CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A00FA211AF4D700B8A97C /* AppDelegate.swift */; };
 		CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A00FC211AF4D700B8A97C /* ViewController.swift */; };
 		CC2A0102211AF4D800B8A97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0101211AF4D800B8A97C /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* Begin PBXFileReference section */
 		1DB972AF680DB8F1CEB2C470 /* Pods-simplepin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplepin.release.xcconfig"; path = "Pods/Target Support Files/Pods-simplepin/Pods-simplepin.release.xcconfig"; sourceTree = "<group>"; };
 		4ADBB367A3F8A221160BD9AE /* Pods-simplepin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplepin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-simplepin/Pods-simplepin.debug.xcconfig"; sourceTree = "<group>"; };
+		CC0A0060211DF593008B5279 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		CC2A00F7211AF4D700B8A97C /* simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2A00FA211AF4D700B8A97C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC2A00FC211AF4D700B8A97C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				CCE3F084211B0B9600E50242 /* UIColors.swift */,
+				CC0A0060211DF593008B5279 /* Environment.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
+				CC0A0061211DF593008B5279 /* Environment.swift in Sources */,
 				CCA508FF211C5BE800282009 /* ApiRequest.swift in Sources */,
 				CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */,
 				CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */,

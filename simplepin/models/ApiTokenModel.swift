@@ -1,9 +1,9 @@
 import Foundation
 
 struct ApiTokenModel: Codable {
-    let token: String
+    let result: String
 
     private enum CodingKeys: String, CodingKey {
-        case token = "result"
+        case result
     }
 }

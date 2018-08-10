@@ -109,7 +109,7 @@ class LoginApiViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.activityIndicator.stopAnimating()
-                UserDefaults.standard.set(enteredApiToken, forKey: "apiToken")
+                Environment.defaults.set(enteredApiToken, forKey: "apiToken")
                 AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
             }, onError: { [weak self] error in
                 self?.activityIndicator.stopAnimating()
