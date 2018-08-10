@@ -6,7 +6,6 @@ class MainViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
 
         let label = UILabel()
         view.addSubview(label)

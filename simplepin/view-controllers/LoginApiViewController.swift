@@ -72,11 +72,11 @@ class LoginApiViewController: UIViewController {
             .disposed(by: disposeBag)
 
         apiTokenField.rx.controlEvent(.editingDidEndOnExit)
-            .bind { self.login(apiTokenString) }
+            .bind { self.login(with: apiTokenString) }
             .disposed(by: disposeBag)
 
         loginButton.rx.tap
-            .bind { self.login(apiTokenString) }
+            .bind { self.login(with: apiTokenString) }
             .disposed(by: disposeBag)
 
         apiTokenButton.rx.tap
@@ -92,15 +92,15 @@ class LoginApiViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
 
-    private func login(_ token: Observable<String>) {
-        var enteredToken = String()
+    private func login(with apiToken: Observable<String>) {
+        var enteredApiToken = String()
 
         self.activityIndicator.startAnimating()
         view.endEditing(true)
 
-        token
+        apiToken
             .map {
-                enteredToken = $0
+                enteredApiToken = $0
                 return ApiTokenRequest($0)
             }
             .flatMap { request -> Observable<ApiTokenModel> in
@@ -109,7 +109,7 @@ class LoginApiViewController: UIViewController {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] _ in
                 self?.activityIndicator.stopAnimating()
-                UserDefaults.standard.set(enteredToken, forKey: "apiToken")
+                UserDefaults.standard.set(enteredApiToken, forKey: "apiToken")
                 AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
             }, onError: { [weak self] error in
                 self?.activityIndicator.stopAnimating()

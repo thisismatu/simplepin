@@ -1,8 +1,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-    
-    private let userLoggedIn = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,7 +8,7 @@ class ViewController: UIViewController {
     }
 
     private func showMainApp() {
-        if userLoggedIn {
+        if UserDefaults.standard.string(forKey: "apiToken") != nil {
             DispatchQueue.main.async {
                 AppDelegate.instance.changeRootViewController(to: MainViewController(), animated: true)
             }
