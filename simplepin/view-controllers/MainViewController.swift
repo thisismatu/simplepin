@@ -7,7 +7,7 @@ import SafariServices
 class MainViewController: UIViewController {
 
     private let tableView = UITableView()
-    private let cellIdentifier = "cellIdentifier"
+    private let cellIdentifier = "BookmarkCell"
     private let apiClient = APIClient()
     private let disposeBag = DisposeBag()
     private let update = Observable.just(UpdateRequest())
@@ -28,9 +28,13 @@ class MainViewController: UIViewController {
         navigationItem.hidesSearchBarWhenScrolling = true
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.bookmarks, target: nil, action: nil)
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.add, target: nil, action: nil)
+        navigationController?.navigationBar.prefersLargeTitles = true
 
         view.addSubview(tableView)
-        tableView.register(TableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.register(BookmarkCell.self, forCellReuseIdentifier: cellIdentifier)
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.separatorStyle = .none
         tableView.snp.makeConstraints { make in
             make.left.right.bottom.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -71,9 +75,11 @@ class MainViewController: UIViewController {
                 return self.apiClient.send(apiRequest: request)
             }
             .observeOn(MainScheduler.instance)
-            .bind(to: tableView.rx.items(cellIdentifier: cellIdentifier)) { index, model, cell in
-                cell.textLabel?.text = model.description
-                cell.detailTextLabel?.text = model.extended
+            .bind(to: tableView.rx.items(cellIdentifier: cellIdentifier, cellType: BookmarkCell.self)) { index, model, cell in
+                cell.titleLabel.text = model.description
+                cell.descriptionLabel.text = model.extended
+                cell.tagLabel.text = model.tags
+                cell.dateLabel.text = model.time.description
             }
             .disposed(by: disposeBag)
     }

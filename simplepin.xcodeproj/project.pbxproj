@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		840F1F0AE35725BF9ABD25FD /* Pods_simplepin.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8FF4A3E004EB9956BF8392F /* Pods_simplepin.framework */; };
 		CC0A0061211DF593008B5279 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A0060211DF593008B5279 /* Environment.swift */; };
+		CC0A0065211E0CC5008B5279 /* BookmarkCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0A0064211E0CC5008B5279 /* BookmarkCell.swift */; };
 		CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A00FA211AF4D700B8A97C /* AppDelegate.swift */; };
 		CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2A00FC211AF4D700B8A97C /* ViewController.swift */; };
 		CC2A0102211AF4D800B8A97C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC2A0101211AF4D800B8A97C /* Assets.xcassets */; };
@@ -19,7 +20,6 @@
 		CCA508FF211C5BE800282009 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA508FE211C5BE800282009 /* ApiRequest.swift */; };
 		CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50901211C5C5700282009 /* ApiTokenModel.swift */; };
 		CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */; };
-		CCC84C6C211D7DF100ACF32B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */; };
 		CCC84C6F211D827400ACF32B /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C6E211D827400ACF32B /* BookmarkModel.swift */; };
 		CCC84C71211D856400ACF32B /* BookmarkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C70211D856400ACF32B /* BookmarkRequest.swift */; };
 		CCC84C73211DAC4600ACF32B /* UpdateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C72211DAC4600ACF32B /* UpdateModel.swift */; };
@@ -36,6 +36,7 @@
 		1DB972AF680DB8F1CEB2C470 /* Pods-simplepin.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplepin.release.xcconfig"; path = "Pods/Target Support Files/Pods-simplepin/Pods-simplepin.release.xcconfig"; sourceTree = "<group>"; };
 		4ADBB367A3F8A221160BD9AE /* Pods-simplepin.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-simplepin.debug.xcconfig"; path = "Pods/Target Support Files/Pods-simplepin/Pods-simplepin.debug.xcconfig"; sourceTree = "<group>"; };
 		CC0A0060211DF593008B5279 /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		CC0A0064211E0CC5008B5279 /* BookmarkCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkCell.swift; sourceTree = "<group>"; };
 		CC2A00F7211AF4D700B8A97C /* simplepin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = simplepin.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2A00FA211AF4D700B8A97C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC2A00FC211AF4D700B8A97C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		CCA508FE211C5BE800282009 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		CCA50901211C5C5700282009 /* ApiTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenModel.swift; sourceTree = "<group>"; };
 		CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenRequest.swift; sourceTree = "<group>"; };
-		CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		CCC84C6E211D827400ACF32B /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
 		CCC84C70211D856400ACF32B /* BookmarkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRequest.swift; sourceTree = "<group>"; };
 		CCC84C72211DAC4600ACF32B /* UpdateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateModel.swift; sourceTree = "<group>"; };
@@ -143,7 +143,7 @@
 			children = (
 				CCE3F086211B0E3A00E50242 /* RoundedButton.swift */,
 				CCE3F08C211B20FF00E50242 /* InputField.swift */,
-				CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */,
+				CC0A0064211E0CC5008B5279 /* BookmarkCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -319,7 +319,6 @@
 				CCE3F08D211B20FF00E50242 /* InputField.swift in Sources */,
 				CCA508FD211C5BDD00282009 /* ApiClient.swift in Sources */,
 				CCE3F089211B1C5800E50242 /* LoginPasswordViewController.swift in Sources */,
-				CCC84C6C211D7DF100ACF32B /* TableViewCell.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
@@ -329,6 +328,7 @@
 				CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */,
 				CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */,
 				CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */,
+				CC0A0065211E0CC5008B5279 /* BookmarkCell.swift in Sources */,
 				CCC84C6F211D827400ACF32B /* BookmarkModel.swift in Sources */,
 				CCC84C71211D856400ACF32B /* BookmarkRequest.swift in Sources */,
 				CCC84C75211DAC5600ACF32B /* UpdateRequest.swift in Sources */,
