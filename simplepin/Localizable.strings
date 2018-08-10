@@ -16,3 +16,6 @@
 
 "common.ok" = "OK";
 "common.cancel" = "Cancel";
+
+"main.all" = "All";
+"main.search" = "Search";

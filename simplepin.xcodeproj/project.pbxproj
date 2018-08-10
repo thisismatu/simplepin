@@ -18,6 +18,11 @@
 		CCA508FF211C5BE800282009 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA508FE211C5BE800282009 /* ApiRequest.swift */; };
 		CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50901211C5C5700282009 /* ApiTokenModel.swift */; };
 		CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */; };
+		CCC84C6C211D7DF100ACF32B /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */; };
+		CCC84C6F211D827400ACF32B /* BookmarkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C6E211D827400ACF32B /* BookmarkModel.swift */; };
+		CCC84C71211D856400ACF32B /* BookmarkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C70211D856400ACF32B /* BookmarkRequest.swift */; };
+		CCC84C73211DAC4600ACF32B /* UpdateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C72211DAC4600ACF32B /* UpdateModel.swift */; };
+		CCC84C75211DAC5600ACF32B /* UpdateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC84C74211DAC5600ACF32B /* UpdateRequest.swift */; };
 		CCE3F081211B024800E50242 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCE3F080211B024800E50242 /* Localizable.strings */; };
 		CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F084211B0B9600E50242 /* UIColors.swift */; };
 		CCE3F087211B0E3A00E50242 /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE3F086211B0E3A00E50242 /* RoundedButton.swift */; };
@@ -41,6 +46,11 @@
 		CCA508FE211C5BE800282009 /* ApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		CCA50901211C5C5700282009 /* ApiTokenModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenModel.swift; sourceTree = "<group>"; };
 		CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiTokenRequest.swift; sourceTree = "<group>"; };
+		CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		CCC84C6E211D827400ACF32B /* BookmarkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkModel.swift; sourceTree = "<group>"; };
+		CCC84C70211D856400ACF32B /* BookmarkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarkRequest.swift; sourceTree = "<group>"; };
+		CCC84C72211DAC4600ACF32B /* UpdateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateModel.swift; sourceTree = "<group>"; };
+		CCC84C74211DAC5600ACF32B /* UpdateRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateRequest.swift; sourceTree = "<group>"; };
 		CCE3F080211B024800E50242 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		CCE3F084211B0B9600E50242 /* UIColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColors.swift; sourceTree = "<group>"; };
 		CCE3F086211B0E3A00E50242 /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
@@ -131,6 +141,7 @@
 			children = (
 				CCE3F086211B0E3A00E50242 /* RoundedButton.swift */,
 				CCE3F08C211B20FF00E50242 /* InputField.swift */,
+				CCC84C6B211D7DF100ACF32B /* TableViewCell.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -149,6 +160,8 @@
 				CCA508FC211C5BDD00282009 /* ApiClient.swift */,
 				CCA508FE211C5BE800282009 /* ApiRequest.swift */,
 				CCA50903211C5DBF00282009 /* ApiTokenRequest.swift */,
+				CCC84C74211DAC5600ACF32B /* UpdateRequest.swift */,
+				CCC84C70211D856400ACF32B /* BookmarkRequest.swift */,
 			);
 			path = api;
 			sourceTree = "<group>";
@@ -157,6 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				CCA50901211C5C5700282009 /* ApiTokenModel.swift */,
+				CCC84C72211DAC4600ACF32B /* UpdateModel.swift */,
+				CCC84C6E211D827400ACF32B /* BookmarkModel.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -301,6 +316,7 @@
 				CCE3F08D211B20FF00E50242 /* InputField.swift in Sources */,
 				CCA508FD211C5BDD00282009 /* ApiClient.swift in Sources */,
 				CCE3F089211B1C5800E50242 /* LoginPasswordViewController.swift in Sources */,
+				CCC84C6C211D7DF100ACF32B /* TableViewCell.swift in Sources */,
 				CC2A00FD211AF4D700B8A97C /* ViewController.swift in Sources */,
 				CCA50902211C5C5700282009 /* ApiTokenModel.swift in Sources */,
 				CC2A00FB211AF4D700B8A97C /* AppDelegate.swift in Sources */,
@@ -309,6 +325,10 @@
 				CCA50904211C5DBF00282009 /* ApiTokenRequest.swift in Sources */,
 				CC2A0113211AFF4500B8A97C /* MainViewController.swift in Sources */,
 				CCE3F085211B0B9600E50242 /* UIColors.swift in Sources */,
+				CCC84C6F211D827400ACF32B /* BookmarkModel.swift in Sources */,
+				CCC84C71211D856400ACF32B /* BookmarkRequest.swift in Sources */,
+				CCC84C75211DAC5600ACF32B /* UpdateRequest.swift in Sources */,
+				CCC84C73211DAC4600ACF32B /* UpdateModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
