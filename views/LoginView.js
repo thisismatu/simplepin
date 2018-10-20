@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, TextInput, Alert } from 'react-native'
+import { login } from 'app/Api';
 import colors from 'app/assets/colors'
 import strings from 'app/assets/strings'
 
@@ -11,6 +12,38 @@ export default class WelcomeView extends React.Component {
     title: `${strings.login.title}`
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {apiToken: ''}
+    this.handleChange = this.handleChange.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleChange(e) {
+    this.setState({
+      apiToken: e.nativeEvent.text
+    })
+  }
+
+  showAlert() {
+    Alert.alert(
+     `${strings.error.login}`
+    )
+  }
+
+  handleSubmit() {
+    login(this.state.apiToken)
+      .then((res) => {
+        console.log(res)
+        if(res.ok == 0) {
+          console.log('Login failed')
+          this.showAlert()
+        } else {
+          console.log('Login succeeded')
+        }
+      })
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -20,15 +53,24 @@ export default class WelcomeView extends React.Component {
           style={styles.input}
           placeholder={strings.login.placeholder}
           placeholderTextColor = {colors.gray2}
-          autoCapitalize='none'
+          autoCapitalize="none"
           autoCorrect={false}
-          onChangeText={(text) => this.setState({text})}
+          onChange = {this.handleChange}
         />
         <TouchableHighlight
-          style={styles.loginButton} onPress={() => console.log('Login')} underlayColor={colors.blue3} activeOpacity={1}>
+          style={styles.loginButton}
+          underlayColor={colors.blue3}
+          activeOpacity={1}
+          onPress={this.handleSubmit}
+        >
           <Text style={styles.loginButtonText}>{strings.login.button}</Text>
         </TouchableHighlight>
-        <TouchableHighlight style={styles.tokenButton} onPress={() => console.log('Show API token')} underlayColor={colors.gray1} activeOpacity={1}>
+        <TouchableHighlight
+          style={styles.tokenButton}
+          underlayColor={colors.gray1}
+          activeOpacity={1}
+          onPress={() => console.log('Show API token')}
+        >
           <Text style={styles.text}>{strings.login.token}</Text>
         </TouchableHighlight>
       </View>
