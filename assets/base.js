@@ -17,6 +17,7 @@ export const colors = {
 }
 
 export const padding = {
+  tiny: 4,
   small: 8,
   medium: 16,
   large: 24,
@@ -32,4 +33,7 @@ export const fonts = {
   regular: '400'
 }
 
-export const radius = 4
+export const radius = {
+  small: 2,
+  medium: 4
+}

@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: colors.white,
     borderColor: colors.gray1,
-    borderRadius: radius,
+    borderRadius: radius.medium,
     borderWidth: 1,
     color: colors.gray4,
     fontSize: fonts.medium,
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     backgroundColor: colors.blue2,
-    borderRadius: radius,
+    borderRadius: radius.medium,
     marginBottom: padding.large,
     padding: padding.medium,
     width: '100%'
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   tokenButton: {
     backgroundColor: colors.white,
-    borderRadius: radius,
+    borderRadius: radius.medium,
     padding: padding.medium,
     width: '100%'
   },
