@@ -69,8 +69,9 @@ export default class WelcomeView extends React.Component {
           onChange = {this.handleChange}
         />
         <TouchableHighlight
+          disabled={!this.state.apiToken}
           activeOpacity={1}
-          style={styles.loginButton}
+          style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
           underlayColor={colors.blue3}
           onPress={this.handleSubmit}
         >
@@ -143,5 +144,8 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 12,
     width: '100%'
+  },
+  disabled: {
+    opacity: 0.4
   }
 })
