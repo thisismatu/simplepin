@@ -1,4 +1,4 @@
-import { createSwitchNavigator, createStackNavigator } from 'react-navigation'
+import {createSwitchNavigator, createStackNavigator} from 'react-navigation'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import ListView from 'app/views/ListView'

@@ -1,13 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableHighlight, TextInput, Alert, AsyncStorage } from 'react-native'
-import { login } from 'app/Api';
-import colors from 'app/assets/colors'
+import {StyleSheet, Text, View, TouchableHighlight, TextInput, Alert, AsyncStorage} from 'react-native'
+import {login} from 'app/Api';
+import {colors, fonts, padding, radius} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
 export default class WelcomeView extends React.Component {
   static navigationOptions = {
     header: null,
-    title: `${strings.login.title}`
+    title: strings.login.title
   }
 
   constructor(props) {
@@ -28,13 +28,13 @@ export default class WelcomeView extends React.Component {
     var errorMessage
     switch (error) {
       case 503:
-        errorMessage = `${strings.error.unavailable}`
+        errorMessage = strings.error.unavailable
       default:
-        errorMessage = `${strings.error.token}`
+        errorMessage = strings.error.token
     }
     Alert.alert(
-      `${strings.error.login}`,
-      `${errorMessage}`
+      strings.error.login,
+      errorMessage
     )
   }
 
@@ -93,56 +93,55 @@ export default class WelcomeView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: `${colors.white}`,
+    backgroundColor: colors.white,
     flex: 1,
     justifyContent: 'center',
-    padding: 32
+    padding: padding.huge
   },
   title: {
-    color: `${colors.gray4}`,
-    fontSize: 20,
-    fontWeight: '600',
-    lineHeight: 24,
-    marginBottom: 12,
+    color: colors.gray4,
+    fontSize: fonts.huge,
+    fontWeight: fonts.bold,
+    marginBottom: padding.medium,
     textAlign: 'center'
   },
   text: {
-    color: `${colors.gray3}`,
-    fontSize: 15,
-    lineHeight: 20,
-    marginBottom: 24,
+    color: colors.gray3,
+    fontSize: fonts.medium,
+    lineHeight: 24,
+    marginBottom: padding.large,
     textAlign: 'center'
   },
   input: {
-    backgroundColor: `${colors.white}`,
-    borderColor: `${colors.gray1}`,
-    borderRadius: 4,
+    backgroundColor: colors.white,
+    borderColor: colors.gray1,
+    borderRadius: radius,
     borderWidth: 1,
-    color: `${colors.gray4}`,
-    fontSize: 15,
+    color: colors.gray4,
+    fontSize: fonts.medium,
     height: 48,
-    marginBottom: 24,
+    marginBottom: padding.large,
     textAlign: 'center',
     width: '100%'
   },
   loginButton: {
-    backgroundColor: `${colors.blue2}`,
-    borderRadius: 4,
-    marginBottom: 24,
-    padding: 12,
+    backgroundColor: colors.blue2,
+    borderRadius: radius,
+    marginBottom: padding.large,
+    padding: padding.medium,
     width: '100%'
   },
   loginButtonText: {
-    color: `${colors.white}`,
-    fontSize: 15,
-    fontWeight: '600',
-    lineHeight: 24,
+    color: colors.white,
+    fontSize: fonts.medium,
+    fontWeight: fonts.bold,
+    lineHeight: 16,
     textAlign: 'center',
   },
   tokenButton: {
-    backgroundColor: `${colors.white}`,
-    borderRadius: 4,
-    padding: 12,
+    backgroundColor: colors.white,
+    borderRadius: radius,
+    padding: padding.medium,
     width: '100%'
   },
   disabled: {

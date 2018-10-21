@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, AsyncStorage } from 'react-native'
+import {View, AsyncStorage} from 'react-native'
 
 export default class AuthLoadingView extends React.Component {
   constructor(props) {
