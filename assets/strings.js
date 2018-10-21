@@ -5,7 +5,9 @@ const strings = {
     ok: 'OK'
   },
   error: {
-    login: 'Login failed'
+    login: 'Login failed',
+    token: 'Incorrect API token',
+    unavailable: 'The server is currently unavailable'
   },
   login: {
     title: 'Welcome!',

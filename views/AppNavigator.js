@@ -1,10 +1,24 @@
-import React from 'react'
-import { createStackNavigator } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator } from 'react-navigation'
+import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
+import ListView from 'app/views/ListView'
 
-const AppNavigator = createStackNavigator(
+const AppStack = createStackNavigator({
+  List: ListView
+})
+
+const AuthStack = createStackNavigator({
+  Login: LoginView
+})
+
+const AppNavigator = createSwitchNavigator(
   {
-    Login: { screen: LoginView }
+    AuthLoading: AuthLoadingView,
+    App: AppStack,
+    Auth: AuthStack
+  },
+  {
+    initialRouteName: 'AuthLoading',
   }
 )
 

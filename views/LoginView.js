@@ -1,10 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableHighlight, TextInput, Alert } from 'react-native'
+import { StyleSheet, Text, View, TouchableHighlight, TextInput, Alert, AsyncStorage } from 'react-native'
 import { login } from 'app/Api';
 import colors from 'app/assets/colors'
 import strings from 'app/assets/strings'
-
-const buttonPressed = () => console.log('button pressed')
 
 export default class WelcomeView extends React.Component {
   static navigationOptions = {
@@ -25,21 +23,32 @@ export default class WelcomeView extends React.Component {
     })
   }
 
-  showAlert() {
+  showAlert(error) {
+    console.log(error)
+    var errorMessage
+    switch (error) {
+      case 503:
+        errorMessage = `${strings.error.unavailable}`
+      default:
+        errorMessage = `${strings.error.token}`
+    }
     Alert.alert(
-     `${strings.error.login}`
+      `${strings.error.login}`,
+      `${errorMessage}`
     )
   }
 
-  handleSubmit() {
+  handleSubmit = async () => {
     login(this.state.apiToken)
-      .then((res) => {
-        console.log(res)
-        if(res.ok == 0) {
+      .then(async (response) => {
+        console.log(response)
+        if(response.ok == 0) {
           console.log('Login failed')
-          this.showAlert()
+          this.showAlert(response.error)
         } else {
           console.log('Login succeeded')
+          await AsyncStorage.setItem('apiToken', this.state.apiToken)
+          this.props.navigation.navigate('App')
         }
       })
   }
@@ -50,25 +59,27 @@ export default class WelcomeView extends React.Component {
         <Text style={styles.title}>{strings.login.title}</Text>
         <Text style={styles.text}>{strings.login.text}</Text>
         <TextInput
-          style={styles.input}
-          placeholder={strings.login.placeholder}
-          placeholderTextColor = {colors.gray2}
           autoCapitalize="none"
           autoCorrect={false}
+          enablesReturnKeyAutomatically={true}
+          returnKeyType="done"
+          placeholder={strings.login.placeholder}
+          placeholderTextColor = {colors.gray2}
+          style={styles.input}
           onChange = {this.handleChange}
         />
         <TouchableHighlight
+          activeOpacity={1}
           style={styles.loginButton}
           underlayColor={colors.blue3}
-          activeOpacity={1}
           onPress={this.handleSubmit}
         >
           <Text style={styles.loginButtonText}>{strings.login.button}</Text>
         </TouchableHighlight>
         <TouchableHighlight
+          activeOpacity={1}
           style={styles.tokenButton}
           underlayColor={colors.gray1}
-          activeOpacity={1}
           onPress={() => console.log('Show API token')}
         >
           <Text style={styles.text}>{strings.login.token}</Text>
