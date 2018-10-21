@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, FlatList} from 'react-native'
+import {StyleSheet, FlatList, RefreshControl} from 'react-native'
 import {colors} from 'app/assets/base'
 import ListItemView from 'app/views/ListItemView'
 import strings from 'app/assets/strings'
@@ -11,6 +11,18 @@ export default class WelcomeView extends React.Component {
     title: strings.common.simplepin
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      refreshing: false,
+    }
+  }
+
+  onRefresh = () => {
+    this.setState({refreshing: true})
+    setTimeout(() => {this.setState({refreshing: false})}, 2000)
+  }
+
   render() {
     return (
       <FlatList
@@ -18,6 +30,12 @@ export default class WelcomeView extends React.Component {
         data={mockData}
         renderItem={({item}) => <ListItemView post={item} />}
         keyExtractor={(item, index) => index.toString()}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh}
+          />
+        }
       />
     )
   }
