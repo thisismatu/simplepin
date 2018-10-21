@@ -24,7 +24,6 @@ export default class WelcomeView extends React.Component {
   }
 
   showAlert(error) {
-    console.log(error)
     var errorMessage
     switch (error) {
       case 503:
@@ -43,10 +42,8 @@ export default class WelcomeView extends React.Component {
       .then(async (response) => {
         console.log(response)
         if(response.ok == 0) {
-          console.log('Login failed')
           this.showAlert(response.error)
         } else {
-          console.log('Login succeeded')
           await AsyncStorage.setItem('apiToken', this.state.apiToken)
           this.props.navigation.navigate('App')
         }

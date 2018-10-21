@@ -1,3 +1,9 @@
+import queryString from 'query-string'
+
+const server = 'https://api.pinboard.in/v1'
+
+const loginUrl = (parameters) => `${server}/user/api_token/?${parameters}`
+
 const handleResponse = (response) => {
   if (!response.ok) {
     return Promise.resolve({ ok: 0, error: response.status })
@@ -12,7 +18,10 @@ const fetchWithErrorHandling = (url) => {
 }
 
 export const login = (token) => {
-  let apiToken = token.trim();
-  const url = `https://api.pinboard.in/v1/user/api_token/?format=json&auth_token=${apiToken}`;
-  return fetchWithErrorHandling(url)
+  const data = {
+    'format': 'json',
+    'auth_token': token
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(loginUrl(params))
 }
