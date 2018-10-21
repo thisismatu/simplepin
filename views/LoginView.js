@@ -59,10 +59,13 @@ export default class WelcomeView extends React.Component {
           autoCapitalize="none"
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
-          returnKeyType="done"
           placeholder={strings.login.placeholder}
           placeholderTextColor = {colors.gray2}
+          returnKeyType="done"
           style={styles.input}
+          textContentType="password"
+          secureTextEntry={true}
+          underlineColorAndroid="transparent"
           onChange = {this.handleChange}
         />
         <TouchableHighlight
