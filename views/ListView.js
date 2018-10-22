@@ -30,6 +30,7 @@ export default class WelcomeView extends React.Component {
         data={mockData}
         renderItem={({item}) => <ListItemView post={item} />}
         keyExtractor={(item, index) => index.toString()}
+        initialNumToRender={8}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}

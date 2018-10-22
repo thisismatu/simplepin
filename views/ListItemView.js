@@ -1,12 +1,30 @@
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native'
 import {colors, fonts, padding, radius} from 'app/assets/base'
 
+const TagItem = ({tag}) => {
+  const isPrivateTag = tag.charAt(0) === '.'
+  return(
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.tagContainer}
+      onPress={() => console.log(tag)}
+    >
+      <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
+        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
+      </View>
+    </TouchableOpacity>
+  )
+}
+
 export default ListItem = ({post}) => {
+  const tags = post.tags != '' ? post.tags.split(' ') : null
+  const date = new Date(post.time).toLocaleDateString()
+
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => console.log(post.description)}
+      onPress={() => console.log(post)}
     >
       {
         post.toread
@@ -20,20 +38,15 @@ export default ListItem = ({post}) => {
           ? <Text style={styles.description}>{post.extended.trim()}</Text>
           : null
         }
-        {
-          post.tags
-          ? <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.tagContainer}
-              onPress={() => console.log(post.tags)}
-            >
-              <View style={styles.tag}>
-                <Text style={styles.tagText}>{post.tags}</Text>
-              </View>
-            </TouchableOpacity>
-          : <View style={styles.spacer} />
-        }
-        <Text style={styles.time}>{post.time}</Text>
+        <FlatList
+          style={[styles.tagList, !tags && styles.spacer]}
+          data={tags}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item}) => <TagItem tag={item} />}
+          keyExtractor={(item, index) => index.toString()}
+          horizontal={true}
+        />
+        <Text style={styles.time}>{date}</Text>
       </View>
       {
         !post.shared
@@ -99,8 +112,12 @@ const styles = StyleSheet.create({
     fontSize: fonts.medium,
     lineHeight: 20,
   },
+  tagList: {
+    width: '100%'
+  },
   tagContainer: {
     paddingVertical: padding.small,
+    marginRight: padding.small
   },
   tag: {
     backgroundColor: colors.blue1,
@@ -111,5 +128,11 @@ const styles = StyleSheet.create({
   tagText: {
     color: colors.blue2,
     lineHeight: 16,
+  },
+  privateTag: {
+    backgroundColor: colors.gray1,
+  },
+  privateTagText: {
+    color: colors.gray3,
   }
 })
