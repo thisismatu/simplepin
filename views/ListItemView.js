@@ -6,7 +6,7 @@ const TagItem = ({tag}) => {
   const isPrivateTag = tag.charAt(0) === '.'
   return(
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={0.7}
       style={styles.tagContainer}
       onPress={() => console.log(tag)}
     >
@@ -23,7 +23,7 @@ export default ListItem = ({post}) => {
 
   return (
     <TouchableOpacity
-      activeOpacity={0.5}
+      activeOpacity={0.7}
       onPress={() => console.log(post)}
     >
       {
@@ -39,12 +39,12 @@ export default ListItem = ({post}) => {
           : null
         }
         <FlatList
-          style={[styles.tagList, !tags && styles.spacer]}
           data={tags}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => <TagItem tag={item} />}
-          keyExtractor={(item, index) => index.toString()}
           horizontal={true}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({item}) => <TagItem tag={item} />}
+          showsHorizontalScrollIndicator={false}
+          style={[styles.tagList, !tags && styles.spacer]}
         />
         <Text style={styles.time}>{date}</Text>
       </View>

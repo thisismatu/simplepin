@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View, TouchableHighlight, TextInput, Alert, AsyncStorage} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, AsyncStorage} from 'react-native'
 import {login} from 'app/Api';
 import {colors, fonts, padding, radius} from 'app/assets/base'
 import strings from 'app/assets/strings'
@@ -68,23 +68,21 @@ export default class WelcomeView extends React.Component {
           underlineColorAndroid="transparent"
           onChange = {this.handleChange}
         />
-        <TouchableHighlight
+        <TouchableOpacity
+          activeOpacity={0.7}
           disabled={!this.state.apiToken}
-          activeOpacity={1}
           style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
-          underlayColor={colors.blue3}
           onPress={this.handleSubmit}
         >
           <Text style={styles.loginButtonText}>{strings.login.button}</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          activeOpacity={1}
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.7}
           style={styles.tokenButton}
-          underlayColor={colors.gray1}
           onPress={() => console.log('Show API token')}
         >
           <Text style={styles.text}>{strings.login.token}</Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       </View>
     )
   }

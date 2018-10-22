@@ -26,11 +26,11 @@ export default class WelcomeView extends React.Component {
   render() {
     return (
       <FlatList
-        style={styles.container}
         data={mockData}
-        renderItem={({item}) => <ListItemView post={item} />}
-        keyExtractor={(item, index) => index.toString()}
         initialNumToRender={8}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({item}) => <ListItemView post={item} />}
+        style={styles.container}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
