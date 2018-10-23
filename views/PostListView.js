@@ -29,7 +29,7 @@ export default class PostListView extends React.Component {
         data={mockData}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => <PostListItem post={item} />}
+        renderItem={({item}) => <PostListItem item={item} />}
         style={styles.container}
         refreshControl={
           <RefreshControl

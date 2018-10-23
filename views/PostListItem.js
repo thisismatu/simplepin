@@ -1,67 +1,76 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
 import {colors, fonts, padding, radius} from 'app/assets/base'
 
-const TagItem = ({tag}) => {
-  const isPrivateTag = tag.charAt(0) === '.'
+const TagItem = ({item}) => {
+  const isPrivateTag = item.charAt(0) === '.'
   return(
     <TouchableOpacity
       activeOpacity={0.7}
       style={styles.tagContainer}
-      onPress={() => console.log(tag)}
+      onPress={() => console.log(item)}
     >
       <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
-        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
+        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{item}</Text>
       </View>
     </TouchableOpacity>
   )
 }
 
-// export default class PostListItem extends React.Component {
-//   static propTypes = {
+export default class PostListItem extends React.Component {
+  render() {
+    const tags = this.props.item.tags != '' ? this.props.item.tags.split(' ') : null
+    const date = new Date(this.props.item.time).toLocaleDateString()
 
-//   }
-// }
-
-export default PostListItem = ({post}) => {
-  const tags = post.tags != '' ? post.tags.split(' ') : null
-  const date = new Date(post.time).toLocaleDateString()
-
-  return (
-    <TouchableOpacity
-      activeOpacity={0.7}
-      onPress={() => console.log(post)}
-    >
-      {
-        post.toread
-        ? <View style={styles.unread} />
-        : null
-      }
-      <View style={styles.post}>
-        <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
+    return (
+      <TouchableOpacity
+        activeOpacity={0.7}
+        onPress={() => console.log(this.props.item)}
+      >
         {
-          post.extended
-          ? <Text style={styles.description}>{post.extended.trim()}</Text>
+          this.props.item.toread
+          ? <View style={styles.unread} />
           : null
         }
-        <FlatList
-          data={tags}
-          horizontal={true}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({item}) => <TagItem tag={item} />}
-          showsHorizontalScrollIndicator={false}
-          style={[styles.tagList, !tags && styles.spacer]}
-        />
-        <Text style={styles.time}>{date}</Text>
-      </View>
-      {
-        !post.shared
-        ? <Image source={require('app/assets/ic_lock.png')} style={styles.private} />
-        : null
-      }
-      <View style={styles.border} />
-    </TouchableOpacity>
-  )
+        <View style={styles.post}>
+          <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
+          {
+            this.props.item.extended
+            ? <Text style={styles.description}>{this.props.item.extended.trim()}</Text>
+            : null
+          }
+          <FlatList
+            data={tags}
+            horizontal={true}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({item}) => <TagItem item={item} />}
+            showsHorizontalScrollIndicator={false}
+            style={[styles.tagList, !tags && styles.spacer]}
+          />
+          <Text style={styles.time}>{date}</Text>
+        </View>
+        {
+          !this.props.item.shared
+          ? <Image source={require('app/assets/ic_lock.png')} style={styles.private} />
+          : null
+        }
+        <View style={styles.border} />
+      </TouchableOpacity>
+    )
+  }
+}
+
+PostListItem.propTypes = {
+  item: PropTypes.shape({
+    description: PropTypes.string.isRequired,
+    extended: PropTypes.string,
+    href: PropTypes.string.isRequired,
+    shared: PropTypes.bool.isRequired,
+    tags: PropTypes.string,
+    time: PropTypes.string.isRequired,
+    toread: PropTypes.bool.isRequired,
+  })
 }
 
 const styles = StyleSheet.create({
