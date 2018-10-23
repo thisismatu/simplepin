@@ -4,7 +4,7 @@ import {login} from 'app/Api';
 import {colors, fonts, padding, radius} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
-export default class WelcomeView extends React.Component {
+export default class LoginView extends React.Component {
   static navigationOptions = {
     header: null,
     title: strings.login.title
@@ -94,25 +94,25 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     flex: 1,
     justifyContent: 'center',
-    padding: padding.huge
+    padding: padding.huge,
   },
   title: {
     color: colors.gray4,
     fontSize: fonts.huge,
     fontWeight: fonts.bold,
     marginBottom: padding.medium,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   text: {
     color: colors.gray3,
     fontSize: fonts.medium,
     lineHeight: 24,
     marginBottom: padding.large,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   input: {
     backgroundColor: colors.white,
-    borderColor: colors.gray1,
+    borderColor: colors.border,
     borderRadius: radius.medium,
     borderWidth: 1,
     color: colors.gray4,
@@ -120,14 +120,14 @@ const styles = StyleSheet.create({
     height: 48,
     marginBottom: padding.large,
     textAlign: 'center',
-    width: '100%'
+    width: '100%',
   },
   loginButton: {
     backgroundColor: colors.blue2,
     borderRadius: radius.medium,
     marginBottom: padding.large,
     padding: padding.medium,
-    width: '100%'
+    width: '100%',
   },
   loginButtonText: {
     color: colors.white,
@@ -140,9 +140,9 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
     borderRadius: radius.medium,
     padding: padding.medium,
-    width: '100%'
+    width: '100%',
   },
   disabled: {
-    opacity: 0.4
-  }
+    opacity: 0.4,
+  },
 })

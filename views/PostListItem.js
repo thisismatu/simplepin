@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, FlatList} from 'react-native'
+import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
 import {colors, fonts, padding, radius} from 'app/assets/base'
 
 const TagItem = ({tag}) => {
@@ -17,7 +17,13 @@ const TagItem = ({tag}) => {
   )
 }
 
-export default ListItem = ({post}) => {
+// export default class PostListItem extends React.Component {
+//   static propTypes = {
+
+//   }
+// }
+
+export default PostListItem = ({post}) => {
   const tags = post.tags != '' ? post.tags.split(' ') : null
   const date = new Date(post.time).toLocaleDateString()
 
@@ -50,7 +56,7 @@ export default ListItem = ({post}) => {
       </View>
       {
         !post.shared
-        ? <View style={styles.private} />
+        ? <Image source={require('app/assets/ic_lock.png')} style={styles.private} />
         : null
       }
       <View style={styles.border} />
@@ -62,36 +68,35 @@ const styles = StyleSheet.create({
   post: {
     flex: 1,
     justifyContent: 'center',
-    paddingVertical: 12,
-    paddingRight: padding.medium,
     paddingLeft: padding.large,
+    paddingRight: padding.medium,
+    paddingVertical: 12,
   },
   border: {
-    borderBottomColor: colors.gray1,
-    borderBottomWidth: 1,
-    marginRight: padding.medium,
+    borderBottomColor: colors.border,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     marginLeft: padding.large,
+    marginRight: padding.medium,
   },
   spacer: {
     height: padding.tiny,
   },
   unread: {
+    backgroundColor: colors.blue2,
+    borderRadius: 5,
+    height: 9,
+    left: 8,
     position: 'absolute',
     top: 20,
-    left: 8,
-    width: 8,
-    height: 8,
-    borderRadius: radius.medium,
-    backgroundColor: colors.blue2,
+    width: 9,
   },
   private: {
-    position: 'absolute',
     bottom: padding.medium,
-    right: padding.medium,
-    width: 16,
     height: 16,
-    borderRadius: radius.small,
-    backgroundColor: colors.gray2,
+    position: 'absolute',
+    right: padding.medium,
+    tintColor: colors.gray2,
+    width: 16,
   },
   title: {
     color: colors.gray4,
@@ -113,17 +118,17 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   tagList: {
-    width: '100%'
+    width: '100%',
   },
   tagContainer: {
+    marginRight: padding.small,
     paddingVertical: padding.small,
-    marginRight: padding.small
   },
   tag: {
     backgroundColor: colors.blue1,
+    borderRadius: radius.small,
     paddingHorizontal: padding.small,
     paddingVertical: padding.tiny,
-    borderRadius: radius.small,
   },
   tagText: {
     color: colors.blue2,
@@ -134,5 +139,5 @@ const styles = StyleSheet.create({
   },
   privateTagText: {
     color: colors.gray3,
-  }
+  },
 })

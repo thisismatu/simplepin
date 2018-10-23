@@ -1,14 +1,14 @@
 import React from 'react'
 import {StyleSheet, FlatList, RefreshControl} from 'react-native'
 import {colors} from 'app/assets/base'
-import ListItemView from 'app/views/ListItemView'
+import PostListItem from 'app/views/PostListItem'
 import strings from 'app/assets/strings'
 
 import {mockData} from 'app/mockData'
 
-export default class WelcomeView extends React.Component {
+export default class PostListView extends React.Component {
   static navigationOptions = {
-    title: strings.common.simplepin
+    title: strings.common.simplepin,
   }
 
   constructor(props) {
@@ -29,7 +29,7 @@ export default class WelcomeView extends React.Component {
         data={mockData}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
-        renderItem={({item}) => <ListItemView post={item} />}
+        renderItem={({item}) => <PostListItem post={item} />}
         style={styles.container}
         refreshControl={
           <RefreshControl

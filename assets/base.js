@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from 'react-native'
 
 export const dimensions = {
   fullHeight: Dimensions.get('window').height,
-  fullWidth: Dimensions.get('window').width
+  fullWidth: Dimensions.get('window').width,
 }
 
 export const colors = {
@@ -12,7 +12,8 @@ export const colors = {
   gray2: '#AAAAAA',
   gray3: '#757575',
   gray4: '#111111',
-  white: '#FFFFFF'
+  white: '#FFFFFF',
+  border: 'rgba(0,0,0,0.12)',
 }
 
 export const padding = {
@@ -20,7 +21,7 @@ export const padding = {
   small: 8,
   medium: 16,
   large: 24,
-  huge: 32
+  huge: 32,
 }
 
 export const fonts = {
@@ -29,10 +30,10 @@ export const fonts = {
   large: 17,
   huge: 20,
   bold: '600',
-  regular: '400'
+  regular: '400',
 }
 
 export const radius = {
   small: 2,
-  medium: 4
+  medium: 4,
 }
