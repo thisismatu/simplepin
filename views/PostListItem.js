@@ -20,9 +20,6 @@ const TagItem = ({item}) => {
 
 export default class PostListItem extends React.Component {
   render() {
-    const tags = this.props.item.tags != '' ? this.props.item.tags.split(' ') : null
-    const date = new Date(this.props.item.time).toLocaleDateString()
-
     return (
       <TouchableOpacity
         activeOpacity={0.7}
@@ -41,14 +38,14 @@ export default class PostListItem extends React.Component {
             : null
           }
           <FlatList
-            data={tags}
+            data={this.props.item.tags}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({item}) => <TagItem item={item} />}
             showsHorizontalScrollIndicator={false}
-            style={[styles.tagList, !tags && styles.spacer]}
+            style={[styles.tagList, !this.props.item.tags && styles.emptyTagList]}
           />
-          <Text style={styles.time}>{date}</Text>
+          <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
         </View>
         {
           !this.props.item.shared
@@ -67,8 +64,8 @@ PostListItem.propTypes = {
     extended: PropTypes.string,
     href: PropTypes.string.isRequired,
     shared: PropTypes.bool.isRequired,
-    tags: PropTypes.string,
-    time: PropTypes.string.isRequired,
+    tags: PropTypes.array,
+    time: PropTypes.object.isRequired,
     toread: PropTypes.bool.isRequired,
   })
 }
@@ -87,7 +84,7 @@ const styles = StyleSheet.create({
     marginLeft: padding.large,
     marginRight: padding.medium,
   },
-  spacer: {
+  emptyTagList: {
     height: padding.tiny,
   },
   unread: {

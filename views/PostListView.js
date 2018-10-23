@@ -1,10 +1,24 @@
 import React from 'react'
 import {StyleSheet, FlatList, RefreshControl} from 'react-native'
-import {colors} from 'app/assets/base'
+import {moockPosts} from 'app/Api'
 import PostListItem from 'app/views/PostListItem'
+import {colors} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
-import {mockData} from 'app/mockData'
+const reviver = (key, value) => {
+  switch (key) {
+    case 'shared':
+      return value == 'yes'
+    case 'toread':
+      return value == 'yes'
+    case 'time':
+      return new Date(value)
+    case 'tags':
+      return value != '' ? value.split(' ') : null
+    default:
+      return value
+  }
+}
 
 export default class PostListView extends React.Component {
   static navigationOptions = {
@@ -14,8 +28,26 @@ export default class PostListView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      posts: [],
       refreshing: false,
     }
+  }
+
+  componentDidMount() {
+    this.setState({refreshing: true})
+    setTimeout(() => {
+      moockPosts()
+        .then((response) => {
+          this.setState({refreshing: false})
+          if(response.ok == 0) {
+            console.warn(response.error)
+          } else {
+            const str = JSON.stringify(response)
+            const obj = JSON.parse(str, reviver)
+            this.setState({posts: obj})
+          }
+        })
+    }, 1000)
   }
 
   onRefresh = () => {
@@ -26,7 +58,7 @@ export default class PostListView extends React.Component {
   render() {
     return (
       <FlatList
-        data={mockData}
+        data={this.state.posts}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({item}) => <PostListItem item={item} />}

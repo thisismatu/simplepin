@@ -29,19 +29,24 @@ export const login = (token) => {
 }
 
 export const update = (token) => {
- const data = {
+  const data = {
    'format': 'json',
    'auth_token': token
- }
- const params = queryString.stringify(data)
- return fetchWithErrorHandling(updateUrl(params))
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(updateUrl(params))
 }
 
 export const posts = (token) => {
- const data = {
+  const data = {
    'format': 'json',
    'auth_token': token
- }
- const params = queryString.stringify(data)
- return fetchWithErrorHandling(postsUrl(params))
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(updateUrl(params))
+}
+
+export const moockPosts = () => {
+  const mockdata = 'http://localhost:3000/posts.json'
+  return fetchWithErrorHandling(mockdata)
 }

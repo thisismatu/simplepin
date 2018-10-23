@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, AsyncStorage} from 'react-native'
-import {login} from 'app/Api';
+import {login} from 'app/Api'
 import {colors, fonts, padding, radius} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
