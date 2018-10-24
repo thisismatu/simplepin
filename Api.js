@@ -28,7 +28,7 @@ export const login = (token) => {
   return fetchWithErrorHandling(loginUrl(params))
 }
 
-export const update = (token) => {
+export const fetchUpdate = (token) => {
   const data = {
    'format': 'json',
    'auth_token': token
@@ -37,7 +37,7 @@ export const update = (token) => {
   return fetchWithErrorHandling(updateUrl(params))
 }
 
-export const posts = (token) => {
+export const fetchPosts = (token) => {
   const data = {
    'format': 'json',
    'auth_token': token
@@ -46,7 +46,7 @@ export const posts = (token) => {
   return fetchWithErrorHandling(updateUrl(params))
 }
 
-export const moockPosts = () => {
+export const fetchMockPosts = () => {
   const mockdata = 'http://localhost:3000/posts.json'
   return fetchWithErrorHandling(mockdata)
 }
