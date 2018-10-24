@@ -1,6 +1,7 @@
 import React from 'react'
-import {StyleSheet, FlatList, RefreshControl} from 'react-native'
-import {moockPosts} from 'app/Api'
+import {StyleSheet, FlatList, RefreshControl, AsyncStorage} from 'react-native'
+import {fetchMockPosts, fetchUpdate} from 'app/Api'
+import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
 import {colors} from 'app/assets/base'
 import strings from 'app/assets/strings'
@@ -14,7 +15,7 @@ const reviver = (key, value) => {
     case 'time':
       return new Date(value)
     case 'tags':
-      return value != '' ? value.split(' ') : null
+      return value !== '' ? value.split(' ') : null
     default:
       return value
   }
@@ -35,24 +36,45 @@ export default class PostListView extends React.Component {
 
   componentDidMount() {
     this.setState({refreshing: true})
-    setTimeout(() => {
-      moockPosts()
-        .then((response) => {
-          this.setState({refreshing: false})
-          if(response.ok == 0) {
-            console.warn(response.error)
-          } else {
-            const str = JSON.stringify(response)
-            const obj = JSON.parse(str, reviver)
-            this.setState({posts: obj})
+    this.checkForUpdates()
+  }
+
+  checkForUpdates = async () => {
+    const apiToken = await Storage.apiToken()
+    fetchUpdate(apiToken)
+      .then((response) => {
+        if (response.ok == 0) {
+          console.warn(response.error)
+        } else {
+          const updateTime = new Date(response.update_time)
+          console.log(updateTime)
+          if (updateTime !== new Date()) {
+            console.log("new posts!")
+            Storage.setUpdateTime(updateTime)
+            return this.getPosts()
           }
-        })
-    }, 1000)
+          console.log("nothing new…")
+          this.setState({refreshing: false})
+        }
+      })
+  }
+
+  getPosts = async () => {
+    fetchMockPosts()
+      .then((response) => {
+        if(response.ok === 0) {
+          console.warn(response.error)
+        } else {
+          const str = JSON.stringify(response)
+          const obj = JSON.parse(str, reviver)
+          this.setState({posts: obj, refreshing: false})
+        }
+      })
   }
 
   onRefresh = () => {
     this.setState({refreshing: true})
-    setTimeout(() => {this.setState({refreshing: false})}, 2000)
+    this.checkForUpdates()
   }
 
   render() {
