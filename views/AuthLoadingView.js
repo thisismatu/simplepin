@@ -1,14 +1,15 @@
 import React from 'react'
-import {View, AsyncStorage} from 'react-native'
+import {View} from 'react-native'
+import Storage from 'app/util/Storage'
 
 export default class AuthLoadingView extends React.Component {
   constructor(props) {
     super(props)
-    this.bootstrapAsync()
+    this.initialView()
   }
 
-  bootstrapAsync = async () => {
-    const apiToken = await AsyncStorage.getItem('apiToken')
+  initialView = async () => {
+    const apiToken = await Storage.apiToken()
     this.props.navigation.navigate(apiToken ? 'App' : 'Auth')
   }
 
