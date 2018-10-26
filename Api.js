@@ -19,7 +19,7 @@ const fetchWithErrorHandling = (url) => {
     .then(handleResponse)
 }
 
-export const login = (token) => {
+const login = (token) => {
   const data = {
     'format': 'json',
     'auth_token': token
@@ -28,7 +28,7 @@ export const login = (token) => {
   return fetchWithErrorHandling(loginUrl(params))
 }
 
-export const fetchUpdate = (token) => {
+const update = (token) => {
   const data = {
    'format': 'json',
    'auth_token': token
@@ -37,16 +37,20 @@ export const fetchUpdate = (token) => {
   return fetchWithErrorHandling(updateUrl(params))
 }
 
-export const fetchPosts = (token) => {
+const posts = (token) => {
   const data = {
    'format': 'json',
    'auth_token': token
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(updateUrl(params))
+  return fetchWithErrorHandling(postsUrl(params))
 }
 
-export const fetchMockPosts = () => {
+const mockPosts = () => {
   const mockdata = 'http://localhost:3000/posts.json'
   return fetchWithErrorHandling(mockdata)
+}
+
+export default {
+  login, update, posts, mockPosts
 }
