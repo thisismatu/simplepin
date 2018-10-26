@@ -63,7 +63,9 @@ PostListItem.propTypes = {
   item: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
+    hash: PropTypes.string.isRequired,
     href: PropTypes.string.isRequired,
+    meta: PropTypes.string.isRequired,
     shared: PropTypes.bool.isRequired,
     tags: PropTypes.array,
     time: PropTypes.object.isRequired,
