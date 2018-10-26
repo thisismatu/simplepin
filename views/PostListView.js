@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, FlatList, RefreshControl, AsyncStorage} from 'react-native'
-import {fetchMockPosts, fetchUpdate} from 'app/Api'
+import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
 import {colors} from 'app/assets/base'
@@ -29,52 +29,47 @@ export default class PostListView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: [],
+      posts: null,
       refreshing: false,
+      lastUpdateTime: null,
     }
   }
 
   componentDidMount() {
+    this.onRefresh()
+  }
+
+  onRefresh = async () => {
     this.setState({refreshing: true})
-    this.checkForUpdates()
+    const hasUpdates = await this.checkForUpdates()
+    hasUpdates && await this.fetchPosts()
+    this.setState({refreshing: false})
   }
 
   checkForUpdates = async () => {
     const apiToken = await Storage.apiToken()
-    fetchUpdate(apiToken)
-      .then((response) => {
-        if (response.ok == 0) {
-          console.warn(response.error)
-        } else {
-          const updateTime = new Date(response.update_time)
-          console.log(updateTime)
-          if (updateTime !== new Date()) {
-            console.log("new posts!")
-            Storage.setUpdateTime(updateTime)
-            return this.getPosts()
-          }
-          console.log("nothing new…")
-          this.setState({refreshing: false})
-        }
-      })
+    const response = await Api.update(apiToken)
+    if (response.ok == 0) {
+      console.warn(response.error)
+    } else {
+      if (response.update_time !== this.state.lastUpdateTime) {
+        this.setState({'lastUpdateTime': response.update_time})
+        return true
+      }
+      return false
+    }
   }
 
-  getPosts = async () => {
-    fetchMockPosts()
-      .then((response) => {
-        if(response.ok === 0) {
-          console.warn(response.error)
-        } else {
-          const str = JSON.stringify(response)
-          const obj = JSON.parse(str, reviver)
-          this.setState({posts: obj, refreshing: false})
-        }
-      })
-  }
-
-  onRefresh = () => {
-    this.setState({refreshing: true})
-    this.checkForUpdates()
+  fetchPosts = async () => {
+    const apiToken = await Storage.apiToken()
+    const response = await Api.posts(apiToken)
+    if(response.ok === 0) {
+      console.warn(response.error)
+    } else {
+      const str = JSON.stringify(response)
+      const obj = JSON.parse(str, reviver)
+      this.setState({posts: obj})
+    }
   }
 
   render() {
@@ -83,6 +78,7 @@ export default class PostListView extends React.Component {
         data={this.state.posts}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={null}
         renderItem={({item}) => <PostListItem item={item} />}
         style={styles.container}
         refreshControl={
