@@ -41,9 +41,10 @@ export default class PostListItem extends React.Component {
             data={this.props.item.tags}
             horizontal={true}
             keyExtractor={(item, index) => index.toString()}
+            ListEmptyComponent={() => <View style={styles.emptyTagList} />}
             renderItem={({item}) => <TagItem item={item} />}
             showsHorizontalScrollIndicator={false}
-            style={[styles.tagList, !this.props.item.tags && styles.emptyTagList]}
+            style={styles.tagList}
           />
           <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
         </View>
@@ -84,9 +85,6 @@ const styles = StyleSheet.create({
     marginLeft: padding.large,
     marginRight: padding.medium,
   },
-  emptyTagList: {
-    height: padding.tiny,
-  },
   unread: {
     backgroundColor: colors.blue2,
     borderRadius: 5,
@@ -122,6 +120,9 @@ const styles = StyleSheet.create({
     color: colors.gray3,
     fontSize: fonts.medium,
     lineHeight: 20,
+  },
+  emptyTagList: {
+    height: 5,
   },
   tagList: {
     width: '100%',
