@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, AsyncStorage} from 'react-native'
 import Storage from 'app/util/Storage'
-import {login} from 'app/Api'
+import Api from 'app/Api'
 import {colors, fonts, padding, radius} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
@@ -38,17 +38,14 @@ export default class LoginView extends React.Component {
     )
   }
 
-  handleSubmit = () => {
-    login(this.state.apiToken)
-      .then((response) => {
-        console.log(response)
-        if (response.ok === 0) {
-          this.showAlert(response.error)
-        } else {
-          Storage.setApiToken(this.state.apiToken)
-          this.props.navigation.navigate('App')
-        }
-      })
+  handleSubmit = async () => {
+    const response = await Api.login(this.state.apiToken)
+    if (response.ok === 0) {
+      this.showAlert(response.error)
+    } else {
+      Storage.setApiToken(this.state.apiToken)
+      this.props.navigation.navigate('App')
+    }
   }
 
   render() {
