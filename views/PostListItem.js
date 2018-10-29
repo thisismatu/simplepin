@@ -50,7 +50,7 @@ export default class PostListItem extends React.Component {
         </View>
         {
           !this.props.item.shared
-          ? <Image source={require('app/assets/ic_lock.png')} style={styles.private} />
+          ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
           : null
         }
         <View style={styles.border} />
