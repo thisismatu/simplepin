@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, FlatList, RefreshControl, AsyncStorage} from 'react-native'
+import {StyleSheet, FlatList, RefreshControl, AsyncStorage, TouchableOpacity, Image} from 'react-native'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
@@ -22,8 +22,18 @@ const reviver = (key, value) => {
 }
 
 export default class PostListView extends React.Component {
-  static navigationOptions = {
-    title: strings.common.simplepin,
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: strings.menu.all,
+      headerLeft: (
+        <TouchableOpacity
+          activeOpacity={0.7}
+          onPress={() => navigation.navigate('Menu')}
+        >
+          <Image source={require('app/assets/ic-menu.png')} style={styles.menu} />
+        </TouchableOpacity>
+      )
+    }
   }
 
   constructor(props) {
@@ -62,7 +72,7 @@ export default class PostListView extends React.Component {
 
   fetchPosts = async () => {
     const apiToken = await Storage.apiToken()
-    const response = await Api.posts(apiToken)
+    const response = await Api.mockPosts(apiToken)
     if(response.ok === 0) {
       console.warn(response.error)
     } else {
@@ -95,5 +105,11 @@ export default class PostListView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
+  },
+  menu: {
+    backgroundColor: 'red',
+    marginHorizontal: 12,
+    marginVertical: 8,
+    tintColor: colors.blue2,
   }
 })

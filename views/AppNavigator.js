@@ -3,6 +3,7 @@ import {colors} from 'app/assets/base'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
+import MenuView from 'app/views/MenuView'
 
 const headerStyles = {
   headerStyle: {
@@ -15,6 +16,7 @@ const headerStyles = {
 const AppStack = createStackNavigator(
   {
     List: PostListView,
+    Menu: MenuView,
   },
   {
     navigationOptions: headerStyles,
