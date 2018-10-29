@@ -1,9 +1,9 @@
 import {createSwitchNavigator, createStackNavigator} from 'react-navigation'
-import {colors} from 'app/assets/base'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
 import MenuView from 'app/views/MenuView'
+import {colors} from 'app/assets/base'
 
 const headerStyles = {
   headerStyle: {
@@ -13,14 +13,33 @@ const headerStyles = {
   headerTintColor: '#111',
 }
 
-const AppStack = createStackNavigator(
+const MainStack = createStackNavigator(
   {
-    List: PostListView,
-    Menu: MenuView,
+    List: PostListView
   },
   {
     navigationOptions: headerStyles,
+  }
+)
+
+const MenuStack = createStackNavigator(
+  {
+    Menu: MenuView
   },
+  {
+    navigationOptions: headerStyles,
+  }
+)
+
+const AppStack = createStackNavigator(
+  {
+    Main: MainStack,
+    Menu: MenuStack,
+  },
+  {
+    headerMode: 'none',
+    mode: 'modal',
+  }
 )
 
 const AuthStack = createStackNavigator({

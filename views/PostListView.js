@@ -23,8 +23,9 @@ const reviver = (key, value) => {
 
 export default class PostListView extends React.Component {
   static navigationOptions = ({navigation}) => {
+    const type = navigation.getParam('type', 1)
     return {
-      title: strings.menu.all,
+      title: strings.menu.all +" "+ type,
       headerLeft: (
         <TouchableOpacity
           activeOpacity={0.7}
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.white,
   },
   menu: {
-    backgroundColor: 'red',
     marginHorizontal: 12,
     marginVertical: 8,
     tintColor: colors.blue2,
