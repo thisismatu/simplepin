@@ -3,6 +3,7 @@ import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
 import MenuView from 'app/views/MenuView'
+import SettingsView from 'app/views/SettingsView'
 import {colors} from 'app/assets/base'
 
 const headerStyles = {
@@ -10,31 +11,31 @@ const headerStyles = {
     backgroundColor: colors.white,
     borderBottomColor: colors.border,
   },
-  headerTintColor: '#111',
+  headerTintColor: colors.gray4,
 }
 
-const MainStack = createStackNavigator(
+const ListStack = createStackNavigator(
   {
-    List: PostListView
+    List: PostListView,
   },
   {
     navigationOptions: headerStyles,
   }
 )
 
-const MenuStack = createStackNavigator(
+const SettingsStack = createStackNavigator(
   {
-    Menu: MenuView
+    Settings: SettingsView,
   },
   {
     navigationOptions: headerStyles,
   }
 )
 
-const AppStack = createDrawerNavigator(
+const AppDrawer = createDrawerNavigator(
   {
-    Main: MainStack,
-    Menu: MenuStack,
+    List: ListStack,
+    Settings: SettingsStack,
   },
   {
     contentComponent: MenuView
@@ -48,7 +49,7 @@ const AuthStack = createStackNavigator({
 const AppNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingView,
-    App: AppStack,
+    App: AppDrawer,
     Auth: AuthStack,
   },
   {

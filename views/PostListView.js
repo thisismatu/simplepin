@@ -1,8 +1,9 @@
 import React from 'react'
-import {StyleSheet, FlatList, RefreshControl, AsyncStorage, TouchableOpacity, Image} from 'react-native'
+import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, Image, Text} from 'react-native'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
+import MenuButton from 'app/components/MenuButton'
 import {colors} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
@@ -21,18 +22,26 @@ const reviver = (key, value) => {
   }
 }
 
+const viewTitle = (type) => {
+  switch (type) {
+    case 1:
+      return strings.menu.all
+    case 2:
+      return strings.menu.unread
+    case 3:
+      return strings.menu.private
+    case 4:
+      return strings.menu.public
+  }
+}
+
 export default class PostListView extends React.Component {
   static navigationOptions = ({navigation}) => {
     const type = navigation.getParam('type', 1)
     return {
-      title: strings.menu.all +" "+ type,
+      title: viewTitle(type),
       headerLeft: (
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => navigation.openDrawer()}
-        >
-          <Image source={require('app/assets/ic-menu.png')} style={styles.menu} />
-        </TouchableOpacity>
+        <MenuButton navigation={navigation} />
       )
     }
   }
@@ -86,7 +95,7 @@ export default class PostListView extends React.Component {
   render() {
     return (
       <FlatList
-        data={this.state.posts}
+        data={null}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
@@ -106,10 +115,5 @@ export default class PostListView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-  },
-  menu: {
-    marginHorizontal: 12,
-    marginVertical: 8,
-    tintColor: colors.blue2,
   }
 })
