@@ -95,7 +95,7 @@ export default class PostListView extends React.Component {
   render() {
     return (
       <FlatList
-        data={null}
+        data={this.state.posts}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}

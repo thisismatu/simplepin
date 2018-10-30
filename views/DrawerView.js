@@ -9,7 +9,7 @@ const listSections = [
   {title: strings.common.simplepin, data: [strings.menu.settings, strings.menu.feedback, strings.menu.rate, strings.menu.logout]},
 ]
 
-class DrawerItem extends React.Component {
+class DrawerItem extends React.PureComponent {
   isRouteFocused = (route) => {
     const { state } = this.props.navigation
     const focusedRoute = state.routes[state.index].key

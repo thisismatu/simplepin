@@ -18,7 +18,7 @@ const TagItem = ({item}) => {
   )
 }
 
-export default class PostListItem extends React.Component {
+export default class PostListItem extends React.PureComponent {
   render() {
     return (
       <TouchableOpacity
