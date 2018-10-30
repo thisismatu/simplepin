@@ -5,7 +5,6 @@ import strings from 'app/assets/strings'
 
 export default class SetingsView extends React.Component {
   static navigationOptions = ({navigation}) => {
-    const type = navigation.getParam('type', 1)
     return {
       title: strings.menu.settings,
       headerLeft: (

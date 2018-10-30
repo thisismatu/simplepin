@@ -1,10 +1,12 @@
 import {createSwitchNavigator, createStackNavigator, createDrawerNavigator} from 'react-navigation'
+import {colors} from 'app/assets/base'
+import strings from 'app/assets/strings'
+
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
-import {colors} from 'app/assets/base'
 
 const headerStyles = {
   headerStyle: {
@@ -20,7 +22,7 @@ const ListStack = createStackNavigator(
   },
   {
     initialRouteName: 'List',
-    initialRouteParams: {type: 1},
+    initialRouteParams: {title: strings.menu.all},
     navigationOptions: headerStyles,
   }
 )

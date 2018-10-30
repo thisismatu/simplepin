@@ -22,24 +22,10 @@ const reviver = (key, value) => {
   }
 }
 
-const viewTitle = (type) => {
-  switch (type) {
-    case 1:
-      return strings.menu.all
-    case 2:
-      return strings.menu.unread
-    case 3:
-      return strings.menu.private
-    case 4:
-      return strings.menu.public
-  }
-}
-
 export default class PostListView extends React.Component {
   static navigationOptions = ({navigation}) => {
-    const type = navigation.getParam('type', 1)
     return {
-      title: viewTitle(type),
+      title: navigation.getParam('title', strings.menu.all),
       headerLeft: (
         <MenuButton navigation={navigation} />
       )

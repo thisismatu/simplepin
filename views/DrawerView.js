@@ -67,14 +67,14 @@ export default class DrawerView extends React.Component {
 
           <DrawerItem
             route={'List'}
-            param={{'type': 1}}
+            param={{'title': strings.menu.all}}
             text={strings.menu.all}
             secondary={263}
             navigation={this.props.navigation}
           />
           <DrawerItem
             route={'List'}
-            param={{'type': 2}}
+            param={{'title': strings.menu.unread}}
             text={strings.menu.unread}
             secondary={63}
             navigation={this.props.navigation}
