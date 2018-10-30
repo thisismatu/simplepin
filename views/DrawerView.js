@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
 import Storage from 'app/util/Storage'
@@ -11,25 +12,32 @@ const listSections = [
 
 class DrawerItem extends React.PureComponent {
   isRouteFocused = (route) => {
-    const { state } = this.props.navigation
+    const {state} = this.props.navigation
     const focusedRoute = state.routes[state.index].key
     return route === focusedRoute
   }
 
-  navigateTo = (route) => {
+  isRouteParamsFocused = (route, param) => {
+    const {state} = this.props.navigation
+    const focusedParams = state.routes[state.index].routes[0].params
+    return this.isRouteFocused(route) && _.isEqual(param, focusedParams)
+  }
+
+  navigateTo = (route, param) => {
     if (this.isRouteFocused(route)) {
       this.props.navigation.closeDrawer()
     }
-    this.props.navigation.navigate(route)
+    this.props.navigation.navigate(route, param)
   }
 
   render() {
-    const { route, text, secondary } = this.props
+    const {route, text, secondary, param} = this.props
+    const isFocused = param ? this.isRouteParamsFocused(route, param) : this.isRouteFocused(route)
     return (
       <TouchableOpacity
-        style={[styles.item, this.isRouteFocused(route) && styles.activeItem]}
+        style={[styles.item, isFocused && styles.activeItem]}
         activeOpacity={0.7}
-        onPress={() => this.navigateTo(route)}
+        onPress={() => this.navigateTo(route, param)}
       >
         <Text style={styles.itemText}>{text}</Text>
         { secondary
@@ -46,17 +54,6 @@ export default class DrawerView extends React.Component {
     title: strings.common.simplepin,
   }
 
-  constructor(props) {
-    super(props)
-  }
-
-  findRouteNameFromNavigatorState ({ routes }) {
-    let route = routes[routes.length - 1];
-    while (route.index !== undefined) route = route.routes[route.index];
-    console.log(route.routeName)
-    return route.routeName;
-  }
-
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -70,8 +67,16 @@ export default class DrawerView extends React.Component {
 
           <DrawerItem
             route={'List'}
+            param={{'type': 1}}
             text={strings.menu.all}
             secondary={263}
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            route={'List'}
+            param={{'type': 2}}
+            text={strings.menu.unread}
+            secondary={63}
             navigation={this.props.navigation}
           />
 
@@ -80,7 +85,6 @@ export default class DrawerView extends React.Component {
           <DrawerItem
             route={'Settings'}
             text={strings.menu.settings}
-            secondary={263}
             navigation={this.props.navigation}
           />
 

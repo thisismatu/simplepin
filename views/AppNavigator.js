@@ -19,6 +19,8 @@ const ListStack = createStackNavigator(
     List: PostListView,
   },
   {
+    initialRouteName: 'List',
+    initialRouteParams: {type: 1},
     navigationOptions: headerStyles,
   }
 )
