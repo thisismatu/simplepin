@@ -41,7 +41,7 @@ class DrawerItem extends React.Component {
   }
 }
 
-export default class MenuView extends React.Component {
+export default class DrawerView extends React.Component {
   static navigationOptions = {
     title: strings.common.simplepin,
   }

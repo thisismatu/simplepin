@@ -2,7 +2,7 @@ import {createSwitchNavigator, createStackNavigator, createDrawerNavigator} from
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
-import MenuView from 'app/views/MenuView'
+import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
 import {colors} from 'app/assets/base'
 
@@ -38,7 +38,7 @@ const AppDrawer = createDrawerNavigator(
     Settings: SettingsStack,
   },
   {
-    contentComponent: MenuView
+    contentComponent: DrawerView
   }
 )
 
