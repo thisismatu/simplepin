@@ -29,7 +29,7 @@ export default class PostListView extends React.Component {
       headerLeft: (
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => navigation.navigate('Menu')}
+          onPress={() => navigation.openDrawer()}
         >
           <Image source={require('app/assets/ic-menu.png')} style={styles.menu} />
         </TouchableOpacity>

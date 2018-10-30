@@ -1,4 +1,4 @@
-import {createSwitchNavigator, createStackNavigator} from 'react-navigation'
+import {createSwitchNavigator, createStackNavigator, createDrawerNavigator} from 'react-navigation'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostListView from 'app/views/PostListView'
@@ -31,14 +31,13 @@ const MenuStack = createStackNavigator(
   }
 )
 
-const AppStack = createStackNavigator(
+const AppStack = createDrawerNavigator(
   {
     Main: MainStack,
     Menu: MenuStack,
   },
   {
-    headerMode: 'none',
-    mode: 'modal',
+    contentComponent: MenuView
   }
 )
 
