@@ -20,19 +20,25 @@ class DrawerItem extends React.PureComponent {
   isRouteParamsFocused = (route, param) => {
     const {state} = this.props.navigation
     const focusedParams = state.routes[state.index].routes[0].params
-    return this.isRouteFocused(route) && _.isEqual(param, focusedParams)
+    return this.isRouteFocused(route) && _.isEqual(param, focusedParams.title)
+  }
+
+  getRouteCount = (route, param) => {
+    const {state} = this.props.navigation
+    return state.routes[state.index].routes[0].params[param]
   }
 
   navigateTo = (route, param) => {
     if (this.isRouteFocused(route)) {
       this.props.navigation.closeDrawer()
     }
-    this.props.navigation.navigate(route, param)
+    this.props.navigation.navigate(route, {title: param})
   }
 
   render() {
     const {route, text, secondary, param} = this.props
     const isFocused = param ? this.isRouteParamsFocused(route, param) : this.isRouteFocused(route)
+    const routeCount = this.getRouteCount(route, secondary)
     return (
       <TouchableOpacity
         style={[styles.item, isFocused && styles.activeItem]}
@@ -40,8 +46,8 @@ class DrawerItem extends React.PureComponent {
         onPress={() => this.navigateTo(route, param)}
       >
         <Text style={styles.itemText}>{text}</Text>
-        { secondary
-          ? <Text style={styles.itemSecondaryText}>{secondary}</Text>
+        { routeCount
+          ? <Text style={styles.itemSecondaryText}>{routeCount}</Text>
           : null
         }
       </TouchableOpacity>
@@ -50,10 +56,6 @@ class DrawerItem extends React.PureComponent {
 }
 
 export default class DrawerView extends React.Component {
-  static navigationOptions = {
-    title: strings.common.simplepin,
-  }
-
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -64,30 +66,40 @@ export default class DrawerView extends React.Component {
           style={styles.container}
         >
           <Text style={styles.header}>{strings.menu.bookmarks}</Text>
-
           <DrawerItem
-            route={'List'}
-            param={{'title': strings.menu.all}}
+            route="List"
+            param={strings.menu.all}
             text={strings.menu.all}
-            secondary={263}
+            secondary="allCount"
             navigation={this.props.navigation}
           />
           <DrawerItem
-            route={'List'}
-            param={{'title': strings.menu.unread}}
+            route="List"
+            param={strings.menu.unread}
             text={strings.menu.unread}
-            secondary={63}
+            secondary="unreadCount"
             navigation={this.props.navigation}
           />
-
-          <Text style={styles.header}>{strings.common.simplepin}</Text>
-
           <DrawerItem
-            route={'Settings'}
+            route="List"
+            param={strings.menu.private}
+            text={strings.menu.private}
+            secondary="privateCount"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            route="List"
+            param={strings.menu.public}
+            text={strings.menu.public}
+            secondary="publicCount"
+            navigation={this.props.navigation}
+          />
+          <Text style={styles.header}>{strings.common.simplepin}</Text>
+          <DrawerItem
+            route="Settings"
             text={strings.menu.settings}
             navigation={this.props.navigation}
           />
-
           <Text style={styles.version}>{strings.common.simplepin} v. XXXX</Text>
         </ScrollView>
       </SafeAreaView>

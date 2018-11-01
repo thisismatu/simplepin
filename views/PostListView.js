@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, Image, Text} from 'react-native'
 import Api from 'app/Api'
@@ -35,7 +36,10 @@ export default class PostListView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      posts: null,
+      allPosts: null,
+      unreadPosts: null,
+      privatePosts: null,
+      publicPosts: null,
       refreshing: false,
       lastUpdateTime: null,
     }
@@ -74,14 +78,39 @@ export default class PostListView extends React.Component {
     } else {
       const str = JSON.stringify(response)
       const obj = JSON.parse(str, reviver)
-      this.setState({posts: obj})
+      this.setState({
+        allPosts: obj,
+        unreadPosts: _.filter(obj, ['toread', true]),
+        privatePosts: _.filter(obj, ['shared', false]),
+        publicPosts: _.filter(obj, ['shared', true]),
+      })
+      this.props.navigation.setParams({
+        allCount: this.state.allPosts.length,
+        unreadCount: this.state.unreadPosts.length,
+        privateCount: this.state.privatePosts.length,
+        publicCount: this.state.publicPosts.length,
+      })
+    }
+  }
+
+  filterPosts = () => {
+    const predicate = this.props.navigation.getParam('title', '')
+    switch (predicate) {
+      case strings.menu.unread:
+        return this.state.unreadPosts
+      case strings.menu.private:
+        return this.state.privatePosts
+      case strings.menu.public:
+        return this.state.publicPosts
+      default:
+        return this.state.allPosts
     }
   }
 
   render() {
     return (
       <FlatList
-        data={this.state.posts}
+        data={this.filterPosts()}
         initialNumToRender={8}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
