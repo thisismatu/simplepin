@@ -46,6 +46,7 @@ export default class PostListView extends React.Component {
   }
 
   componentDidMount() {
+    // TODO: open app, goto settings, go to public, app goes to all
     this.onRefresh()
   }
 
