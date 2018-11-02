@@ -12,10 +12,10 @@ const setApiToken = async (apiToken) => {
   await AsyncStorage.setItem(keys.apiToken, apiToken)
 }
 
-const postCount = async () => await AsyncStorage.getItem(keys.postCount)
+const postCount = async () => JSON.parse(await AsyncStorage.getItem(keys.postCount))
 
 const setPostCount = async (postCount) => {
-  await AsyncStorage.setItem(keys.postCount, postCount)
+  await AsyncStorage.setItem(keys.postCount, JSON.stringify(postCount))
 }
 
 // Update time may not be needed after all…

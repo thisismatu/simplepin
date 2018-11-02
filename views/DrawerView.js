@@ -58,7 +58,7 @@ export default class DrawerView extends React.Component {
   }
 
   getPostCounts = async () => {
-    const postCount = JSON.parse(await Storage.postCount())
+    const postCount = await Storage.postCount()
     if (!_.isEqual(this.state.postCount, postCount)) {
       this.setState({'postCount': postCount})
     }

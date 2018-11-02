@@ -84,14 +84,12 @@ export default class PostListView extends React.Component {
         privatePosts: _.filter(obj, ['shared', false]),
         publicPosts: _.filter(obj, ['shared', true]),
       })
-      Storage.setPostCount(
-        JSON.stringify({
-          all: this.state.allPosts.length,
-          unread: this.state.unreadPosts.length,
-          private: this.state.privatePosts.length,
-          public: this.state.publicPosts.length,
-        })
-      )
+      Storage.setPostCount({
+        all: this.state.allPosts.length,
+        unread: this.state.unreadPosts.length,
+        private: this.state.privatePosts.length,
+        public: this.state.publicPosts.length,
+      })
     }
   }
 
