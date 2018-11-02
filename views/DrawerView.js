@@ -1,16 +1,12 @@
 import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, Text, Image, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
+import {StyleSheet, Text, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
 import Storage from 'app/util/Storage'
 import {colors, padding, fonts} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
-const listSections = [
-  {title: strings.menu.bookmarks, data: [strings.menu.all, strings.menu.unread, strings.menu.public, strings.menu.private]},
-  {title: strings.common.simplepin, data: [strings.menu.settings, strings.menu.feedback, strings.menu.rate, strings.menu.logout]},
-]
 
-class DrawerItem extends React.PureComponent {
+class DrawerItem extends React.Component {
   isRouteFocused = (route) => {
     const {state} = this.props.navigation
     const focusedRoute = state.routes[state.index].key
@@ -38,16 +34,16 @@ class DrawerItem extends React.PureComponent {
   render() {
     const {route, text, secondary, param} = this.props
     const isFocused = param ? this.isRouteParamsFocused(route, param) : this.isRouteFocused(route)
-    const routeCount = this.getRouteCount(route, secondary)
     return (
       <TouchableOpacity
-        style={[styles.item, isFocused && styles.activeItem]}
+        style={[styles.cell, isFocused && styles.active]}
         activeOpacity={0.7}
         onPress={() => this.navigateTo(route, param)}
       >
-        <Text style={styles.itemText}>{text}</Text>
-        { routeCount
-          ? <Text style={styles.itemSecondaryText}>{routeCount}</Text>
+        <Text style={styles.text}>{text}</Text>
+        {
+          secondary
+          ? <Text style={styles.secondary}>{secondary}</Text>
           : null
         }
       </TouchableOpacity>
@@ -56,7 +52,20 @@ class DrawerItem extends React.PureComponent {
 }
 
 export default class DrawerView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {postCount: {}}
+  }
+
+  getPostCounts = async () => {
+    const postCount = JSON.parse(await Storage.postCount())
+    if (!_.isEqual(this.state.postCount, postCount)) {
+      this.setState({'postCount': postCount})
+    }
+  }
+
   render() {
+    this.props.navigation.addListener('willFocus', () => this.getPostCounts())
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
@@ -70,28 +79,28 @@ export default class DrawerView extends React.Component {
             route="List"
             param={strings.menu.all}
             text={strings.menu.all}
-            secondary="allCount"
+            secondary={this.state.postCount.all}
             navigation={this.props.navigation}
           />
           <DrawerItem
             route="List"
             param={strings.menu.unread}
             text={strings.menu.unread}
-            secondary="unreadCount"
+            secondary={this.state.postCount.unread}
             navigation={this.props.navigation}
           />
           <DrawerItem
             route="List"
             param={strings.menu.private}
             text={strings.menu.private}
-            secondary="privateCount"
+            secondary={this.state.postCount.private}
             navigation={this.props.navigation}
           />
           <DrawerItem
             route="List"
             param={strings.menu.public}
             text={strings.menu.public}
-            secondary="publicCount"
+            secondary={this.state.postCount.public}
             navigation={this.props.navigation}
           />
           <Text style={styles.header}>{strings.common.simplepin}</Text>
@@ -111,32 +120,33 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
   },
-  item: {
+  cell: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: padding.medium,
+    paddingHorizontal: padding.medium,
+    paddingVertical: 14,
   },
-  activeItem: {
+  active: {
     backgroundColor: colors.blue1,
   },
-  itemText: {
+  text: {
     color: colors.gray4,
     fontSize: fonts.large,
-    lineHeight: 16,
+    lineHeight: 20,
   },
-  itemSecondaryText: {
+  secondary: {
     color: colors.gray3,
-    lineHeight: 16,
+    lineHeight: 20,
     fontSize: fonts.medium,
   },
   header: {
     color: colors.gray4,
     fontSize: fonts.large,
     fontWeight: fonts.bold,
-    lineHeight: 16,
-    padding: padding.medium,
-    paddingTop: padding.large
+    lineHeight: 20,
+    paddingHorizontal: padding.medium,
+    paddingVertical: 14,
   },
   version: {
     fontSize: fonts.small,

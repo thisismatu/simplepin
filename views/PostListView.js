@@ -84,12 +84,14 @@ export default class PostListView extends React.Component {
         privatePosts: _.filter(obj, ['shared', false]),
         publicPosts: _.filter(obj, ['shared', true]),
       })
-      this.props.navigation.setParams({
-        allCount: this.state.allPosts.length,
-        unreadCount: this.state.unreadPosts.length,
-        privateCount: this.state.privatePosts.length,
-        publicCount: this.state.publicPosts.length,
-      })
+      Storage.setPostCount(
+        JSON.stringify({
+          all: this.state.allPosts.length,
+          unread: this.state.unreadPosts.length,
+          private: this.state.privatePosts.length,
+          public: this.state.publicPosts.length,
+        })
+      )
     }
   }
 

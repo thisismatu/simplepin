@@ -3,12 +3,19 @@ import {AsyncStorage} from 'react-native'
 const keys = {
   apiToken: '@Simplepin:apiToken',
   updateTime: '@Simplepin:updateTime',
+  postCount: '@Simplepin:postCount',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
 
 const setApiToken = async (apiToken) => {
   await AsyncStorage.setItem(keys.apiToken, apiToken)
+}
+
+const postCount = async () => await AsyncStorage.getItem(keys.postCount)
+
+const setPostCount = async (postCount) => {
+  await AsyncStorage.setItem(keys.postCount, postCount)
 }
 
 // Update time may not be needed after all…
@@ -21,5 +28,6 @@ const setUpdateTime = async (updateTime) => {
 
 export default {
   apiToken, setApiToken,
+  postCount, setPostCount,
   updateTime, setUpdateTime
 }
