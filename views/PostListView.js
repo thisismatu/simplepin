@@ -52,7 +52,9 @@ export default class PostListView extends React.Component {
   onRefresh = async () => {
     this.setState({refreshing: true})
     const hasUpdates = await this.checkForUpdates()
-    hasUpdates && await this.fetchPosts()
+    if (hasUpdates) {
+      await this.fetchPosts()
+    }
     this.setState({refreshing: false})
   }
 
@@ -84,11 +86,11 @@ export default class PostListView extends React.Component {
         privatePosts: _.filter(obj, ['shared', false]),
         publicPosts: _.filter(obj, ['shared', true]),
       })
-      Storage.setPostCount({
-        all: this.state.allPosts.length,
-        unread: this.state.unreadPosts.length,
-        private: this.state.privatePosts.length,
-        public: this.state.publicPosts.length,
+      this.props.navigation.setParams({
+        allCount: this.state.allPosts.length,
+        unreadCount: this.state.unreadPosts.length,
+        privateCount: this.state.privatePosts.length,
+        publicCount: this.state.publicPosts.length,
       })
     }
   }

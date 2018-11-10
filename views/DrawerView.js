@@ -19,7 +19,7 @@ class DrawerItem extends React.Component {
 
   getRouteCount = (route, param) => {
     const {state} = this.props.navigation
-    return state.routes[state.index].routes[0].params[param]
+    return _.get(state.routes, ['0', 'routes', '0', 'params', param], null)
   }
 
   navigateTo = (route, param) => {
@@ -41,7 +41,7 @@ class DrawerItem extends React.Component {
         <Text style={styles.text}>{text}</Text>
         {
           secondary
-          ? <Text style={styles.secondary}>{secondary}</Text>
+          ? <Text style={styles.secondary}>{this.getRouteCount(route, secondary)}</Text>
           : null
         }
       </TouchableOpacity>
@@ -52,18 +52,9 @@ class DrawerItem extends React.Component {
 export default class DrawerView extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {postCount: {}}
-  }
-
-  getPostCounts = async () => {
-    const postCount = await Storage.postCount()
-    if (!_.isEqual(this.state.postCount, postCount)) {
-      this.setState({'postCount': postCount})
-    }
   }
 
   render() {
-    this.props.navigation.addListener('willFocus', () => this.getPostCounts())
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
@@ -79,28 +70,28 @@ export default class DrawerView extends React.Component {
               route="List"
               param={strings.menu.all}
               text={strings.menu.all}
-              secondary={this.state.postCount.all}
+              secondary="allCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
               param={strings.menu.unread}
               text={strings.menu.unread}
-              secondary={this.state.postCount.unread}
+              secondary="unreadCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
               param={strings.menu.private}
               text={strings.menu.private}
-              secondary={this.state.postCount.private}
+              secondary="privateCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
               param={strings.menu.public}
               text={strings.menu.public}
-              secondary={this.state.postCount.public}
+              secondary="publicCount"
               navigation={this.props.navigation}
             />
           </View>
