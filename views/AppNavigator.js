@@ -38,8 +38,8 @@ const SettingsStack = createStackNavigator(
 
 const AppDrawer = createDrawerNavigator(
   {
-    List: ListStack,
-    Settings: SettingsStack,
+    ListStack: ListStack,
+    SettingsStack: SettingsStack,
   },
   {
     contentComponent: DrawerView

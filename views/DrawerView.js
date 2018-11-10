@@ -5,18 +5,16 @@ import Storage from 'app/util/Storage'
 import {colors, padding, fonts} from 'app/assets/base'
 import strings from 'app/assets/strings'
 
-
 class DrawerItem extends React.Component {
-  isRouteFocused = (route) => {
+  isRouteFocused = (route, param = null) => {
     const {state} = this.props.navigation
-    const focusedRoute = state.routes[state.index].key
-    return route === focusedRoute
-  }
+    const focusedRoute = _.get(state.routes[state.index], ['routes', '0', 'routeName'], null)
+    const focusedParam = _.get(state.routes[state.index], ['routes', '0', 'params', 'title'], null)
 
-  isRouteParamsFocused = (route, param) => {
-    const {state} = this.props.navigation
-    const focusedParams = state.routes[state.index].routes[0].params
-    return this.isRouteFocused(route) && _.isEqual(param, focusedParams.title)
+    if (param) {
+      return _.isEqual([route, param],[focusedRoute, focusedParam])
+    }
+    return _.isEqual(route, focusedRoute)
   }
 
   getRouteCount = (route, param) => {
@@ -25,18 +23,18 @@ class DrawerItem extends React.Component {
   }
 
   navigateTo = (route, param) => {
-    if (this.isRouteFocused(route)) {
-      this.props.navigation.closeDrawer()
+    if (this.isRouteFocused(route,param)) {
+      return this.props.navigation.closeDrawer()
     }
-    this.props.navigation.navigate(route, {title: param})
+    this.props.navigation.closeDrawer()
+    this.props.navigation.navigate(route, param && {title: param})
   }
 
   render() {
     const {route, text, secondary, param} = this.props
-    const isFocused = param ? this.isRouteParamsFocused(route, param) : this.isRouteFocused(route)
     return (
       <TouchableOpacity
-        style={[styles.cell, isFocused && styles.active]}
+        style={[styles.cell, this.isRouteFocused(route, param) && styles.active]}
         activeOpacity={0.7}
         onPress={() => this.navigateTo(route, param)}
       >
