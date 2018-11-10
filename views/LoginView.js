@@ -13,15 +13,9 @@ export default class LoginView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = {apiToken: ''}
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
-  }
-
-  handleChange(e) {
-    this.setState({
-      apiToken: e.nativeEvent.text
-    })
+    this.state = {
+      apiToken: '',
+    }
   }
 
   showAlert(error) {
@@ -36,6 +30,12 @@ export default class LoginView extends React.Component {
       strings.error.login,
       errorMessage
     )
+  }
+
+  handleChange = (evt) => {
+    this.setState({
+      apiToken: evt.nativeEvent.text
+    })
   }
 
   handleSubmit = async () => {
@@ -64,7 +64,7 @@ export default class LoginView extends React.Component {
           textContentType="password"
           secureTextEntry={true}
           underlineColorAndroid="transparent"
-          onChange = {this.handleChange}
+          onChange={this.handleChange}
         />
         <TouchableOpacity
           activeOpacity={0.7}
