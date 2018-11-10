@@ -1,5 +1,6 @@
+import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, AsyncStorage} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState} from 'react-native'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import {colors, fonts, padding, radius} from 'app/assets/base'
@@ -14,22 +15,26 @@ export default class LoginView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      appState: AppState.currentState,
       apiToken: '',
+      clipboardContent: null,
     }
   }
 
-  showAlert(error) {
-    var errorMessage
-    switch (error) {
-      case 503:
-        errorMessage = strings.error.unavailable
-      default:
-        errorMessage = strings.error.token
+  componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange)
+    this.checkClipboardForApiToken()
+  }
+
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange)
+  }
+
+  handleAppStateChange = (nextAppState) => {
+    if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+      this.checkClipboardForApiToken()
     }
-    Alert.alert(
-      strings.error.login,
-      errorMessage
-    )
+    this.setState({appState: nextAppState})
   }
 
   handleChange = (evt) => {
@@ -48,6 +53,32 @@ export default class LoginView extends React.Component {
     }
   }
 
+  checkClipboardForApiToken = async () => {
+    const clipboardContent = await Clipboard.getString()
+    this.setState({ clipboardContent: clipboardContent.trim() })
+    const regex = /[A-Z,0-9]/g
+    const tokenLatterPart = _(this.state.clipboardContent).split(':').get(['1'])
+    if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {
+      this.setState({
+        apiToken: this.state.clipboardContent
+      })
+    }
+  }
+
+  showAlert(error) {
+    var errorMessage
+    switch (error) {
+      case 503:
+        errorMessage = strings.error.unavailable
+      default:
+        errorMessage = strings.error.token
+    }
+    Alert.alert(
+      strings.error.login,
+      errorMessage
+    )
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -60,10 +91,11 @@ export default class LoginView extends React.Component {
           placeholder={strings.login.placeholder}
           placeholderTextColor = {colors.gray2}
           returnKeyType="done"
+          secureTextEntry={true}
           style={styles.input}
           textContentType="password"
-          secureTextEntry={true}
           underlineColorAndroid="transparent"
+          value={this.state.apiToken}
           onChange={this.handleChange}
         />
         <TouchableOpacity
