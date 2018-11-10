@@ -8,8 +8,8 @@ import strings from 'app/assets/strings'
 class DrawerItem extends React.Component {
   isRouteFocused = (route, param = null) => {
     const {state} = this.props.navigation
-    const focusedRoute = _.get(state.routes[state.index], ['routes', '0', 'routeName'], null)
-    const focusedParam = _.get(state.routes[state.index], ['routes', '0', 'params', 'title'], null)
+    const focusedRoute = _.get(state.routes[state.index], ['routes', '0', 'routeName'])
+    const focusedParam = _.get(state.routes[state.index], ['routes', '0', 'params', 'title'])
 
     if (param) {
       return _.isEqual([route, param],[focusedRoute, focusedParam])
@@ -19,7 +19,7 @@ class DrawerItem extends React.Component {
 
   getRouteCount = (route, param) => {
     const {state} = this.props.navigation
-    return _.get(state.routes, ['0', 'routes', '0', 'params', param], null)
+    return _.get(state.routes, ['0', 'routes', '0', 'params', param])
   }
 
   navigateTo = (route, param) => {

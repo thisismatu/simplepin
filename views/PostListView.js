@@ -17,7 +17,7 @@ const reviver = (key, value) => {
     case 'time':
       return new Date(value)
     case 'tags':
-      return value !== '' ? value.split(' ') : null
+      return value !== '' ? _.split(value, ' ') : null
     default:
       return value
   }
@@ -114,7 +114,7 @@ export default class PostListView extends React.Component {
       <FlatList
         data={this.filterPosts(currentList)}
         initialNumToRender={8}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item, index) => _.toString(index)}
         ListEmptyComponent={null}
         renderItem={({item}) => <PostListItem item={item} />}
         style={styles.container}

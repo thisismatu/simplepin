@@ -55,7 +55,7 @@ export default class LoginView extends React.Component {
 
   checkClipboardForApiToken = async () => {
     const clipboardContent = await Clipboard.getString()
-    this.setState({ clipboardContent: clipboardContent.trim() })
+    this.setState({clipboardContent: _.trim(clipboardContent)})
     const regex = /[A-Z,0-9]/g
     const tokenLatterPart = _(this.state.clipboardContent).split(':').get(['1'])
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {

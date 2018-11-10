@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
@@ -34,13 +35,13 @@ export default class PostListItem extends React.PureComponent {
           <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
           {
             this.props.item.extended
-            ? <Text style={styles.description}>{this.props.item.extended.trim()}</Text>
+            ? <Text style={styles.description}>{_.trim(this.props.item.extended)}</Text>
             : null
           }
           <FlatList
             data={this.props.item.tags}
             horizontal={true}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => _.toString(index)}
             ListEmptyComponent={() => <View style={styles.emptyTagList} />}
             renderItem={({item}) => <TagItem item={item} />}
             showsHorizontalScrollIndicator={false}
