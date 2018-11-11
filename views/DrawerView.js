@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
+import {StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Platform} from 'react-native'
+import {Constants} from 'expo'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -60,6 +61,7 @@ export default class DrawerView extends React.Component {
           bounces={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
+          style={Platform.OS === 'android' && styles.scrollView}
         >
           <View style={styles.section}>
             <View style={styles.cell}>
@@ -114,6 +116,9 @@ export default class DrawerView extends React.Component {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+  },
+  scrollView: {
+    marginTop: Constants.statusBarHeight,
   },
   section: {
     paddingTop: Base.padding.small,
