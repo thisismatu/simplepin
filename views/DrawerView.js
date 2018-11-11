@@ -1,7 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
-import Storage from 'app/util/Storage'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
