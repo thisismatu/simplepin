@@ -19,7 +19,11 @@ const TagItem = ({item}) => {
   )
 }
 
-export default class PostListItem extends React.PureComponent {
+export default class PostListItem extends React.Component {
+  shouldComponentUpdate (nextProps, nextState) {
+    return !_.isEqual(this.props, nextProps) || !_.isEqual(this.state, nextState)
+  }
+
   render() {
     return (
       <TouchableOpacity
@@ -54,7 +58,6 @@ export default class PostListItem extends React.PureComponent {
           />
           <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
         </View>
-        <View style={styles.border} />
       </TouchableOpacity>
     )
   }
@@ -76,17 +79,13 @@ PostListItem.propTypes = {
 
 const styles = StyleSheet.create({
   post: {
-    flex: 1,
-    justifyContent: 'center',
-    paddingLeft: Base.padding.large,
-    paddingRight: Base.padding.medium,
-    paddingVertical: 12,
-  },
-  border: {
     borderBottomColor: Base.colors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
+    flex: 1,
+    justifyContent: 'center',
     marginLeft: Base.padding.large,
     marginRight: Base.padding.medium,
+    paddingVertical: 12,
   },
   unread: {
     backgroundColor: Base.colors.blue2,
