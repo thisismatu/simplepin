@@ -3,7 +3,7 @@ import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState} from 'react-native'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
-import {colors, fonts, padding, radius} from 'app/assets/base'
+import Base from 'app/assets/Base'
 import strings from 'app/assets/strings'
 
 export default class LoginView extends React.Component {
@@ -89,7 +89,7 @@ export default class LoginView extends React.Component {
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
           placeholder={strings.login.placeholder}
-          placeholderTextColor = {colors.gray2}
+          placeholderTextColor = {Base.colors.gray2}
           returnKeyType="done"
           secureTextEntry={true}
           style={styles.input}
@@ -121,55 +121,55 @@ export default class LoginView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: colors.white,
+    backgroundColor: Base.colors.white,
     flex: 1,
     justifyContent: 'center',
-    padding: padding.huge,
+    padding: Base.padding.huge,
   },
   title: {
-    color: colors.gray4,
-    fontSize: fonts.huge,
-    fontWeight: fonts.bold,
-    marginBottom: padding.medium,
+    color: Base.colors.gray4,
+    fontSize: Base.fonts.huge,
+    fontWeight: Base.fonts.bold,
+    marginBottom: Base.padding.medium,
     textAlign: 'center',
   },
   text: {
-    color: colors.gray3,
-    fontSize: fonts.medium,
+    color: Base.colors.gray3,
+    fontSize: Base.fonts.medium,
     lineHeight: 24,
-    marginBottom: padding.large,
+    marginBottom: Base.padding.large,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: colors.white,
-    borderColor: colors.border,
-    borderRadius: radius.medium,
+    backgroundColor: Base.colors.white,
+    borderColor: Base.colors.border,
+    borderRadius: Base.radius.medium,
     borderWidth: 1,
-    color: colors.gray4,
-    fontSize: fonts.medium,
+    color: Base.colors.gray4,
+    fontSize: Base.fonts.medium,
     height: 48,
-    marginBottom: padding.large,
+    marginBottom: Base.padding.large,
     textAlign: 'center',
     width: '100%',
   },
   loginButton: {
-    backgroundColor: colors.blue2,
-    borderRadius: radius.medium,
-    marginBottom: padding.large,
-    padding: padding.medium,
+    backgroundColor: Base.colors.blue2,
+    borderRadius: Base.radius.medium,
+    marginBottom: Base.padding.large,
+    padding: Base.padding.medium,
     width: '100%',
   },
   loginButtonText: {
-    color: colors.white,
-    fontSize: fonts.medium,
-    fontWeight: fonts.bold,
+    color: Base.colors.white,
+    fontSize: Base.fonts.medium,
+    fontWeight: Base.fonts.bold,
     lineHeight: 16,
     textAlign: 'center',
   },
   tokenButton: {
-    backgroundColor: colors.white,
-    borderRadius: radius.medium,
-    padding: padding.medium,
+    backgroundColor: Base.colors.white,
+    borderRadius: Base.radius.medium,
+    padding: Base.padding.medium,
     width: '100%',
   },
   disabled: {

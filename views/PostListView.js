@@ -5,7 +5,7 @@ import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
 import MenuButton from 'app/components/MenuButton'
-import {colors} from 'app/assets/base'
+import Base from 'app/assets/Base'
 import strings from 'app/assets/strings'
 
 const reviver = (key, value) => {
@@ -131,6 +131,6 @@ export default class PostListView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: Base.colors.white,
   }
 })

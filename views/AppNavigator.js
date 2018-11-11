@@ -1,5 +1,5 @@
 import {createSwitchNavigator, createStackNavigator, createDrawerNavigator} from 'react-navigation'
-import {colors} from 'app/assets/base'
+import Base from 'app/assets/Base'
 import strings from 'app/assets/strings'
 
 import AuthLoadingView from 'app/views/AuthLoadingView'
@@ -10,10 +10,10 @@ import SettingsView from 'app/views/SettingsView'
 
 const headerStyles = {
   headerStyle: {
-    backgroundColor: colors.white,
-    borderBottomColor: colors.border,
+    backgroundColor: Base.colors.white,
+    borderBottomColor: Base.colors.border,
   },
-  headerTintColor: colors.gray4,
+  headerTintColor: Base.colors.gray4,
 }
 
 const ListStack = createStackNavigator(

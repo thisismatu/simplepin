@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet, TouchableOpacity, Image} from 'react-native'
-import {colors} from 'app/assets/base'
+import Base from 'app/assets/Base'
 
 export default class MenuButton extends React.PureComponent {
   render() {
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
   menuButton: {
     marginHorizontal: 12,
     marginVertical: 8,
-    tintColor: colors.blue2,
+    tintColor: Base.colors.blue2,
   }
 })

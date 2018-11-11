@@ -2,10 +2,10 @@ import _ from 'lodash'
 import React from 'react'
 import PropTypes from 'prop-types'
 import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
-import {colors, fonts, padding, radius} from 'app/assets/base'
+import Base from 'app/assets/Base'
 
 const TagItem = ({item}) => {
-  const isPrivateTag = item.charAt(0) === '.'
+  const isPrivateTag = _.startsWith(item, '.')
   return(
     <TouchableOpacity
       activeOpacity={0.7}
@@ -31,6 +31,11 @@ export default class PostListItem extends React.PureComponent {
           ? <View style={styles.unread} />
           : null
         }
+        {
+          !this.props.item.shared
+          ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
+          : null
+        }
         <View style={styles.post}>
           <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
           {
@@ -49,11 +54,6 @@ export default class PostListItem extends React.PureComponent {
           />
           <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
         </View>
-        {
-          !this.props.item.shared
-          ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
-          : null
-        }
         <View style={styles.border} />
       </TouchableOpacity>
     )
@@ -78,18 +78,18 @@ const styles = StyleSheet.create({
   post: {
     flex: 1,
     justifyContent: 'center',
-    paddingLeft: padding.large,
-    paddingRight: padding.medium,
+    paddingLeft: Base.padding.large,
+    paddingRight: Base.padding.medium,
     paddingVertical: 12,
   },
   border: {
-    borderBottomColor: colors.border,
+    borderBottomColor: Base.colors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginLeft: padding.large,
-    marginRight: padding.medium,
+    marginLeft: Base.padding.large,
+    marginRight: Base.padding.medium,
   },
   unread: {
-    backgroundColor: colors.blue2,
+    backgroundColor: Base.colors.blue2,
     borderRadius: 5,
     height: 9,
     left: 8,
@@ -98,30 +98,30 @@ const styles = StyleSheet.create({
     width: 9,
   },
   private: {
-    bottom: padding.medium,
+    bottom: Base.padding.medium,
     height: 16,
     position: 'absolute',
-    right: padding.medium,
-    tintColor: colors.gray2,
+    right: Base.padding.medium,
+    tintColor: Base.colors.gray2,
     width: 16,
   },
   title: {
-    color: colors.gray4,
-    fontSize: fonts.large,
+    color: Base.colors.gray4,
+    fontSize: Base.fonts.large,
     lineHeight: 24,
   },
   titleUnread: {
-    fontWeight: fonts.bold,
+    fontWeight: Base.fonts.bold,
   },
   description: {
-    color: colors.gray3,
-    fontSize: fonts.medium,
+    color: Base.colors.gray3,
+    fontSize: Base.fonts.medium,
     lineHeight: 20,
-    marginTop: padding.tiny,
+    marginTop: Base.padding.tiny,
   },
   time: {
-    color: colors.gray3,
-    fontSize: fonts.medium,
+    color: Base.colors.gray3,
+    fontSize: Base.fonts.medium,
     lineHeight: 20,
   },
   emptyTagList: {
@@ -131,23 +131,23 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   tagContainer: {
-    marginRight: padding.small,
-    paddingVertical: padding.small,
+    marginRight: Base.padding.small,
+    paddingVertical: Base.padding.small,
   },
   tag: {
-    backgroundColor: colors.blue1,
-    borderRadius: radius.small,
-    paddingHorizontal: padding.small,
-    paddingVertical: padding.tiny,
+    backgroundColor: Base.colors.blue1,
+    borderRadius: Base.radius.small,
+    paddingHorizontal: Base.padding.small,
+    paddingVertical: Base.padding.tiny,
   },
   tagText: {
-    color: colors.blue2,
+    color: Base.colors.blue2,
     lineHeight: 16,
   },
   privateTag: {
-    backgroundColor: colors.gray1,
+    backgroundColor: Base.colors.gray1,
   },
   privateTagText: {
-    color: colors.gray3,
+    color: Base.colors.gray3,
   },
 })

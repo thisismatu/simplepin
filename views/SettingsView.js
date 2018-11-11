@@ -1,7 +1,7 @@
 import React from 'react'
 import {StyleSheet, Text, View, Switch, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
 import MenuButton from 'app/components/MenuButton'
-import {colors, padding, fonts} from 'app/assets/base'
+import Base from 'app/assets/Base'
 import strings from 'app/assets/strings'
 
 export default class SetingsView extends React.Component {
@@ -23,15 +23,15 @@ export default class SetingsView extends React.Component {
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Private by default</Text>
-            <Switch onTintColor={colors.blue2} />
+            <Switch onTintColor={Base.colors.blue2} />
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Unread by default</Text>
-            <Switch onTintColor={colors.blue2} />
+            <Switch onTintColor={Base.colors.blue2} />
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Mark as read when opened</Text>
-            <Switch onTintColor={colors.blue2} value={true} />
+            <Switch onTintColor={Base.colors.blue2} value={true} />
           </View>
         </View>
         <View style={styles.section}>
@@ -44,11 +44,11 @@ export default class SetingsView extends React.Component {
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Open links in default browser</Text>
-            <Switch onTintColor={colors.blue2} />
+            <Switch onTintColor={Base.colors.blue2} />
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Mark as read when opened</Text>
-            <Switch onTintColor={colors.blue2} />
+            <Switch onTintColor={Base.colors.blue2} />
           </View>
         </View>
         <View style={styles.section}>
@@ -61,7 +61,7 @@ export default class SetingsView extends React.Component {
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Exact dates</Text>
-            <Switch onTintColor={colors.blue2} />
+            <Switch onTintColor={Base.colors.blue2} />
           </View>
           <View style={styles.cell}>
             <Text style={styles.text}>Sort tags</Text>
@@ -75,10 +75,10 @@ export default class SetingsView extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.white,
+    backgroundColor: Base.colors.white,
   },
   section: {
-    paddingTop: padding.small,
+    paddingTop: Base.padding.small,
   },
   cell: {
     flex: 1,
@@ -86,30 +86,30 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     height: 48,
-    marginHorizontal: padding.medium,
-    borderBottomColor: colors.border,
+    marginHorizontal: Base.padding.medium,
+    borderBottomColor: Base.colors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   active: {
-    backgroundColor: colors.blue1,
+    backgroundColor: Base.colors.blue1,
   },
   text: {
-    color: colors.gray4,
-    fontSize: fonts.large,
+    color: Base.colors.gray4,
+    fontSize: Base.fonts.large,
   },
   secondary: {
-    color: colors.gray3,
-    fontSize: fonts.medium,
+    color: Base.colors.gray3,
+    fontSize: Base.fonts.medium,
   },
   header: {
-    color: colors.gray4,
-    fontSize: fonts.large,
-    fontWeight: fonts.bold,
+    color: Base.colors.gray4,
+    fontSize: Base.fonts.large,
+    fontWeight: Base.fonts.bold,
   },
   version: {
-    fontSize: fonts.small,
-    color: colors.gray3,
-    paddingVertical: padding.large,
-    paddingHorizontal: padding.medium,
+    fontSize: Base.fonts.small,
+    color: Base.colors.gray3,
+    paddingVertical: Base.padding.large,
+    paddingHorizontal: Base.padding.medium,
   }
 })
