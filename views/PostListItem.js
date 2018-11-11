@@ -79,10 +79,11 @@ PostListItem.propTypes = {
 
 const styles = StyleSheet.create({
   separator: {
-    borderBottomColor: Base.colors.border,
-    borderBottomWidth: StyleSheet.hairlineWidth,
+    backgroundColor: 'white',
+    borderTopColor: Base.colors.border,
+    borderTopWidth: StyleSheet.hairlineWidth,
     borderStyle: 'solid',
-    height: 2,
+    height: 1,
     marginLeft: Base.padding.large,
     marginRight: Base.padding.medium,
   },
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     color: Base.colors.gray3,
     fontSize: Base.fonts.medium,
     lineHeight: 20,
-    paddingBottom: 12,
+    paddingBottom: 14,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
   },

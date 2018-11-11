@@ -132,5 +132,6 @@ export default class PostListView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.colors.white,
+    paddingVertical: Base.padding.tiny,
   }
 })
