@@ -3,7 +3,7 @@ import React from 'react'
 import {StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
 import Storage from 'app/util/Storage'
 import Base from 'app/assets/Base'
-import strings from 'app/assets/strings'
+import Strings from 'app/assets/Strings'
 
 class DrawerItem extends React.Component {
   isRouteFocused = (route, param = null) => {
@@ -64,47 +64,47 @@ export default class DrawerView extends React.Component {
         >
           <View style={styles.section}>
             <View style={styles.cell}>
-              <Text style={styles.header}>{strings.menu.bookmarks}</Text>
+              <Text style={styles.header}>{Strings.menu.bookmarks}</Text>
             </View>
             <DrawerItem
               route="List"
-              param={strings.menu.all}
-              text={strings.menu.all}
+              param={Strings.menu.all}
+              text={Strings.menu.all}
               secondary="allCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={strings.menu.unread}
-              text={strings.menu.unread}
+              param={Strings.menu.unread}
+              text={Strings.menu.unread}
               secondary="unreadCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={strings.menu.private}
-              text={strings.menu.private}
+              param={Strings.menu.private}
+              text={Strings.menu.private}
               secondary="privateCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={strings.menu.public}
-              text={strings.menu.public}
+              param={Strings.menu.public}
+              text={Strings.menu.public}
               secondary="publicCount"
               navigation={this.props.navigation}
             />
           </View>
           <View style={styles.section}>
             <View style={styles.cell}>
-              <Text style={styles.header}>{strings.common.simplepin}</Text>
+              <Text style={styles.header}>{Strings.common.simplepin}</Text>
             </View>
             <DrawerItem
               route="Settings"
-              text={strings.menu.settings}
+              text={Strings.menu.settings}
               navigation={this.props.navigation}
             />
-            <Text style={styles.version}>{strings.common.simplepin} v. XXXX</Text>
+            <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>
           </View>
         </ScrollView>
       </SafeAreaView>

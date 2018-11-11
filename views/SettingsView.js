@@ -2,12 +2,12 @@ import React from 'react'
 import {StyleSheet, Text, View, Switch, TouchableOpacity, ScrollView, SafeAreaView} from 'react-native'
 import MenuButton from 'app/components/MenuButton'
 import Base from 'app/assets/Base'
-import strings from 'app/assets/strings'
+import Strings from 'app/assets/Strings'
 
 export default class SetingsView extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-      title: strings.menu.settings,
+      title: Strings.menu.settings,
       headerLeft: (
         <MenuButton navigation={navigation} />
       )

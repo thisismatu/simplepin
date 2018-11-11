@@ -1,4 +1,4 @@
-const strings = {
+const Strings = {
   common: {
     simplepin: 'Simplepin',
     cancel: 'Cancel',
@@ -29,4 +29,4 @@ const strings = {
   },
 }
 
-export default strings
+export default Strings

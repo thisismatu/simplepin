@@ -6,7 +6,7 @@ import Storage from 'app/util/Storage'
 import PostListItem from 'app/views/PostListItem'
 import MenuButton from 'app/components/MenuButton'
 import Base from 'app/assets/Base'
-import strings from 'app/assets/strings'
+import Strings from 'app/assets/Strings'
 
 const reviver = (key, value) => {
   switch (key) {
@@ -26,7 +26,7 @@ const reviver = (key, value) => {
 export default class PostListView extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('title', strings.menu.all),
+      title: navigation.getParam('title', Strings.menu.all),
       headerLeft: (
         <MenuButton navigation={navigation} />
       )
@@ -97,11 +97,11 @@ export default class PostListView extends React.Component {
 
   filterPosts = (predicate) => {
     switch (predicate) {
-      case strings.menu.unread:
+      case Strings.menu.unread:
         return this.state.unreadPosts
-      case strings.menu.private:
+      case Strings.menu.private:
         return this.state.privatePosts
-      case strings.menu.public:
+      case Strings.menu.public:
         return this.state.publicPosts
       default:
         return this.state.allPosts
@@ -109,7 +109,7 @@ export default class PostListView extends React.Component {
   }
 
   render() {
-    const currentList = this.props.navigation.getParam('title', strings.menu.all)
+    const currentList = this.props.navigation.getParam('title', Strings.menu.all)
     return (
       <FlatList
         data={this.filterPosts(currentList)}

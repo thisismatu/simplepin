@@ -4,12 +4,12 @@ import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, A
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
-import strings from 'app/assets/strings'
+import Strings from 'app/assets/Strings'
 
 export default class LoginView extends React.Component {
   static navigationOptions = {
     header: null,
-    title: strings.login.title
+    title: Strings.login.title
   }
 
   constructor(props) {
@@ -69,12 +69,12 @@ export default class LoginView extends React.Component {
     var errorMessage
     switch (error) {
       case 503:
-        errorMessage = strings.error.unavailable
+        errorMessage = Strings.error.unavailable
       default:
-        errorMessage = strings.error.token
+        errorMessage = Strings.error.token
     }
     Alert.alert(
-      strings.error.login,
+      Strings.error.login,
       errorMessage
     )
   }
@@ -82,13 +82,13 @@ export default class LoginView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>{strings.login.title}</Text>
-        <Text style={styles.text}>{strings.login.text}</Text>
+        <Text style={styles.title}>{Strings.login.title}</Text>
+        <Text style={styles.text}>{Strings.login.text}</Text>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
-          placeholder={strings.login.placeholder}
+          placeholder={Strings.login.placeholder}
           placeholderTextColor = {Base.colors.gray2}
           returnKeyType="done"
           secureTextEntry={true}
@@ -104,14 +104,14 @@ export default class LoginView extends React.Component {
           style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
           onPress={this.handleSubmit}
         >
-          <Text style={styles.loginButtonText}>{strings.login.button}</Text>
+          <Text style={styles.loginButtonText}>{Strings.login.button}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.7}
           style={styles.tokenButton}
           onPress={() => console.log('Show API token')}
         >
-          <Text style={styles.text}>{strings.login.token}</Text>
+          <Text style={styles.text}>{Strings.login.token}</Text>
         </TouchableOpacity>
       </View>
     )
