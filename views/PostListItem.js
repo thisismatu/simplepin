@@ -40,24 +40,24 @@ export default class PostListItem extends React.Component {
           ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
           : null
         }
-        <View style={styles.post}>
-          <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
-          {
-            this.props.item.extended
-            ? <Text style={styles.description}>{_.trim(this.props.item.extended)}</Text>
-            : null
-          }
-          <FlatList
-            data={this.props.item.tags}
-            horizontal={true}
-            keyExtractor={(item, index) => _.toString(index)}
-            ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-            renderItem={({item}) => <TagItem item={item} />}
-            showsHorizontalScrollIndicator={false}
-            style={styles.tagList}
-          />
-          <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
-        </View>
+        <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
+        {
+          this.props.item.extended
+          ? <Text style={styles.description}>{_.trim(this.props.item.extended)}</Text>
+          : null
+        }
+        <FlatList
+          bounces={false}
+          data={this.props.item.tags}
+          horizontal={true}
+          keyExtractor={(item, index) => _.toString(index)}
+          ListEmptyComponent={() => <View style={styles.emptyTagList} />}
+          renderItem={({item}) => <TagItem item={item} />}
+          showsHorizontalScrollIndicator={false}
+          style={styles.tagList}
+        />
+        <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
+        <View style={styles.separator} />
       </TouchableOpacity>
     )
   }
@@ -78,14 +78,13 @@ PostListItem.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  post: {
+  separator: {
     borderBottomColor: Base.colors.border,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    flex: 1,
-    justifyContent: 'center',
+    borderStyle: 'solid',
+    height: 2,
     marginLeft: Base.padding.large,
     marginRight: Base.padding.medium,
-    paddingVertical: 12,
   },
   unread: {
     backgroundColor: Base.colors.blue2,
@@ -108,6 +107,9 @@ const styles = StyleSheet.create({
     color: Base.colors.gray4,
     fontSize: Base.fonts.large,
     lineHeight: 24,
+    paddingTop: 12,
+    paddingLeft: Base.padding.large,
+    paddingRight: Base.padding.medium,
   },
   titleUnread: {
     fontWeight: Base.fonts.bold,
@@ -116,18 +118,24 @@ const styles = StyleSheet.create({
     color: Base.colors.gray3,
     fontSize: Base.fonts.medium,
     lineHeight: 20,
-    marginTop: Base.padding.tiny,
+    paddingTop: Base.padding.tiny,
+    paddingLeft: Base.padding.large,
+    paddingRight: Base.padding.medium,
   },
   time: {
     color: Base.colors.gray3,
     fontSize: Base.fonts.medium,
     lineHeight: 20,
+    paddingBottom: 12,
+    paddingLeft: Base.padding.large,
+    paddingRight: Base.padding.medium,
   },
   emptyTagList: {
     height: 5,
   },
   tagList: {
-    width: '100%',
+    marginLeft: Base.padding.large,
+    overflow: 'visible',
   },
   tagContainer: {
     marginRight: Base.padding.small,
