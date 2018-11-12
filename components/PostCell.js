@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
 import Base from 'app/assets/Base'
 
-const TagItem = ({item}) => {
+const Tag = ({item}) => {
   const isPrivateTag = _.startsWith(item, '.')
   return(
     <TouchableOpacity
@@ -19,7 +19,7 @@ const TagItem = ({item}) => {
   )
 }
 
-export default class PostListItem extends React.Component {
+export default class PostCell extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
     return !_.isEqual(this.props, nextProps) || !_.isEqual(this.state, nextState)
   }
@@ -52,7 +52,7 @@ export default class PostListItem extends React.Component {
           horizontal={true}
           keyExtractor={(item, index) => _.toString(index)}
           ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-          renderItem={({item}) => <TagItem item={item} />}
+          renderItem={({item}) => <Tag item={item} />}
           showsHorizontalScrollIndicator={false}
           style={styles.tagList}
         />
@@ -63,7 +63,7 @@ export default class PostListItem extends React.Component {
   }
 }
 
-PostListItem.propTypes = {
+PostCell.propTypes = {
   item: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

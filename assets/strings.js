@@ -16,8 +16,8 @@ const Strings = {
     button: 'Log in',
     token: 'Show API token',
   },
-  list: {
-    bookmarks: 'Bookmarks',
+  posts: {
+    title: 'Bookmarks',
     all: 'All',
     private: 'Private',
     public: 'Public',

@@ -3,8 +3,8 @@ import React from 'react'
 import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, Image, Text} from 'react-native'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
-import PostListItem from 'app/views/PostListItem'
 import MenuButton from 'app/components/MenuButton'
+import PostCell from 'app/components/PostCell'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -23,10 +23,10 @@ const reviver = (key, value) => {
   }
 }
 
-export default class PostListView extends React.Component {
+export default class PostsView extends React.Component {
   static navigationOptions = ({navigation}) => {
     return {
-      title: navigation.getParam('title', Strings.menu.all),
+      title: navigation.getParam('title', Strings.posts.all),
       headerLeft: (
         <MenuButton navigation={navigation} />
       )
@@ -97,11 +97,11 @@ export default class PostListView extends React.Component {
 
   filterPosts = (predicate) => {
     switch (predicate) {
-      case Strings.menu.unread:
+      case Strings.posts.unread:
         return this.state.unreadPosts
-      case Strings.menu.private:
+      case Strings.posts.private:
         return this.state.privatePosts
-      case Strings.menu.public:
+      case Strings.posts.public:
         return this.state.publicPosts
       default:
         return this.state.allPosts
@@ -109,14 +109,14 @@ export default class PostListView extends React.Component {
   }
 
   render() {
-    const currentList = this.props.navigation.getParam('title', Strings.menu.all)
+    const currentList = this.props.navigation.getParam('title', Strings.posts.all)
     return (
       <FlatList
         data={this.filterPosts(currentList)}
         initialNumToRender={8}
         keyExtractor={(item, index) => _.toString(index)}
         ListEmptyComponent={null}
-        renderItem={({item}) => <PostListItem item={item} />}
+        renderItem={({item}) => <PostCell item={item} />}
         style={styles.container}
         refreshControl={
           <RefreshControl

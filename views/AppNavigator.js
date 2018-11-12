@@ -4,7 +4,7 @@ import Strings from 'app/assets/Strings'
 
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
-import PostListView from 'app/views/PostListView'
+import PostsView from 'app/views/PostsView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
 
@@ -16,13 +16,13 @@ const headerStyles = {
   headerTintColor: Base.colors.gray4,
 }
 
-const ListStack = createStackNavigator(
+const PostsStack = createStackNavigator(
   {
-    List: PostListView,
+    Posts: PostsView,
   },
   {
-    initialRouteName: 'List',
-    initialRouteParams: {title: Strings.list.all},
+    initialRouteName: 'Posts',
+    initialRouteParams: {title: Strings.posts.all},
     navigationOptions: headerStyles,
   }
 )
@@ -38,7 +38,7 @@ const SettingsStack = createStackNavigator(
 
 const AppDrawer = createDrawerNavigator(
   {
-    ListStack: ListStack,
+    PostsStack: PostsStack,
     SettingsStack: SettingsStack,
   },
   {
