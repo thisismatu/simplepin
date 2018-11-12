@@ -134,11 +134,12 @@ const styles = StyleSheet.create({
     height: 5,
   },
   tagList: {
-    marginLeft: Base.padding.large,
+    marginLeft: Base.padding.large - Base.padding.tiny,
+    marginRight: Base.padding.tiny,
     overflow: 'visible',
   },
   tagContainer: {
-    marginRight: Base.padding.small,
+    paddingHorizontal: Base.padding.tiny,
     paddingVertical: Base.padding.small,
   },
   tag: {
