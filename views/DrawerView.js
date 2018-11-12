@@ -61,7 +61,7 @@ export default class DrawerView extends React.Component {
           bounces={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          style={Platform.OS === 'android' && styles.scrollView}
+          style={styles.scrollView}
         >
           <View style={styles.section}>
             <View style={styles.cell}>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
-    marginTop: Constants.statusBarHeight,
+    marginTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
   },
   section: {
     paddingTop: Base.padding.small,
