@@ -14,9 +14,22 @@ export default class SetingsView extends React.Component {
     }
   }
 
+  constructor(props) {
+    super(props)
+    this.state = {
+      switch: false,
+    }
+  }
+
+  handleToggleSwitch = (evt) => {
+    this.setState({
+      switch: evt
+    })
+  }
+
   render() {
     const track = Platform.OS === 'android' ? Base.colors.blue2 + '88' : Base.colors.blue2
-    const thumb = Platform.OS === 'android' ? Base.colors.blue2 : null
+    const thumb = (enabled) => Platform.OS === 'android' && enabled ? Base.colors.blue2 : null
 
     return (
       <ScrollView style={styles.container}>
@@ -29,8 +42,10 @@ export default class SetingsView extends React.Component {
             <Text style={styles.text}>Private by default</Text>
             <Switch
               style={styles.switch}
-              thumbColor={thumb}
+              thumbColor={thumb(this.state.switch)}
               trackColor={{true: track}}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
@@ -38,8 +53,10 @@ export default class SetingsView extends React.Component {
             <Text style={styles.text}>Unread by default</Text>
             <Switch
               style={styles.switch}
-              thumbColor={thumb}
+              thumbColor={thumb(this.state.switch)}
               trackColor={{true: track}}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
@@ -47,9 +64,10 @@ export default class SetingsView extends React.Component {
             <Text style={styles.text}>Mark as read when opened</Text>
             <Switch
               style={styles.switch}
-              thumbColor={thumb}
+              thumbColor={thumb(this.state.switch)}
               trackColor={{true: track}}
-              value={true}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
@@ -68,18 +86,22 @@ export default class SetingsView extends React.Component {
           <View style={styles.cell}>
             <Text style={styles.text}>Open links in default browser</Text>
             <Switch
-              trackColor={{true: track}}
-              thumbColor={thumb}
               style={styles.switch}
+              thumbColor={thumb(this.state.switch)}
+              trackColor={{true: track}}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
           <View style={styles.cell}>
             <Text style={styles.text}>Mark as read when opened</Text>
             <Switch
-              trackColor={{true: track}}
-              thumbColor={thumb}
               style={styles.switch}
+              thumbColor={thumb(this.state.switch)}
+              trackColor={{true: track}}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
@@ -99,8 +121,10 @@ export default class SetingsView extends React.Component {
             <Text style={styles.text}>Exact dates</Text>
             <Switch
               style={styles.switch}
-              thumbColor={thumb}
+              thumbColor={thumb(this.state.switch)}
               trackColor={{true: track}}
+              onValueChange={this.handleToggleSwitch}
+              value={this.state.switch}
             />
           </View>
           <View style={styles.separator} />
