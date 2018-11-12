@@ -1,5 +1,4 @@
 import queryString from 'query-string'
-import {Platform} from 'react-native'
 
 const server = 'https://api.pinboard.in/v1'
 
@@ -48,9 +47,8 @@ const posts = (token) => {
 }
 
 const mockPosts = () => {
-  const baseurl = Platform.OS === 'android' ? 'http://10.0.2.2' : 'http://localhost'
-  const mockdata = baseurl + ':3000/posts.json'
-  return fetchWithErrorHandling(mockdata)
+  const mock = 'http://192.168.0.20:3000/posts.json'
+  return fetchWithErrorHandling(mock)
 }
 
 export default {
