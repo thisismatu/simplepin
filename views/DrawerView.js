@@ -105,7 +105,6 @@ export default class DrawerView extends React.Component {
               text={Strings.menu.settings}
               navigation={this.props.navigation}
             />
-            <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
@@ -147,10 +146,4 @@ const styles = StyleSheet.create({
     fontSize: Base.fonts.large,
     fontWeight: Base.fonts.bold,
   },
-  version: {
-    fontSize: Base.fonts.small,
-    color: Base.colors.gray3,
-    paddingVertical: Base.padding.large,
-    paddingHorizontal: Base.padding.medium,
-  }
 })

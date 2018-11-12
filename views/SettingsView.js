@@ -110,6 +110,7 @@ export default class SetingsView extends React.Component {
           </View>
           <View style={styles.separator} />
         </View>
+        <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>
       </ScrollView>
     )
   }
