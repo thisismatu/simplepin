@@ -65,33 +65,33 @@ export default class DrawerView extends React.Component {
         >
           <View style={styles.section}>
             <View style={styles.cell}>
-              <Text style={styles.header}>{Strings.menu.bookmarks}</Text>
+              <Text style={styles.header}>{Strings.list.bookmarks}</Text>
             </View>
             <DrawerItem
               route="List"
-              param={Strings.menu.all}
-              text={Strings.menu.all}
+              param={Strings.list.all}
+              text={Strings.list.all}
               secondary="allCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={Strings.menu.unread}
-              text={Strings.menu.unread}
+              param={Strings.list.unread}
+              text={Strings.list.unread}
               secondary="unreadCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={Strings.menu.private}
-              text={Strings.menu.private}
+              param={Strings.list.private}
+              text={Strings.list.private}
               secondary="privateCount"
               navigation={this.props.navigation}
             />
             <DrawerItem
               route="List"
-              param={Strings.menu.public}
-              text={Strings.menu.public}
+              param={Strings.list.public}
+              text={Strings.list.public}
               secondary="publicCount"
               navigation={this.props.navigation}
             />
@@ -102,7 +102,7 @@ export default class DrawerView extends React.Component {
             </View>
             <DrawerItem
               route="Settings"
-              text={Strings.menu.settings}
+              text={Strings.settings.title}
               navigation={this.props.navigation}
             />
           </View>

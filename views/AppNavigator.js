@@ -22,7 +22,7 @@ const ListStack = createStackNavigator(
   },
   {
     initialRouteName: 'List',
-    initialRouteParams: {title: Strings.menu.all},
+    initialRouteParams: {title: Strings.list.all},
     navigationOptions: headerStyles,
   }
 )

@@ -16,16 +16,27 @@ const Strings = {
     button: 'Log in',
     token: 'Show API token',
   },
-  menu: {
-    all: 'All',
+  list: {
     bookmarks: 'Bookmarks',
-    feedback: 'Give feedback',
-    logout: 'Log out',
+    all: 'All',
     private: 'Private',
     public: 'Public',
-    rate: 'Rate the app',
-    settings: 'Settings',
     unread: 'Unread',
+  },
+  settings: {
+    title: 'Settings',
+    general: 'General',
+    privateByDefault: 'Private by default',
+    unreadByDefault: 'Unread by default',
+    markAsReadWhenOpened: 'Mark as read when opened',
+    browser: 'Browser',
+    defaultBrowser: 'Default browser',
+    openLinksInDefaultBrowser: 'Open links in default browser',
+    markAsReadWhenOpened: 'Mark as read when opened',
+    display: 'Display',
+    boldBookmarkTitles: 'Bold bookmark titles',
+    exactDates: 'Exact dates',
+    sortTags: 'Sort tags',
   },
 }
 
