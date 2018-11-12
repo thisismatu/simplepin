@@ -1,6 +1,7 @@
 import React from 'react'
 import {StyleSheet, Text, View, Switch, TouchableOpacity, ScrollView, SafeAreaView, Platform} from 'react-native'
 import MenuButton from 'app/components/MenuButton'
+import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -37,7 +38,7 @@ export default class SetingsView extends React.Component {
           <View style={styles.cell}>
             <Text style={styles.header}>{Strings.settings.general}</Text>
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.privateByDefault}</Text>
             <Switch
@@ -48,7 +49,7 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.unreadByDefault}</Text>
             <Switch
@@ -59,7 +60,7 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.markAsReadWhenOpened}</Text>
             <Switch
@@ -70,19 +71,19 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
         </View>
 
         <View style={styles.section}>
           <View style={styles.cell}>
             <Text style={styles.header}>{Strings.settings.browser}</Text>
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.defaultBrowser}</Text>
             <Text style={styles.secondary}>Browser</Text>
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.openLinksInDefaultBrowser}</Text>
             <Switch
@@ -93,14 +94,14 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
         </View>
 
         <View style={styles.section}>
           <View style={styles.cell}>
             <Text style={styles.header}>{Strings.settings.display}</Text>
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.boldBookmarkTitles}</Text>
             <Switch
@@ -111,7 +112,7 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.exactDates}</Text>
             <Switch
@@ -122,12 +123,12 @@ export default class SetingsView extends React.Component {
               value={this.state.switch}
             />
           </View>
-          <View style={styles.separator} />
+          <Separator />
           <View style={styles.cell}>
             <Text style={styles.text}>{Strings.settings.sortTags}</Text>
             <Text style={styles.secondary}>Default</Text>
           </View>
-          <View style={styles.separator} />
+          <Separator />
         </View>
         <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>
       </ScrollView>
@@ -138,12 +139,6 @@ export default class SetingsView extends React.Component {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.colors.white,
-  },
-  separator: {
-    borderTopColor: Base.colors.border,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderStyle: 'solid',
-    marginHorizontal: Base.padding.medium,
   },
   section: {
     paddingTop: Base.padding.small,

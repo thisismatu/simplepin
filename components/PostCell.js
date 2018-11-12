@@ -57,7 +57,6 @@ export default class PostCell extends React.Component {
           style={styles.tagList}
         />
         <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
-        <View style={styles.separator} />
       </TouchableOpacity>
     )
   }
@@ -78,14 +77,6 @@ PostCell.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  separator: {
-    borderTopColor: Base.colors.border,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderStyle: 'solid',
-    height: 1,
-    marginLeft: Base.padding.large,
-    marginRight: Base.padding.medium,
-  },
   unread: {
     backgroundColor: Base.colors.blue2,
     borderRadius: 5,

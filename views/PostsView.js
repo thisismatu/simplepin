@@ -1,10 +1,11 @@
 import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, Image, Text} from 'react-native'
+import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, View, Image, Text} from 'react-native'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
+import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -116,6 +117,7 @@ export default class PostsView extends React.Component {
         initialNumToRender={8}
         keyExtractor={(item, index) => _.toString(index)}
         ListEmptyComponent={null}
+        ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
         renderItem={({item}) => <PostCell item={item} />}
         style={styles.container}
         refreshControl={
@@ -133,5 +135,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.colors.white,
     paddingVertical: Base.padding.tiny,
-  }
+  },
 })
