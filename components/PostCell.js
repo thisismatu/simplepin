@@ -82,9 +82,6 @@ PostCell.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  firstTag: {
-    marginLeft: Base.padding.large - Base.padding.tiny,
-  },
   unread: {
     backgroundColor: Base.color.blue2,
     borderRadius: 5,
@@ -131,6 +128,9 @@ const styles = StyleSheet.create({
   },
   emptyTagList: {
     height: 5,
+  },
+  firstTag: {
+    marginLeft: Base.padding.large - Base.padding.tiny,
   },
   tagContainer: {
     paddingHorizontal: Base.padding.tiny,
