@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, 
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import get from 'lodash/get'
-import split from 'lodash/isEqual'
+import split from 'lodash/split'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
