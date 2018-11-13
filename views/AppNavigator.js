@@ -2,6 +2,7 @@ import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } fr
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostsView from 'app/views/PostsView'
+import BrowserView from 'app/views/BrowserView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
 import Base from 'app/assets/Base'
@@ -18,6 +19,7 @@ const headerStyles = {
 const PostsStack = createStackNavigator(
   {
     Posts: PostsView,
+    Browser: BrowserView,
   },
   {
     initialRouteName: 'Posts',

@@ -30,44 +30,50 @@ export default class PostCell extends React.Component {
     return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState)
   }
 
+  openInBrowser(url, title) {
+    this.props.navigation.navigate('Browser', { title: title, url: url })
+  }
+
   render() {
+    const { item } = this.props
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => console.log(this.props.item)}
+        onPress={() => this.openInBrowser(item.href, item.description)}
       >
         {
-          this.props.item.toread
+          item.toread
           ? <View style={styles.unread} />
           : null
         }
         {
-          !this.props.item.shared
+          !item.shared
           ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
           : null
         }
-        <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
+        <Text style={[styles.title, item.toread && styles.titleUnread]}>{item.description}</Text>
         {
-          this.props.item.extended
-          ? <Text style={styles.description}>{this.props.item.extended.trim()}</Text>
+          item.extended
+          ? <Text style={styles.description}>{item.extended.trim()}</Text>
           : null
         }
         <FlatList
           bounces={false}
-          data={this.props.item.tags}
+          data={item.tags}
           horizontal={true}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => <View style={styles.emptyTagList} />}
           renderItem={({ item, index }) => <Tag item={item} index={index} />}
           showsHorizontalScrollIndicator={false}
         />
-        <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
+        <Text style={styles.time}>{item.time.toLocaleDateString()}</Text>
       </TouchableOpacity>
     )
   }
 }
 
 PostCell.propTypes = {
+  navigation: PropTypes.object.isRequired,
   item: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

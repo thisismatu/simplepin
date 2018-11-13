@@ -116,7 +116,7 @@ export default class PostsView extends React.Component {
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
         ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
-        renderItem={({ item }) => <PostCell item={item} />}
+        renderItem={({ item }) => <PostCell item={item} navigation={this.props.navigation} />}
         style={styles.container}
         refreshControl={
           <RefreshControl
