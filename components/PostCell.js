@@ -5,12 +5,12 @@ import isEqual from 'lodash/isEqual'
 import startsWith from 'lodash/startsWith'
 import Base from 'app/assets/Base'
 
-const Tag = ({ item }) => {
+const Tag = ({ item, index }) => {
   const isPrivateTag = startsWith(item, '.')
   return(
     <TouchableOpacity
       activeOpacity={0.7}
-      style={styles.tagContainer}
+      style={[styles.tagContainer, index === 0 && styles.firstTag]}
       onPress={() => console.log(item)}
     >
       <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
@@ -18,6 +18,11 @@ const Tag = ({ item }) => {
       </View>
     </TouchableOpacity>
   )
+}
+
+Tag.propTypes = {
+  item: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
 }
 
 export default class PostCell extends React.Component {
@@ -53,9 +58,8 @@ export default class PostCell extends React.Component {
           horizontal={true}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-          renderItem={({ item }) => <Tag item={item} />}
+          renderItem={({ item, index }) => <Tag item={item} index={index} />}
           showsHorizontalScrollIndicator={false}
-          style={styles.tagList}
         />
         <Text style={styles.time}>{this.props.item.time.toLocaleDateString()}</Text>
       </TouchableOpacity>
@@ -78,6 +82,9 @@ PostCell.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  firstTag: {
+    marginLeft: Base.padding.large - Base.padding.tiny,
+  },
   unread: {
     backgroundColor: Base.color.blue2,
     borderRadius: 5,
@@ -124,11 +131,6 @@ const styles = StyleSheet.create({
   },
   emptyTagList: {
     height: 5,
-  },
-  tagList: {
-    marginLeft: Base.padding.large - Base.padding.tiny,
-    marginRight: Base.padding.tiny,
-    overflow: 'visible',
   },
   tagContainer: {
     paddingHorizontal: Base.padding.tiny,
