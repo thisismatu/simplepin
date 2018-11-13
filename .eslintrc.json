@@ -87,6 +87,8 @@
         "code": 120
       }
     ],
+    "no-lonely-if": 1,
+    "eol-last": 1,
     "react/prefer-es6-class": [2, "always"],
     "react/no-unused-prop-types": 2,
     "react/jsx-uses-react": "error",
