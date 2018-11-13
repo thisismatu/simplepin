@@ -21,8 +21,8 @@ MenuButton.propTypes = {
 const styles = StyleSheet.create({
   menuButton: {
     marginHorizontal: 12,
-    marginVertical: 8,
-    tintColor: Base.colors.blue2,
+    marginVertical: Base.padding.small,
+    tintColor: Base.color.blue2,
   },
 })
 

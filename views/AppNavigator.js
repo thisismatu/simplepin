@@ -9,10 +9,10 @@ import Strings from 'app/assets/Strings'
 
 const headerStyles = {
   headerStyle: {
-    backgroundColor: Base.colors.white,
-    borderBottomColor: Base.colors.border,
+    backgroundColor: Base.color.white,
+    borderBottomColor: Base.color.border,
   },
-  headerTintColor: Base.colors.gray4,
+  headerTintColor: Base.color.gray4,
 }
 
 const PostsStack = createStackNavigator(

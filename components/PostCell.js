@@ -79,7 +79,7 @@ PostCell.propTypes = {
 
 const styles = StyleSheet.create({
   unread: {
-    backgroundColor: Base.colors.blue2,
+    backgroundColor: Base.color.blue2,
     borderRadius: 5,
     height: 9,
     left: 8,
@@ -92,31 +92,31 @@ const styles = StyleSheet.create({
     height: 16,
     position: 'absolute',
     right: Base.padding.medium,
-    tintColor: Base.colors.gray2,
+    tintColor: Base.color.gray2,
     width: 16,
   },
   title: {
-    color: Base.colors.gray4,
-    fontSize: Base.fonts.large,
+    color: Base.color.gray4,
+    fontSize: Base.font.large,
     lineHeight: 24,
     paddingTop: 12,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
   },
   titleUnread: {
-    fontWeight: Base.fonts.bold,
+    fontWeight: Base.font.bold,
   },
   description: {
-    color: Base.colors.gray3,
-    fontSize: Base.fonts.medium,
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
     lineHeight: 20,
     paddingTop: Base.padding.tiny,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
   },
   time: {
-    color: Base.colors.gray3,
-    fontSize: Base.fonts.medium,
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
     lineHeight: 20,
     paddingBottom: 14,
     paddingLeft: Base.padding.large,
@@ -135,19 +135,19 @@ const styles = StyleSheet.create({
     paddingVertical: Base.padding.small,
   },
   tag: {
-    backgroundColor: Base.colors.blue1,
+    backgroundColor: Base.color.blue1,
     borderRadius: Base.radius.small,
     paddingHorizontal: Base.padding.small,
     paddingVertical: Base.padding.tiny,
   },
   tagText: {
-    color: Base.colors.blue2,
+    color: Base.color.blue2,
     lineHeight: 16,
   },
   privateTag: {
-    backgroundColor: Base.colors.gray1,
+    backgroundColor: Base.color.gray1,
   },
   privateTagText: {
-    color: Base.colors.gray3,
+    color: Base.color.gray3,
   },
 })

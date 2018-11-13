@@ -1,11 +1,12 @@
 import { Dimensions } from 'react-native'
 
-const dimensions = {
+const size = {
   fullHeight: Dimensions.get('window').height,
   fullWidth: Dimensions.get('window').width,
+  rowHeight: 48,
 }
 
-const colors = {
+const color = {
   blue1: '#E0F0FF',
   blue2: '#0066CC',
   gray1: '#E5E5E5',
@@ -24,7 +25,7 @@ const padding = {
   huge: 32,
 }
 
-const fonts = {
+const font = {
   small: 13,
   medium: 15,
   large: 17,
@@ -39,9 +40,9 @@ const radius = {
 }
 
 export default {
-  dimensions,
-  colors,
+  size,
+  color,
   padding,
-  fonts,
+  font,
   radius,
 }

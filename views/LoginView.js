@@ -90,7 +90,7 @@ export default class LoginView extends React.Component {
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
           placeholder={Strings.login.placeholder}
-          placeholderTextColor = {Base.colors.gray2}
+          placeholderTextColor = {Base.color.gray2}
           returnKeyType="done"
           secureTextEntry={true}
           style={styles.input}
@@ -126,53 +126,53 @@ LoginView.propTypes = {
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    backgroundColor: Base.colors.white,
+    backgroundColor: Base.color.white,
     flex: 1,
     justifyContent: 'center',
     padding: Base.padding.huge,
   },
   title: {
-    color: Base.colors.gray4,
-    fontSize: Base.fonts.huge,
-    fontWeight: Base.fonts.bold,
+    color: Base.color.gray4,
+    fontSize: Base.font.huge,
+    fontWeight: Base.font.bold,
     marginBottom: Base.padding.medium,
     textAlign: 'center',
   },
   text: {
-    color: Base.colors.gray3,
-    fontSize: Base.fonts.medium,
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
     lineHeight: 24,
     marginBottom: Base.padding.large,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: Base.colors.white,
-    borderColor: Base.colors.border,
+    backgroundColor: Base.color.white,
+    borderColor: Base.color.border,
     borderRadius: Base.radius.medium,
     borderWidth: 1,
-    color: Base.colors.gray4,
-    fontSize: Base.fonts.medium,
+    color: Base.color.gray4,
+    fontSize: Base.font.medium,
     height: 48,
     marginBottom: Base.padding.large,
     textAlign: 'center',
     width: '100%',
   },
   loginButton: {
-    backgroundColor: Base.colors.blue2,
+    backgroundColor: Base.color.blue2,
     borderRadius: Base.radius.medium,
     marginBottom: Base.padding.large,
     padding: Base.padding.medium,
     width: '100%',
   },
   loginButtonText: {
-    color: Base.colors.white,
-    fontSize: Base.fonts.medium,
-    fontWeight: Base.fonts.bold,
+    color: Base.color.white,
+    fontSize: Base.font.medium,
+    fontWeight: Base.font.bold,
     lineHeight: 16,
     textAlign: 'center',
   },
   tokenButton: {
-    backgroundColor: Base.colors.white,
+    backgroundColor: Base.color.white,
     borderRadius: Base.radius.medium,
     padding: Base.padding.medium,
     width: '100%',

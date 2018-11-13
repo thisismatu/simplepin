@@ -135,7 +135,7 @@ PostsView.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: Base.colors.white,
+    backgroundColor: Base.color.white,
     paddingVertical: Base.padding.tiny,
   },
 })
