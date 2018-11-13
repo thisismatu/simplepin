@@ -3,6 +3,8 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react
 import PropTypes from 'prop-types'
 import isEqual from 'lodash/isEqual'
 import startsWith from 'lodash/startsWith'
+import Api from 'app/Api'
+import Storage from 'app/util/Storage'
 import Base from 'app/assets/Base'
 
 const Tag = ({ item, index }) => {
@@ -30,8 +32,24 @@ export default class PostCell extends React.Component {
     return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState)
   }
 
-  openInBrowser(url, title) {
-    this.props.navigation.navigate('Browser', { title: title, url: url })
+  openInBrowser(item) {
+    const markAsReadWhenOpened = true // todo: implement asyncstorage for this
+    if (markAsReadWhenOpened) {
+      item.toread = item.toread && !item.toread
+      this.updatePost(item)
+    }
+    this.props.navigation.navigate('Browser', { title: item.description, url: item.href })
+  }
+
+  updatePost = async (post) => {
+    const apiToken = await Storage.apiToken()
+    const response = await Api.postsAdd(post, apiToken)
+    if(response.ok === 0) {
+      console.warn(response.error)
+    } else {
+      const str = JSON.stringify(response)
+      console.log(str)
+    }
   }
 
   render() {
@@ -39,7 +57,7 @@ export default class PostCell extends React.Component {
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => this.openInBrowser(item.href, item.description)}
+        onPress={() => this.openInBrowser(item)}
       >
         {
           item.toread
@@ -54,7 +72,7 @@ export default class PostCell extends React.Component {
         <Text style={[styles.title, item.toread && styles.titleUnread]}>{item.description}</Text>
         {
           item.extended
-          ? <Text style={styles.description}>{item.extended.trim()}</Text>
+          ? <Text style={styles.description}>{item.extended}</Text>
           : null
         }
         <FlatList

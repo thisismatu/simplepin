@@ -7,6 +7,19 @@ const updateUrl = (parameters) => `${server}/posts/update/?${parameters}`
 const postsAllUrl = (parameters) => `${server}/posts/all/?${parameters}`
 const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
 
+const replacer = (key, value) => {
+  switch (key) {
+    case 'shared':
+      return value ? 'yes' : 'no'
+    case 'toread':
+      return value ? 'yes' : 'no'
+    case 'tags':
+      return value ? value.join(' ') : ''
+    default:
+      return value
+  }
+}
+
 const handleResponse = (response) => {
   if (!response.ok) {
     return Promise.resolve({ ok: 0, error: response.status })
@@ -52,9 +65,9 @@ const postsAdd = (post, token) => {
     'url': post.href,
     'description': post.description,
     'extended': post.extended,
-    'tags': post.tags,
-    'toread': post.toread,
-    'shared': post.shared,
+    'tags': replacer('tags', post.tags),
+    'toread': replacer('toread', post.toread),
+    'shared': replacer('shared', post.shared),
     'format': 'json',
     'auth_token': token,
   }
