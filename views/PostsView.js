@@ -13,6 +13,8 @@ import Strings from 'app/assets/Strings'
 
 const reviver = (key, value) => {
   switch (key) {
+    case 'extended':
+      return value.trim()
     case 'shared':
       return value === 'yes'
     case 'toread':
