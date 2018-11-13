@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import get from 'lodash/get'
 import split from 'lodash/isEqual'
-import trim from 'lodash/trim'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
@@ -57,7 +56,7 @@ export default class LoginView extends React.Component {
 
   checkClipboardForApiToken = async () => {
     const clipboardContent = await Clipboard.getString()
-    this.setState({ clipboardContent: trim(clipboardContent) })
+    this.setState({ clipboardContent: clipboardContent.trim() })
     const regex = /[A-Z,0-9]/g
     const tokenLatterPart = lodash(this.state.clipboardContent).split(':').get(['1'])
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {

@@ -1,10 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, ScrollView, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, ScrollView, SafeAreaView, Platform } from 'react-native'
 import PropTypes from 'prop-types'
 import { Constants } from 'expo'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
-import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
 export default class DrawerView extends React.Component {
