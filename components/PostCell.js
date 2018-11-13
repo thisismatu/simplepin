@@ -1,11 +1,12 @@
-import _ from 'lodash'
 import React from 'react'
+import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
-import {StyleSheet, Text, Image, View, TouchableOpacity, FlatList} from 'react-native'
+import isEqual from 'lodash/isEqual'
+import startsWith from 'lodash/startsWith'
 import Base from 'app/assets/Base'
 
-const Tag = ({item}) => {
-  const isPrivateTag = _.startsWith(item, '.')
+const Tag = ({ item }) => {
+  const isPrivateTag = startsWith(item, '.')
   return(
     <TouchableOpacity
       activeOpacity={0.7}
@@ -21,7 +22,7 @@ const Tag = ({item}) => {
 
 export default class PostCell extends React.Component {
   shouldComponentUpdate (nextProps, nextState) {
-    return !_.isEqual(this.props, nextProps) || !_.isEqual(this.state, nextState)
+    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState)
   }
 
   render() {
@@ -43,16 +44,16 @@ export default class PostCell extends React.Component {
         <Text style={[styles.title, this.props.item.toread && styles.titleUnread]}>{this.props.item.description}</Text>
         {
           this.props.item.extended
-          ? <Text style={styles.description}>{_.trim(this.props.item.extended)}</Text>
+          ? <Text style={styles.description}>{this.props.item.extended.trim()}</Text>
           : null
         }
         <FlatList
           bounces={false}
           data={this.props.item.tags}
           horizontal={true}
-          keyExtractor={(item, index) => _.toString(index)}
+          keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-          renderItem={({item}) => <Tag item={item} />}
+          renderItem={({ item }) => <Tag item={item} />}
           showsHorizontalScrollIndicator={false}
           style={styles.tagList}
         />
@@ -73,7 +74,7 @@ PostCell.propTypes = {
     tags: PropTypes.array,
     time: PropTypes.object.isRequired,
     toread: PropTypes.bool.isRequired,
-  })
+  }),
 }
 
 const styles = StyleSheet.create({

@@ -1,6 +1,8 @@
-import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, FlatList, RefreshControl, TouchableOpacity, View, Image, Text} from 'react-native'
+import { StyleSheet, FlatList, RefreshControl } from 'react-native'
+import split from 'lodash/split'
+import filter from 'lodash/filter'
+import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
@@ -12,25 +14,23 @@ import Strings from 'app/assets/Strings'
 const reviver = (key, value) => {
   switch (key) {
     case 'shared':
-      return value == 'yes'
+      return value === 'yes'
     case 'toread':
-      return value == 'yes'
+      return value === 'yes'
     case 'time':
       return new Date(value)
     case 'tags':
-      return value !== '' ? _.split(value, ' ') : null
+      return value !== '' ? split(value, ' ') : null
     default:
       return value
   }
 }
 
 export default class PostsView extends React.Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', Strings.posts.all),
-      headerLeft: (
-        <MenuButton navigation={navigation} />
-      )
+      headerLeft: <MenuButton navigation={navigation} />,
     }
   }
 
@@ -50,30 +50,28 @@ export default class PostsView extends React.Component {
     this.onRefresh()
   }
 
-  onRefresh = async () => {
-    this.setState({refreshing: true})
+  async onRefresh() {
+    this.setState({ refreshing: true })
     const hasUpdates = await this.checkForUpdates()
     if (hasUpdates) {
       await this.fetchPosts()
     }
-    this.setState({refreshing: false})
+    this.setState({ refreshing: false })
   }
 
-  checkForUpdates = async () => {
+  async checkForUpdates() {
     const apiToken = await Storage.apiToken()
     const response = await Api.update(apiToken)
-    if (response.ok == 0) {
+    if (response.ok === 0) {
       console.warn(response.error)
-    } else {
-      if (response.update_time !== this.state.lastUpdateTime) {
-        this.setState({'lastUpdateTime': response.update_time})
-        return true
-      }
-      return false
+    } else if (response.update_time !== this.state.lastUpdateTime) {
+      this.setState({ lastUpdateTime: response.update_time })
+      return true
     }
+    return false
   }
 
-  fetchPosts = async () => {
+  async fetchPosts() {
     const apiToken = await Storage.apiToken()
     const response = await Api.mockPosts(apiToken)
     if(response.ok === 0) {
@@ -83,9 +81,9 @@ export default class PostsView extends React.Component {
       const obj = JSON.parse(str, reviver)
       this.setState({
         allPosts: obj,
-        unreadPosts: _.filter(obj, ['toread', true]),
-        privatePosts: _.filter(obj, ['shared', false]),
-        publicPosts: _.filter(obj, ['shared', true]),
+        unreadPosts: filter(obj, ['toread', true]),
+        privatePosts: filter(obj, ['shared', false]),
+        publicPosts: filter(obj, ['shared', true]),
       })
       this.props.navigation.setParams({
         allCount: this.state.allPosts.length,
@@ -96,7 +94,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  filterPosts = (predicate) => {
+  filterPosts(predicate) {
     switch (predicate) {
       case Strings.posts.unread:
         return this.state.unreadPosts
@@ -115,10 +113,10 @@ export default class PostsView extends React.Component {
       <FlatList
         data={this.filterPosts(currentList)}
         initialNumToRender={8}
-        keyExtractor={(item, index) => _.toString(index)}
+        keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
         ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
-        renderItem={({item}) => <PostCell item={item} />}
+        renderItem={({ item }) => <PostCell item={item} />}
         style={styles.container}
         refreshControl={
           <RefreshControl
@@ -129,6 +127,10 @@ export default class PostsView extends React.Component {
       />
     )
   }
+}
+
+PostsView.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

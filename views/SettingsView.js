@@ -1,17 +1,15 @@
 import React from 'react'
-import {StyleSheet, Text, View, Switch, TouchableOpacity, ScrollView, SafeAreaView, Platform} from 'react-native'
+import { StyleSheet, Text, View, Switch, ScrollView, Platform } from 'react-native'
 import MenuButton from 'app/components/MenuButton'
 import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
 export default class SetingsView extends React.Component {
-  static navigationOptions = ({navigation}) => {
+  static navigationOptions = ({ navigation }) => {
     return {
       title: Strings.settings.title,
-      headerLeft: (
-        <MenuButton navigation={navigation} />
-      )
+      headerLeft: <MenuButton navigation={navigation} />,
     }
   }
 
@@ -24,7 +22,7 @@ export default class SetingsView extends React.Component {
 
   handleToggleSwitch = (evt) => {
     this.setState({
-      switch: evt
+      switch: evt,
     })
   }
 
@@ -44,7 +42,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />
@@ -55,7 +53,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />
@@ -66,7 +64,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />
@@ -89,7 +87,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />
@@ -107,7 +105,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />
@@ -118,7 +116,7 @@ export default class SetingsView extends React.Component {
             <Switch
               style={styles.switch}
               thumbColor={thumb(this.state.switch)}
-              trackColor={{true: track}}
+              trackColor={{ true: track }}
               onValueChange={this.handleToggleSwitch}
               value={this.state.switch}
             />

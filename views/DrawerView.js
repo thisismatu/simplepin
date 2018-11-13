@@ -1,37 +1,39 @@
-import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Platform} from 'react-native'
-import {Constants} from 'expo'
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, SafeAreaView, Platform } from 'react-native'
+import PropTypes from 'prop-types'
+import { Constants } from 'expo'
+import get from 'lodash/get'
+import isEqual from 'lodash/isEqual'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
 class DrawerItem extends React.Component {
-  isRouteFocused = (route, param = null) => {
-    const {state} = this.props.navigation
-    const focusedRoute = _.get(state.routes[state.index], ['routes', '0', 'routeName'])
-    const focusedParam = _.get(state.routes[state.index], ['routes', '0', 'params', 'title'])
+  isRouteFocused(route, param = null) {
+    const { state } = this.props.navigation
+    const focusedRoute = get(state.routes[state.index], ['routes', '0', 'routeName'])
+    const focusedParam = get(state.routes[state.index], ['routes', '0', 'params', 'title'])
 
     if (param) {
-      return _.isEqual([route, param],[focusedRoute, focusedParam])
+      return isEqual([route, param],[focusedRoute, focusedParam])
     }
-    return _.isEqual(route, focusedRoute)
+    return isEqual(route, focusedRoute)
   }
 
-  getRouteCount = (route, param) => {
-    const {state} = this.props.navigation
-    return _.get(state.routes, ['0', 'routes', '0', 'params', param])
+  getRouteCount(route, param) {
+    const { state } = this.props.navigation
+    return get(state.routes, ['0', 'routes', '0', 'params', param])
   }
 
-  navigateTo = (route, param) => {
+  navigateTo(route, param) {
     if (this.isRouteFocused(route,param)) {
       return this.props.navigation.closeDrawer()
     }
     this.props.navigation.closeDrawer()
-    this.props.navigation.navigate(route, param && {title: param})
+    this.props.navigation.navigate(route, param && { title: param })
   }
 
   render() {
-    const {route, text, secondary, param} = this.props
+    const { route, text, secondary, param } = this.props
     return (
       <TouchableOpacity
         style={[styles.cell, this.isRouteFocused(route, param) && styles.active]}
@@ -47,6 +49,14 @@ class DrawerItem extends React.Component {
       </TouchableOpacity>
     )
   }
+}
+
+DrawerItem.propTypes = {
+  navigation: PropTypes.object.isRequired,
+  route: PropTypes.string.isRequired,
+  text: PropTypes.string.isRequired,
+  secondary: PropTypes.string,
+  param: PropTypes.string,
 }
 
 export default class DrawerView extends React.Component {
@@ -110,6 +120,10 @@ export default class DrawerView extends React.Component {
       </SafeAreaView>
     )
   }
+}
+
+DrawerView.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({

@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native'
+import { AsyncStorage } from 'react-native'
 
 const keys = {
   apiToken: '@Simplepin:apiToken',
@@ -13,5 +13,6 @@ const setApiToken = async (apiToken) => {
 }
 
 export default {
-  apiToken, setApiToken
+  apiToken,
+  setApiToken,
 }

@@ -1,5 +1,6 @@
 import React from 'react'
-import {View} from 'react-native'
+import { View } from 'react-native'
+import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 
 export default class AuthLoadingView extends React.Component {
@@ -8,7 +9,7 @@ export default class AuthLoadingView extends React.Component {
     this.initialView()
   }
 
-  initialView = async () => {
+  async initialView() {
     const apiToken = await Storage.apiToken()
     this.props.navigation.navigate(apiToken ? 'App' : 'Auth')
   }
@@ -16,4 +17,8 @@ export default class AuthLoadingView extends React.Component {
   render() {
     return <View />
   }
+}
+
+AuthLoadingView.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }

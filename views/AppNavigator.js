@@ -1,12 +1,11 @@
-import {createSwitchNavigator, createStackNavigator, createDrawerNavigator} from 'react-navigation'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
-
+import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostsView from 'app/views/PostsView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
+import Base from 'app/assets/Base'
+import Strings from 'app/assets/Strings'
 
 const headerStyles = {
   headerStyle: {
@@ -22,7 +21,7 @@ const PostsStack = createStackNavigator(
   },
   {
     initialRouteName: 'Posts',
-    initialRouteParams: {title: Strings.posts.all},
+    initialRouteParams: { title: Strings.posts.all },
     navigationOptions: headerStyles,
   }
 )
@@ -42,7 +41,7 @@ const AppDrawer = createDrawerNavigator(
     SettingsStack: SettingsStack,
   },
   {
-    contentComponent: DrawerView
+    contentComponent: DrawerView,
   }
 )
 

@@ -1,8 +1,9 @@
 import React from 'react'
-import {StyleSheet, View} from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import PropTypes from 'prop-types'
 import Base from 'app/assets/Base'
 
-const Separator = ({left = Base.padding.medium, right = Base.padding.medium}) => {
+const Separator = ({ left = Base.padding.medium, right = Base.padding.medium }) => {
   return (
     <View
       style={{
@@ -13,6 +14,11 @@ const Separator = ({left = Base.padding.medium, right = Base.padding.medium}) =>
       }}
     />
   )
+}
+
+Separator.propTypes = {
+  left: PropTypes.number,
+  right: PropTypes.number,
 }
 
 export default Separator

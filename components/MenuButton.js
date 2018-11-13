@@ -1,8 +1,9 @@
 import React from 'react'
-import {StyleSheet, TouchableOpacity, Image} from 'react-native'
+import { StyleSheet, TouchableOpacity, Image } from 'react-native'
+import PropTypes from 'prop-types'
 import Base from 'app/assets/Base'
 
-const MenuButton = ({navigation}) => {
+const MenuButton = ({ navigation }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
@@ -13,12 +14,16 @@ const MenuButton = ({navigation}) => {
   )
 }
 
+MenuButton.propTypes = {
+  navigation: PropTypes.object.isRequired,
+}
+
 const styles = StyleSheet.create({
   menuButton: {
     marginHorizontal: 12,
     marginVertical: 8,
     tintColor: Base.colors.blue2,
-  }
+  },
 })
 
 export default MenuButton

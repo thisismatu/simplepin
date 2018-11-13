@@ -1,6 +1,10 @@
-import _ from 'lodash'
 import React from 'react'
-import {StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState} from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState } from 'react-native'
+import PropTypes from 'prop-types'
+import lodash from 'lodash/lodash'
+import get from 'lodash/get'
+import split from 'lodash/isEqual'
+import trim from 'lodash/trim'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
@@ -9,7 +13,7 @@ import Strings from 'app/assets/Strings'
 export default class LoginView extends React.Component {
   static navigationOptions = {
     header: null,
-    title: Strings.login.title
+    title: Strings.login.title,
   }
 
   constructor(props) {
@@ -21,7 +25,7 @@ export default class LoginView extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {
     AppState.addEventListener('change', this.handleAppStateChange)
     this.checkClipboardForApiToken()
   }
@@ -34,13 +38,11 @@ export default class LoginView extends React.Component {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       this.checkClipboardForApiToken()
     }
-    this.setState({appState: nextAppState})
+    this.setState({ appState: nextAppState })
   }
 
   handleChange = (evt) => {
-    this.setState({
-      apiToken: evt.nativeEvent.text
-    })
+    this.setState({ apiToken: evt.nativeEvent.text })
   }
 
   handleSubmit = async () => {
@@ -55,13 +57,11 @@ export default class LoginView extends React.Component {
 
   checkClipboardForApiToken = async () => {
     const clipboardContent = await Clipboard.getString()
-    this.setState({clipboardContent: _.trim(clipboardContent)})
+    this.setState({ clipboardContent: trim(clipboardContent) })
     const regex = /[A-Z,0-9]/g
-    const tokenLatterPart = _(this.state.clipboardContent).split(':').get(['1'])
+    const tokenLatterPart = lodash(this.state.clipboardContent).split(':').get(['1'])
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {
-      this.setState({
-        apiToken: this.state.clipboardContent
-      })
+      this.setState({ apiToken: this.state.clipboardContent })
     }
   }
 
@@ -70,6 +70,7 @@ export default class LoginView extends React.Component {
     switch (error) {
       case 503:
         errorMessage = Strings.error.unavailable
+        break
       default:
         errorMessage = Strings.error.token
     }
@@ -116,6 +117,10 @@ export default class LoginView extends React.Component {
       </View>
     )
   }
+}
+
+LoginView.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
