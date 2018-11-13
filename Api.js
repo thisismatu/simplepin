@@ -22,7 +22,7 @@ const fetchWithErrorHandling = (url) => {
 const login = (token) => {
   const data = {
     'format': 'json',
-    'auth_token': token
+    'auth_token': token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(loginUrl(params))
@@ -30,8 +30,8 @@ const login = (token) => {
 
 const update = (token) => {
   const data = {
-   'format': 'json',
-   'auth_token': token
+    'format': 'json',
+    'auth_token': token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(updateUrl(params))
@@ -39,8 +39,8 @@ const update = (token) => {
 
 const posts = (token) => {
   const data = {
-   'format': 'json',
-   'auth_token': token
+    'format': 'json',
+    'auth_token': token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(postsUrl(params))
@@ -52,5 +52,8 @@ const mockPosts = () => {
 }
 
 export default {
-  login, update, posts, mockPosts
+  login,
+  update,
+  posts,
+  mockPosts,
 }

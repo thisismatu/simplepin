@@ -1,4 +1,4 @@
-import {StyleSheet, Dimensions} from 'react-native'
+import { Dimensions } from 'react-native'
 
 const dimensions = {
   fullHeight: Dimensions.get('window').height,
@@ -39,5 +39,9 @@ const radius = {
 }
 
 export default {
-  dimensions, colors, padding, fonts, radius
+  dimensions,
+  colors,
+  padding,
+  fonts,
+  radius,
 }

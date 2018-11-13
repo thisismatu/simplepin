@@ -12,7 +12,7 @@ const Strings = {
   login: {
     title: 'Welcome!',
     text: 'Simplepin makes reading and managing your Pinboard bookmarks easy',
-    placeholder: "Enter your API token",
+    placeholder: 'Enter your API token',
     button: 'Log in',
     token: 'Show API token',
   },
@@ -32,7 +32,6 @@ const Strings = {
     browser: 'Browser',
     defaultBrowser: 'Default browser',
     openLinksInDefaultBrowser: 'Open links in default browser',
-    markAsReadWhenOpened: 'Mark as read when opened',
     display: 'Display',
     boldBookmarkTitles: 'Bold bookmark titles',
     exactDates: 'Exact dates',
