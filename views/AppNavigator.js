@@ -13,7 +13,8 @@ const headerStyles = {
     backgroundColor: Base.color.white,
     borderBottomColor: Base.color.border,
   },
-  headerTintColor: Base.color.gray4,
+  headerTintColor: Base.color.blue2,
+  headerTitleStyle: { color: Base.color.gray4 },
 }
 
 const PostsStack = createStackNavigator(
