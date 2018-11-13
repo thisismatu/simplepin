@@ -9,7 +9,7 @@ export default class AuthLoadingView extends React.Component {
     this.initialView()
   }
 
-  async initialView() {
+  initialView = async () => {
     const apiToken = await Storage.apiToken()
     this.props.navigation.navigate(apiToken ? 'App' : 'Auth')
   }

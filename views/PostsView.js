@@ -52,7 +52,7 @@ export default class PostsView extends React.Component {
     this.onRefresh()
   }
 
-  async onRefresh() {
+  onRefresh = async () => {
     this.setState({ refreshing: true })
     const hasUpdates = await this.checkForUpdates()
     if (hasUpdates) {
@@ -61,7 +61,7 @@ export default class PostsView extends React.Component {
     this.setState({ refreshing: false })
   }
 
-  async checkForUpdates() {
+  checkForUpdates = async () => {
     const apiToken = await Storage.apiToken()
     const response = await Api.update(apiToken)
     if (response.ok === 0) {
@@ -73,9 +73,9 @@ export default class PostsView extends React.Component {
     return false
   }
 
-  async fetchPosts() {
+  fetchPosts = async () => {
     const apiToken = await Storage.apiToken()
-    const response = await Api.mockPosts(apiToken)
+    const response = await Api.postsAll(apiToken)
     if(response.ok === 0) {
       console.warn(response.error)
     } else {
