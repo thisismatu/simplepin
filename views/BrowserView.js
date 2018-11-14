@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, WebView, StyleSheet, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/assets/Base'
 
@@ -36,38 +36,40 @@ export default class BrowserView extends React.Component {
   render() {
     const url = this.props.navigation.getParam('url', '')
     return (
-      <View style={styles.container}>
-        <WebView
-          ref={ref => this.webview = ref}
-          source={{ uri: url }}
-          startInLoadingState={true}
-          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
-        />
-        <View style={styles.toolbar}>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={!this.state.canGoBack}
-            onPress={this.onBack.bind(this)}
-            style={styles.button}
-          >
-            <Image
-              source={require('app/assets/ic-left.png')}
-              style={[styles.icon, !this.state.canGoBack && styles.iconDisabled]}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.7}
-            disabled={!this.state.canGoForward}
-            onPress={this.onForward.bind(this)}
-            style={styles.button}
-          >
-            <Image
-              source={require('app/assets/ic-right.png')}
-              style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
-            />
-          </TouchableOpacity>
+      <SafeAreaView style={styles.safeArea}>
+        <View style={styles.container}>
+          <WebView
+            ref={ref => this.webview = ref}
+            source={{ uri: url }}
+            startInLoadingState={true}
+            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          />
+          <View style={styles.toolbar}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={!this.state.canGoBack}
+              onPress={this.onBack.bind(this)}
+              style={styles.button}
+            >
+              <Image
+                source={require('app/assets/ic-left.png')}
+                style={[styles.icon, !this.state.canGoBack && styles.iconDisabled]}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              disabled={!this.state.canGoForward}
+              onPress={this.onForward.bind(this)}
+              style={styles.button}
+            >
+              <Image
+                source={require('app/assets/ic-right.png')}
+                style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
 }
@@ -77,6 +79,10 @@ BrowserView.propTypes = {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: Base.color.white,
+    flex: 1,
+  },
   container: {
     flex: 1,
   },
@@ -84,7 +90,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: Base.size.rowHeight,
+    height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: Base.color.border,
     backgroundColor: Base.color.white,
