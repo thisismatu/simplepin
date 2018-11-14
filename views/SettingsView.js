@@ -1,10 +1,14 @@
 import React from 'react'
 import { StyleSheet, Text, View, Switch, ScrollView, Platform } from 'react-native'
+import isEqual from 'lodash/isEqual'
+import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
+
+const isAndroid = Platform.OS === 'android'
 
 export default class SetingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -17,19 +21,24 @@ export default class SetingsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      switch: false,
+      markAsRead: false,
     }
   }
 
-  handleToggleSwitch = (evt) => {
-    this.setState({
-      switch: evt,
+  componentDidMount() {
+    Storage.markAsRead().then((value) => {
+      this.setState({ markAsRead: !!value })
     })
   }
 
+  handleToggleSwitch = (value) => {
+    Storage.setMarkAsRead(value)
+    this.setState({ markAsRead: value })
+  }
+
   render() {
-    const track = Platform.OS === 'android' ? Base.color.blue2 + '88' : Base.color.blue2
-    const thumb = (enabled) => Platform.OS === 'android' && enabled ? Base.color.blue2 : null
+    const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
+    const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
 
     return (
       <ScrollView style={styles.container}>
@@ -41,7 +50,6 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
             value={this.state.switch}
           />
         </View>
@@ -52,7 +60,6 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
             value={this.state.switch}
           />
         </View>
@@ -64,7 +71,7 @@ export default class SetingsView extends React.Component {
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
             onValueChange={this.handleToggleSwitch}
-            value={this.state.switch}
+            value={this.state.markAsRead}
           />
         </View>
         <Separator />
@@ -82,7 +89,6 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
             value={this.state.switch}
           />
         </View>
@@ -96,7 +102,6 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
             value={this.state.switch}
           />
         </View>
@@ -107,7 +112,6 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
             value={this.state.switch}
           />
         </View>
@@ -143,7 +147,7 @@ const styles = StyleSheet.create({
     paddingLeft: Base.padding.medium,
   },
   switch: {
-    marginRight: Platform.OS === 'android' ? 12 : Base.padding.medium,
+    marginRight: isAndroid ? 12 : Base.padding.medium,
   },
   secondary: {
     color: Base.color.gray3,
