@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Base.size.rowHeight,
+    height: 48,
     marginTop: Base.padding.small,
     paddingHorizontal: Base.padding.medium,
   },

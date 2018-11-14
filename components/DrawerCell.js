@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Base.size.rowHeight,
+    height: 48,
     paddingHorizontal: Base.padding.medium,
   },
   active: {
