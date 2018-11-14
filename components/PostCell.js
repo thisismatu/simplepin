@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: Base.padding.medium,
     tintColor: Base.color.gray2,
-    width: 16,
+    width: 12,
   },
   title: {
     color: Base.color.gray4,
