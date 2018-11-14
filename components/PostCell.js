@@ -1,98 +1,71 @@
 import React from 'react'
 import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
-import isEqual from 'lodash/isEqual'
 import startsWith from 'lodash/startsWith'
-import Api from 'app/Api'
-import Storage from 'app/util/Storage'
 import Base from 'app/assets/Base'
 
-const Tag = ({ item, index }) => {
-  const isPrivateTag = startsWith(item, '.')
+const Tag = ({ tag, index }) => {
+  const isPrivateTag = startsWith(tag, '.')
   return(
     <TouchableOpacity
       activeOpacity={0.7}
       style={[styles.tagContainer, index === 0 && styles.firstTag]}
-      onPress={() => console.log(item)}
+      onPress={() => console.log(tag)}
     >
       <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
-        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{item}</Text>
+        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
       </View>
     </TouchableOpacity>
   )
 }
 
 Tag.propTypes = {
-  item: PropTypes.string.isRequired,
+  tag: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
 }
 
 export default class PostCell extends React.Component {
-  shouldComponentUpdate (nextProps, nextState) {
-    return !isEqual(this.props, nextProps) || !isEqual(this.state, nextState)
-  }
-
-  openInBrowser(item) {
-    const markAsReadWhenOpened = true // todo: implement asyncstorage for this
-    if (markAsReadWhenOpened) {
-      item.toread = item.toread && !item.toread
-      this.updatePost(item)
-    }
-    this.props.navigation.navigate('Browser', { title: item.description, url: item.href })
-  }
-
-  updatePost = async (post) => {
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsAdd(post, apiToken)
-    if(response.ok === 0) {
-      console.warn(response.error)
-    } else {
-      const str = JSON.stringify(response)
-      console.log(str)
-    }
-  }
-
   render() {
-    const { item } = this.props
+    const { post } = this.props
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => this.openInBrowser(item)}
+        onPress={() => this.props.cellHandler(post)}
       >
         {
-          item.toread
+          post.toread
           ? <View style={styles.unread} />
           : null
         }
         {
-          !item.shared
+          !post.shared
           ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
           : null
         }
-        <Text style={[styles.title, item.toread && styles.titleUnread]}>{item.description}</Text>
+        <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
         {
-          item.extended
-          ? <Text style={styles.description}>{item.extended}</Text>
+          post.extended
+          ? <Text style={styles.description}>{post.extended}</Text>
           : null
         }
         <FlatList
           bounces={false}
-          data={item.tags}
+          data={post.tags}
           horizontal={true}
           keyExtractor={(item, index) => index.toString()}
           ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-          renderItem={({ item, index }) => <Tag item={item} index={index} />}
+          renderItem={({ item, index }) => <Tag tag={item} index={index} />}
           showsHorizontalScrollIndicator={false}
         />
-        <Text style={styles.time}>{item.time.toLocaleDateString()}</Text>
+        <Text style={styles.time}>{post.time.toLocaleDateString()}</Text>
       </TouchableOpacity>
     )
   }
 }
 
 PostCell.propTypes = {
-  navigation: PropTypes.object.isRequired,
-  item: PropTypes.shape({
+  cellHandler: PropTypes.func.isRequired,
+  post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
     hash: PropTypes.string.isRequired,

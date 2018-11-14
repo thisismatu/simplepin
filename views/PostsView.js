@@ -2,6 +2,8 @@ import React from 'react'
 import { StyleSheet, FlatList, RefreshControl } from 'react-native'
 import split from 'lodash/split'
 import filter from 'lodash/filter'
+import isEqual from 'lodash/isEqual'
+import merge from 'lodash/merge'
 import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
@@ -45,6 +47,15 @@ export default class PostsView extends React.Component {
       publicPosts: null,
       refreshing: false,
       lastUpdateTime: null,
+      markAsRead: false,
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!isEqual(this.state, prevState)) {
+      Storage.markAsRead().then((value) => {
+        this.setState({ markAsRead: !!value })
+      })
     }
   }
 
@@ -96,6 +107,36 @@ export default class PostsView extends React.Component {
     }
   }
 
+  cellHandler = (post) => {
+    this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
+    this.shouldUpdatePost(post)
+  }
+
+  shouldUpdatePost(post) {
+    if (this.state.markAsRead && post.toread) {
+      post.toread = !post.toread
+      const mergeCollection = merge(this.state.allPosts, post)
+      this.setState({
+        allPosts: mergeCollection,
+        unreadPosts: filter(mergeCollection, ['toread', true]),
+        privatePosts: filter(mergeCollection, ['shared', false]),
+        publicPosts: filter(mergeCollection, ['shared', true]),
+      })
+      this.updatePost(post)
+    }
+  }
+
+  updatePost = async (post) => {
+    const apiToken = await Storage.apiToken()
+    const response = await Api.postsAdd(post, apiToken)
+    if(response.ok === 0) {
+      console.warn(response.error)
+    } else {
+      const str = JSON.stringify(response)
+      console.log(str)
+    }
+  }
+
   filterPosts(predicate) {
     switch (predicate) {
       case Strings.posts.unread:
@@ -118,7 +159,14 @@ export default class PostsView extends React.Component {
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
         ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
-        renderItem={({ item }) => <PostCell item={item} navigation={this.props.navigation} />}
+        renderItem={({ item }) =>
+          <PostCell
+            post={item}
+            navigation={this.props.navigation}
+            markAsRead={this.state.markAsRead}
+            cellHandler={this.cellHandler}
+          />
+        }
         style={styles.container}
         refreshControl={
           <RefreshControl
