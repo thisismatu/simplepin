@@ -20,11 +20,19 @@ const headerStyles = {
 const PostsStack = createStackNavigator(
   {
     Posts: PostsView,
-    Browser: BrowserView,
   },
   {
     initialRouteName: 'Posts',
     initialRouteParams: { title: Strings.posts.all },
+    navigationOptions: headerStyles,
+  }
+)
+
+const ModalStack = createStackNavigator(
+  {
+    Browser: BrowserView,
+  },
+  {
     navigationOptions: headerStyles,
   }
 )
@@ -48,6 +56,17 @@ const AppDrawer = createDrawerNavigator(
   }
 )
 
+const AppStack = createStackNavigator(
+  {
+    Drawer: AppDrawer,
+    ModalStack: ModalStack,
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none'
+  }
+)
+
 const AuthStack = createStackNavigator({
   Login: LoginView,
 })
@@ -55,7 +74,7 @@ const AuthStack = createStackNavigator({
 const AppNavigator = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingView,
-    App: AppDrawer,
+    App: AppStack,
     Auth: AuthStack,
   },
   {
