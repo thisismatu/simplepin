@@ -10,7 +10,6 @@ const Tag = ({ tag, index }) => {
     <TouchableOpacity
       activeOpacity={0.7}
       style={[styles.tagContainer, index === 0 && styles.firstTag]}
-      onPress={() => console.log(tag)}
     >
       <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
         <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
@@ -25,12 +24,21 @@ Tag.propTypes = {
 }
 
 export default class PostCell extends React.Component {
+  constructor(props) {
+    super(props)
+    this.handlePress = this.handlePress.bind(this)
+  }
+
+  handlePress() {
+    this.props.cellHandler(this.props.post)
+  }
+
   render() {
     const { post } = this.props
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={() => this.props.cellHandler(post)}
+        onPress={this.handlePress}
       >
         {
           post.toread

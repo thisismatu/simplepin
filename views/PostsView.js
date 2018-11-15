@@ -156,24 +156,22 @@ export default class PostsView extends React.Component {
       <FlatList
         data={this.filterPosts(currentList)}
         initialNumToRender={8}
+        ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={null}
-        ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
         renderItem={({ item }) =>
           <PostCell
             post={item}
-            navigation={this.props.navigation}
-            markAsRead={this.state.markAsRead}
             cellHandler={this.cellHandler}
           />
         }
-        style={styles.container}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
             onRefresh={this.onRefresh}
           />
         }
+        style={styles.container}
       />
     )
   }
