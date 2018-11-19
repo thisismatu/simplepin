@@ -25,26 +25,26 @@ export default class LoginView extends React.Component {
   }
 
   componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange)
+    AppState.addEventListener('change', this.onAppStateChange)
     this.checkClipboardForApiToken()
   }
 
   componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange)
+    AppState.removeEventListener('change', this.onAppStateChange)
   }
 
-  handleAppStateChange = (nextAppState) => {
+  onAppStateChange = (nextAppState) => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       this.checkClipboardForApiToken()
     }
     this.setState({ appState: nextAppState })
   }
 
-  handleChange = (evt) => {
+  onChange = (evt) => {
     this.setState({ apiToken: evt.nativeEvent.text })
   }
 
-  handleSubmit = async () => {
+  onSubmit = async () => {
     const response = await Api.login(this.state.apiToken)
     if (response.ok === 0) {
       this.showAlert(response.error)
@@ -96,13 +96,13 @@ export default class LoginView extends React.Component {
           textContentType="password"
           underlineColorAndroid="transparent"
           value={this.state.apiToken}
-          onChange={this.handleChange}
+          onChange={this.onChange}
         />
         <TouchableOpacity
           activeOpacity={0.7}
           disabled={!this.state.apiToken}
           style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
-          onPress={this.handleSubmit}
+          onPress={this.onSubmit}
         >
           <Text style={styles.loginButtonText}>{Strings.login.button}</Text>
         </TouchableOpacity>

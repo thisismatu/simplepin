@@ -25,7 +25,7 @@ Tag.propTypes = {
 
 export default class PostCell extends React.Component {
   onPress = () => {
-    this.props.handleCellPress(this.props.post)
+    this.props.onCellPress(this.props.post)
   }
 
   render() {
@@ -67,7 +67,7 @@ export default class PostCell extends React.Component {
 }
 
 PostCell.propTypes = {
-  handleCellPress: PropTypes.func.isRequired,
+  onCellPress: PropTypes.func.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

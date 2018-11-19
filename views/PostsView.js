@@ -60,7 +60,7 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
-    this.handleRefresh()
+    this.onRefresh()
   }
 
   checkForUpdates = async () => {
@@ -109,7 +109,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  handleRefresh = async () => {
+  onRefresh = async () => {
     this.setState({ refreshing: true })
     const hasUpdates = await this.checkForUpdates()
     if (hasUpdates) {
@@ -118,7 +118,7 @@ export default class PostsView extends React.Component {
     this.setState({ refreshing: false })
   }
 
-  handleCellPress = (post) => {
+  onCellPress = (post) => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
       post.toread = !post.toread
@@ -158,13 +158,13 @@ export default class PostsView extends React.Component {
         renderItem={({ item }) =>
           <PostCell
             post={item}
-            handleCellPress={this.handleCellPress}
+            onCellPress={this.onCellPress}
           />
         }
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
-            onRefresh={this.handleRefresh}
+            onRefresh={this.onRefresh}
           />
         }
         style={styles.container}

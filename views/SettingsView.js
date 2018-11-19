@@ -31,7 +31,7 @@ export default class SetingsView extends React.Component {
     })
   }
 
-  handleToggleSwitch = (value) => {
+  onToggleSwitch = (value) => {
     Storage.setMarkAsRead(value)
     this.setState({ markAsRead: value })
   }
@@ -70,7 +70,7 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
-            onValueChange={this.handleToggleSwitch}
+            onValueChange={this.onToggleSwitch}
             value={this.state.markAsRead}
           />
         </View>
