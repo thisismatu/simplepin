@@ -15,42 +15,34 @@ export default class BrowserView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      url: this.props.navigation.getParam('url', ''),
       canGoBack: false,
       canGoForward: false,
     }
   }
 
-  onNavigationStateChange(navState) {
+  onNavigationStateChange = (navState) => {
     this.setState({
       canGoBack: navState.canGoBack,
       canGoForward: navState.canGoForward,
     })
   }
 
-  onBack() {
-    this.webview.goBack()
-  }
-
-  onForward() {
-    this.webview.goForward()
-  }
-
   render() {
-    const url = this.props.navigation.getParam('url', '')
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <WebView
             ref={ref => this.webview = ref}
-            source={{ uri: url }}
+            source={{ uri: this.state.url }}
             startInLoadingState={true}
-            onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+            onNavigationStateChange={this.onNavigationStateChange}
           />
           <View style={styles.toolbar}>
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={!this.state.canGoBack}
-              onPress={this.onBack.bind(this)}
+              onPress={() => this.webview.goBack()}
               style={styles.button}
             >
               <Image
@@ -61,7 +53,7 @@ export default class BrowserView extends React.Component {
             <TouchableOpacity
               activeOpacity={0.7}
               disabled={!this.state.canGoForward}
-              onPress={this.onForward.bind(this)}
+              onPress={() => this.webview.goForward()}
               style={styles.button}
             >
               <Image

@@ -60,16 +60,7 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
-    this.onRefresh()
-  }
-
-  onRefresh = async () => {
-    this.setState({ refreshing: true })
-    const hasUpdates = await this.checkForUpdates()
-    if (hasUpdates) {
-      await this.fetchPosts()
-    }
-    this.setState({ refreshing: false })
+    this.handleRefresh()
   }
 
   checkForUpdates = async () => {
@@ -107,12 +98,28 @@ export default class PostsView extends React.Component {
     }
   }
 
-  cellHandler = (post) => {
-    this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
-    this.shouldUpdatePost(post)
+  updatePost = async (post) => {
+    const apiToken = await Storage.apiToken()
+    const response = await Api.postsAdd(post, apiToken)
+    if(response.ok === 0) {
+      console.warn(response.error)
+    } else {
+      const str = JSON.stringify(response)
+      console.log(str)
+    }
   }
 
-  shouldUpdatePost(post) {
+  handleRefresh = async () => {
+    this.setState({ refreshing: true })
+    const hasUpdates = await this.checkForUpdates()
+    if (hasUpdates) {
+      await this.fetchPosts()
+    }
+    this.setState({ refreshing: false })
+  }
+
+  handleCellPress = (post) => {
+    this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
       post.toread = !post.toread
       const mergeCollection = merge(this.state.allPosts, post)
@@ -123,17 +130,6 @@ export default class PostsView extends React.Component {
         publicPosts: filter(mergeCollection, ['shared', true]),
       })
       this.updatePost(post)
-    }
-  }
-
-  updatePost = async (post) => {
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsAdd(post, apiToken)
-    if(response.ok === 0) {
-      console.warn(response.error)
-    } else {
-      const str = JSON.stringify(response)
-      console.log(str)
     }
   }
 
@@ -162,13 +158,13 @@ export default class PostsView extends React.Component {
         renderItem={({ item }) =>
           <PostCell
             post={item}
-            cellHandler={this.cellHandler}
+            handleCellPress={this.handleCellPress}
           />
         }
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh}
+            onRefresh={this.handleRefresh}
           />
         }
         style={styles.container}

@@ -7,10 +7,6 @@ import DrawerCell from 'app/components/DrawerCell'
 import Strings from 'app/assets/Strings'
 
 export default class DrawerView extends React.Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>

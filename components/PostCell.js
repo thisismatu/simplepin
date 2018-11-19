@@ -24,13 +24,8 @@ Tag.propTypes = {
 }
 
 export default class PostCell extends React.Component {
-  constructor(props) {
-    super(props)
-    this.handlePress = this.handlePress.bind(this)
-  }
-
-  handlePress() {
-    this.props.cellHandler(this.props.post)
+  onPress = () => {
+    this.props.handleCellPress(this.props.post)
   }
 
   render() {
@@ -38,7 +33,7 @@ export default class PostCell extends React.Component {
     return (
       <TouchableOpacity
         activeOpacity={0.7}
-        onPress={this.handlePress}
+        onPress={this.onPress}
       >
         {
           post.toread
@@ -72,7 +67,7 @@ export default class PostCell extends React.Component {
 }
 
 PostCell.propTypes = {
-  cellHandler: PropTypes.func.isRequired,
+  handleCellPress: PropTypes.func.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
