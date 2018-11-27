@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, Platform, Alert, ActionSheetIOS } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View } from 'react-native'
 import split from 'lodash/split'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
@@ -10,10 +10,9 @@ import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
+import PostModal from 'app/components/PostModal'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
-
-const isAndroid = Platform.OS === 'android'
 
 const reviver = (key, value) => {
   switch (key) {
@@ -50,6 +49,8 @@ export default class PostsView extends React.Component {
       refreshing: false,
       lastUpdateTime: null,
       markAsRead: false,
+      modalVisible: false,
+      selectedPost: {},
     }
   }
 
@@ -136,28 +137,14 @@ export default class PostsView extends React.Component {
   }
 
   onCellLongPress = (post) => {
-    if (isAndroid) {
-      return Alert.alert(
-        post.description,
-        post.extended,
-        [
-          { text: 'Mark as unread', onPress: () => console.log('Mark as unread') },
-          { text: 'Edit', onPress: () => console.log('Edit') },
-          { text: 'Delete', onPress: () => console.log('Delete') },
-        ]
-      )
-    }
-    return ActionSheetIOS.showActionSheetWithOptions(
-      {
-        title: post.description,
-        options: ['Mark as unread', 'Edit', 'Delete', 'Cancel'],
-        destructiveButtonIndex: 2,
-        cancelButtonIndex: 3,
-      },
-      (buttonIndex) => {
-        console.log(buttonIndex)
-      }
-    )
+    this.setState({
+      modalVisible: true,
+      selectedPost: post,
+    })
+  }
+
+  onModalClose = () => {
+    this.setState({ modalVisible: false })
   }
 
   filterPosts(predicate) {
@@ -176,27 +163,34 @@ export default class PostsView extends React.Component {
   render() {
     const currentList = this.props.navigation.getParam('title', Strings.posts.all)
     return (
-      <FlatList
-        data={this.filterPosts(currentList)}
-        initialNumToRender={8}
-        ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={null}
-        renderItem={({ item }) =>
-          <PostCell
-            post={item}
-            onCellPress={this.onCellPress}
-            onCellLongPress={this.onCellLongPress}
-          />
-        }
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh}
-          />
-        }
-        style={styles.container}
-      />
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={this.filterPosts(currentList)}
+          initialNumToRender={8}
+          ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={null}
+          renderItem={({ item }) =>
+            <PostCell
+              post={item}
+              onCellPress={this.onCellPress}
+              onCellLongPress={this.onCellLongPress}
+            />
+          }
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh}
+            />
+          }
+          style={styles.container}
+        />
+        <PostModal
+          modalVisible={this.state.modalVisible}
+          onClose={this.onModalClose}
+          post={this.state.selectedPost}
+        />
+      </View>
     )
   }
 }
@@ -209,5 +203,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingVertical: Base.padding.tiny,
-  },
+  }
 })
