@@ -97,16 +97,6 @@ export default class SetingsView extends React.Component {
         <HeaderCell text={Strings.settings.display} />
         <Separator />
         <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.boldBookmarkTitles}</Text>
-          <Switch
-            style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
-            trackColor={{ true: track }}
-            value={this.state.switch}
-          />
-        </View>
-        <Separator />
-        <View style={styles.cell}>
           <Text style={styles.text}>{Strings.settings.exactDates}</Text>
           <Switch
             style={styles.switch}

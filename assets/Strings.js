@@ -33,7 +33,6 @@ const Strings = {
     defaultBrowser: 'Default browser',
     openLinksInDefaultBrowser: 'Open links in default browser',
     display: 'Display',
-    boldBookmarkTitles: 'Bold bookmark titles',
     exactDates: 'Exact dates',
     sortTags: 'Sort tags',
   },
