@@ -28,12 +28,17 @@ export default class PostCell extends React.Component {
     this.props.onCellPress(this.props.post)
   }
 
+  onLongPress = () => {
+    this.props.onCellLongPress(this.props.post)
+  }
+
   render() {
     const { post } = this.props
     return (
       <TouchableOpacity
         activeOpacity={0.7}
         onPress={this.onPress}
+        onLongPress={this.onLongPress}
       >
         {
           post.toread
@@ -68,6 +73,7 @@ export default class PostCell extends React.Component {
 
 PostCell.propTypes = {
   onCellPress: PropTypes.func.isRequired,
+  onCellLongPress: PropTypes.func.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

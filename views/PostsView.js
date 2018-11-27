@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, Platform, Alert, ActionSheetIOS } from 'react-native'
 import split from 'lodash/split'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
@@ -12,6 +12,8 @@ import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
+
+const isAndroid = Platform.OS === 'android'
 
 const reviver = (key, value) => {
   switch (key) {
@@ -133,6 +135,31 @@ export default class PostsView extends React.Component {
     }
   }
 
+  onCellLongPress = (post) => {
+    if (isAndroid) {
+      return Alert.alert(
+        post.description,
+        post.extended,
+        [
+          { text: 'Mark as unread', onPress: () => console.log('Mark as unread') },
+          { text: 'Edit', onPress: () => console.log('Edit') },
+          { text: 'Delete', onPress: () => console.log('Delete') },
+        ]
+      )
+    }
+    return ActionSheetIOS.showActionSheetWithOptions(
+      {
+        title: post.description,
+        options: ['Mark as unread', 'Edit', 'Delete', 'Cancel'],
+        destructiveButtonIndex: 2,
+        cancelButtonIndex: 3,
+      },
+      (buttonIndex) => {
+        console.log(buttonIndex)
+      }
+    )
+  }
+
   filterPosts(predicate) {
     switch (predicate) {
       case Strings.posts.unread:
@@ -159,6 +186,7 @@ export default class PostsView extends React.Component {
           <PostCell
             post={item}
             onCellPress={this.onCellPress}
+            onCellLongPress={this.onCellLongPress}
           />
         }
         refreshControl={
