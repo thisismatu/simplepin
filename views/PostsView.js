@@ -23,6 +23,15 @@ const filteredPosts = (obj) => {
   }
 }
 
+const filteredPostsCount = (obj) => {
+  return {
+    allCount: obj.allPosts.length,
+    unreadCount: obj.unreadPosts.length,
+    privateCount: obj.privatePosts.length,
+    publicCount: obj.publicPosts.length,
+  }
+}
+
 export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -79,13 +88,9 @@ export default class PostsView extends React.Component {
       const str = JSON.stringify(response)
       const obj = JSON.parse(str, reviver)
       const newState = filteredPosts(obj)
+      const newStateCount = filteredPostsCount(newState)
       this.setState(newState)
-      this.props.navigation.setParams({
-        allCount: this.state.allPosts.length,
-        unreadCount: this.state.unreadPosts.length,
-        privateCount: this.state.privatePosts.length,
-        publicCount: this.state.publicPosts.length,
-      })
+      this.props.navigation.setParams(newStateCount)
     }
   }
 
@@ -102,7 +107,9 @@ export default class PostsView extends React.Component {
     post.toread = !post.toread
     const mergeCollection = merge(this.state.allPosts, post)
     const newState = filteredPosts(mergeCollection)
+    const newStateCount = filteredPostsCount(newState)
     this.setState(newState)
+    this.props.navigation.setParams(newStateCount)
     const apiToken = await Storage.apiToken()
     Api.postsAdd(post, apiToken)
   }
