@@ -1,4 +1,5 @@
 import queryString from 'query-string'
+import { replacer } from 'app/util/JsonUtils'
 
 const server = 'https://api.pinboard.in/v1'
 
@@ -6,19 +7,6 @@ const loginUrl = (parameters) => `${server}/user/api_token/?${parameters}`
 const updateUrl = (parameters) => `${server}/posts/update/?${parameters}`
 const postsAllUrl = (parameters) => `${server}/posts/all/?${parameters}`
 const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
-
-const replacer = (key, value) => {
-  switch (key) {
-    case 'shared':
-      return value ? 'yes' : 'no'
-    case 'toread':
-      return value ? 'yes' : 'no'
-    case 'tags':
-      return value ? value.join(' ') : ''
-    default:
-      return value
-  }
-}
 
 const handleResponse = (response) => {
   if (!response.ok) {

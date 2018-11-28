@@ -1,35 +1,18 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View } from 'react-native'
-import split from 'lodash/split'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import merge from 'lodash/merge'
 import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
+import { reviver } from 'app/util/JsonUtils'
 import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
 import PostModal from 'app/components/PostModal'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
-
-const reviver = (key, value) => {
-  switch (key) {
-    case 'extended':
-      return value.trim()
-    case 'shared':
-      return value === 'yes'
-    case 'toread':
-      return value === 'yes'
-    case 'time':
-      return new Date(value)
-    case 'tags':
-      return value !== '' ? split(value, ' ') : null
-    default:
-      return value
-  }
-}
 
 export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
