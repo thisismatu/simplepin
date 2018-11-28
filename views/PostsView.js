@@ -104,7 +104,7 @@ export default class PostsView extends React.Component {
     this.setState({ refreshing: false })
   }
 
-  onCellPress = (post) => {
+  onCellPress = post => () => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
       post.toread = !post.toread
@@ -119,7 +119,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  onCellLongPress = (post) => {
+  onCellLongPress = post => () => {
     this.setState({
       modalVisible: true,
       selectedPost: post,

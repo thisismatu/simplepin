@@ -23,52 +23,41 @@ Tag.propTypes = {
   index: PropTypes.number.isRequired,
 }
 
-export default class PostCell extends React.Component {
-  onPress = () => {
-    this.props.onCellPress(this.props.post)
-  }
-
-  onLongPress = () => {
-    this.props.onCellLongPress(this.props.post)
-  }
-
-  render() {
-    const { post } = this.props
-    return (
-      <TouchableOpacity
-        activeOpacity={0.7}
-        onPress={this.onPress}
-        onLongPress={this.onLongPress}
-      >
-        {
-          post.toread
-          ? <View style={styles.unread} />
-          : null
-        }
-        {
-          !post.shared
-          ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
-          : null
-        }
-        <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
-        {
-          post.extended
-          ? <Text style={styles.description}>{post.extended}</Text>
-          : null
-        }
-        <FlatList
-          bounces={false}
-          data={post.tags}
-          horizontal={true}
-          keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-          renderItem={({ item, index }) => <Tag tag={item} index={index} />}
-          showsHorizontalScrollIndicator={false}
-        />
-        <Text style={styles.time}>{post.time.toLocaleDateString()}</Text>
-      </TouchableOpacity>
-    )
-  }
+const PostCell = (props) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.7}
+      onPress={props.onCellPress(props.post)}
+      onLongPress={props.onCellLongPress(props.post)}
+    >
+      {
+        props.post.toread
+        ? <View style={styles.unread} />
+        : null
+      }
+      {
+        !props.post.shared
+        ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
+        : null
+      }
+      <Text style={[styles.title, props.post.toread && styles.titleUnread]}>{props.post.description}</Text>
+      {
+        props.post.extended
+        ? <Text style={styles.description}>{props.post.extended}</Text>
+        : null
+      }
+      <FlatList
+        bounces={false}
+        data={props.post.tags}
+        horizontal={true}
+        keyExtractor={(item, index) => index.toString()}
+        ListEmptyComponent={() => <View style={styles.emptyTagList} />}
+        renderItem={({ item, index }) => <Tag tag={item} index={index} />}
+        showsHorizontalScrollIndicator={false}
+      />
+      <Text style={styles.time}>{props.post.time.toLocaleDateString()}</Text>
+    </TouchableOpacity>
+  )
 }
 
 PostCell.propTypes = {
@@ -159,3 +148,5 @@ const styles = StyleSheet.create({
     color: Base.color.gray3,
   },
 })
+
+export default PostCell
