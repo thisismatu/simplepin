@@ -17,9 +17,7 @@ HeaderCell.propTypes = {
 
 const styles = StyleSheet.create({
   header: {
-    flex: 1,
     flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
     height: 48,
     marginTop: Base.padding.small,
