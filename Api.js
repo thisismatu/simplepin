@@ -7,6 +7,7 @@ const loginUrl = (parameters) => `${server}/user/api_token/?${parameters}`
 const updateUrl = (parameters) => `${server}/posts/update/?${parameters}`
 const postsAllUrl = (parameters) => `${server}/posts/all/?${parameters}`
 const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
+const postsDeleteUrl = (parameters) => `${server}/posts/delete/?${parameters}`
 
 const handleResponse = (response) => {
   if (!response.ok) {
@@ -63,6 +64,16 @@ const postsAdd = (post, token) => {
   return fetchWithErrorHandling(postsAddUrl(params))
 }
 
+const postsDelete = (post, token) => {
+  const data = {
+    'url': post.href,
+    'format': 'json',
+    'auth_token': token,
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(postsDeleteUrl(params))
+}
+
 const mockPosts = () => {
   const mock = 'http://192.168.0.18:3000/posts.json'
   return fetchWithErrorHandling(mock)
@@ -73,5 +84,6 @@ export default {
   update,
   postsAll,
   postsAdd,
+  postsDelete,
   mockPosts,
 }

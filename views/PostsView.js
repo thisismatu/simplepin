@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import filter from 'lodash/filter'
 import isEqual from 'lodash/isEqual'
 import merge from 'lodash/merge'
+import reject from 'lodash/reject'
 import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
@@ -114,6 +115,16 @@ export default class PostsView extends React.Component {
     Api.postsAdd(post, apiToken)
   }
 
+  deletePost = async (post) => {
+    const newCollection = reject(this.state.allPosts, { href: post.href })
+    const newState = filteredPosts(newCollection)
+    const newStateCount = filteredPostsCount(newState)
+    this.setState(newState)
+    this.props.navigation.setParams(newStateCount)
+    const apiToken = await Storage.apiToken()
+    Api.postsDelete(post, apiToken)
+  }
+
   onCellPress = post => () => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
@@ -133,6 +144,28 @@ export default class PostsView extends React.Component {
       modalVisible: false,
       selectedPost: {},
     })
+  }
+
+  onToggleRead = post => () => {
+    this.onModalClose()
+    this.updatePost(post)
+  }
+
+  onDeletePost = post => () => {
+    Alert.alert(
+      'Delte post?',
+      post.description,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'Delete',
+          onPress: () => {
+            this.onModalClose()
+            this.deletePost(post)
+          },
+          style: 'destructive',
+        },
+      ]
+    )
   }
 
   render() {
@@ -163,6 +196,8 @@ export default class PostsView extends React.Component {
         <PostModal
           modalVisible={this.state.modalVisible}
           onClose={this.onModalClose}
+          onToggleRead={this.onToggleRead}
+          onDeletePost={this.onDeletePost}
           post={this.state.selectedPost}
         />
       </View>
@@ -178,5 +213,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingVertical: Base.padding.tiny,
-  }
+  },
 })

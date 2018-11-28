@@ -29,6 +29,7 @@ const PostModal = (props) => {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cell}
+              onPress={props.onToggleRead(props.post)}
             >
               <Text style={styles.text}>Mark as {toread}</Text>
             </TouchableOpacity>
@@ -41,6 +42,7 @@ const PostModal = (props) => {
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cell}
+              onPress={props.onDeletePost(props.post)}
             >
               <Text style={styles.text}>Delete</Text>
             </TouchableOpacity>
@@ -64,6 +66,8 @@ const PostModal = (props) => {
 PostModal.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  onToggleRead: PropTypes.func.isRequired,
+  onDeletePost: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
 }
 
