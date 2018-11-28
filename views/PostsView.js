@@ -14,6 +14,15 @@ import PostModal from 'app/components/PostModal'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
+const filteredPosts = (obj) => {
+  return {
+    allPosts: obj,
+    unreadPosts: filter(obj, ['toread', true]),
+    privatePosts: filter(obj, ['shared', false]),
+    publicPosts: filter(obj, ['shared', true]),
+  }
+}
+
 export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -69,29 +78,14 @@ export default class PostsView extends React.Component {
     } else {
       const str = JSON.stringify(response)
       const obj = JSON.parse(str, reviver)
-      this.setState({
-        allPosts: obj,
-        unreadPosts: filter(obj, ['toread', true]),
-        privatePosts: filter(obj, ['shared', false]),
-        publicPosts: filter(obj, ['shared', true]),
-      })
+      const newState = filteredPosts(obj)
+      this.setState(newState)
       this.props.navigation.setParams({
         allCount: this.state.allPosts.length,
         unreadCount: this.state.unreadPosts.length,
         privateCount: this.state.privatePosts.length,
         publicCount: this.state.publicPosts.length,
       })
-    }
-  }
-
-  updatePost = async (post) => {
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsAdd(post, apiToken)
-    if(response.ok === 0) {
-      console.warn(response.error)
-    } else {
-      const str = JSON.stringify(response)
-      console.log(str)
     }
   }
 
@@ -104,17 +98,18 @@ export default class PostsView extends React.Component {
     this.setState({ refreshing: false })
   }
 
+  updatePost = async (post) => {
+    post.toread = !post.toread
+    const mergeCollection = merge(this.state.allPosts, post)
+    const newState = filteredPosts(mergeCollection)
+    this.setState(newState)
+    const apiToken = await Storage.apiToken()
+    Api.postsAdd(post, apiToken)
+  }
+
   onCellPress = post => () => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
-      post.toread = !post.toread
-      const mergeCollection = merge(this.state.allPosts, post)
-      this.setState({
-        allPosts: mergeCollection,
-        unreadPosts: filter(mergeCollection, ['toread', true]),
-        privatePosts: filter(mergeCollection, ['shared', false]),
-        publicPosts: filter(mergeCollection, ['shared', true]),
-      })
       this.updatePost(post)
     }
   }
@@ -133,7 +128,7 @@ export default class PostsView extends React.Component {
     })
   }
 
-  filterPosts(predicate) {
+  currentList(predicate) {
     switch (predicate) {
       case Strings.posts.unread:
         return this.state.unreadPosts
@@ -147,11 +142,11 @@ export default class PostsView extends React.Component {
   }
 
   render() {
-    const currentList = this.props.navigation.getParam('title', Strings.posts.all)
+    const titleParam = this.props.navigation.getParam('title', Strings.posts.all)
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          data={this.filterPosts(currentList)}
+          data={this.currentList(titleParam)}
           initialNumToRender={8}
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
           keyExtractor={(item, index) => index.toString()}
