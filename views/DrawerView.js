@@ -2,11 +2,36 @@ import React from 'react'
 import { StyleSheet, ScrollView, SafeAreaView, Platform } from 'react-native'
 import PropTypes from 'prop-types'
 import { Constants } from 'expo'
+import get from 'lodash/get'
+import isEqual from 'lodash/isEqual'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
 import Strings from 'app/assets/Strings'
 
 export default class DrawerView extends React.Component {
+  isRouteFocused = (route, param = null) => {
+    const { state } = this.props.navigation
+    const focusedRoute = get(state.routes[state.index], ['routes', '0', 'routeName'])
+    const focusedParam = get(state.routes[state.index], ['routes', '0', 'params', 'title'])
+    if (param) {
+      return isEqual([route, param],[focusedRoute, focusedParam])
+    }
+    return isEqual(route, focusedRoute)
+  }
+
+  routeCount = (param) => {
+    const { state } = this.props.navigation
+    return get(state.routes, ['0', 'routes', '0', 'params', param])
+  }
+
+  navigateTo = (route, param, isFocused) => () => {
+    if (isFocused) {
+      return this.props.navigation.closeDrawer()
+    }
+    this.props.navigation.closeDrawer()
+    this.props.navigation.navigate(route, param && { title: param })
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
@@ -19,38 +44,43 @@ export default class DrawerView extends React.Component {
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route="Posts"
-            param={Strings.posts.all}
-            text={Strings.posts.all}
-            secondary="allCount"
-            navigation={this.props.navigation}
+            title={Strings.posts.all}
+            count="allCount"
+            routeCount={this.routeCount}
+            isFocused={this.isRouteFocused}
+            navigateTo={this.navigateTo}
           />
           <DrawerCell
             route="Posts"
-            param={Strings.posts.unread}
-            text={Strings.posts.unread}
-            secondary="unreadCount"
-            navigation={this.props.navigation}
+            title={Strings.posts.unread}
+            count="unreadCount"
+            routeCount={this.routeCount}
+            isFocused={this.isRouteFocused}
+            navigateTo={this.navigateTo}
           />
           <DrawerCell
             route="Posts"
-            param={Strings.posts.private}
-            text={Strings.posts.private}
-            secondary="privateCount"
-            navigation={this.props.navigation}
+            title={Strings.posts.private}
+            count="privateCount"
+            routeCount={this.routeCount}
+            isFocused={this.isRouteFocused}
+            navigateTo={this.navigateTo}
           />
           <DrawerCell
             route="Posts"
-            param={Strings.posts.public}
-            text={Strings.posts.public}
-            secondary="publicCount"
-            navigation={this.props.navigation}
+            title={Strings.posts.public}
+            count="publicCount"
+            routeCount={this.routeCount}
+            isFocused={this.isRouteFocused}
+            navigateTo={this.navigateTo}
           />
 
           <HeaderCell text={Strings.common.simplepin} />
           <DrawerCell
             route="Settings"
-            text={Strings.settings.title}
-            navigation={this.props.navigation}
+            title={Strings.settings.title}
+            isFocused={this.isRouteFocused}
+            navigateTo={this.navigateTo}
           />
         </ScrollView>
       </SafeAreaView>
