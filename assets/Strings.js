@@ -3,6 +3,10 @@ const Strings = {
     simplepin: 'Simplepin',
     cancel: 'Cancel',
     ok: 'OK',
+    delete: 'Delete',
+    deletePost: 'Delte post?',
+    edit: 'Edit',
+    markAs: 'Mark as',
   },
   error: {
     login: 'Login failed',

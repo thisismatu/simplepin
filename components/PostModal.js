@@ -31,20 +31,20 @@ const PostModal = (props) => {
               style={styles.cell}
               onPress={props.onToggleRead(props.post)}
             >
-              <Text style={styles.text}>Mark as {toread}</Text>
+              <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cell}
             >
-              <Text style={styles.text}>Edit</Text>
+              <Text style={styles.text}>{Strings.common.edit}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               activeOpacity={0.7}
               style={styles.cell}
               onPress={props.onDeletePost(props.post)}
             >
-              <Text style={styles.text}>Delete</Text>
+              <Text style={styles.text}>{Strings.common.delete}</Text>
             </TouchableOpacity>
           </View>
           <Separator />
@@ -54,7 +54,7 @@ const PostModal = (props) => {
               style={styles.cell}
               onPress={props.onClose}
             >
-              <Text style={styles.text}>Cancel</Text>
+              <Text style={styles.text}>{Strings.common.cancel}</Text>
             </TouchableOpacity>
           </View>
         </View>

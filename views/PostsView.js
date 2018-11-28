@@ -153,11 +153,11 @@ export default class PostsView extends React.Component {
 
   onDeletePost = post => () => {
     Alert.alert(
-      'Delte post?',
+      Strings.common.deletePost,
       post.description,
       [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete',
+        { text: Strings.common.cancel, style: 'cancel' },
+        { text: Strings.common.delete,
           onPress: () => {
             this.onModalClose()
             this.deletePost(post)
