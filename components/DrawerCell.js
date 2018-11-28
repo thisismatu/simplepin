@@ -9,7 +9,7 @@ const DrawerCell = (props) => {
     <TouchableOpacity
       style={[styles.cell, isFocused && styles.active]}
       activeOpacity={0.7}
-      onPress={props.navigateTo(props.route, props.title, isFocused)}
+      onPress={props.navigateTo(props.route, props.title, props.list, isFocused)}
     >
       <Text style={styles.text}>{props.title}</Text>
       {
@@ -22,12 +22,13 @@ const DrawerCell = (props) => {
 }
 
 DrawerCell.propTypes = {
-  count: PropTypes.string,
   isFocused: PropTypes.func.isRequired,
   navigateTo: PropTypes.func.isRequired,
   route: PropTypes.string.isRequired,
-  routeCount: PropTypes.func,
   title: PropTypes.string.isRequired,
+  count: PropTypes.string,
+  list: PropTypes.string,
+  routeCount: PropTypes.func,
 }
 
 const styles = StyleSheet.create({

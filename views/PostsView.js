@@ -135,25 +135,12 @@ export default class PostsView extends React.Component {
     })
   }
 
-  currentList(predicate) {
-    switch (predicate) {
-      case Strings.posts.unread:
-        return this.state.unreadPosts
-      case Strings.posts.private:
-        return this.state.privatePosts
-      case Strings.posts.public:
-        return this.state.publicPosts
-      default:
-        return this.state.allPosts
-    }
-  }
-
   render() {
-    const titleParam = this.props.navigation.getParam('title', Strings.posts.all)
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          data={this.currentList(titleParam)}
+          data={this.state[currentList]}
           initialNumToRender={8}
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
           keyExtractor={(item, index) => index.toString()}

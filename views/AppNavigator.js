@@ -23,7 +23,7 @@ const PostsStack = createStackNavigator(
   },
   {
     initialRouteName: 'Posts',
-    initialRouteParams: { title: Strings.posts.all },
+    initialRouteParams: { title: Strings.posts.all, list: 'allPosts' },
     navigationOptions: headerStyles,
   }
 )

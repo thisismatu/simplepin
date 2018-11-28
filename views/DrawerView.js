@@ -24,12 +24,12 @@ export default class DrawerView extends React.Component {
     return get(state.routes, ['0', 'routes', '0', 'params', param])
   }
 
-  navigateTo = (route, param, isFocused) => () => {
+  navigateTo = (route, title, list = null, isFocused) => () => {
     if (isFocused) {
       return this.props.navigation.closeDrawer()
     }
     this.props.navigation.closeDrawer()
-    this.props.navigation.navigate(route, param && { title: param })
+    this.props.navigation.navigate(route, { title: title, list: list })
   }
 
   render() {
@@ -46,6 +46,7 @@ export default class DrawerView extends React.Component {
             route="Posts"
             title={Strings.posts.all}
             count="allCount"
+            list="allPosts"
             routeCount={this.routeCount}
             isFocused={this.isRouteFocused}
             navigateTo={this.navigateTo}
@@ -54,6 +55,7 @@ export default class DrawerView extends React.Component {
             route="Posts"
             title={Strings.posts.unread}
             count="unreadCount"
+            list="unreadPosts"
             routeCount={this.routeCount}
             isFocused={this.isRouteFocused}
             navigateTo={this.navigateTo}
@@ -62,6 +64,7 @@ export default class DrawerView extends React.Component {
             route="Posts"
             title={Strings.posts.private}
             count="privateCount"
+            list="privatePosts"
             routeCount={this.routeCount}
             isFocused={this.isRouteFocused}
             navigateTo={this.navigateTo}
@@ -70,6 +73,7 @@ export default class DrawerView extends React.Component {
             route="Posts"
             title={Strings.posts.public}
             count="publicCount"
+            list="publicPosts"
             routeCount={this.routeCount}
             isFocused={this.isRouteFocused}
             navigateTo={this.navigateTo}
