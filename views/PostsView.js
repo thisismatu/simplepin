@@ -127,7 +127,10 @@ export default class PostsView extends React.Component {
   }
 
   onModalClose = () => {
-    this.setState({ modalVisible: false })
+    this.setState({
+      modalVisible: false,
+      selectedPost: {},
+    })
   }
 
   filterPosts(predicate) {
