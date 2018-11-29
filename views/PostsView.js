@@ -11,7 +11,7 @@ import { reviver } from 'app/util/JsonUtils'
 import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
-import PostModal from 'app/components/PostModal'
+import BottomSheet from 'app/components/BottomSheet'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -193,7 +193,7 @@ export default class PostsView extends React.Component {
           }
           style={styles.container}
         />
-        <PostModal
+        <BottomSheet
           modalVisible={this.state.modalVisible}
           onClose={this.onModalClose}
           onToggleRead={this.onToggleRead}

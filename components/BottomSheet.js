@@ -6,12 +6,12 @@ import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
-const BottomSheetView = Platform.select({
+const BottomView = Platform.select({
   ios: () => SafeAreaView,
   android: () => View,
 })()
 
-const PostModal = (props) => {
+const BottomSheet = (props) => {
   const toread = props.post.toread ? 'read' : 'unread'
   return (
     <Modal
@@ -26,7 +26,7 @@ const PostModal = (props) => {
         style={{ flex: 1 }}
         onPress={props.onClose}
       />
-      <BottomSheetView style={styles.bottomSheet}>
+      <BottomView style={styles.bottomSheet}>
         <View style={{ paddingVertical: 20, paddingHorizontal: 16 }}>
           <Text style={[styles.text, styles.title]}>{props.post.description}</Text>
         </View>
@@ -63,12 +63,12 @@ const PostModal = (props) => {
             <Text style={styles.text}>{Strings.common.cancel}</Text>
           </TouchableOpacity>
         </View>
-      </BottomSheetView>
+      </BottomView>
     </Modal>
   )
 }
 
-PostModal.propTypes = {
+BottomSheet.propTypes = {
   modalVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onToggleRead: PropTypes.func.isRequired,
@@ -104,4 +104,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default PostModal
+export default BottomSheet
