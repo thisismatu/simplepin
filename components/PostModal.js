@@ -1,9 +1,15 @@
 import React from 'react'
-import { StyleSheet, Modal, TouchableOpacity, View, Text } from 'react-native'
+import { StyleSheet, Modal, TouchableOpacity, View, Text, Platform } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
+
+const BottomSheetView = Platform.select({
+  ios: () => SafeAreaView,
+  android: () => View,
+})()
 
 const PostModal = (props) => {
   const toread = props.post.toread ? 'read' : 'unread'
@@ -17,48 +23,47 @@ const PostModal = (props) => {
     >
       <TouchableOpacity
         activeOpacity={1}
-        style={styles.wrapper}
+        style={{ flex: 1 }}
         onPress={props.onClose}
-      >
-        <View style={styles.container}>
-          <View style={{ paddingVertical: 20, paddingHorizontal: 16 }}>
-            <Text style={[styles.text, styles.title]}>{props.post.description}</Text>
-          </View>
-          <Separator />
-          <View style={styles.section}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.cell}
-              onPress={props.onToggleRead(props.post)}
-            >
-              <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.cell}
-            >
-              <Text style={styles.text}>{Strings.common.edit}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.cell}
-              onPress={props.onDeletePost(props.post)}
-            >
-              <Text style={styles.text}>{Strings.common.delete}</Text>
-            </TouchableOpacity>
-          </View>
-          <Separator />
-          <View style={styles.section}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              style={styles.cell}
-              onPress={props.onClose}
-            >
-              <Text style={styles.text}>{Strings.common.cancel}</Text>
-            </TouchableOpacity>
-          </View>
+      />
+      <BottomSheetView style={styles.bottomSheet}>
+        <View style={{ paddingVertical: 20, paddingHorizontal: 16 }}>
+          <Text style={[styles.text, styles.title]}>{props.post.description}</Text>
         </View>
-      </TouchableOpacity>
+        <Separator />
+        <View style={styles.section}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.cell}
+            onPress={props.onToggleRead(props.post)}
+          >
+            <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.cell}
+          >
+            <Text style={styles.text}>{Strings.common.edit}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.cell}
+            onPress={props.onDeletePost(props.post)}
+          >
+            <Text style={styles.text}>{Strings.common.delete}</Text>
+          </TouchableOpacity>
+        </View>
+        <Separator />
+        <View style={styles.section}>
+          <TouchableOpacity
+            activeOpacity={0.7}
+            style={styles.cell}
+            onPress={props.onClose}
+          >
+            <Text style={styles.text}>{Strings.common.cancel}</Text>
+          </TouchableOpacity>
+        </View>
+      </BottomSheetView>
     </Modal>
   )
 }
@@ -72,11 +77,7 @@ PostModal.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  container: {
+  bottomSheet: {
     backgroundColor: Base.color.white,
     shadowColor: '#000',
     shadowOpacity: 0.15,
