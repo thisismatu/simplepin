@@ -6,7 +6,7 @@ import Base from 'app/assets/Base'
 const MenuButton = ({ navigation }) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
+      activeOpacity={0.5}
       onPress={() => navigation.dismiss()}
     >
       <Image source={require('app/assets/ic-close.png')} style={styles.menuButton} />

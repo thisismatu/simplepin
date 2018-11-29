@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 48,
+    height: Base.row.medium,
     marginTop: Base.padding.small,
     paddingHorizontal: Base.padding.medium,
   },

@@ -54,7 +54,7 @@ export default class BrowserView extends React.Component {
     return (
       <View style={styles.toolbar}>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           disabled={!this.state.canGoBack}
           onPress={() => this.webview.goBack()}
           style={styles.button}
@@ -65,7 +65,7 @@ export default class BrowserView extends React.Component {
           />
         </TouchableOpacity>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           disabled={!this.state.canGoForward}
           onPress={() => this.webview.goForward()}
           style={styles.button}

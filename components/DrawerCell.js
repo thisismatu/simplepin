@@ -8,7 +8,7 @@ const DrawerCell = (props) => {
   return (
     <TouchableOpacity
       style={[styles.cell, isFocused && styles.active]}
-      activeOpacity={0.7}
+      activeOpacity={0.5}
       onPress={props.navigateTo(props.route, props.title, props.list, isFocused)}
     >
       <Text style={styles.text}>{props.title}</Text>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 48,
+    height: Base.row.medium,
     paddingHorizontal: Base.padding.medium,
   },
   active: {

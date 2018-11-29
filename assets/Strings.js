@@ -4,7 +4,7 @@ const Strings = {
     cancel: 'Cancel',
     ok: 'OK',
     delete: 'Delete',
-    deletePost: 'Delte bookmark',
+    deletePost: 'Delte bookmark?',
     edit: 'Edit',
     markAs: 'Mark as',
   },

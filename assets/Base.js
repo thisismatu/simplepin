@@ -7,6 +7,7 @@ const color = {
   gray4: '#111111',
   white: '#FFFFFF',
   border: 'rgba(0,0,0,0.12)',
+  overlay: 'rgba(0,0,0,0.4)',
 }
 
 const padding = {
@@ -18,12 +19,24 @@ const padding = {
 }
 
 const font = {
-  small: 13,
-  medium: 15,
-  large: 17,
+  small: 12,
+  medium: 14,
+  large: 16,
   huge: 20,
   bold: '600',
   regular: '400',
+}
+
+const line = {
+  small: 16,
+  medium: 20,
+  large: 22,
+}
+
+const row = {
+  small: 40,
+  medium: 48,
+  large: 56,
 }
 
 const radius = {
@@ -35,5 +48,7 @@ export default {
   color,
   padding,
   font,
+  line,
+  row,
   radius,
 }

@@ -48,7 +48,6 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.privateByDefault}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
             value={this.state.switch}
           />
@@ -58,7 +57,6 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.unreadByDefault}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
             value={this.state.switch}
           />
@@ -68,7 +66,7 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.markAsReadWhenOpened}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
+            thumbColor={thumb(this.state.markAsRead)}
             trackColor={{ true: track }}
             onValueChange={this.onToggleSwitch}
             value={this.state.markAsRead}
@@ -87,7 +85,6 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.openLinksInDefaultBrowser}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
             value={this.state.switch}
           />
@@ -100,7 +97,6 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.exactDates}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.switch)}
             trackColor={{ true: track }}
             value={this.state.switch}
           />
@@ -129,7 +125,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 48,
+    height: Base.row.medium,
   },
   text: {
     color: Base.color.gray4,

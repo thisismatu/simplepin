@@ -8,7 +8,7 @@ const Tag = ({ tag, index }) => {
   const isPrivateTag = startsWith(tag, '.')
   return(
     <TouchableOpacity
-      activeOpacity={0.7}
+      activeOpacity={0.5}
       style={[styles.tagContainer, index === 0 && styles.firstTag]}
     >
       <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
@@ -26,7 +26,7 @@ Tag.propTypes = {
 const PostCell = (props) => {
   return (
     <TouchableOpacity
-      activeOpacity={0.7}
+      activeOpacity={0.5}
       onPress={props.onCellPress(props.post)}
       onLongPress={props.onCellLongPress(props.post)}
     >
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     height: 9,
     left: 8,
     position: 'absolute',
-    top: 20,
+    top: 19,
     width: 9,
   },
   private: {
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
   title: {
     color: Base.color.gray4,
     fontSize: Base.font.large,
-    lineHeight: 24,
+    lineHeight: Base.line.large,
     paddingTop: 12,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
   description: {
     color: Base.color.gray3,
     fontSize: Base.font.medium,
-    lineHeight: 20,
+    lineHeight: Base.line.medium,
     paddingTop: Base.padding.tiny,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
@@ -116,20 +116,20 @@ const styles = StyleSheet.create({
   time: {
     color: Base.color.gray3,
     fontSize: Base.font.medium,
-    lineHeight: 20,
-    paddingBottom: 14,
+    lineHeight: Base.line.medium,
+    paddingBottom: 12,
     paddingLeft: Base.padding.large,
     paddingRight: Base.padding.medium,
   },
   emptyTagList: {
-    height: 5,
+    height: 4,
   },
   firstTag: {
     marginLeft: Base.padding.large - Base.padding.tiny,
   },
   tagContainer: {
     paddingHorizontal: Base.padding.tiny,
-    paddingVertical: Base.padding.small,
+    paddingVertical: 6,
   },
   tag: {
     backgroundColor: Base.color.blue1,
@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
   },
   tagText: {
     color: Base.color.blue2,
-    lineHeight: 16,
+    fontSize: Base.font.small,
+    lineHeight: Base.line.small,
   },
   privateTag: {
     backgroundColor: Base.color.gray1,

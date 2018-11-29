@@ -2,7 +2,6 @@ import React from 'react'
 import { StyleSheet, Modal, TouchableOpacity, View, Text, Platform } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
-import Separator from 'app/components/Separator'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -27,36 +26,40 @@ const BottomSheet = (props) => {
         onPress={props.onClose}
       />
       <BottomView style={styles.bottomSheet}>
-        <View style={{ paddingVertical: 20, paddingHorizontal: 16 }}>
-          <Text style={[styles.text, styles.title]}>{props.post.description}</Text>
-        </View>
-        <Separator />
         <View style={styles.section}>
+          <View style={styles.cell}>
+            <Text
+              style={[styles.text, styles.title]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {props.post.description}
+            </Text>
+          </View>
+
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.cell}
             onPress={props.onToggleRead(props.post)}
           >
             <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.cell}
           >
             <Text style={styles.text}>{Strings.common.edit}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.cell}
             onPress={props.onDeletePost(props.post)}
           >
             <Text style={styles.text}>{Strings.common.delete}</Text>
           </TouchableOpacity>
-        </View>
-        <Separator />
-        <View style={styles.section}>
+
           <TouchableOpacity
-            activeOpacity={0.7}
+            activeOpacity={0.5}
             style={styles.cell}
             onPress={props.onClose}
           >
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   cell: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 48,
+    height: Base.row.large,
     paddingHorizontal: Base.padding.medium,
   },
   text: {
@@ -99,8 +102,7 @@ const styles = StyleSheet.create({
     fontSize: Base.font.large,
   },
   title: {
-    fontWeight: '600',
-    lineHeight: 24,
+    fontWeight: Base.font.bold,
   },
 })
 

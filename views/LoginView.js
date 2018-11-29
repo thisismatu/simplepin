@@ -99,7 +99,7 @@ export default class LoginView extends React.Component {
           onChange={this.onChange}
         />
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           disabled={!this.state.apiToken}
           style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
           onPress={this.onSubmit}
@@ -107,7 +107,7 @@ export default class LoginView extends React.Component {
           <Text style={styles.loginButtonText}>{Strings.login.button}</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          activeOpacity={0.7}
+          activeOpacity={0.5}
           style={styles.tokenButton}
           onPress={() => console.log('Show API token')}
         >
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   text: {
     color: Base.color.gray3,
     fontSize: Base.font.medium,
-    lineHeight: 24,
+    lineHeight: Base.line.medium,
     marginBottom: Base.padding.large,
     textAlign: 'center',
   },
@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     color: Base.color.gray4,
     fontSize: Base.font.medium,
-    height: 48,
+    height: Base.row.medium,
     marginBottom: Base.padding.large,
     textAlign: 'center',
     width: '100%',
@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     color: Base.color.white,
     fontSize: Base.font.medium,
     fontWeight: Base.font.bold,
-    lineHeight: 16,
+    lineHeight: Base.line.small,
     textAlign: 'center',
   },
   tokenButton: {
