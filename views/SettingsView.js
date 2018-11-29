@@ -22,6 +22,7 @@ export default class SetingsView extends React.Component {
     super(props)
     this.state = {
       markAsRead: false,
+      exactDate: false,
     }
   }
 
@@ -29,11 +30,19 @@ export default class SetingsView extends React.Component {
     Storage.markAsRead().then((value) => {
       this.setState({ markAsRead: !!value })
     })
+    Storage.exactDate().then((value) => {
+      this.setState({ exactDate: !!value })
+    })
   }
 
-  onToggleSwitch = (value) => {
+  onMarkAsRead = (value) => {
     Storage.setMarkAsRead(value)
     this.setState({ markAsRead: value })
+  }
+
+  onExactDate = (value) => {
+    Storage.setExactDate(value)
+    this.setState({ exactDate: value })
   }
 
   render() {
@@ -49,7 +58,6 @@ export default class SetingsView extends React.Component {
           <Switch
             style={styles.switch}
             trackColor={{ true: track }}
-            value={this.state.switch}
           />
         </View>
         <Separator />
@@ -58,7 +66,6 @@ export default class SetingsView extends React.Component {
           <Switch
             style={styles.switch}
             trackColor={{ true: track }}
-            value={this.state.switch}
           />
         </View>
         <Separator />
@@ -68,7 +75,7 @@ export default class SetingsView extends React.Component {
             style={styles.switch}
             thumbColor={thumb(this.state.markAsRead)}
             trackColor={{ true: track }}
-            onValueChange={this.onToggleSwitch}
+            onValueChange={this.onMarkAsRead}
             value={this.state.markAsRead}
           />
         </View>
@@ -86,7 +93,6 @@ export default class SetingsView extends React.Component {
           <Switch
             style={styles.switch}
             trackColor={{ true: track }}
-            value={this.state.switch}
           />
         </View>
         <Separator />
@@ -97,8 +103,10 @@ export default class SetingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.exactDates}</Text>
           <Switch
             style={styles.switch}
+            thumbColor={thumb(this.state.exactDate)}
             trackColor={{ true: track }}
-            value={this.state.switch}
+            onValueChange={this.onExactDate}
+            value={this.state.exactDate}
           />
         </View>
         <Separator />

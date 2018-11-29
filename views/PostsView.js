@@ -62,6 +62,9 @@ export default class PostsView extends React.Component {
       Storage.markAsRead().then((value) => {
         this.setState({ markAsRead: !!value })
       })
+      Storage.exactDate().then((value) => {
+        this.setState({ exactDate: !!value })
+      })
     }
   }
 
