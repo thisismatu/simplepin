@@ -51,6 +51,7 @@ export default class PostsView extends React.Component {
       refreshing: false,
       lastUpdateTime: null,
       markAsRead: false,
+      exactDate: false,
       modalVisible: false,
       selectedPost: {},
     }
@@ -183,6 +184,7 @@ export default class PostsView extends React.Component {
               post={item}
               onCellPress={this.onCellPress}
               onCellLongPress={this.onCellLongPress}
+              exactDate={this.state.exactDate}
             />
           }
           refreshControl={

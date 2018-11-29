@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
+import TimeAgo from 'app/components/TimeAgo'
 import Base from 'app/assets/Base'
 
 const Tag = ({ tag, index }) => {
@@ -55,7 +56,11 @@ const PostCell = (props) => {
         renderItem={({ item, index }) => <Tag tag={item} index={index} />}
         showsHorizontalScrollIndicator={false}
       />
-      <Text style={styles.time}>{props.post.time.toLocaleDateString()}</Text>
+      <TimeAgo
+        style={styles.time}
+        time={props.post.time}
+        exactDate={props.exactDate}
+      />
     </TouchableOpacity>
   )
 }
@@ -63,6 +68,7 @@ const PostCell = (props) => {
 PostCell.propTypes = {
   onCellPress: PropTypes.func.isRequired,
   onCellLongPress: PropTypes.func.isRequired,
+  exactDate: PropTypes.bool.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
