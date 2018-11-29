@@ -29,7 +29,7 @@ const BottomSheet = (props) => {
         <View style={styles.section}>
           <View style={styles.cell}>
             <Text
-              style={[styles.text, styles.title]}
+              style={styles.title}
               numberOfLines={1}
               ellipsizeMode="tail"
             >
@@ -102,7 +102,9 @@ const styles = StyleSheet.create({
     fontSize: Base.font.large,
   },
   title: {
-    fontWeight: Base.font.bold,
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
+    marginTop: Base.padding.tiny,
   },
 })
 
