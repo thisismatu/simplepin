@@ -129,6 +129,10 @@ export default class PostsView extends React.Component {
     Api.postsDelete(post, apiToken)
   }
 
+  toggleModal = () => {
+    this.setState({ modalVisible: !this.state.modalVisible })
+  }
+
   onCellPress = post => () => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
@@ -137,22 +141,17 @@ export default class PostsView extends React.Component {
   }
 
   onCellLongPress = post => () => {
-    this.setState({
-      modalVisible: true,
-      selectedPost: post,
-    })
+    this.toggleModal()
+    this.setState({ selectedPost: post })
   }
 
-  onModalClose = () => {
-    this.setState({
-      modalVisible: false,
-      selectedPost: {},
-    })
-  }
-
-  onToggleRead = post => () => {
-    this.onModalClose()
+  onToggleToread = post => () => {
+    this.toggleModal()
     this.updatePost(post)
+  }
+
+  onEditPost = post => () => {
+    console.log('TODO: edit post view \n', post)
   }
 
   onDeletePost = post => () => {
@@ -163,7 +162,7 @@ export default class PostsView extends React.Component {
         { text: Strings.common.cancel, style: 'cancel' },
         { text: Strings.common.delete,
           onPress: () => {
-            this.onModalClose()
+            this.toggleModal()
             this.deletePost(post)
           },
           style: 'destructive',
@@ -200,8 +199,9 @@ export default class PostsView extends React.Component {
         />
         <BottomSheet
           modalVisible={this.state.modalVisible}
-          onClose={this.onModalClose}
-          onToggleRead={this.onToggleRead}
+          onClose={this.toggleModal}
+          onToggleToread={this.onToggleToread}
+          onEditPost={this.onEditPost}
           onDeletePost={this.onDeletePost}
           post={this.state.selectedPost}
         />
