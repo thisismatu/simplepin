@@ -25,6 +25,7 @@ Tag.propTypes = {
 }
 
 const PostCell = (props) => {
+  const tags = props.post.tags && props.tagOrder  ? props.post.tags.sort() : props.post.tags
   return (
     <TouchableOpacity
       activeOpacity={0.5}
@@ -49,11 +50,16 @@ const PostCell = (props) => {
       }
       <FlatList
         bounces={false}
-        data={props.post.tags}
+        data={tags}
         horizontal={true}
         keyExtractor={(item, index) => index.toString()}
         ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-        renderItem={({ item, index }) => <Tag tag={item} index={index} />}
+        renderItem={({ item, index }) =>
+          <Tag
+            tag={item}
+            index={index}
+          />
+        }
         showsHorizontalScrollIndicator={false}
       />
       <TimeAgo
@@ -69,6 +75,7 @@ PostCell.propTypes = {
   onCellPress: PropTypes.func.isRequired,
   onCellLongPress: PropTypes.func.isRequired,
   exactDate: PropTypes.bool.isRequired,
+  tagOrder: PropTypes.bool.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

@@ -52,6 +52,7 @@ export default class PostsView extends React.Component {
       lastUpdateTime: null,
       markAsRead: false,
       exactDate: false,
+      tagOrder: false,
       modalVisible: false,
       selectedPost: {},
     }
@@ -64,6 +65,9 @@ export default class PostsView extends React.Component {
       })
       Storage.exactDate().then((value) => {
         this.setState({ exactDate: !!value })
+      })
+      Storage.tagOrder().then((value) => {
+        this.setState({ tagOrder: !!value })
       })
     }
   }
@@ -187,6 +191,7 @@ export default class PostsView extends React.Component {
               onCellPress={this.onCellPress}
               onCellLongPress={this.onCellLongPress}
               exactDate={this.state.exactDate}
+              tagOrder={this.state.tagOrder}
             />
           }
           refreshControl={

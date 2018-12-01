@@ -23,6 +23,7 @@ export default class SetingsView extends React.Component {
     this.state = {
       markAsRead: false,
       exactDate: false,
+      tagOrder: false,
     }
   }
 
@@ -32,6 +33,9 @@ export default class SetingsView extends React.Component {
     })
     Storage.exactDate().then((value) => {
       this.setState({ exactDate: !!value })
+    })
+    Storage.tagOrder().then((value) => {
+      this.setState({ tagOrder: !!value })
     })
   }
 
@@ -43,6 +47,11 @@ export default class SetingsView extends React.Component {
   onExactDate = (value) => {
     Storage.setExactDate(value)
     this.setState({ exactDate: value })
+  }
+
+  onTagOrder = (value) => {
+    Storage.setTagOrder(value)
+    this.setState({ tagOrder: value })
   }
 
   render() {
@@ -111,8 +120,14 @@ export default class SetingsView extends React.Component {
         </View>
         <Separator />
         <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.sortTags}</Text>
-          <Text style={styles.secondary}>Default</Text>
+          <Text style={styles.text}>{Strings.settings.sortTagsAlphabetically}</Text>
+          <Switch
+            style={styles.switch}
+            thumbColor={thumb(this.state.tagOrder)}
+            trackColor={{ true: track }}
+            onValueChange={this.onTagOrder}
+            value={this.state.tagOrder}
+          />
         </View>
         <Separator />
         <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>

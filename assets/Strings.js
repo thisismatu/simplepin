@@ -38,7 +38,7 @@ const Strings = {
     openLinksInDefaultBrowser: 'Open links in default browser',
     display: 'Display',
     exactDates: 'Exact dates',
-    sortTags: 'Sort tags',
+    sortTagsAlphabetically: 'Sort tags alphabetically',
   },
 }
 

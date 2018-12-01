@@ -4,6 +4,7 @@ const keys = {
   apiToken: '@Simplepin:apiToken',
   markAsRead: '@Simplepin:markAsRead',
   exactDate: '@Simplepin:exactDate',
+  tagOrder: '@Simplepin:tagOrder',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
@@ -32,6 +33,16 @@ const setExactDate = async (exactDate) => {
   await AsyncStorage.setItem(keys.exactDate, value)
 }
 
+const tagOrder = async () => {
+  const value = await AsyncStorage.getItem(keys.tagOrder)
+  return JSON.parse(value)
+}
+
+const setTagOrder = async (tagOrder) => {
+  const value = JSON.stringify(tagOrder)
+  await AsyncStorage.setItem(keys.tagOrder, value)
+}
+
 export default {
   apiToken,
   setApiToken,
@@ -39,4 +50,6 @@ export default {
   setMarkAsRead,
   exactDate,
   setExactDate,
+  tagOrder,
+  setTagOrder,
 }
