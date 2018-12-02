@@ -1,9 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState, ActivityIndicator } from 'react-native'
 import PropTypes from 'prop-types'
-import lodash from 'lodash/lodash'
-import get from 'lodash/get'
-import split from 'lodash/split'
 import Storage from 'app/util/Storage'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
@@ -21,6 +18,7 @@ export default class LoginView extends React.Component {
       appState: AppState.currentState,
       apiToken: '',
       clipboardContent: null,
+      loading: false,
     }
   }
 
@@ -45,10 +43,13 @@ export default class LoginView extends React.Component {
   }
 
   onSubmit = async () => {
+    this.setState({ loading: true })
     const response = await Api.login(this.state.apiToken)
     if (response.ok === 0) {
+      this.setState({ loading: false })
       this.showAlert(response.error)
     } else {
+      this.setState({ loading: false })
       Storage.setApiToken(this.state.apiToken)
       this.props.navigation.navigate('App')
     }
@@ -58,7 +59,7 @@ export default class LoginView extends React.Component {
     const clipboardContent = await Clipboard.getString()
     this.setState({ clipboardContent: clipboardContent.trim() })
     const regex = /[A-Z,0-9]/g
-    const tokenLatterPart = lodash(this.state.clipboardContent).split(':').get(['1'])
+    const tokenLatterPart = this.state.clipboardContent.split(':')[1]
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {
       this.setState({ apiToken: this.state.clipboardContent })
     }
@@ -113,6 +114,7 @@ export default class LoginView extends React.Component {
         >
           <Text style={styles.text}>{Strings.login.token}</Text>
         </TouchableOpacity>
+        <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
       </View>
     )
   }
