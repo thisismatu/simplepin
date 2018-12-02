@@ -64,11 +64,40 @@ export default class PostsView extends React.Component {
     this.onRefresh()
   }
 
+  handleError = (error) => {
+    switch (error) {
+      case 401:
+        return Alert.alert(
+          Strings.error.invalidToken,
+          Strings.error.logInAgain,
+          [{ onPress: () => {
+            Storage.removeApiToken()
+            this.props.navigation.navigate('AuthLoading')
+          } }]
+        )
+      case 429:
+        return Alert.alert(
+          Strings.error.tooManyRequests,
+          Strings.error.tryAgainLater,
+        )
+      case 500,503:
+        return Alert.alert(
+          Strings.error.troubleConnecting,
+          Strings.error.pinboardDown,
+        )
+      default:
+        return Alert.alert(
+          Strings.error.somethingWrong,
+          Strings.error.tryAgainLater,
+        )
+    }
+  }
+
   checkForUpdates = async () => {
     const apiToken = await Storage.apiToken()
     const response = await Api.update(apiToken)
     if (response.ok === 0) {
-      console.warn(response.error)
+      this.handleError(response.error)
     } else if (response.update_time !== this.state.lastUpdateTime) {
       this.setState({ lastUpdateTime: response.update_time })
       return true
@@ -80,7 +109,7 @@ export default class PostsView extends React.Component {
     const apiToken = await Storage.apiToken()
     const response = await Api.postsAll(apiToken)
     if(response.ok === 0) {
-      console.warn(response.error)
+      this.handleError(response.error)
     } else {
       const str = JSON.stringify(response)
       const obj = JSON.parse(str, reviver)
@@ -102,13 +131,16 @@ export default class PostsView extends React.Component {
 
   updatePost = async (post) => {
     post.toread = !post.toread
-    const mergeCollection = merge(this.state.allPosts, post)
-    const newState = filteredPosts(mergeCollection)
+    const newCollection = merge(this.state.allPosts, post)
+    const newState = filteredPosts(newCollection)
     const newStateCount = filteredPostsCount(newState)
     this.setState(newState)
     this.props.navigation.setParams(newStateCount)
     const apiToken = await Storage.apiToken()
-    Api.postsAdd(post, apiToken)
+    const response = await Api.postsAdd(post, apiToken)
+    if(response.ok === 0) {
+      this.handleError(response.error)
+    }
   }
 
   deletePost = async (post) => {
@@ -118,7 +150,10 @@ export default class PostsView extends React.Component {
     this.setState(newState)
     this.props.navigation.setParams(newStateCount)
     const apiToken = await Storage.apiToken()
-    Api.postsDelete(post, apiToken)
+    const response = await Api.postsDelete(post, apiToken)
+    if(response.ok === 0) {
+      this.handleError(response.error)
+    }
   }
 
   toggleModal = () => {

@@ -11,6 +11,7 @@ const postsDeleteUrl = (parameters) => `${server}/posts/delete/?${parameters}`
 
 const handleResponse = (response) => {
   if (!response.ok) {
+    console.warn(response.status)
     return Promise.resolve({ ok: 0, error: response.status })
   }
   return response.json()

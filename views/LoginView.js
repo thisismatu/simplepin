@@ -66,18 +66,18 @@ export default class LoginView extends React.Component {
   }
 
   showAlert(error) {
-    var errorMessage
     switch (error) {
-      case 503:
-        errorMessage = Strings.error.unavailable
-        break
+      case 401, 500:
+        return Alert.alert(
+          Strings.error.loginFailed,
+          Strings.error.incorrectToken
+        )
       default:
-        errorMessage = Strings.error.token
+        return Alert.alert(
+          Strings.error.somethingWrong,
+          Strings.error.tryAgainLater
+        )
     }
-    Alert.alert(
-      Strings.error.login,
-      errorMessage
-    )
   }
 
   render() {
