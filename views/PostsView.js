@@ -7,6 +7,7 @@ import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
+import { handleResponseError } from 'app/util/ErrorUtils'
 import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
@@ -64,40 +65,11 @@ export default class PostsView extends React.Component {
     this.onRefresh()
   }
 
-  handleError = (error) => {
-    switch (error) {
-      case 401:
-        return Alert.alert(
-          Strings.error.invalidToken,
-          Strings.error.logInAgain,
-          [{ onPress: () => {
-            Storage.removeApiToken()
-            this.props.navigation.navigate('AuthLoading')
-          } }]
-        )
-      case 429:
-        return Alert.alert(
-          Strings.error.tooManyRequests,
-          Strings.error.tryAgainLater,
-        )
-      case 500,503:
-        return Alert.alert(
-          Strings.error.troubleConnecting,
-          Strings.error.pinboardDown,
-        )
-      default:
-        return Alert.alert(
-          Strings.error.somethingWrong,
-          Strings.error.tryAgainLater,
-        )
-    }
-  }
-
   checkForUpdates = async () => {
     const apiToken = await Storage.apiToken()
     const response = await Api.update(apiToken)
     if (response.ok === 0) {
-      this.handleError(response.error)
+      handleResponseError(response.error, this.props.navigation)
     } else if (response.update_time !== this.state.lastUpdateTime) {
       this.setState({ lastUpdateTime: response.update_time })
       return true
@@ -109,7 +81,7 @@ export default class PostsView extends React.Component {
     const apiToken = await Storage.apiToken()
     const response = await Api.postsAll(apiToken)
     if(response.ok === 0) {
-      this.handleError(response.error)
+      handleResponseError(response.error, this.props.navigation)
     } else {
       const str = JSON.stringify(response)
       const obj = JSON.parse(str, reviver)
@@ -139,7 +111,7 @@ export default class PostsView extends React.Component {
     const apiToken = await Storage.apiToken()
     const response = await Api.postsAdd(post, apiToken)
     if(response.ok === 0) {
-      this.handleError(response.error)
+      handleResponseError(response.error, this.props.navigation)
     }
   }
 
@@ -152,7 +124,7 @@ export default class PostsView extends React.Component {
     const apiToken = await Storage.apiToken()
     const response = await Api.postsDelete(post, apiToken)
     if(response.ok === 0) {
-      this.handleError(response.error)
+      handleResponseError(response.error, this.props.navigation)
     }
   }
 

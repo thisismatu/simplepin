@@ -2,6 +2,7 @@ const Strings = {
   common: {
     simplepin: 'Simplepin',
     cancel: 'Cancel',
+    ok: 'OK',
     delete: 'Delete',
     deletePost: 'Delte bookmark?',
     edit: 'Edit',

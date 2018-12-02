@@ -13,8 +13,6 @@ const setApiToken = async (apiToken) => {
   await AsyncStorage.setItem(keys.apiToken, apiToken)
 }
 
-const removeApiToken = async () => await AsyncStorage.removeItem(keys.apiToken)
-
 const markAsRead = async () => {
   const value = await AsyncStorage.getItem(keys.markAsRead)
   return !!JSON.parse(value)
@@ -57,7 +55,6 @@ const userPreferences = async () => {
 export default {
   apiToken,
   setApiToken,
-  removeApiToken,
   markAsRead,
   setMarkAsRead,
   exactDate,

@@ -1,7 +1,8 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert, Clipboard, AppState, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Clipboard, AppState, ActivityIndicator } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
+import { handleLoginResponseError } from 'app/util/ErrorUtils'
 import Api from 'app/Api'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
@@ -47,7 +48,7 @@ export default class LoginView extends React.Component {
     const response = await Api.login(this.state.apiToken)
     if (response.ok === 0) {
       this.setState({ loading: false })
-      this.showAlert(response.error)
+      handleLoginResponseError(response.error)
     } else {
       this.setState({ loading: false })
       Storage.setApiToken(this.state.apiToken)
@@ -62,21 +63,6 @@ export default class LoginView extends React.Component {
     const tokenLatterPart = this.state.clipboardContent.split(':')[1]
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {
       this.setState({ apiToken: this.state.clipboardContent })
-    }
-  }
-
-  showAlert(error) {
-    switch (error) {
-      case 401, 500:
-        return Alert.alert(
-          Strings.error.loginFailed,
-          Strings.error.incorrectToken
-        )
-      default:
-        return Alert.alert(
-          Strings.error.somethingWrong,
-          Strings.error.tryAgainLater
-        )
     }
   }
 
