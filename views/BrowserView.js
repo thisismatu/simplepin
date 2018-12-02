@@ -10,7 +10,7 @@ export default class BrowserView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', ''),
-      headerLeft: <CloseButton navigation={navigation} />,
+      headerLeft: <CloseButton onPress={() => navigation.dismiss()} />,
     }
   }
 
@@ -23,7 +23,7 @@ export default class BrowserView extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }

@@ -13,7 +13,7 @@ export default class SetingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: Strings.settings.title,
-      headerLeft: <MenuButton navigation={navigation} />,
+      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
     }
   }
 

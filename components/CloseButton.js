@@ -3,19 +3,19 @@ import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/assets/Base'
 
-const MenuButton = ({ navigation }) => {
+const CloseButton = (props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      onPress={() => navigation.dismiss()}
+      onPress={props.onPress}
     >
       <Image source={require('app/assets/ic-close.png')} style={styles.menuButton} />
     </TouchableOpacity>
   )
 }
 
-MenuButton.propTypes = {
-  navigation: PropTypes.object.isRequired,
+CloseButton.propTypes = {
+  onPress: PropTypes.func.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -26,4 +26,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default MenuButton
+export default CloseButton

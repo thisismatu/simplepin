@@ -36,7 +36,7 @@ export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', Strings.posts.all),
-      headerLeft: <MenuButton navigation={navigation} />,
+      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
     }
   }
 

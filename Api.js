@@ -24,8 +24,8 @@ const fetchWithErrorHandling = (url) => {
 
 const login = (token) => {
   const data = {
-    'format': 'json',
-    'auth_token': token,
+    format: 'json',
+    auth_token: token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(loginUrl(params))
@@ -33,8 +33,8 @@ const login = (token) => {
 
 const update = (token) => {
   const data = {
-    'format': 'json',
-    'auth_token': token,
+    format: 'json',
+    auth_token: token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(updateUrl(params))
@@ -42,8 +42,8 @@ const update = (token) => {
 
 const postsAll = (token) => {
   const data = {
-    'format': 'json',
-    'auth_token': token,
+    format: 'json',
+    auth_token: token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(postsAllUrl(params))
@@ -51,14 +51,14 @@ const postsAll = (token) => {
 
 const postsAdd = (post, token) => {
   const data = {
-    'url': post.href,
-    'description': post.description,
-    'extended': post.extended,
-    'tags': replacer('tags', post.tags),
-    'toread': replacer('toread', post.toread),
-    'shared': replacer('shared', post.shared),
-    'format': 'json',
-    'auth_token': token,
+    url: post.href,
+    description: post.description,
+    extended: post.extended,
+    tags: replacer('tags', post.tags),
+    toread: replacer('toread', post.toread),
+    shared: replacer('shared', post.shared),
+    format: 'json',
+    auth_token: token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(postsAddUrl(params))
@@ -66,9 +66,9 @@ const postsAdd = (post, token) => {
 
 const postsDelete = (post, token) => {
   const data = {
-    'url': post.href,
-    'format': 'json',
-    'auth_token': token,
+    url: post.href,
+    format: 'json',
+    auth_token: token,
   }
   const params = queryString.stringify(data)
   return fetchWithErrorHandling(postsDeleteUrl(params))
