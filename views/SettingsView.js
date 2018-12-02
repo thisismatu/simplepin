@@ -1,6 +1,5 @@
 import React from 'react'
 import { StyleSheet, Text, View, Switch, ScrollView, Platform } from 'react-native'
-import isEqual from 'lodash/isEqual'
 import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import HeaderCell from 'app/components/HeaderCell'
@@ -28,14 +27,8 @@ export default class SetingsView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.markAsRead().then((value) => {
-      this.setState({ markAsRead: !!value })
-    })
-    Storage.exactDate().then((value) => {
-      this.setState({ exactDate: !!value })
-    })
-    Storage.tagOrder().then((value) => {
-      this.setState({ tagOrder: !!value })
+    Storage.userPreferences().then((value) => {
+      this.setState(value)
     })
   }
 

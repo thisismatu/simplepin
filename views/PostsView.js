@@ -1,7 +1,6 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import filter from 'lodash/filter'
-import isEqual from 'lodash/isEqual'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
 import PropTypes from 'prop-types'
@@ -58,21 +57,10 @@ export default class PostsView extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(this.state, prevState)) {
-      Storage.markAsRead().then((value) => {
-        this.setState({ markAsRead: !!value })
-      })
-      Storage.exactDate().then((value) => {
-        this.setState({ exactDate: !!value })
-      })
-      Storage.tagOrder().then((value) => {
-        this.setState({ tagOrder: !!value })
-      })
-    }
-  }
-
   componentDidMount() {
+    Storage.userPreferences().then((value) => {
+      this.setState(value)
+    })
     this.onRefresh()
   }
 

@@ -43,6 +43,15 @@ const setTagOrder = async (tagOrder) => {
   await AsyncStorage.setItem(keys.tagOrder, value)
 }
 
+const userPreferences = async () => {
+  const obj = {
+    exactDate: await exactDate(),
+    markAsRead: await markAsRead(),
+    tagOrder: await tagOrder(),
+  }
+  return obj
+}
+
 export default {
   apiToken,
   setApiToken,
@@ -52,4 +61,5 @@ export default {
   setExactDate,
   tagOrder,
   setTagOrder,
+  userPreferences,
 }
