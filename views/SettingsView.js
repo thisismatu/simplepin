@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Switch, ScrollView, Platform } from 'react-native'
+import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
 import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import HeaderCell from 'app/components/HeaderCell'
@@ -45,6 +45,21 @@ export default class SetingsView extends React.Component {
   onTagOrder = (value) => {
     Storage.setTagOrder(value)
     this.setState({ tagOrder: value })
+  }
+
+  logout = () => {
+    Alert.alert(
+      Strings.settings.logout + '?',
+      null,
+      [
+        { text: Strings.common.cancel, style: 'cancel' },
+        { text: Strings.settings.logout, onPress: () => {
+          Storage.clear()
+          this.props.navigation.navigate('AuthLoading')
+        }, style: 'destructive' },
+      ]
+    )
+
   }
 
   render() {
@@ -123,7 +138,22 @@ export default class SetingsView extends React.Component {
           />
         </View>
         <Separator />
-        <Text style={styles.version}>{Strings.common.simplepin} v. XXXX</Text>
+
+        <HeaderCell text={Strings.settings.other} />
+        <Separator />
+        <View style={styles.cell}>
+          <Text style={styles.text}>{Strings.settings.version}</Text>
+          <Text style={styles.secondary}>X.Y.Z</Text>
+        </View>
+        <Separator />
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.cell}
+          onPress={() => this.logout()}
+        >
+          <Text style={styles.text}>{Strings.settings.logout}</Text>
+        </TouchableOpacity>
+        <Separator />
       </ScrollView>
     )
   }

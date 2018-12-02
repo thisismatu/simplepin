@@ -1,9 +1,9 @@
 import { Alert } from 'react-native'
-import { AsyncStorage } from 'react-native'
+import Storage from 'app/util/Storage'
 import Strings from 'app/assets/Strings'
 
 const logout = (navigation) => {
-  AsyncStorage.clear()
+  Storage.clear()
   navigation.navigate('AuthLoading')
 }
 

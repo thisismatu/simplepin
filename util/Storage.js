@@ -52,6 +52,8 @@ const userPreferences = async () => {
   return obj
 }
 
+const clear = async () => await AsyncStorage.clear()
+
 export default {
   apiToken,
   setApiToken,
@@ -62,4 +64,5 @@ export default {
   tagOrder,
   setTagOrder,
   userPreferences,
+  clear,
 }

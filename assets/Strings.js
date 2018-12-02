@@ -45,6 +45,9 @@ const Strings = {
     display: 'Display',
     exactDates: 'Exact dates',
     sortTagsAlphabetically: 'Sort tags alphabetically',
+    other: 'Other',
+    version: 'Version',
+    logout: 'Log out',
   },
 }
 
