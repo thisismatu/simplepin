@@ -15,7 +15,7 @@ const setApiToken = async (apiToken) => {
 
 const markAsRead = async () => {
   const value = await AsyncStorage.getItem(keys.markAsRead)
-  return JSON.parse(value)
+  return !!JSON.parse(value)
 }
 
 const setMarkAsRead = async (markAsRead) => {
@@ -25,7 +25,7 @@ const setMarkAsRead = async (markAsRead) => {
 
 const exactDate = async () => {
   const value = await AsyncStorage.getItem(keys.exactDate)
-  return JSON.parse(value)
+  return !!JSON.parse(value)
 }
 
 const setExactDate = async (exactDate) => {
@@ -35,7 +35,7 @@ const setExactDate = async (exactDate) => {
 
 const tagOrder = async () => {
   const value = await AsyncStorage.getItem(keys.tagOrder)
-  return JSON.parse(value)
+  return !!JSON.parse(value)
 }
 
 const setTagOrder = async (tagOrder) => {
