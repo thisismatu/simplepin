@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
+import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import HeaderCell from 'app/components/HeaderCell'
@@ -9,7 +10,7 @@ import Strings from 'app/assets/Strings'
 
 const isAndroid = Platform.OS === 'android'
 
-export default class SetingsView extends React.Component {
+export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: Strings.settings.title,
@@ -157,6 +158,10 @@ export default class SetingsView extends React.Component {
       </ScrollView>
     )
   }
+}
+
+SettingsView.propTypes = {
+  navigation: PropTypes.object.isRequired,
 }
 
 const styles = StyleSheet.create({
