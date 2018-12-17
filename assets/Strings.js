@@ -8,6 +8,7 @@ const Strings = {
     edit: 'Edit',
     markAs: 'Mark as',
     search: 'Search…',
+    noBookmarks: 'No bookmarks found',
   },
   error: {
     loginFailed: 'Login failed',

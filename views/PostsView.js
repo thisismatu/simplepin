@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert, Text } from 'react-native'
 import filter from 'lodash/filter'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
@@ -236,6 +236,17 @@ export default class PostsView extends React.Component {
     )
   }
 
+  renderEmptyState = () => {
+    const { allPosts, refreshing, isSearchActive, searchText } = this.state
+    if (isSearchActive) {
+      return <Text style={styles.emptyText}>{Strings.common.noBookmarks} for “{searchText}”</Text>
+    } else if (!allPosts && !refreshing) {
+      return <Text style={styles.emptyText}>{Strings.common.noBookmarks}</Text>
+    } else {
+      return null
+    }
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -246,8 +257,10 @@ export default class PostsView extends React.Component {
           renderItem={({ item }) => this.renderPostCell(item)}
           refreshControl={this.renderRefreshControl()}
           style={styles.container}
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
-          ListEmptyComponent={null}
+          ListEmptyComponent={this.renderEmptyState()}
           ListHeaderComponent={this.renderListHeader()}
         />
         <BottomSheet
@@ -271,5 +284,12 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingBottom: Base.padding.tiny,
+  },
+  emptyText: {
+    color: Base.color.gray2,
+    fontSize: Base.font.large,
+    marginTop: 48,
+    paddingHorizontal: Base.padding.medium,
+    textAlign: 'center',
   },
 })
