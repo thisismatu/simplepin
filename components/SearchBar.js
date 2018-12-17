@@ -9,7 +9,7 @@ const SearchBar = (props) => {
     ? require('app/assets/ic-close-small.png')
     : require('app/assets/ic-search-small.png')
   return (
-    <View style={styles.searchContainer}>
+    <View style={styles.container}>
       <TextInput
         autoCapitalize="none"
         autoCorrect={false}
@@ -19,16 +19,16 @@ const SearchBar = (props) => {
         placeholder={Strings.common.search}
         placeholderTextColor = {Base.color.gray2}
         returnKeyType="search"
-        style={styles.searchField}
+        style={styles.textField}
         underlineColorAndroid="transparent"
         value={props.searchText}
       />
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => props.onSearchChange('')}
-        style={styles.searchClearButton}
+        style={styles.button}
       >
-        <Image source={icon} style={styles.searchIcon} />
+        <Image source={icon} style={styles.icon} />
       </TouchableOpacity>
     </View>
   )
@@ -41,24 +41,27 @@ SearchBar.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  searchContainer: {
-    padding: Base.padding.small,
+  container: {
+    backgroundColor: Base.color.white,
+    paddingHorizontal: Base.padding.small,
+    paddingTop: Base.padding.medium,
+    paddingBottom: Base.padding.tiny,
   },
-  searchField: {
+  textField: {
     backgroundColor: Base.color.gray0,
     color: Base.color.gray4,
     height: 32,
     paddingHorizontal: Base.padding.medium,
     borderRadius: 100,
   },
-  searchClearButton: {
+  button: {
     width: 36,
     height: 32,
     position: 'absolute',
-    top: 8,
-    right: 8,
+    top: Base.padding.medium,
+    right: Base.padding.small,
   },
-  searchIcon: {
+  icon: {
     margin: 7,
     marginRight: 11,
     tintColor: Base.color.gray2,
