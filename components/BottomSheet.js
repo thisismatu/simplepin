@@ -76,9 +76,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
+    backgroundColor: Base.color.overlay,
   },
   bottomsheet: {
     backgroundColor: Base.color.white,
+    borderTopLeftRadius: Base.radius.large,
+    borderTopRightRadius: Base.radius.large,
     elevation: 8,
     paddingBottom: Math.max(getBottomSpace(), Base.padding.small),
     paddingTop: Base.padding.small,

@@ -43,6 +43,7 @@ const row = {
 const radius = {
   small: 2,
   medium: 4,
+  large: 8,
 }
 
 export default {
