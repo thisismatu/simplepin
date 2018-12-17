@@ -7,6 +7,7 @@ const Strings = {
     deletePost: 'Delte bookmark?',
     edit: 'Edit',
     markAs: 'Mark as',
+    search: 'Search…',
   },
   error: {
     loginFailed: 'Login failed',

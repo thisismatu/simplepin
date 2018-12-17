@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert, TextInput, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import filter from 'lodash/filter'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
@@ -12,6 +12,7 @@ import MenuButton from 'app/components/MenuButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
 import BottomSheet from 'app/components/BottomSheet'
+import SearchBar from 'app/components/SearchBar'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
@@ -203,31 +204,35 @@ export default class PostsView extends React.Component {
     )
   }
 
-  renderHeader() {
-    const icon = this.state.isSearchActive ? require('app/assets/ic-close-small.png') : require('app/assets/ic-search-small.png')
+  renderListHeader = () => {
+    if (!this.currentList()) { return null }
     return (
-      <View style={styles.searchContainer}>
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          clearButtonMode="never"
-          enablesReturnKeyAutomatically={true}
-          onChange={this.onSearchChange}
-          placeholder="Search…"
-          placeholderTextColor = {Base.color.gray2}
-          returnKeyType="search"
-          style={styles.searchField}
-          underlineColorAndroid="transparent"
-          value={this.state.searchText}
-        />
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => this.onSearchChange('')}
-          style={styles.searchClearButton}
-        >
-          <Image source={icon} style={styles.searchIcon} />
-        </TouchableOpacity>
-      </View>
+      <SearchBar
+        isSearchActive={this.state.isSearchActive}
+        searchText={this.state.searchText}
+        onSearchChange={this.onSearchChange}
+      />
+    )
+  }
+
+  renderPostCell = (item) => {
+    return (
+      <PostCell
+        post={item}
+        onCellPress={this.onCellPress}
+        onCellLongPress={this.onCellLongPress}
+        exactDate={this.state.exactDate}
+        tagOrder={this.state.tagOrder}
+      />
+    )
+  }
+
+  renderRefreshControl = () => {
+    return (
+      <RefreshControl
+        refreshing={this.state.refreshing}
+        onRefresh={this.onRefresh}
+      />
     )
   }
 
@@ -238,25 +243,12 @@ export default class PostsView extends React.Component {
           data={this.state.isSearchActive ? this.state.searchResults : this.currentList()}
           initialNumToRender={8}
           keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) =>
-            <PostCell
-              post={item}
-              onCellPress={this.onCellPress}
-              onCellLongPress={this.onCellLongPress}
-              exactDate={this.state.exactDate}
-              tagOrder={this.state.tagOrder}
-            />
-          }
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh}
-            />
-          }
+          renderItem={({ item }) => this.renderPostCell(item)}
+          refreshControl={this.renderRefreshControl()}
           style={styles.container}
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
           ListEmptyComponent={null}
-          ListHeaderComponent={this.currentList() ? this.renderHeader() : null}
+          ListHeaderComponent={this.renderListHeader()}
         />
         <BottomSheet
           modalVisible={this.state.modalVisible}
@@ -279,27 +271,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingVertical: Base.padding.tiny,
-  },
-  searchContainer: {
-    padding: Base.padding.small,
-  },
-  searchField: {
-    backgroundColor: Base.color.gray0,
-    color: Base.color.gray4,
-    height: 32,
-    paddingHorizontal: Base.padding.medium,
-    borderRadius: 100,
-  },
-  searchClearButton: {
-    width: 36,
-    height: 32,
-    position: 'absolute',
-    top: 8,
-    right: 8,
-  },
-  searchIcon: {
-    margin: 7,
-    marginRight: 11,
-    tintColor: Base.color.gray2,
   },
 })
