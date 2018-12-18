@@ -39,30 +39,35 @@ SearchBar.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
 }
 
+const barHeight = 36
+const barVerticalMargin = 12
+const barTopMargin = 16
+const iconSize = 18
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
-    paddingHorizontal: 12,
-    paddingTop: Base.padding.medium,
     paddingBottom: Base.padding.tiny,
+    paddingHorizontal: barVerticalMargin,
+    paddingTop: barTopMargin,
   },
   textField: {
     backgroundColor: Base.color.gray0,
-    color: Base.color.gray4,
-    height: 32,
-    paddingHorizontal: Base.padding.medium,
     borderRadius: 100,
+    color: Base.color.gray4,
+    height: barHeight,
+    paddingHorizontal: Base.padding.medium,
   },
   button: {
-    width: 36,
-    height: 32,
+    height: barHeight,
+    padding: (barHeight - iconSize) / 2,
     position: 'absolute',
-    top: Base.padding.medium,
-    right: 12,
+    right: barVerticalMargin,
+    top: barTopMargin,
+    width: barHeight,
   },
   icon: {
-    margin: 7,
-    marginRight: 11,
+    marginLeft: - barVerticalMargin / 4,
     tintColor: Base.color.black36,
   },
 })
