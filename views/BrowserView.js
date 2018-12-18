@@ -3,6 +3,7 @@ import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platf
 import PropTypes from 'prop-types'
 import CloseButton from 'app/components/CloseButton'
 import Base from 'app/assets/Base'
+import Icons from 'app/assets/Icons'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -60,7 +61,7 @@ export default class BrowserView extends React.Component {
           style={styles.button}
         >
           <Image
-            source={require('app/assets/ic-left.png')}
+            source={Icons.left}
             style={[styles.icon, !this.state.canGoBack && styles.iconDisabled]}
           />
         </TouchableOpacity>
@@ -71,7 +72,7 @@ export default class BrowserView extends React.Component {
           style={styles.button}
         >
           <Image
-            source={require('app/assets/ic-right.png')}
+            source={Icons.right}
             style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
           />
         </TouchableOpacity>

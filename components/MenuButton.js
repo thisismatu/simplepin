@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/assets/Base'
+import Icons from 'app/assets/Icons'
 
 const MenuButton = (props) => {
   return (
@@ -9,7 +10,7 @@ const MenuButton = (props) => {
       activeOpacity={0.5}
       onPress={props.onPress}
     >
-      <Image source={require('app/assets/ic-menu.png')} style={styles.menuButton} />
+      <Image source={Icons.menu} style={styles.menuButton} />
     </TouchableOpacity>
   )
 }

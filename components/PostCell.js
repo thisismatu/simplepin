@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
 import TimeAgo from 'app/components/TimeAgo'
 import Base from 'app/assets/Base'
+import Icons from 'app/assets/Icons'
 
 const Tag = ({ tag, index }) => {
   const isPrivateTag = startsWith(tag, '.')
@@ -39,7 +40,7 @@ const PostCell = (props) => {
       }
       {
         !props.post.shared
-        ? <Image source={require('app/assets/ic-lock.png')} style={styles.private} />
+        ? <Image source={Icons.privateSmall} style={styles.private} />
         : null
       }
       <Text style={[styles.title, props.post.toread && styles.titleUnread]}>{props.post.description}</Text>
@@ -100,12 +101,12 @@ const styles = StyleSheet.create({
     width: 9,
   },
   private: {
-    bottom: Base.padding.medium,
-    height: 16,
+    bottom: 13,
+    height: 18,
     position: 'absolute',
-    right: Base.padding.medium,
     tintColor: Base.color.gray2,
-    width: 12,
+    right: 13,
+    width: 18,
   },
   title: {
     color: Base.color.gray4,
