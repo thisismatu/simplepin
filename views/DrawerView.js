@@ -7,6 +7,7 @@ import isEqual from 'lodash/isEqual'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
 import Strings from 'app/assets/Strings'
+import Icons from 'app/assets/Icons'
 
 export default class DrawerView extends React.Component {
   isRouteFocused = (route, param = null) => {
@@ -44,6 +45,7 @@ export default class DrawerView extends React.Component {
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route="Posts"
+            icon={Icons.all}
             title={Strings.posts.all}
             count="allCount"
             list="allPosts"
@@ -53,6 +55,7 @@ export default class DrawerView extends React.Component {
           />
           <DrawerCell
             route="Posts"
+            icon={Icons.unread}
             title={Strings.posts.unread}
             count="unreadCount"
             list="unreadPosts"
@@ -62,6 +65,7 @@ export default class DrawerView extends React.Component {
           />
           <DrawerCell
             route="Posts"
+            icon={Icons.private}
             title={Strings.posts.private}
             count="privateCount"
             list="privatePosts"
@@ -71,6 +75,7 @@ export default class DrawerView extends React.Component {
           />
           <DrawerCell
             route="Posts"
+            icon={Icons.public}
             title={Strings.posts.public}
             count="publicCount"
             list="publicPosts"
@@ -82,6 +87,7 @@ export default class DrawerView extends React.Component {
           <HeaderCell text={Strings.common.simplepin} />
           <DrawerCell
             route="Settings"
+            icon={Icons.settings}
             title={Strings.settings.title}
             isFocused={this.isRouteFocused}
             navigateTo={this.navigateTo}
