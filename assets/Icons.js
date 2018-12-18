@@ -10,6 +10,7 @@ const Icons = {
   right: require('app/assets/ic-right.png'),
   searchSmall: require('app/assets/ic-search-small.png'),
   settings: require('app/assets/ic-settings.png'),
+  simplepin: require('app/assets/art-pin.png'),
   unread: require('app/assets/ic-unread.png'),
 }
 

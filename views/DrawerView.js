@@ -4,10 +4,13 @@ import PropTypes from 'prop-types'
 import { Constants } from 'expo'
 import get from 'lodash/get'
 import isEqual from 'lodash/isEqual'
+import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
 import Strings from 'app/assets/Strings'
 import Icons from 'app/assets/Icons'
+
+const isAndroid = Platform.OS === 'android'
 
 export default class DrawerView extends React.Component {
   isRouteFocused = (route, param = null) => {
@@ -42,6 +45,7 @@ export default class DrawerView extends React.Component {
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
+          <DrawerHeader version="2.0.0" />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route="Posts"
@@ -107,6 +111,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollView: {
-    marginTop: Platform.OS === 'android' ? Constants.statusBarHeight : 0,
+    marginTop: isAndroid ? Constants.statusBarHeight : 0,
   },
 })
