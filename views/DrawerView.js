@@ -11,6 +11,7 @@ import Strings from 'app/assets/Strings'
 import Icons from 'app/assets/Icons'
 
 const isAndroid = Platform.OS === 'android'
+const { expo } = require('app/app.json')
 
 export default class DrawerView extends React.Component {
   isRouteFocused = (route, param = null) => {
@@ -45,7 +46,7 @@ export default class DrawerView extends React.Component {
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
-          <DrawerHeader version="2.0.0" />
+          <DrawerHeader version={expo.version} />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route="Posts"

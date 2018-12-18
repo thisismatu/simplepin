@@ -15,7 +15,7 @@ const DrawerHeader = (props) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{Strings.common.simplepin}</Text>
-        <Text style={styles.subtitle}>Version {props.version}</Text>
+        <Text style={styles.subtitle}>{Strings.settings.version} {props.version}</Text>
       </View>
     </View>
   )

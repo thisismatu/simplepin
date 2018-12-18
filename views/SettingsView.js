@@ -9,6 +9,7 @@ import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
 
 const isAndroid = Platform.OS === 'android'
+const { expo } = require('app/app.json')
 
 export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
@@ -144,7 +145,7 @@ export default class SettingsView extends React.Component {
         <Separator />
         <View style={styles.cell}>
           <Text style={styles.text}>{Strings.settings.version}</Text>
-          <Text style={styles.secondary}>X.Y.Z</Text>
+          <Text style={styles.secondary}>{expo.version}</Text>
         </View>
         <Separator />
         <TouchableOpacity
@@ -155,6 +156,7 @@ export default class SettingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.logout}</Text>
         </TouchableOpacity>
         <Separator />
+        <View style={{paddingBottom: Base.padding.large}} />
       </ScrollView>
     )
   }
