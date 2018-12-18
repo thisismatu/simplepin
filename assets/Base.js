@@ -7,8 +7,8 @@ const color = {
   gray3: '#757575',
   gray4: '#111111',
   white: '#FFFFFF',
-  border: 'rgba(0,0,0,0.12)',
-  overlay: 'rgba(0,0,0,0.4)',
+  black12: 'rgba(0,0,0,0.12)',
+  black36: 'rgba(0,0,0,0.36)',
 }
 
 const padding = {

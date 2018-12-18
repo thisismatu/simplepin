@@ -104,8 +104,8 @@ const styles = StyleSheet.create({
     bottom: 13,
     height: 18,
     position: 'absolute',
-    tintColor: Base.color.gray2,
     right: 13,
+    tintColor: Base.color.black36,
     width: 18,
   },
   title: {

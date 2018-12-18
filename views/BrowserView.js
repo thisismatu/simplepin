@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Base.color.border,
+    borderTopColor: Base.color.black12,
     backgroundColor: Base.color.white,
     paddingHorizontal: Base.padding.medium,
   },

@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   icon: {
     margin: 7,
     marginRight: 11,
-    tintColor: Base.color.gray2,
+    tintColor: Base.color.black36,
   },
 })
 

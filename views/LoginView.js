@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: Base.color.white,
-    borderColor: Base.color.border,
+    borderColor: Base.color.black12,
     borderRadius: Base.radius.medium,
     borderWidth: 1,
     color: Base.color.gray4,

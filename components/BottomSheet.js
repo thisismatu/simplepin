@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'flex-end',
-    backgroundColor: Base.color.overlay,
+    backgroundColor: Base.color.black36,
   },
   bottomsheet: {
     backgroundColor: Base.color.white,

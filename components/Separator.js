@@ -9,7 +9,7 @@ const Separator = ({ left = Base.padding.medium, right = Base.padding.medium }) 
       style={{
         marginRight: right,
         marginLeft: left,
-        borderBottomColor: Base.color.border,
+        borderBottomColor: Base.color.black12,
         borderBottomWidth: StyleSheet.hairlineWidth,
       }}
     />

@@ -11,7 +11,7 @@ import Strings from 'app/assets/Strings'
 const headerStyles = {
   headerStyle: {
     backgroundColor: Base.color.white,
-    borderBottomColor: Base.color.border,
+    borderBottomColor: Base.color.black12,
   },
   headerTintColor: Base.color.blue2,
   headerTitleStyle: { color: Base.color.gray4 },
