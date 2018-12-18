@@ -42,7 +42,7 @@ SearchBar.propTypes = {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
-    paddingHorizontal: Base.padding.small,
+    paddingHorizontal: 12,
     paddingTop: Base.padding.medium,
     paddingBottom: Base.padding.tiny,
   },
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     height: 32,
     position: 'absolute',
     top: Base.padding.medium,
-    right: Base.padding.small,
+    right: 12,
   },
   icon: {
     margin: 7,
