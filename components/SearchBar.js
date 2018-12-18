@@ -26,6 +26,7 @@ const SearchBar = (props) => {
         activeOpacity={0.5}
         onPress={() => props.onSearchChange('')}
         style={styles.button}
+        disabled={!props.searchText}
       >
         <Image source={icon} style={styles.icon} />
       </TouchableOpacity>
