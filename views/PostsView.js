@@ -3,6 +3,8 @@ import { StyleSheet, FlatList, RefreshControl, View, Alert, Text } from 'react-n
 import filter from 'lodash/filter'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
+import map from 'lodash/map'
+import intersection from 'lodash/intersection'
 import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
@@ -124,7 +126,7 @@ export default class PostsView extends React.Component {
   }
 
   filterSearchResults = (text) => {
-    const searchResults = filter(this.currentList(), post => {
+    return filter(this.currentList(), post => {
       const postData = `
         ${post.description.toLowerCase()}
         ${post.extended.toLowerCase()}
@@ -132,7 +134,6 @@ export default class PostsView extends React.Component {
       `
       return postData.includes(text.toLocaleString())
     })
-    return searchResults
   }
 
   currentList = (shouldFilter) => {
@@ -158,12 +159,14 @@ export default class PostsView extends React.Component {
 
   onSearchChange = (evt) => {
     const searchText = evt.nativeEvent ? evt.nativeEvent.text : evt
+    const searchTextArray = searchText.toLowerCase().split(' ')
     this.setState({
       searchText: searchText,
       isSearchActive: searchText === '' ? false : true,
     })
-    const searchResults = this.filterSearchResults(searchText)
-    this.setState({ searchResults })
+    const searchResults = map(searchTextArray, text => this.filterSearchResults(text))
+    const uniqueSearchResults = intersection(...searchResults)
+    this.setState({ searchResults: uniqueSearchResults })
   }
 
   onCellPress = post => () => {
