@@ -51,6 +51,7 @@ export default class PostsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      apiToken: '',
       allPosts: null,
       unreadPosts: null,
       privatePosts: null,
@@ -69,15 +70,13 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => {
-      this.setState(value)
-    })
-    this.onRefresh()
+    Storage.userPreferences()
+      .then((value) => this.setState(value))
+      .then(() => this.onRefresh())
   }
 
   checkForUpdates = async () => {
-    const apiToken = await Storage.apiToken()
-    const response = await Api.update(apiToken)
+    const response = await Api.update(this.state.apiToken)
     if (response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     } else if (response.update_time !== this.state.lastUpdateTime) {
@@ -88,8 +87,7 @@ export default class PostsView extends React.Component {
   }
 
   fetchPosts = async () => {
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsAll(apiToken)
+    const response = await Api.postsAll(this.state.apiToken)
     if(response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     } else {
@@ -109,8 +107,7 @@ export default class PostsView extends React.Component {
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsAdd(post, apiToken)
+    const response = await Api.postsAdd(post, this.state.apiToken)
     if(response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     }
@@ -122,8 +119,7 @@ export default class PostsView extends React.Component {
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const apiToken = await Storage.apiToken()
-    const response = await Api.postsDelete(post, apiToken)
+    const response = await Api.postsDelete(post, this.state.apiToken)
     if(response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     }

@@ -28,9 +28,7 @@ export default class EditPostView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => {
-      this.setState(value)
-    })
+    Storage.userPreferences().then((value) => this.setState(value))
     console.log(this.state)
   }
 

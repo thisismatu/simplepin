@@ -30,9 +30,7 @@ export default class SettingsView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => {
-      this.setState(value)
-    })
+    Storage.userPreferences().then((value) => this.setState(value))
   }
 
   onMarkAsRead = (value) => {

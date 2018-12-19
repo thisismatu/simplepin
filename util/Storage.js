@@ -45,6 +45,7 @@ const setTagOrder = async (tagOrder) => {
 
 const userPreferences = async () => {
   const obj = {
+    apiToken: await apiToken(),
     exactDate: await exactDate(),
     markAsRead: await markAsRead(),
     tagOrder: await tagOrder(),
