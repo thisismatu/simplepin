@@ -100,7 +100,6 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-
         <HeaderCell text={Strings.settings.browser} />
         <Separator />
         <View style={styles.cell}>
@@ -116,7 +115,6 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-
         <HeaderCell text={Strings.settings.display} />
         <Separator />
         <View style={styles.cell}>
@@ -141,7 +139,6 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-
         <HeaderCell text={Strings.settings.other} />
         <Separator />
         <View style={styles.cell}>
@@ -157,7 +154,7 @@ export default class SettingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.logout}</Text>
         </TouchableOpacity>
         <Separator />
-        <View style={{paddingBottom: Base.padding.large}} />
+        <View style={{ paddingBottom: Base.padding.large }} />
       </ScrollView>
     )
   }
@@ -170,9 +167,6 @@ SettingsView.propTypes = {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
-  },
-  section: {
-    paddingTop: Base.padding.small,
   },
   cell: {
     flex: 1,

@@ -165,6 +165,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   disabled: {
-    opacity: 0.4,
+    opacity: 0.3,
   },
 })
