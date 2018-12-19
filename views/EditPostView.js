@@ -95,7 +95,7 @@ export default class EditPostView extends React.Component {
               <Switch
                 style={styles.switch}
                 trackColor={{ true: track }}
-                value={post.shared ? !post.shared : false}
+                value={post ? !post.shared : this.state.privateByDefault}
               />
             </View>
             <Separator />
@@ -104,7 +104,7 @@ export default class EditPostView extends React.Component {
               <Switch
                 style={styles.switch}
                 trackColor={{ true: track }}
-                value={post.toread ? post.toread : false}
+                value={post ? post.toread : this.state.unreadByDefault}
               />
             </View>
             <Separator />

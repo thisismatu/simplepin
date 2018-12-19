@@ -5,6 +5,8 @@ const keys = {
   markAsRead: '@Simplepin:markAsRead',
   exactDate: '@Simplepin:exactDate',
   tagOrder: '@Simplepin:tagOrder',
+  privateByDefault: '@Simplepin:privateByDefault',
+  unreadByDefault: '@Simplepin:unreadByDefault',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
@@ -43,12 +45,34 @@ const setTagOrder = async (tagOrder) => {
   await AsyncStorage.setItem(keys.tagOrder, value)
 }
 
+const privateByDefault = async () => {
+  const value = await AsyncStorage.getItem(keys.privateByDefault)
+  return !!JSON.parse(value)
+}
+
+const setPrivateByDefault = async (privateByDefault) => {
+  const value = JSON.stringify(privateByDefault)
+  await AsyncStorage.setItem(keys.privateByDefault, value)
+}
+
+const unreadByDefault = async () => {
+  const value = await AsyncStorage.getItem(keys.unreadByDefault)
+  return !!JSON.parse(value)
+}
+
+const setUnreadByDefault = async (unreadByDefault) => {
+  const value = JSON.stringify(unreadByDefault)
+  await AsyncStorage.setItem(keys.unreadByDefault, value)
+}
+
 const userPreferences = async () => {
   const obj = {
     apiToken: await apiToken(),
     exactDate: await exactDate(),
     markAsRead: await markAsRead(),
     tagOrder: await tagOrder(),
+    privateByDefault: await privateByDefault(),
+    unreadByDefault: await unreadByDefault(),
   }
   return obj
 }
@@ -64,6 +88,10 @@ export default {
   setExactDate,
   tagOrder,
   setTagOrder,
+  privateByDefault,
+  setPrivateByDefault,
+  unreadByDefault,
+  setUnreadByDefault,
   userPreferences,
   clear,
 }

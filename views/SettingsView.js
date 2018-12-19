@@ -26,6 +26,8 @@ export default class SettingsView extends React.Component {
       markAsRead: false,
       exactDate: false,
       tagOrder: false,
+      privateByDefault: false,
+      unreadByDefault: false,
     }
   }
 
@@ -48,6 +50,16 @@ export default class SettingsView extends React.Component {
     this.setState({ tagOrder: value })
   }
 
+  onPrivateByDefault = (value) => {
+    Storage.setPrivateByDefault(value)
+    this.setState({ privateByDefault: value })
+  }
+
+  onUnreadByDefault = (value) => {
+    Storage.setUnreadByDefault(value)
+    this.setState({ unreadByDefault: value })
+  }
+
   logout = () => {
     Alert.alert(
       Strings.settings.logout + '?',
@@ -60,7 +72,6 @@ export default class SettingsView extends React.Component {
         }, style: 'destructive' },
       ]
     )
-
   }
 
   render() {
@@ -75,7 +86,10 @@ export default class SettingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.privateByDefault}</Text>
           <Switch
             style={styles.switch}
+            thumbColor={thumb(this.state.privateByDefault)}
             trackColor={{ true: track }}
+            onValueChange={this.onPrivateByDefault}
+            value={this.state.privateByDefault}
           />
         </View>
         <Separator />
@@ -83,7 +97,10 @@ export default class SettingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.unreadByDefault}</Text>
           <Switch
             style={styles.switch}
+            thumbColor={thumb(this.state.unreadByDefault)}
             trackColor={{ true: track }}
+            onValueChange={this.onUnreadByDefault}
+            value={this.state.unreadByDefault}
           />
         </View>
         <Separator />
