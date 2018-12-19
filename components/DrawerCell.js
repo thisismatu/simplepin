@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
+import Base from 'app/style/Base'
 
 const DrawerCell = (props) => {
   const isFocused = props.isFocused(props.route, props.title)

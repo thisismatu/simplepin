@@ -1,9 +1,9 @@
 import React from 'react'
 import { StyleSheet, Platform, View, Text, Image } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
-import Icons from 'app/assets/Icons'
-import Strings from 'app/assets/Strings'
+import Base from 'app/style/Base'
+import Icons from 'app/style/Icons'
+import Strings from 'app/style/Strings'
 
 const isAndroid = Platform.OS === 'android'
 

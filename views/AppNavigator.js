@@ -5,8 +5,8 @@ import PostsView from 'app/views/PostsView'
 import BrowserView from 'app/views/BrowserView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
+import Base from 'app/style/Base'
+import Strings from 'app/style/Strings'
 
 const headerStyles = {
   headerStyle: {

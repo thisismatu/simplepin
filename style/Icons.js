@@ -8,6 +8,7 @@ const Icons = {
   privateSmall: require('app/assets/ic-private-small.png'),
   public: require('app/assets/ic-public.png'),
   right: require('app/assets/ic-right.png'),
+  search: require('app/assets/ic-search.png'),
   searchSmall: require('app/assets/ic-search-small.png'),
   settings: require('app/assets/ic-settings.png'),
   simplepin: require('app/assets/art-pin.png'),

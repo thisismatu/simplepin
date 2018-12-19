@@ -4,8 +4,8 @@ import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
 import Api from 'app/Api'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
+import Base from 'app/style/Base'
+import Strings from 'app/style/Strings'
 
 export default class LoginView extends React.Component {
   static navigationOptions = {

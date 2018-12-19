@@ -5,8 +5,8 @@ import Storage from 'app/util/Storage'
 import MenuButton from 'app/components/MenuButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
+import Base from 'app/style/Base'
+import Strings from 'app/style/Strings'
 
 const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
+import Base from 'app/style/Base'
 
 const EmptyState = (props) => {
   return (

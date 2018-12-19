@@ -3,8 +3,8 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
 import TimeAgo from 'app/components/TimeAgo'
-import Base from 'app/assets/Base'
-import Icons from 'app/assets/Icons'
+import Base from 'app/style/Base'
+import Icons from 'app/style/Icons'
 
 const Tag = ({ tag, index }) => {
   const isPrivateTag = startsWith(tag, '.')

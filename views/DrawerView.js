@@ -7,8 +7,8 @@ import isEqual from 'lodash/isEqual'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
-import Strings from 'app/assets/Strings'
-import Icons from 'app/assets/Icons'
+import Strings from 'app/style/Strings'
+import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')

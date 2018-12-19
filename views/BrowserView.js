@@ -2,8 +2,8 @@ import React from 'react'
 import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
 import CloseButton from 'app/components/CloseButton'
-import Base from 'app/assets/Base'
-import Icons from 'app/assets/Icons'
+import Base from 'app/style/Base'
+import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 

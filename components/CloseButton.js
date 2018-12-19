@@ -1,8 +1,8 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
-import Icons from 'app/assets/Icons'
+import Base from 'app/style/Base'
+import Icons from 'app/style/Icons'
 
 const CloseButton = (props) => {
   return (

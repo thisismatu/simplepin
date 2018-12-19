@@ -2,8 +2,8 @@ import React from 'react'
 import { StyleSheet, Modal, TouchableOpacity, TouchableWithoutFeedback, View, Text } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
+import Base from 'app/style/Base'
+import Strings from 'app/style/Strings'
 
 const BottomSheet = (props) => {
   const toread = props.post.toread ? 'read' : 'unread'

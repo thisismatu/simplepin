@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import Storage from 'app/util/Storage'
-import Strings from 'app/assets/Strings'
+import Strings from 'app/style/Strings'
 
 const logout = (navigation) => {
   Storage.clear()

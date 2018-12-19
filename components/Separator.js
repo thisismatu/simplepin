@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/assets/Base'
+import Base from 'app/style/Base'
 
 const Separator = ({ left = Base.padding.medium, right = Base.padding.medium }) => {
   return (

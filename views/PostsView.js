@@ -16,9 +16,9 @@ import Separator from 'app/components/Separator'
 import BottomSheet from 'app/components/BottomSheet'
 import SearchBar from 'app/components/SearchBar'
 import EmptyState from 'app/components/EmptyState'
-import Base from 'app/assets/Base'
-import Strings from 'app/assets/Strings'
-import Icons from 'app/assets/Icons'
+import Base from 'app/style/Base'
+import Strings from 'app/style/Strings'
+import Icons from 'app/style/Icons'
 
 const filterPosts = (obj) => {
   return {
