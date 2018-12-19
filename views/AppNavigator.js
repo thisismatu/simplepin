@@ -5,6 +5,7 @@ import PostsView from 'app/views/PostsView'
 import BrowserView from 'app/views/BrowserView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
+import EditPostView from 'app/views/EditPostView'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
 
@@ -37,6 +38,15 @@ const ModalStack = createStackNavigator(
   }
 )
 
+const EditStack = createStackNavigator(
+  {
+    Edit: EditPostView,
+  },
+  {
+    navigationOptions: headerStyles,
+  }
+)
+
 const SettingsStack = createStackNavigator(
   {
     Settings: SettingsView,
@@ -60,6 +70,7 @@ const AppStack = createStackNavigator(
   {
     Drawer: AppDrawer,
     ModalStack: ModalStack,
+    EditStack: EditStack,
   },
   {
     mode: 'modal',
@@ -70,9 +81,11 @@ const AppStack = createStackNavigator(
   }
 )
 
-const AuthStack = createStackNavigator({
-  Login: LoginView,
-})
+const AuthStack = createStackNavigator(
+  {
+    Login: LoginView,
+  }
+)
 
 const AppNavigator = createSwitchNavigator(
   {

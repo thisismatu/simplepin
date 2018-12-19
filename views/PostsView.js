@@ -1,11 +1,11 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
+import PropTypes from 'prop-types'
 import filter from 'lodash/filter'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
 import map from 'lodash/map'
 import intersection from 'lodash/intersection'
-import PropTypes from 'prop-types'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -43,6 +43,8 @@ export default class PostsView extends React.Component {
     return {
       title: navigation.getParam('title', Strings.posts.all),
       headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
+      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { title: Strings.edit.titleAdd })} icon={Icons.add}
+      />,
     }
   }
 
@@ -189,7 +191,8 @@ export default class PostsView extends React.Component {
   }
 
   onEditPost = post => () => {
-    console.log('TODO: edit post view \n', post)
+    this.toggleModal()
+    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post })
   }
 
   onDeletePost = post => () => {

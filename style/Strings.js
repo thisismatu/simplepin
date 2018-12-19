@@ -53,6 +53,10 @@ const Strings = {
     version: 'Version',
     logout: 'Log out',
   },
+  edit: {
+    titleAdd: 'Add bookmark',
+    titleEdit: 'Edit bookmark',
+  },
 }
 
 export default Strings
