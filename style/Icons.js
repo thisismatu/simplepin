@@ -1,4 +1,5 @@
 const Icons = {
+  add: require('app/assets/ic-add.png'),
   all: require('app/assets/ic-all.png'),
   close: require('app/assets/ic-close.png'),
   closeSmall: require('app/assets/ic-close-small.png'),

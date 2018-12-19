@@ -10,7 +10,7 @@ import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
 import { handleResponseError } from 'app/util/ErrorUtils'
-import MenuButton from 'app/components/MenuButton'
+import NavigationButton from 'app/components/NavigationButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
 import BottomSheet from 'app/components/BottomSheet'
@@ -42,7 +42,7 @@ export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', Strings.posts.all),
-      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
+      headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
     }
   }
 

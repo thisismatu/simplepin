@@ -4,19 +4,20 @@ import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 import Icons from 'app/style/Icons'
 
-const CloseButton = (props) => {
+const NavigationButton = (props) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       onPress={props.onPress}
     >
-      <Image source={Icons.close} style={styles.menuButton} />
+      <Image source={props.icon} style={styles.menuButton} />
     </TouchableOpacity>
   )
 }
 
-CloseButton.propTypes = {
+NavigationButton.propTypes = {
   onPress: PropTypes.func.isRequired,
+  icon: PropTypes.number.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -27,4 +28,4 @@ const styles = StyleSheet.create({
   },
 })
 
-export default CloseButton
+export default NavigationButton

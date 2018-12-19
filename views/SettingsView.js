@@ -2,11 +2,12 @@ import React from 'react'
 import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
-import MenuButton from 'app/components/MenuButton'
+import NavigationButton from 'app/components/NavigationButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
+import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')
@@ -15,7 +16,7 @@ export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: Strings.settings.title,
-      headerLeft: <MenuButton onPress={() => navigation.openDrawer()} />,
+      headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
     }
   }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
-import CloseButton from 'app/components/CloseButton'
+import NavigationButton from 'app/components/NavigationButton'
 import Base from 'app/style/Base'
 import Icons from 'app/style/Icons'
 
@@ -11,7 +11,7 @@ export default class BrowserView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', ''),
-      headerLeft: <CloseButton onPress={() => navigation.dismiss()} />,
+      headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
     }
   }
 
