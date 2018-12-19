@@ -8,7 +8,9 @@ const Strings = {
     edit: 'Edit',
     markAs: 'Mark as',
     search: 'Search…',
-    noBookmarks: 'No bookmarks found',
+    noPosts: 'No bookmarks yet',
+    noPostsMessage: 'Add bookmarks directly from the browser or by tapping the add button above',
+    noResults: 'No results for',
   },
   error: {
     loginFailed: 'Login failed',

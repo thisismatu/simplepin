@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert, Text } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import filter from 'lodash/filter'
 import merge from 'lodash/merge'
 import reject from 'lodash/reject'
@@ -15,8 +15,10 @@ import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
 import BottomSheet from 'app/components/BottomSheet'
 import SearchBar from 'app/components/SearchBar'
+import EmptyState from 'app/components/EmptyState'
 import Base from 'app/assets/Base'
 import Strings from 'app/assets/Strings'
+import Icons from 'app/assets/Icons'
 
 const filterPosts = (obj) => {
   return {
@@ -242,9 +244,9 @@ export default class PostsView extends React.Component {
   renderEmptyState = () => {
     const { allPosts, refreshing, isSearchActive, searchText } = this.state
     if (isSearchActive) {
-      return <Text style={styles.emptyText}>{Strings.common.noBookmarks} for “{searchText}”</Text>
+      return <EmptyState title={Strings.common.noResults} subtitle={`“${searchText}“`} />
     } else if (!allPosts && !refreshing) {
-      return <Text style={styles.emptyText}>{Strings.common.noBookmarks}</Text>
+      return <EmptyState title={Strings.common.noPosts} subtitle={Strings.common.noPostsMessage} icon={Icons.simplepin} />
     } else {
       return null
     }
@@ -287,12 +289,5 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingBottom: Base.padding.tiny,
-  },
-  emptyText: {
-    color: Base.color.gray2,
-    fontSize: Base.font.large,
-    marginTop: 48,
-    paddingHorizontal: Base.padding.medium,
-    textAlign: 'center',
   },
 })
