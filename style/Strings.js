@@ -12,6 +12,7 @@ const Strings = {
     noPostsMessage: 'Add bookmarks directly from the browser or by tapping the add button above',
     noResults: 'No results for',
     tryAgain: 'Try again',
+    showSimilar: 'Show similar',
   },
   error: {
     loginFailed: 'Login failed',

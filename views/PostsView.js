@@ -6,6 +6,8 @@ import merge from 'lodash/merge'
 import reject from 'lodash/reject'
 import map from 'lodash/map'
 import intersection from 'lodash/intersection'
+import head from 'lodash/head'
+import max from 'lodash/max'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -66,6 +68,7 @@ export default class PostsView extends React.Component {
       searchText: '',
       isSearchActive: false,
       searchResults: null,
+      previousSearchResults: null,
       pinboardDown: false,
     }
   }
@@ -171,7 +174,14 @@ export default class PostsView extends React.Component {
     })
     const searchResults = map(searchTextArray, text => this.filterSearchResults(text))
     const uniqueSearchResults = intersection(...searchResults)
-    this.setState({ searchResults: uniqueSearchResults })
+    this.setState({ searchResults: uniqueSearchResults, previousSearchResults: searchResults })
+  }
+
+  onEmptySearchPress = () => {
+    const previousResultsWithMostMatches = max(this.state.previousSearchResults, (i) => i.length)
+    if (previousResultsWithMostMatches) {
+      this.setState({ searchResults: previousResultsWithMostMatches })
+    }
   }
 
   onCellPress = post => () => {
@@ -246,12 +256,15 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { apiToken, allPosts, refreshing, isSearchActive, searchText, pinboardDown } = this.state
+    const { apiToken, allPosts, refreshing, isSearchActive, searchText, pinboardDown, previousSearchResults } = this.state
     if (!apiToken) { return null }
     if (isSearchActive) {
       return <EmptyState
         title={Strings.common.noResults}
-        subtitle={`“${searchText}“`} />
+        subtitle={`“${searchText}“`}
+        action={ previousSearchResults ? this.onEmptySearchPress : undefined }
+        actionText={Strings.common.showSimilar}
+        />
     }
     if (pinboardDown) {
       return <EmptyState
