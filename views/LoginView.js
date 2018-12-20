@@ -1,11 +1,12 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Clipboard, AppState, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
 import Api from 'app/Api'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
+import Icons from 'app/style/Icons'
 
 export default class LoginView extends React.Component {
   static navigationOptions = {
@@ -69,6 +70,7 @@ export default class LoginView extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image source={Icons.simplepin} style={styles.icon} />
         <Text style={styles.title}>{Strings.login.title}</Text>
         <Text style={styles.text}>{Strings.login.text}</Text>
         <TextInput
@@ -117,6 +119,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: Base.padding.huge,
+  },
+  icon: {
+    marginBottom: Base.padding.medium,
+    tintColor: Base.color.blue2,
   },
   title: {
     color: Base.color.gray4,
