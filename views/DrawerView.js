@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import { Constants } from 'expo'
 import get from 'lodash/get'
 import isEqual from 'lodash/isEqual'
+import Storage from 'app/util/Storage'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
@@ -14,6 +15,17 @@ const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')
 
 export default class DrawerView extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      apiToken: '',
+    }
+  }
+
+  componentDidMount() {
+    Storage.apiToken().then((value) => this.setState({ apiToken: value }))
+  }
+
   isRouteFocused = (route, param = null) => {
     const { state } = this.props.navigation
     const focusedRoute = get(state.routes[state.index], ['routes', '0', 'routeName'])
@@ -38,6 +50,7 @@ export default class DrawerView extends React.Component {
   }
 
   render() {
+    const username = this.state.apiToken.split(':')[0]
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
@@ -46,7 +59,7 @@ export default class DrawerView extends React.Component {
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
-          <DrawerHeader version={expo.version} />
+          <DrawerHeader text={username} />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route="Posts"

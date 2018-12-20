@@ -15,14 +15,14 @@ const DrawerHeader = (props) => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>{Strings.common.simplepin}</Text>
-        <Text style={styles.subtitle}>{Strings.settings.version} {props.version}</Text>
+        { props.text ? <Text style={styles.subtitle}>{props.text}</Text> : null }
       </View>
     </View>
   )
 }
 
 DrawerHeader.propTypes = {
-  version: PropTypes.string.isRequired,
+  text: PropTypes.string,
 }
 
 const styles = StyleSheet.create({
@@ -49,11 +49,11 @@ const styles = StyleSheet.create({
     color: Base.color.gray5,
     fontSize: Base.font.huge,
     fontWeight: Base.font.bold,
-    marginBottom: 2,
   },
   subtitle: {
-    color: Base.color.gray2,
-    fontSize: Base.font.small,
+    marginTop: 2,
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
   },
 })
 
