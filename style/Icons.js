@@ -5,6 +5,7 @@ const Icons = {
   closeSmall: require('app/assets/ic-close-small.png'),
   left: require('app/assets/ic-left.png'),
   menu: require('app/assets/ic-menu.png'),
+  offlineLarge: require('app/assets/ic-offline-large.png'),
   private: require('app/assets/ic-private.png'),
   privateSmall: require('app/assets/ic-private-small.png'),
   public: require('app/assets/ic-public.png'),

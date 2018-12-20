@@ -66,6 +66,7 @@ export default class PostsView extends React.Component {
       searchText: '',
       isSearchActive: false,
       searchResults: null,
+      pinboardDown: false,
     }
   }
 
@@ -78,6 +79,7 @@ export default class PostsView extends React.Component {
   checkForUpdates = async () => {
     const response = await Api.update(this.state.apiToken)
     if (response.ok === 0) {
+      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     } else if (response.update_time !== this.state.lastUpdateTime) {
       this.setState({ lastUpdateTime: response.update_time })
@@ -89,6 +91,7 @@ export default class PostsView extends React.Component {
   fetchPosts = async () => {
     const response = await Api.postsAll(this.state.apiToken)
     if(response.ok === 0) {
+      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     } else {
       const str = JSON.stringify(response)
@@ -109,6 +112,7 @@ export default class PostsView extends React.Component {
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsAdd(post, this.state.apiToken)
     if(response.ok === 0) {
+      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     }
   }
@@ -121,6 +125,7 @@ export default class PostsView extends React.Component {
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsDelete(post, this.state.apiToken)
     if(response.ok === 0) {
+      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     }
   }
@@ -241,15 +246,26 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { apiToken, allPosts, refreshing, isSearchActive, searchText } = this.state
+    const { apiToken, allPosts, refreshing, isSearchActive, searchText, pinboardDown } = this.state
     if (!apiToken) { return null }
     if (isSearchActive) {
-      return <EmptyState title={Strings.common.noResults} subtitle={`“${searchText}“`} />
-    } else if (!allPosts && !refreshing) {
-      return <EmptyState title={Strings.common.noPosts} subtitle={Strings.common.noPostsMessage} icon={Icons.simplepin} />
-    } else {
-      return null
+      return <EmptyState
+        title={Strings.common.noResults}
+        subtitle={`“${searchText}“`} />
     }
+    if (pinboardDown) {
+      return <EmptyState
+        title={Strings.error.troubleConnecting}
+        subtitle={Strings.error.pinboardDown}
+        icon={Icons.offlineLarge} />
+    }
+    if (!allPosts && !refreshing) {
+      return <EmptyState
+        title={Strings.common.noPosts}
+        subtitle={Strings.common.noPostsMessage}
+        icon={Icons.simplepin} />
+    }
+    return null
   }
 
   render() {
