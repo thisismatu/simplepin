@@ -241,7 +241,8 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { allPosts, refreshing, isSearchActive, searchText } = this.state
+    const { apiToken, allPosts, refreshing, isSearchActive, searchText } = this.state
+    if (!apiToken) { return null }
     if (isSearchActive) {
       return <EmptyState title={Strings.common.noResults} subtitle={`“${searchText}“`} />
     } else if (!allPosts && !refreshing) {
