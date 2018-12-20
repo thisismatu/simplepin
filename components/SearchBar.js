@@ -40,9 +40,9 @@ SearchBar.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
 }
 
-const barHeight = 36
+const barHeight = Base.row.tiny
 const barVerticalMargin = 12
-const barTopMargin = 16
+const barTopMargin = Base.padding.medium
 const iconSize = 18
 
 const styles = StyleSheet.create({

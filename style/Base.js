@@ -35,6 +35,7 @@ const line = {
 }
 
 const row = {
+  tiny: 36,
   small: 40,
   medium: 48,
   large: 56,
