@@ -38,7 +38,8 @@ const styles = StyleSheet.create({
   empty: {
     marginTop: Math.round(windowHeight / 6),
     alignItems: 'center',
-    padding: Base.padding.large,
+    paddingHorizontal: Base.padding.large,
+    paddingVertical: Base.padding.medium,
   },
   icon: {
     tintColor: Base.color.black36,

@@ -177,7 +177,7 @@ export default class PostsView extends React.Component {
     this.setState({ searchResults: uniqueSearchResults, previousSearchResults: searchResults })
   }
 
-  onEmptySearchPress = () => {
+  onShowSimilarResults = () => {
     const previousResultsWithMostMatches = max(this.state.previousSearchResults, (i) => i.length)
     if (previousResultsWithMostMatches) {
       this.setState({ searchResults: previousResultsWithMostMatches })
@@ -260,25 +260,27 @@ export default class PostsView extends React.Component {
     if (!apiToken) { return null }
     if (isSearchActive) {
       return <EmptyState
-        title={Strings.common.noResults}
-        subtitle={`“${searchText}“`}
-        action={ previousSearchResults ? this.onEmptySearchPress : undefined }
+        action={ previousSearchResults ? this.onShowSimilarResults : undefined }
         actionText={Strings.common.showSimilar}
-        />
+        icon={Icons.searchLarge}
+        subtitle={`“${searchText}“`}
+        title={Strings.common.noResults} />
     }
     if (pinboardDown) {
       return <EmptyState
-        title={Strings.error.troubleConnecting}
-        subtitle={Strings.error.pinboardDown}
-        icon={Icons.offlineLarge}
         action={this.onRefresh}
-        actionText={Strings.common.tryAgain} />
+        actionText={Strings.common.tryAgain}
+        icon={Icons.offlineLarge}
+        subtitle={Strings.error.pinboardDown}
+        title={Strings.error.troubleConnecting} />
     }
     if (!allPosts && !refreshing) {
       return <EmptyState
-        title={Strings.common.noPosts}
+        action={() => this.props.navigation.navigate('Edit')}
+        actionText={Strings.edit.titleAdd}
+        icon={Icons.simplepin}
         subtitle={Strings.common.noPostsMessage}
-        icon={Icons.simplepin} />
+        title={Strings.common.noPosts} />
     }
     return null
   }

@@ -9,7 +9,7 @@ const Strings = {
     markAs: 'Mark as',
     search: 'Search…',
     noPosts: 'No bookmarks yet',
-    noPostsMessage: 'Add bookmarks directly from the browser or by tapping the add button above',
+    noPostsMessage: 'Add bookmarks directly from the browser or by tapping the add button below',
     noResults: 'No results for',
     tryAgain: 'Try again',
     showSimilar: 'Show similar',
