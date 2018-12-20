@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 
@@ -9,6 +9,17 @@ const EmptyState = (props) => {
       { props.icon ? <Image source={props.icon} style={styles.icon} /> : null }
       <Text style={styles.title}>{props.title}</Text>
       { props.subtitle ? <Text style={styles.subtitle}>{props.subtitle}</Text> : null }
+      {
+        props.action
+        ? <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.button}
+            onPress={props.action}
+          >
+            <Text style={styles.buttonText}>{props.actionText}</Text>
+          </TouchableOpacity>
+        : null
+      }
     </View>
   )
 }
@@ -17,6 +28,8 @@ EmptyState.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   icon: PropTypes.number,
+  action: PropTypes.func,
+  actionText: PropTypes.string,
 }
 
 const windowHeight = Dimensions.get('window').height
@@ -45,14 +58,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button: {
-    backgroundColor: Base.color.blue2,
+    backgroundColor: Base.color.white,
     borderRadius: Base.radius.small,
     paddingHorizontal: Base.padding.medium,
     paddingVertical: Base.padding.small,
     marginTop: Base.padding.medium,
   },
   buttonText: {
-    color: Base.color.white,
+    color: Base.color.blue2,
     fontSize: Base.font.medium,
     lineHeight: Base.line.medium,
   },

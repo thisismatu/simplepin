@@ -257,7 +257,9 @@ export default class PostsView extends React.Component {
       return <EmptyState
         title={Strings.error.troubleConnecting}
         subtitle={Strings.error.pinboardDown}
-        icon={Icons.offlineLarge} />
+        icon={Icons.offlineLarge}
+        action={this.onRefresh}
+        actionText={Strings.common.tryAgain} />
     }
     if (!allPosts && !refreshing) {
       return <EmptyState
