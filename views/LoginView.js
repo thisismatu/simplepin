@@ -98,7 +98,7 @@ export default class LoginView extends React.Component {
           style={styles.tokenButton}
           onPress={() => console.log('Show API token')}
         >
-          <Text style={styles.text}>{Strings.login.token}</Text>
+          <Text style={styles.tokenButtonText}>{Strings.login.token}</Text>
         </TouchableOpacity>
         <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
       </View>
@@ -148,21 +148,26 @@ const styles = StyleSheet.create({
     backgroundColor: Base.color.blue2,
     borderRadius: Base.radius.medium,
     marginBottom: Base.padding.large,
-    padding: Base.padding.medium,
+    paddingHorizontal: Base.padding.medium,
     width: '100%',
   },
   loginButtonText: {
     color: Base.color.white,
-    fontSize: Base.font.medium,
+    fontSize: Base.font.large,
     fontWeight: Base.font.bold,
-    lineHeight: Base.line.small,
+    lineHeight: Base.row.medium,
     textAlign: 'center',
   },
   tokenButton: {
     backgroundColor: Base.color.white,
-    borderRadius: Base.radius.medium,
-    padding: Base.padding.medium,
+    paddingHorizontal: Base.padding.medium,
     width: '100%',
+  },
+  tokenButtonText: {
+    color: Base.color.gray3,
+    fontSize: Base.font.medium,
+    lineHeight: Base.row.medium,
+    textAlign: 'center',
   },
   disabled: {
     opacity: 0.3,

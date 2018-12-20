@@ -59,15 +59,13 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Base.color.white,
-    borderRadius: Base.radius.small,
     paddingHorizontal: Base.padding.medium,
-    paddingVertical: Base.padding.small,
-    marginTop: Base.padding.medium,
   },
   buttonText: {
     color: Base.color.blue2,
     fontSize: Base.font.medium,
-    lineHeight: Base.line.medium,
+    fontWeight: '500',
+    lineHeight: Base.row.medium,
   },
 })
 

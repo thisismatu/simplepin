@@ -181,14 +181,14 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Base.color.blue2,
     borderRadius: Base.radius.medium,
-    padding: Base.padding.medium,
+    paddingHorizontal: Base.padding.medium,
     width: '100%',
   },
   buttonText: {
     color: Base.color.white,
-    fontSize: Base.font.medium,
+    fontSize: Base.font.large,
     fontWeight: Base.font.bold,
-    lineHeight: Base.line.small,
+    lineHeight: Base.row.medium,
     textAlign: 'center',
   },
   disabled: {
