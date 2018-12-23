@@ -3,25 +3,31 @@ import { StyleSheet, View, Text, Image, TouchableOpacity, Dimensions } from 'rea
 import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 
-const EmptyState = (props) => {
-  return (
-    <View style={styles.empty}>
-      { props.icon ? <Image source={props.icon} style={styles.icon} /> : null }
-      <Text style={styles.title}>{props.title}</Text>
-      { props.subtitle ? <Text style={styles.subtitle}>{props.subtitle}</Text> : null }
-      {
-        props.action
-        ? <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.button}
-            onPress={props.action}
-          >
-            <Text style={styles.buttonText}>{props.actionText}</Text>
-          </TouchableOpacity>
-        : null
-      }
-    </View>
-  )
+export default class EmptyState extends React.PureComponent {
+  renderAction() {
+    const { action, actionText } = this.props
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={styles.button}
+        onPress={action}
+      >
+        <Text style={styles.buttonText}>{actionText}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  render() {
+    const { icon, title, subtitle, action } = this.props
+    return (
+      <View style={styles.empty}>
+        { icon ? <Image source={icon} style={styles.icon} /> : null }
+        <Text style={styles.title}>{title}</Text>
+        { subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null }
+        { action ? this.renderAction() : null }
+      </View>
+    )
+  }
 }
 
 EmptyState.propTypes = {
@@ -69,5 +75,3 @@ const styles = StyleSheet.create({
     lineHeight: Base.row.medium,
   },
 })
-
-export default EmptyState
