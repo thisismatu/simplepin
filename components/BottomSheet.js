@@ -5,62 +5,64 @@ import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
 
-const BottomSheet = (props) => {
-  const toread = props.post.toread ? 'read' : 'unread'
-
-  return (
-    <Modal
-      animationType="slide"
-      visible={props.modalVisible}
-      transparent={true}
-      onRequestClose={props.onClose}
-      hardwareAccelerated={true}
-    >
-      <TouchableWithoutFeedback onPress={props.onClose}>
-        <View style={styles.container}>
-          <View style={styles.bottomsheet}>
-            <View style={styles.cell}>
-              <Text
-                style={styles.title}
-                numberOfLines={1}
-                ellipsizeMode="tail"
+export default class BottomSheet extends React.PureComponent {
+  render() {
+    const { post } = this.props
+    const toread = post.toread ? 'read' : 'unread'
+    return (
+      <Modal
+        animationType="slide"
+        visible={this.props.modalVisible}
+        transparent={true}
+        onRequestClose={this.props.onClose}
+        hardwareAccelerated={true}
+      >
+        <TouchableWithoutFeedback onPress={this.props.onClose}>
+          <View style={styles.container}>
+            <View style={styles.bottomsheet}>
+              <View style={styles.cell}>
+                <Text
+                  style={styles.title}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                >
+                  {post.description}
+                </Text>
+              </View>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.cell}
+                onPress={this.props.onToggleToread(post)}
               >
-                {props.post.description}
-              </Text>
+                <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.cell}
+                onPress={this.props.onEditPost(post)}
+              >
+                <Text style={styles.text}>{Strings.common.edit}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.cell}
+                onPress={this.props.onDeletePost(post)}
+              >
+                <Text style={styles.text}>{Strings.common.delete}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                activeOpacity={0.5}
+                style={styles.cell}
+                onPress={this.props.onClose}
+              >
+                <Text style={styles.text}>{Strings.common.cancel}</Text>
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={props.onToggleToread(props.post)}
-            >
-              <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={props.onEditPost(props.post)}
-            >
-              <Text style={styles.text}>{Strings.common.edit}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={props.onDeletePost(props.post)}
-            >
-              <Text style={styles.text}>{Strings.common.delete}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={props.onClose}
-            >
-              <Text style={styles.text}>{Strings.common.cancel}</Text>
-            </TouchableOpacity>
           </View>
-        </View>
-      </TouchableWithoutFeedback>
-    </Modal>
-  )
+        </TouchableWithoutFeedback>
+      </Modal>
+    )
+  }
 }
 
 BottomSheet.propTypes = {
@@ -106,5 +108,3 @@ const styles = StyleSheet.create({
     marginTop: Base.padding.tiny,
   },
 })
-
-export default BottomSheet
