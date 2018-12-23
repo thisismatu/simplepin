@@ -108,6 +108,7 @@ export default class PostsView extends React.Component {
 
   updatePost = async (post) => {
     post.toread = !post.toread
+    post.meta = Math.random().toString(36) // random string for PostCell change detection
     const newCollection = merge(this.state.allPosts, post)
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
@@ -249,6 +250,7 @@ export default class PostsView extends React.Component {
     return (
       <PostCell
         post={item}
+        changeDetection={item.meta}
         onCellPress={this.onCellPress}
         onCellLongPress={this.onCellLongPress}
         exactDate={this.state.exactDate}

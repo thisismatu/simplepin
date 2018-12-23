@@ -2,22 +2,26 @@ import React from 'react'
 import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
+import isEqual from 'lodash/isEqual'
 import TimeAgo from 'app/components/TimeAgo'
 import Base from 'app/style/Base'
 import Icons from 'app/style/Icons'
 
-const Tag = ({ tag, index }) => {
-  const isPrivateTag = startsWith(tag, '.')
-  return(
-    <TouchableOpacity
-      activeOpacity={0.5}
-      style={[styles.tagContainer, index === 0 && styles.firstTag]}
-    >
-      <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
-        <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
-      </View>
-    </TouchableOpacity>
-  )
+class Tag extends React.PureComponent {
+  render() {
+    const { tag, index } = this.props
+    const isPrivateTag = startsWith(tag, '.')
+    return(
+      <TouchableOpacity
+        activeOpacity={0.5}
+        style={[styles.tagContainer, index === 0 && styles.firstTag]}
+      >
+        <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
+          <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
+        </View>
+      </TouchableOpacity>
+    )
+  }
 }
 
 Tag.propTypes = {
@@ -25,51 +29,54 @@ Tag.propTypes = {
   index: PropTypes.number.isRequired,
 }
 
-const PostCell = (props) => {
-  const tags = props.post.tags && props.tagOrder  ? props.post.tags.sort() : props.post.tags
-  return (
-    <TouchableOpacity
-      activeOpacity={0.5}
-      onPress={props.onCellPress(props.post)}
-      onLongPress={props.onCellLongPress(props.post)}
-    >
-      {
-        props.post.toread
-        ? <View style={styles.unread} />
-        : null
-      }
-      {
-        !props.post.shared
-        ? <Image source={Icons.privateSmall} style={styles.private} />
-        : null
-      }
-      <Text style={[styles.title, props.post.toread && styles.titleUnread]}>{props.post.description}</Text>
-      {
-        props.post.extended
-        ? <Text style={styles.description}>{props.post.extended}</Text>
-        : null
-      }
-      <FlatList
-        bounces={false}
-        data={tags}
-        horizontal={true}
-        keyExtractor={(item, index) => index.toString()}
-        ListEmptyComponent={() => <View style={styles.emptyTagList} />}
-        renderItem={({ item, index }) =>
-          <Tag
-            tag={item}
-            index={index}
-          />
+export default class PostCell extends React.PureComponent {
+  render() {
+    const { post, tagOrder, exactDate, onCellPress, onCellLongPress } = this.props
+    const tags = post.tags && tagOrder  ? post.tags.sort() : post.tags
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={onCellPress(post)}
+        onLongPress={onCellLongPress(post)}
+      >
+        {
+          post.toread
+          ? <View style={styles.unread} />
+          : null
         }
-        showsHorizontalScrollIndicator={false}
-      />
-      <TimeAgo
-        style={styles.time}
-        time={props.post.time}
-        exactDate={props.exactDate}
-      />
-    </TouchableOpacity>
-  )
+        {
+          !post.shared
+          ? <Image source={Icons.privateSmall} style={styles.private} />
+          : null
+        }
+        <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
+        {
+          post.extended
+          ? <Text style={styles.description}>{post.extended}</Text>
+          : null
+        }
+        <FlatList
+          bounces={false}
+          data={tags}
+          horizontal={true}
+          keyExtractor={(item, index) => index.toString()}
+          ListEmptyComponent={() => <View style={styles.emptyTagList} />}
+          renderItem={({ item, index }) =>
+            <Tag
+              tag={item}
+              index={index}
+            />
+          }
+          showsHorizontalScrollIndicator={false}
+        />
+        <TimeAgo
+          style={styles.time}
+          time={post.time}
+          exactDate={exactDate}
+        />
+      </TouchableOpacity>
+    )
+  }
 }
 
 PostCell.propTypes = {
@@ -77,6 +84,7 @@ PostCell.propTypes = {
   onCellLongPress: PropTypes.func.isRequired,
   exactDate: PropTypes.bool.isRequired,
   tagOrder: PropTypes.bool.isRequired,
+  changeDetection: PropTypes.string.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
@@ -163,5 +171,3 @@ const styles = StyleSheet.create({
     color: Base.color.gray3,
   },
 })
-
-export default PostCell
