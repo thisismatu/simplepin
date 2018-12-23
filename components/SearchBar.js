@@ -1,43 +1,48 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, TouchableOpacity, Image } from 'react-native'
+import { StyleSheet, View, TextInput, Text, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 import Icons from 'app/style/Icons'
 import Strings from 'app/style/Strings'
 
-const SearchBar = (props) => {
-  const icon = props.isSearchActive ? Icons.closeSmall : Icons.searchSmall
-  return (
-    <View style={styles.container}>
-      <TextInput
-        autoCapitalize="none"
-        autoCorrect={false}
-        clearButtonMode="never"
-        enablesReturnKeyAutomatically={true}
-        onChange={props.onSearchChange}
-        placeholder={Strings.common.search}
-        placeholderTextColor = {Base.color.gray2}
-        returnKeyType="search"
-        style={styles.textField}
-        underlineColorAndroid="transparent"
-        value={props.searchText}
-      />
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={() => props.onSearchChange('')}
-        style={styles.button}
-        disabled={!props.searchText}
-      >
-        <Image source={icon} style={styles.icon} />
-      </TouchableOpacity>
-    </View>
-  )
+export default class SearchBar extends React.PureComponent {
+  render() {
+    const { isSearchActive, searchQuery, onSearchChange, count } = this.props
+    const icon = isSearchActive ? Icons.closeSmall : Icons.searchSmall
+    return (
+      <View style={styles.container}>
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          clearButtonMode="never"
+          enablesReturnKeyAutomatically={true}
+          onChange={onSearchChange}
+          placeholder={Strings.common.search}
+          placeholderTextColor = {Base.color.gray2}
+          returnKeyType="search"
+          style={styles.textField}
+          underlineColorAndroid="transparent"
+          value={searchQuery}
+        />
+        { isSearchActive > 0 ? <Text style={styles.count}>{count}</Text> : null }
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => onSearchChange('')}
+          style={styles.button}
+          disabled={!searchQuery}
+        >
+          <Image source={icon} style={styles.icon} />
+        </TouchableOpacity>
+      </View>
+    )
+  }
 }
 
 SearchBar.propTypes = {
   isSearchActive: PropTypes.bool.isRequired,
-  searchText: PropTypes.string.isRequired,
+  searchQuery: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
+  count: PropTypes.number,
 }
 
 const barHeight = Base.row.tiny
@@ -59,6 +64,15 @@ const styles = StyleSheet.create({
     height: barHeight,
     paddingHorizontal: Base.padding.medium,
   },
+  count: {
+    color: Base.color.black36,
+    fontSize: Base.font.small,
+    lineHeight: barHeight,
+    position: 'absolute',
+    top: barTopMargin,
+    right: barVerticalMargin + barHeight,
+    textAlign: 'right',
+  },
   button: {
     height: barHeight,
     padding: (barHeight - iconSize) / 2,
@@ -72,5 +86,3 @@ const styles = StyleSheet.create({
     tintColor: Base.color.black36,
   },
 })
-
-export default SearchBar

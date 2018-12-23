@@ -6,8 +6,8 @@ import merge from 'lodash/merge'
 import reject from 'lodash/reject'
 import map from 'lodash/map'
 import intersection from 'lodash/intersection'
-import head from 'lodash/head'
-import max from 'lodash/max'
+import fromPairs from 'lodash/fromPairs'
+import maxBy from 'lodash/maxBy'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -65,10 +65,10 @@ export default class PostsView extends React.Component {
       tagOrder: false,
       modalVisible: false,
       selectedPost: {},
-      searchText: '',
       isSearchActive: false,
+      searchQuery: '',
+      searchQueryCounts: null,
       searchResults: null,
-      previousSearchResults: null,
       pinboardDown: false,
     }
   }
@@ -147,7 +147,7 @@ export default class PostsView extends React.Component {
   currentList = (shouldFilter) => {
     const current = this.props.navigation.getParam('list', 'allPosts')
     if (shouldFilter) {
-      return this.filterSearchResults(this.state.searchText)
+      return this.filterSearchResults(this.state.searchQuery)
     }
     return this.state[current]
   }
@@ -166,21 +166,31 @@ export default class PostsView extends React.Component {
   }
 
   onSearchChange = (evt) => {
-    const searchText = evt.nativeEvent ? evt.nativeEvent.text : evt
-    const searchTextArray = searchText.toLowerCase().split(' ')
+    const searchQuery = evt.nativeEvent ? evt.nativeEvent.text : evt
+    const searchQueryArray = searchQuery.toLowerCase().split(' ')
     this.setState({
-      searchText: searchText,
-      isSearchActive: searchText === '' ? false : true,
+      searchQuery: searchQuery,
+      isSearchActive: searchQuery === '' ? false : true,
     })
-    const searchResults = map(searchTextArray, text => this.filterSearchResults(text))
-    const uniqueSearchResults = intersection(...searchResults)
-    this.setState({ searchResults: uniqueSearchResults, previousSearchResults: searchResults })
+    const results = map(searchQueryArray, text => this.filterSearchResults(text))
+    const counts = map(results, (res, i) => [searchQueryArray[i], res.length])
+    const uniqueResults = intersection(...results)
+    const similarResults = maxBy(results, i => i.length)
+    this.setState({
+      searchResults: uniqueResults,
+      searchQueryCounts: fromPairs(counts),
+    })
   }
 
   onShowSimilarResults = () => {
-    const previousResultsWithMostMatches = max(this.state.previousSearchResults, (i) => i.length)
-    if (previousResultsWithMostMatches) {
-      this.setState({ searchResults: previousResultsWithMostMatches })
+    const { searchQueryCounts } = this.state
+    const similarQuery = maxBy(Object.keys(searchQueryCounts), o => searchQueryCounts[o])
+    const similarResults = this.filterSearchResults(similarQuery)
+    if (similarResults.length > 0) {
+      this.setState({
+        searchResults: similarResults,
+        searchQuery: similarQuery,
+      })
     }
   }
 
@@ -228,8 +238,9 @@ export default class PostsView extends React.Component {
     return (
       <SearchBar
         isSearchActive={this.state.isSearchActive}
-        searchText={this.state.searchText}
+        searchQuery={this.state.searchQuery}
         onSearchChange={this.onSearchChange}
+        count={this.state.searchResults.length}
       />
     )
   }
@@ -256,14 +267,15 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { apiToken, allPosts, refreshing, isSearchActive, searchText, pinboardDown, previousSearchResults } = this.state
+    const { apiToken, allPosts, refreshing, pinboardDown, isSearchActive, searchQuery, searchQueryCounts } = this.state
     if (!apiToken) { return null }
     if (isSearchActive) {
+      const hasSimilarQuery = maxBy(Object.values(searchQueryCounts)) > 0
       return <EmptyState
-        action={ previousSearchResults ? this.onShowSimilarResults : undefined }
+        action={ hasSimilarQuery ? this.onShowSimilarResults : undefined }
         actionText={Strings.common.showSimilar}
         icon={Icons.searchLarge}
-        subtitle={`“${searchText}“`}
+        subtitle={`“${searchQuery}“`}
         title={Strings.common.noResults} />
     }
     if (pinboardDown) {
