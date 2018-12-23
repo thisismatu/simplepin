@@ -3,12 +3,14 @@ import { StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 
-const HeaderCell = ({ text }) => {
-  return (
-    <View style={styles.header}>
-      <Text style={styles.text}>{text}</Text>
-    </View>
-  )
+export default class HeaderCell extends React.PureComponent {
+  render() {
+    return (
+      <View style={styles.header}>
+        <Text style={styles.text}>{this.props.text}</Text>
+      </View>
+    )
+  }
 }
 
 HeaderCell.propTypes = {
@@ -29,5 +31,3 @@ const styles = StyleSheet.create({
     fontWeight: Base.font.bold,
   },
 })
-
-export default HeaderCell
