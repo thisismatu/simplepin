@@ -7,18 +7,20 @@ import Strings from 'app/style/Strings'
 
 const isAndroid = Platform.OS === 'android'
 
-const DrawerHeader = (props) => {
-  return (
-    <View style={styles.container}>
-      <View style={styles.iconContainer}>
-        <Image source={Icons.simplepin} style={styles.icon} />
+export default class DrawerHeader extends React.PureComponent {
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.iconContainer}>
+          <Image source={Icons.simplepin} style={styles.icon} />
+        </View>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{Strings.common.simplepin}</Text>
+          { this.props.text ? <Text style={styles.subtitle}>{this.props.text}</Text> : null }
+        </View>
       </View>
-      <View style={styles.textContainer}>
-        <Text style={styles.title}>{Strings.common.simplepin}</Text>
-        { props.text ? <Text style={styles.subtitle}>{props.text}</Text> : null }
-      </View>
-    </View>
-  )
+    )
+  }
 }
 
 DrawerHeader.propTypes = {
@@ -56,5 +58,3 @@ const styles = StyleSheet.create({
     fontSize: Base.font.medium,
   },
 })
-
-export default DrawerHeader
