@@ -3,34 +3,29 @@ import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import Base from 'app/style/Base'
 
-const DrawerCell = (props) => {
-  const isFocused = props.isFocused(props.route, props.title)
-  return (
-    <TouchableOpacity
-      style={[styles.cell, isFocused && styles.active]}
-      activeOpacity={0.5}
-      onPress={props.navigateTo(props.route, props.title, props.list, isFocused)}
-    >
-      <Image source={props.icon} style={styles.icon} />
-      <Text style={styles.text}>{props.title}</Text>
-      {
-        props.count
-        ? <Text style={styles.secondary}>{props.routeCount(props.count)}</Text>
-        : null
-      }
-    </TouchableOpacity>
-  )
+export default class DrawerCell extends React.PureComponent {
+  render() {
+    const { title, icon, count, isFocused } = this.props
+    return (
+      <TouchableOpacity
+        style={[styles.cell, isFocused && styles.active]}
+        activeOpacity={0.5}
+        onPress={this.props.navigateTo}
+      >
+        <Image source={icon} style={styles.icon} />
+        <Text style={styles.text}>{title}</Text>
+        { count ? <Text style={styles.secondary}>{count}</Text> : null }
+      </TouchableOpacity>
+    )
+  }
 }
 
 DrawerCell.propTypes = {
-  isFocused: PropTypes.func.isRequired,
+  isFocused: PropTypes.bool.isRequired,
   navigateTo: PropTypes.func.isRequired,
-  route: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   icon: PropTypes.number,
-  count: PropTypes.string,
-  list: PropTypes.string,
-  routeCount: PropTypes.func,
+  count: PropTypes.number,
 }
 
 const styles = StyleSheet.create({
@@ -61,5 +56,3 @@ const styles = StyleSheet.create({
     fontSize: Base.font.medium,
   },
 })
-
-export default DrawerCell

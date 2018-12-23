@@ -12,7 +12,6 @@ import Strings from 'app/style/Strings'
 import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
-const { expo } = require('app/app.json')
 
 export default class DrawerView extends React.Component {
   constructor(props) {
@@ -26,23 +25,23 @@ export default class DrawerView extends React.Component {
     Storage.apiToken().then((value) => this.setState({ apiToken: value }))
   }
 
-  isRouteFocused = (route, param = null) => {
+  isRouteFocused = (route, title = null) => {
     const { state } = this.props.navigation
     const focusedRoute = get(state.routes[state.index], ['routes', '0', 'routeName'])
-    const focusedParam = get(state.routes[state.index], ['routes', '0', 'params', 'title'])
-    if (param) {
-      return isEqual([route, param],[focusedRoute, focusedParam])
+    const focusedTitle = get(state.routes[state.index], ['routes', '0', 'params', 'title'])
+    if (title) {
+      return isEqual([route, title],[focusedRoute, focusedTitle])
     }
     return isEqual(route, focusedRoute)
   }
 
-  routeCount = (param) => {
+  routeCount = (title) => {
     const { state } = this.props.navigation
-    return get(state.routes, ['0', 'routes', '0', 'params', param])
+    return get(state.routes, ['0', 'routes', '0', 'params', title])
   }
 
-  navigateTo = (route, title, list = null, isFocused) => () => {
-    if (isFocused) {
+  navigateTo = (route, title, list = null) => () => {
+    if (this.isRouteFocused(route,title)) {
       return this.props.navigation.closeDrawer()
     }
     this.props.navigation.closeDrawer()
@@ -51,6 +50,8 @@ export default class DrawerView extends React.Component {
 
   render() {
     const username = this.state.apiToken.split(':')[0]
+    const postsRoute = 'Posts'
+    const settingsRoute = 'Settings'
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView
@@ -62,53 +63,45 @@ export default class DrawerView extends React.Component {
           <DrawerHeader text={username} />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
-            route="Posts"
+            route={postsRoute}
             icon={Icons.all}
             title={Strings.posts.all}
-            count="allCount"
-            list="allPosts"
-            routeCount={this.routeCount}
-            isFocused={this.isRouteFocused}
-            navigateTo={this.navigateTo}
+            count={this.routeCount('allCount')}
+            isFocused={this.isRouteFocused(postsRoute, Strings.posts.all)}
+            navigateTo={this.navigateTo(postsRoute, Strings.posts.all, 'allPosts')}
           />
           <DrawerCell
-            route="Posts"
+            route={postsRoute}
             icon={Icons.unread}
             title={Strings.posts.unread}
-            count="unreadCount"
-            list="unreadPosts"
-            routeCount={this.routeCount}
-            isFocused={this.isRouteFocused}
-            navigateTo={this.navigateTo}
+            count={this.routeCount('unreadCount')}
+            isFocused={this.isRouteFocused(postsRoute, Strings.posts.unread)}
+            navigateTo={this.navigateTo(postsRoute, Strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
-            route="Posts"
+            route={postsRoute}
             icon={Icons.private}
             title={Strings.posts.private}
-            count="privateCount"
-            list="privatePosts"
-            routeCount={this.routeCount}
-            isFocused={this.isRouteFocused}
-            navigateTo={this.navigateTo}
+            count={this.routeCount('privateCount')}
+            isFocused={this.isRouteFocused(postsRoute, Strings.posts.private)}
+            navigateTo={this.navigateTo(postsRoute, Strings.posts.private, 'privatePosts')}
           />
           <DrawerCell
-            route="Posts"
+            route={postsRoute}
             icon={Icons.public}
             title={Strings.posts.public}
-            count="publicCount"
-            list="publicPosts"
-            routeCount={this.routeCount}
-            isFocused={this.isRouteFocused}
-            navigateTo={this.navigateTo}
+            count={this.routeCount('publicCount')}
+            isFocused={this.isRouteFocused(postsRoute, Strings.posts.public)}
+            navigateTo={this.navigateTo(postsRoute, Strings.posts.public, 'publicPosts')}
           />
 
           <HeaderCell text={Strings.common.simplepin} />
           <DrawerCell
-            route="Settings"
+            route={settingsRoute}
             icon={Icons.settings}
             title={Strings.settings.title}
-            isFocused={this.isRouteFocused}
-            navigateTo={this.navigateTo}
+            isFocused={this.isRouteFocused(settingsRoute, Strings.settings.title)}
+            navigateTo={this.navigateTo(settingsRoute, Strings.settings.title)}
           />
         </ScrollView>
       </SafeAreaView>
