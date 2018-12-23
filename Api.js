@@ -75,8 +75,8 @@ const postsDelete = (post, token) => {
   return fetchWithErrorHandling(postsDeleteUrl(params))
 }
 
-const mockPosts = () => {
-  const mock = 'http://192.168.0.18:3000/posts.json'
+const mockPostsAll = () => {
+  const mock = 'http://192.168.43.166:3000/posts.json'
   return fetchWithErrorHandling(mock)
 }
 
@@ -86,5 +86,5 @@ export default {
   postsAll,
   postsAdd,
   postsDelete,
-  mockPosts,
+  mockPostsAll,
 }
