@@ -2,12 +2,14 @@ import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import filter from 'lodash/filter'
-import merge from 'lodash/merge'
-import reject from 'lodash/reject'
-import map from 'lodash/map'
-import intersection from 'lodash/intersection'
 import fromPairs from 'lodash/fromPairs'
+import intersection from 'lodash/intersection'
+import lodash from 'lodash/lodash'
+import map from 'lodash/map'
 import maxBy from 'lodash/maxBy'
+import merge from 'lodash/merge'
+import omit from 'lodash/omit'
+import reject from 'lodash/reject'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -145,6 +147,16 @@ export default class PostsView extends React.Component {
     })
   }
 
+  similarSearchResults = () => {
+    const { searchQueryCounts } = this.state
+    const similarQuery = maxBy(Object.keys(searchQueryCounts), o => searchQueryCounts[o])
+    const similarResults = this.filterSearchResults(similarQuery)
+    return {
+      searchResults: similarResults,
+      searchQuery: similarQuery,
+    }
+  }
+
   currentList = (shouldFilter) => {
     const current = this.props.navigation.getParam('list', 'allPosts')
     if (shouldFilter) {
@@ -173,25 +185,23 @@ export default class PostsView extends React.Component {
       searchQuery: searchQuery,
       isSearchActive: searchQuery === '' ? false : true,
     })
-    const results = map(searchQueryArray, text => this.filterSearchResults(text))
-    const counts = map(results, (res, i) => [searchQueryArray[i], res.length])
-    const uniqueResults = intersection(...results)
-    const similarResults = maxBy(results, i => i.length)
+    const allResults = map(searchQueryArray, text => this.filterSearchResults(text))
+    const queryCounts = lodash(allResults)
+      .map((res, i) => [searchQueryArray[i], res.length])
+      .fromPairs()
+      .omit('')
+      .value()
+    const uniqueResults = intersection(...allResults)
     this.setState({
       searchResults: uniqueResults,
-      searchQueryCounts: fromPairs(counts),
+      searchQueryCounts: queryCounts,
     })
   }
 
   onShowSimilarResults = () => {
-    const { searchQueryCounts } = this.state
-    const similarQuery = maxBy(Object.keys(searchQueryCounts), o => searchQueryCounts[o])
-    const similarResults = this.filterSearchResults(similarQuery)
-    if (similarResults.length > 0) {
-      this.setState({
-        searchResults: similarResults,
-        searchQuery: similarQuery,
-      })
+    const similarResults = this.similarSearchResults()
+    if (similarResults.searchResults.length > 0) {
+      this.setState(similarResults)
     }
   }
 
@@ -269,13 +279,13 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { apiToken, allPosts, refreshing, pinboardDown, isSearchActive, searchQuery, searchQueryCounts } = this.state
+    const { apiToken, allPosts, refreshing, pinboardDown, isSearchActive, searchQuery } = this.state
     if (!apiToken) { return null }
     if (isSearchActive) {
-      const hasSimilarQuery = maxBy(Object.values(searchQueryCounts)) > 0
+      const similarResults = this.similarSearchResults()
       return <EmptyState
-        action={ hasSimilarQuery ? this.onShowSimilarResults : undefined }
-        actionText={Strings.common.showSimilar}
+        action={ similarResults.searchResults.length > 0 ? this.onShowSimilarResults : undefined }
+        actionText={`Show results for “${similarResults.searchQuery}”`}
         icon={Icons.searchLarge}
         subtitle={`“${searchQuery}“`}
         title={Strings.common.noResults} />
