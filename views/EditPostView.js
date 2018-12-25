@@ -96,7 +96,7 @@ export default class EditPostView extends React.Component {
               underlineColorAndroid="transparent"
               value={href}
             />
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
@@ -109,7 +109,7 @@ export default class EditPostView extends React.Component {
               underlineColorAndroid="transparent"
               value={description}
             />
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
@@ -123,7 +123,7 @@ export default class EditPostView extends React.Component {
               underlineColorAndroid="transparent"
               value={extended}
             />
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
@@ -136,7 +136,7 @@ export default class EditPostView extends React.Component {
               underlineColorAndroid="transparent"
               value={tags ? tags.join(' ') : null}
             />
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
             <View style={styles.cell}>
               <Text style={styles.text}>Private</Text>
               <Switch
@@ -147,7 +147,7 @@ export default class EditPostView extends React.Component {
                 value={!shared}
               />
             </View>
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
             <View style={styles.cell}>
               <Text style={styles.text}>Read later</Text>
               <Switch
@@ -158,7 +158,7 @@ export default class EditPostView extends React.Component {
                 value={toread}
               />
             </View>
-            <Separator />
+            <Separator left={Base.padding.medium} right={Base.padding.medium} />
           </View>
           <View style={[styles.section, { paddingHorizontal: Base.padding.medium }]}>
             <TouchableOpacity
