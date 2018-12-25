@@ -1,6 +1,7 @@
 import React from 'react'
 import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
+import compact from 'lodash/compact'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
@@ -20,20 +21,62 @@ export default class EditPostView extends React.Component {
 
   constructor(props) {
     super(props)
+    const post = props.navigation.getParam('post', {})
+    this.isEditing = props.navigation.getParam('isEditing', false)
     this.state = {
-      post: this.props.navigation.getParam('post', ''),
-      privateByDefault: false,
-      unreadByDefault: false,
+      description: post.description,
+      extended: post.extended,
+      href: post.href,
+      shared: post.shared,
+      tags: post.tags,
+      time: post.time || new Date(),
+      toread: post.toread,
     }
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => this.setState(value))
-    console.log(this.state)
+    if (!this.isEditing) {
+      Storage.userPreferences().then(value => {
+        this.setState({
+          shared: !value.privateByDefault,
+          toread: value.unreadByDefault,
+        })
+      })
+    }
+  }
+
+  onHrefChange = (evt) => {
+    this.setState({ href: evt.nativeEvent.text.trim() })
+  }
+
+  onDescriptionChange = (evt) => {
+    this.setState({ description: evt.nativeEvent.text.trim() })
+  }
+
+  onExtendedChange = (evt) => {
+    this.setState({ extended: evt.nativeEvent.text.trim() })
+  }
+
+  onTagsChange = (evt) => {
+    this.setState({ tags: evt.nativeEvent.text.split(' ') })
+  }
+
+  onShared = (value) => {
+    this.setState({ shared: !value })
+  }
+
+  onToread = (value) => {
+    this.setState({ toread: value })
+  }
+
+  onAddEdit = () => {
+    const post = this.state
+    post.tags = compact(post.tags)
+    console.log(post)
   }
 
   render() {
-    const { post } = this.state
+    const { description, extended, href, shared, tags, toread } = this.state
     const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
 
@@ -45,24 +88,26 @@ export default class EditPostView extends React.Component {
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
+              onChange={this.onHrefChange}
               placeholder="URL"
               placeholderTextColor = {Base.color.gray2}
               returnKeyType="next"
               style={styles.textInput}
               underlineColorAndroid="transparent"
-              value={post.href}
+              value={href}
             />
             <Separator />
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
+              onChange={this.onDescriptionChange}
               placeholder="Title"
               placeholderTextColor = {Base.color.gray2}
               returnKeyType="next"
               style={styles.textInput}
               underlineColorAndroid="transparent"
-              value={post.description}
+              value={description}
             />
             <Separator />
             <TextInput
@@ -70,24 +115,26 @@ export default class EditPostView extends React.Component {
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
               multiline={true}
+              onChange={this.onExtendedChange}
               placeholder="Description"
               placeholderTextColor = {Base.color.gray2}
               returnKeyType="next"
               style={[styles.textInput, styles.textArea]}
               underlineColorAndroid="transparent"
-              value={post.extended}
+              value={extended}
             />
             <Separator />
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
               enablesReturnKeyAutomatically={true}
+              onChange={this.onTagsChange}
               placeholder="Tags"
               placeholderTextColor = {Base.color.gray2}
-              returnKeyType="next"
+              returnKeyType="done"
               style={styles.textInput}
               underlineColorAndroid="transparent"
-              value={post.tags ? post.tags.join(' ') : null}
+              value={tags ? tags.join(' ') : null}
             />
             <Separator />
             <View style={styles.cell}>
@@ -95,7 +142,9 @@ export default class EditPostView extends React.Component {
               <Switch
                 style={styles.switch}
                 trackColor={{ true: track }}
-                value={post ? !post.shared : this.state.privateByDefault}
+                thumbColor={thumb(!shared)}
+                onValueChange={this.onShared}
+                value={!shared}
               />
             </View>
             <Separator />
@@ -104,7 +153,9 @@ export default class EditPostView extends React.Component {
               <Switch
                 style={styles.switch}
                 trackColor={{ true: track }}
-                value={post ? post.toread : this.state.unreadByDefault}
+                thumbColor={thumb(toread)}
+                onValueChange={this.onToread}
+                value={toread}
               />
             </View>
             <Separator />
@@ -112,9 +163,9 @@ export default class EditPostView extends React.Component {
           <View style={[styles.section, { paddingHorizontal: Base.padding.medium }]}>
             <TouchableOpacity
               activeOpacity={0.5}
-              disabled={!post.href && !post.description}
-              style={[styles.button, !post.href && !post.description && styles.disabled]}
-              onPress={() => this.props.navigation.dismiss()}
+              // disabled={!href && !description}
+              style={[styles.button, !href && !description && styles.disabled]}
+              onPress={() => this.onAddEdit()}
             >
               <Text style={styles.buttonText}>Add</Text>
             </TouchableOpacity>

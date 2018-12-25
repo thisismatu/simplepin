@@ -224,7 +224,7 @@ export default class PostsView extends React.Component {
 
   onEditPost = post => () => {
     this.toggleModal()
-    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post })
+    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post, isEditing: true })
   }
 
   onDeletePost = post => () => {
