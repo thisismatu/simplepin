@@ -17,12 +17,15 @@ export default class DrawerView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiToken: '',
+      username: null,
     }
   }
 
   componentDidMount() {
-    Storage.apiToken().then((value) => this.setState({ apiToken: value }))
+    Storage.apiToken().then((value) => {
+      const username = value ? value.split(':')[0] : null
+      this.setState({ username: username })
+    })
   }
 
   isRouteFocused = (route, title = null) => {
@@ -49,7 +52,6 @@ export default class DrawerView extends React.Component {
   }
 
   render() {
-    const username = this.state.apiToken.split(':')[0]
     const postsRoute = 'Posts'
     const settingsRoute = 'Settings'
     return (
@@ -60,7 +62,7 @@ export default class DrawerView extends React.Component {
           showsVerticalScrollIndicator={false}
           style={styles.scrollView}
         >
-          <DrawerHeader text={username} />
+          <DrawerHeader text={this.state.username} />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
             route={postsRoute}
