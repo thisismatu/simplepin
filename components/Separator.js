@@ -22,3 +22,8 @@ Separator.propTypes = {
   left: PropTypes.number,
   right: PropTypes.number,
 }
+
+Separator.defaultProps = {
+  left: Base.padding.medium,
+  right: Base.padding.medium,
+}
