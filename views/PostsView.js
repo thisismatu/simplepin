@@ -111,8 +111,6 @@ export default class PostsView extends React.Component {
   }
 
   updatePost = async (post) => {
-    post.toread = !post.toread
-    post.meta = Math.random().toString(36) // random string for PostCell change detection
     const newCollection = merge(this.state.allPosts, post)
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
@@ -210,6 +208,8 @@ export default class PostsView extends React.Component {
   onCellPress = post => () => {
     this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     if (this.state.markAsRead && post.toread) {
+      post.toread = !post.toread
+      post.meta = Math.random().toString(36) // PostCell change detection
       this.updatePost(post)
     }
   }
@@ -221,6 +221,11 @@ export default class PostsView extends React.Component {
 
   onToggleToread = post => () => {
     this.toggleModal()
+    post.toread = !post.toread
+    post.meta = Math.random().toString(36) // PostCell change detection
+    this.updatePost(post)
+  }
+
     this.updatePost(post)
   }
 
