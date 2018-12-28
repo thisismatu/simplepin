@@ -29,7 +29,7 @@ const PostsStack = createStackNavigator(
   }
 )
 
-const ModalStack = createStackNavigator(
+const BrowserStack = createStackNavigator(
   {
     Browser: BrowserView,
   },
@@ -68,8 +68,8 @@ const AppDrawer = createDrawerNavigator(
 
 const AppStack = createStackNavigator(
   {
-    Drawer: AppDrawer,
-    ModalStack: ModalStack,
+    AppDrawer: AppDrawer,
+    BrowserStack: BrowserStack,
     EditStack: EditStack,
   },
   {
