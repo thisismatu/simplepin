@@ -82,7 +82,7 @@ export default class EditPostView extends React.Component {
 
     return (
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container} style={styles.list}>
           <View style={styles.section}>
             <TextInput
               autoCapitalize="none"
@@ -197,6 +197,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
+    paddingBottom: Base.padding.large,
+  },
+  list: {
     backgroundColor: Base.color.white,
   },
   section: {

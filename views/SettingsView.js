@@ -79,7 +79,7 @@ export default class SettingsView extends React.Component {
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
 
     return (
-      <ScrollView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container} style={styles.list}>
         <HeaderCell text={Strings.settings.general} />
         <Separator />
         <View style={styles.cell}>
@@ -169,7 +169,6 @@ export default class SettingsView extends React.Component {
           <Text style={styles.text}>{Strings.settings.logout}</Text>
         </TouchableOpacity>
         <Separator />
-        <View style={{ paddingBottom: Base.padding.large }} />
       </ScrollView>
     )
   }
@@ -181,6 +180,9 @@ SettingsView.propTypes = {
 
 const styles = StyleSheet.create({
   container: {
+    paddingBottom: Base.padding.large,
+  },
+  list: {
     backgroundColor: Base.color.white,
   },
   cell: {
