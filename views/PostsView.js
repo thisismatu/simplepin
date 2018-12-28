@@ -317,11 +317,13 @@ export default class PostsView extends React.Component {
   }
 
   render() {
+    const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
+    const hasData = data && data.length
     return (
       <View style={{ flex: 1 }}>
         <FlatList
-          contentContainerStyle={styles.container}
-          data={this.state.isSearchActive ? this.state.searchResults : this.currentList()}
+          contentContainerStyle={[styles.container, !hasData && { flex: 1 }]}
+          data={data}
           initialNumToRender={8}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => this.renderPostCell(item)}
@@ -352,7 +354,6 @@ PostsView.propTypes = {
 
 const styles = StyleSheet.create({
   container : {
-    flex: 1,
     paddingBottom: Base.padding.large,
   },
   list: {
