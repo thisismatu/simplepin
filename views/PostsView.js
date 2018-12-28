@@ -313,12 +313,13 @@ export default class PostsView extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <FlatList
+          contentContainerStyle={styles.container}
           data={this.state.isSearchActive ? this.state.searchResults : this.currentList()}
           initialNumToRender={8}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => this.renderPostCell(item)}
           refreshControl={this.renderRefreshControl()}
-          style={styles.container}
+          style={styles.list}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="on-drag"
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
@@ -343,8 +344,11 @@ PostsView.propTypes = {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  container : {
+    flex: 1,
+    paddingBottom: Base.padding.large,
+  },
+  list: {
     backgroundColor: Base.color.white,
-    paddingBottom: Base.padding.tiny,
   },
 })
