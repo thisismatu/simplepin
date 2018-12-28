@@ -7,10 +7,10 @@ import intersection from 'lodash/intersection'
 import lodash from 'lodash/lodash'
 import map from 'lodash/map'
 import maxBy from 'lodash/maxBy'
-import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import reject from 'lodash/reject'
 import uniqBy from 'lodash/uniqBy'
+import findIndex from 'lodash/findIndex'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -111,7 +111,9 @@ export default class PostsView extends React.Component {
   }
 
   updatePost = async (post) => {
-    const newCollection = merge(this.state.allPosts, post)
+    const index = findIndex(this.state.allPosts, ['hash', post.hash])
+    const newCollection = this.state.allPosts
+    newCollection[index] = post
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
