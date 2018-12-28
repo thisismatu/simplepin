@@ -10,6 +10,7 @@ import maxBy from 'lodash/maxBy'
 import merge from 'lodash/merge'
 import omit from 'lodash/omit'
 import reject from 'lodash/reject'
+import uniqBy from 'lodash/uniqBy'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -25,11 +26,12 @@ import Strings from 'app/style/Strings'
 import Icons from 'app/style/Icons'
 
 const filterPosts = (obj) => {
+  const unique = uniqBy(obj, 'hash')
   return {
-    allPosts: obj,
-    unreadPosts: filter(obj, ['toread', true]),
-    privatePosts: filter(obj, ['shared', false]),
-    publicPosts: filter(obj, ['shared', true]),
+    allPosts: unique,
+    unreadPosts: filter(unique, ['toread', true]),
+    privatePosts: filter(unique, ['shared', false]),
+    publicPosts: filter(unique, ['shared', true]),
   }
 }
 
