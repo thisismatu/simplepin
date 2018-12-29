@@ -5,7 +5,7 @@ import PostsView from 'app/views/PostsView'
 import BrowserView from 'app/views/BrowserView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
-import EditPostView from 'app/views/EditPostView'
+import AddPostView from 'app/views/AddPostView'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
 
@@ -40,7 +40,7 @@ const BrowserStack = createStackNavigator(
 
 const EditStack = createStackNavigator(
   {
-    Edit: EditPostView,
+    Edit: AddPostView,
   },
   {
     navigationOptions: headerStyles,

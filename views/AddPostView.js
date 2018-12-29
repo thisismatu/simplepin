@@ -13,7 +13,7 @@ import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 
-export default class EditPostView extends React.Component {
+export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const post = navigation.getParam('post', {})
     return {
@@ -188,7 +188,7 @@ export default class EditPostView extends React.Component {
   }
 }
 
-EditPostView.propTypes = {
+AddPostView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
