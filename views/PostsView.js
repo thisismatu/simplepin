@@ -49,7 +49,7 @@ export default class PostsView extends React.Component {
     return {
       title: navigation.getParam('title', Strings.posts.all),
       headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
-      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { title: Strings.edit.titleAdd, onSubmit: navigation.state.params.onSubmit })} icon={Icons.add} />,
+      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { onSubmit: navigation.state.params.onSubmit })} icon={Icons.add} />,
     }
   }
 
@@ -77,7 +77,7 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ onSubmit: this.onSubmitEditPost.bind(this) })
+    this.props.navigation.setParams({ onSubmit: this.onSubmitAddPost.bind(this) })
     Storage.userPreferences()
       .then((value) => this.setState(value))
       .then(() => this.onRefresh())
@@ -110,7 +110,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  updatePost = async (post) => {
+  addPost = async (post) => {
     const index = findIndex(this.state.allPosts, ['hash', post.hash])
     const newCollection = this.state.allPosts
     if (index === -1) {
@@ -216,7 +216,7 @@ export default class PostsView extends React.Component {
     if (this.state.markAsRead && post.toread) {
       post.toread = !post.toread
       post.meta = Math.random().toString(36) // PostCell change detection
-      this.updatePost(post)
+      this.addPost(post)
     }
   }
 
@@ -229,16 +229,17 @@ export default class PostsView extends React.Component {
     this.toggleModal()
     post.toread = !post.toread
     post.meta = Math.random().toString(36) // PostCell change detection
-    this.updatePost(post)
+    this.addPost(post)
   }
 
-  onSubmitEditPost = (post) => {
-    this.updatePost(post)
+  onSubmitAddPost = (post) => {
+    this.addPost(post)
   }
 
   onEditPost = post => () => {
+    const { navigation } = this.props
     this.toggleModal()
-    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post, isEditing: true, onSubmit: this.onSubmitEditPost.bind(this) })
+    navigation.navigate('Edit', { post: post, onSubmit: navigation.state.params.onSubmit })
   }
 
   onDeletePost = post => () => {
@@ -313,8 +314,9 @@ export default class PostsView extends React.Component {
         title={Strings.error.troubleConnecting} />
     }
     if (!allPosts && !refreshing) {
+      const { navigation } = this.props
       return <EmptyState
-        action={() => this.props.navigation.navigate('Edit')}
+        action={() => navigation.navigate('Edit', { onSubmit: navigation.state.params.onSubmit })}
         actionText={Strings.edit.titleAdd}
         icon={Icons.simplepin}
         subtitle={Strings.common.noPostsMessage}

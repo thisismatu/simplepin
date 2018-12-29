@@ -15,8 +15,9 @@ const isAndroid = Platform.OS === 'android'
 
 export default class EditPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    const post = navigation.getParam('post', {})
     return {
-      title: navigation.getParam('title', ''),
+      title: isEmpty(post) ? Strings.edit.titleAdd : Strings.edit.titleEdit,
       headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
     }
   }
@@ -24,8 +25,8 @@ export default class EditPostView extends React.Component {
   constructor(props) {
     super(props)
     const post = props.navigation.getParam('post', {})
-    this.isEditing = props.navigation.getParam('isEditing', false)
     this.state = {
+      isEditing: !isEmpty(post),
       description: post.description || '',
       extended: post.extended || '',
       hash: post.hash || '',
@@ -39,7 +40,7 @@ export default class EditPostView extends React.Component {
   }
 
   componentDidMount() {
-    if (!this.isEditing) {
+    if (!this.state.isEditing) {
       Storage.userPreferences().then(value => {
         this.setState({
           shared: !value.privateByDefault,
@@ -78,7 +79,7 @@ export default class EditPostView extends React.Component {
     this.setState({ toread: value })
   }
 
-  onAddEdit = () => {
+  onSubmit = () => {
     const post = this.state
     const tags = compact(post.tags)
     post.description = post.description.trim()
@@ -177,9 +178,9 @@ export default class EditPostView extends React.Component {
             activeOpacity={0.5}
             disabled={!this.isValidPost()}
             style={[styles.button, !this.isValidPost() && styles.disabled]}
-            onPress={() => this.onAddEdit()}
+            onPress={() => this.onSubmit()}
           >
-            <Text style={styles.buttonText}>{ this.isEditing ? 'Save' : 'Add' }</Text>
+            <Text style={styles.buttonText}>{ this.state.isEditing ? 'Save' : 'Add' }</Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
