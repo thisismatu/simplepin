@@ -1,8 +1,9 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import isUrl from 'is-url'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
@@ -15,34 +16,63 @@ const isAndroid = Platform.OS === 'android'
 
 export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    const post = navigation.getParam('post', {})
     return {
-      title: isEmpty(post) ? Strings.edit.titleAdd : Strings.edit.titleEdit,
-      headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
+      title: navigation.getParam('post') ? Strings.add.titleEdit : Strings.add.titleAdd,
+      headerLeft: <NavigationButton onPress={navigation.getParam('onDismiss')} icon={Icons.close} />,
     }
   }
 
   constructor(props) {
     super(props)
-    this.state = { isEditing: false }
+    this.isEditing = false
+    this.initialState = {}
+    this.state = {
+      description: '',
+      extended: '',
+      hash: '',
+      href: '',
+      meta: '',
+      shared: true,
+      tags: [],
+      time: new Date(),
+      toread: false,
+    }
   }
 
   componentDidMount() {
-    const post = this.props.navigation.getParam('post', {})
-    Storage.userPreferences().then(value => {
-      this.setState({
-        isEditing: !isEmpty(post),
-        description: post.description || '',
-        extended: post.extended || '',
-        hash: post.hash || '',
-        href: post.href || '',
-        meta: post.meta || '',
-        shared: post.shared || !value.privateByDefault,
-        tags: post.tags || [],
-        time: post.time || new Date(),
-        toread: post.toread || value.unreadByDefault,
+    const { navigation } = this.props
+    const post = navigation.getParam('post')
+    navigation.setParams({ onDismiss: this.onUnsavedDismiss })
+    if (post) {
+      this.isEditing = true
+      this.setState(post, () => this.setInitialState(this.state))
+    } else {
+      Storage.userPreferences().then(value => {
+        this.setState({
+          shared: !value.privateByDefault,
+          toread: value.unreadByDefault,
+        }, () => this.setInitialState(this.state))
       })
-    })
+    }
+  }
+
+  setInitialState = (currentState) => {
+    this.initialState = currentState
+  }
+
+  onUnsavedDismiss = () => {
+    if (isEqual(this.initialState, this.state)) {
+      return this.props.navigation.dismiss()
+    } else {
+      Alert.alert(
+        this.isEditing ? Strings.add.discardEdit : Strings.add.discardAdd,
+        null,
+        [
+          { text: Strings.common.cancel, style: 'cancel' },
+          { text: Strings.common.ok, onPress: () => this.props.navigation.dismiss() },
+        ]
+      )
+    }
   }
 
   isValidPost = () => {

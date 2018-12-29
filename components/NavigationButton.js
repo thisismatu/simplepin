@@ -17,8 +17,8 @@ export default class NavigationButton extends React.PureComponent {
 }
 
 NavigationButton.propTypes = {
-  onPress: PropTypes.func.isRequired,
   icon: PropTypes.number.isRequired,
+  onPress: PropTypes.func,
 }
 
 const styles = StyleSheet.create({
