@@ -82,7 +82,7 @@ export default class EditPostView extends React.Component {
     const post = this.state
     const tags = compact(post.tags)
     post.description = post.description.trim()
-    post.extended = post.description.trim()
+    post.extended = post.extended.trim()
     post.tags = !isEmpty(tags) ? tags : null
     post.meta = Math.random().toString(36) // PostCell change detection
     this.props.navigation.state.params.onSubmit(post)
