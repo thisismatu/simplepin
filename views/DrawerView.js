@@ -32,7 +32,6 @@ export default class DrawerView extends React.PureComponent {
 
   isRouteFocused = (route, title = null) => {
     const { state } = this.props.navigation
-    console.log(state)
     const index = get(state.routes, ['0', 'index'])
     const focusedRoute = get(state.routes, ['0', 'routes', index, 'routeName'])
     const focusedTitle = get(state.routes, ['0', 'routes', index, 'params', 'title'])
