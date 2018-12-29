@@ -98,7 +98,7 @@ export default class AddPostView extends React.Component {
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onHrefChange}
-            placeholder="URL"
+            placeholder={Strings.add.placeholderUrl}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="next"
             style={styles.textInput}
@@ -111,7 +111,7 @@ export default class AddPostView extends React.Component {
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onDescriptionChange}
-            placeholder="Title"
+            placeholder={Strings.add.placeholderTitle}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="next"
             style={styles.textInput}
@@ -125,7 +125,7 @@ export default class AddPostView extends React.Component {
             enablesReturnKeyAutomatically={true}
             multiline={true}
             onChange={this.onExtendedChange}
-            placeholder="Description"
+            placeholder={Strings.add.placeholderDescription}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="next"
             style={[styles.textInput, styles.textArea]}
@@ -139,7 +139,7 @@ export default class AddPostView extends React.Component {
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onTagsChange}
-            placeholder="Tags"
+            placeholder={Strings.add.placeholderTags}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="done"
             style={styles.textInput}
@@ -148,7 +148,7 @@ export default class AddPostView extends React.Component {
           />
           <Separator />
           <View style={styles.cell}>
-            <Text style={styles.text}>Private</Text>
+            <Text style={styles.text}>{Strings.posts.private}</Text>
             <Switch
               style={styles.switch}
               trackColor={{ true: track }}
@@ -159,7 +159,7 @@ export default class AddPostView extends React.Component {
           </View>
           <Separator />
           <View style={styles.cell}>
-            <Text style={styles.text}>Read later</Text>
+            <Text style={styles.text}>{Strings.add.readLater}</Text>
             <Switch
               style={styles.switch}
               trackColor={{ true: track }}
@@ -175,7 +175,9 @@ export default class AddPostView extends React.Component {
             style={[styles.button, !this.isValidPost() && styles.disabled]}
             onPress={() => this.onSubmit()}
           >
-            <Text style={styles.buttonText}>{ this.state.isEditing ? 'Save' : 'Add' }</Text>
+            <Text style={styles.buttonText}>
+              {this.isEditing ? Strings.add.buttonSave : Strings.add.buttonAdd}
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>

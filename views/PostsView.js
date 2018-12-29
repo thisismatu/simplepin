@@ -317,7 +317,7 @@ export default class PostsView extends React.Component {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Edit', { onSubmit: navigation.state.params.onSubmit })}
-        actionText={Strings.edit.titleAdd}
+        actionText={Strings.add.titleAdd}
         icon={Icons.simplepin}
         subtitle={Strings.common.noPostsMessage}
         title={Strings.common.noPosts} />

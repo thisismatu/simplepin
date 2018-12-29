@@ -55,9 +55,18 @@ const Strings = {
     version: 'Version',
     logout: 'Log out',
   },
-  edit: {
+  add: {
     titleAdd: 'Add bookmark',
     titleEdit: 'Edit bookmark',
+    discardAdd: 'Discard this bookmark?',
+    discardEdit: 'Discard unsaved changes to this bookmark?',
+    placeholderUrl: 'URL',
+    placeholderTitle: 'Title',
+    placeholderDescription: 'Description',
+    placeholderTags: 'Tags',
+    readLater: 'Read later',
+    buttonAdd: 'Add',
+    buttonSave: 'Save',
   },
 }
 
