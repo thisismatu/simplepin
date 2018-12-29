@@ -19,7 +19,7 @@ export default class SearchBar extends React.PureComponent {
           onChange={onSearchChange}
           placeholder={Strings.common.search}
           placeholderTextColor = {Base.color.gray2}
-          returnKeyType="search"
+          returnKeyType="done"
           style={styles.textField}
           underlineColorAndroid="transparent"
           value={searchQuery}
