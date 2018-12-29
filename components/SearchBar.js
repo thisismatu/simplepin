@@ -46,16 +46,14 @@ SearchBar.propTypes = {
 }
 
 const barHeight = Base.row.tiny
-const barVerticalMargin = 12
-const barTopMargin = Base.padding.medium
+const horizontalMargin = 12
 const iconSize = 18
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingBottom: Base.padding.tiny,
-    paddingHorizontal: barVerticalMargin,
-    paddingTop: barTopMargin,
+    paddingHorizontal: horizontalMargin,
   },
   textField: {
     backgroundColor: Base.color.gray0,
@@ -69,20 +67,20 @@ const styles = StyleSheet.create({
     fontSize: Base.font.small,
     lineHeight: barHeight,
     position: 'absolute',
-    top: barTopMargin,
-    right: barVerticalMargin + barHeight,
+    top: 0,
+    right: horizontalMargin + barHeight,
     textAlign: 'right',
   },
   button: {
     height: barHeight,
     padding: (barHeight - iconSize) / 2,
     position: 'absolute',
-    right: barVerticalMargin,
-    top: barTopMargin,
+    right: horizontalMargin,
+    top: 0,
     width: barHeight,
   },
   icon: {
-    marginLeft: - barVerticalMargin / 4,
+    marginLeft: - horizontalMargin / 4,
     tintColor: Base.color.black36,
   },
 })

@@ -356,6 +356,7 @@ PostsView.propTypes = {
 
 const styles = StyleSheet.create({
   container : {
+    paddingTop: Base.padding.medium,
     paddingBottom: Base.padding.large,
   },
   list: {
