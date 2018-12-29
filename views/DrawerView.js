@@ -4,6 +4,8 @@ import PropTypes from 'prop-types'
 import { Constants } from 'expo'
 import get from 'lodash/get'
 import isEqual from 'lodash/isEqual'
+import isEmpty from 'lodash/isEmpty'
+import omitBy from 'lodash/omitBy'
 import Storage from 'app/util/Storage'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
@@ -30,8 +32,10 @@ export default class DrawerView extends React.PureComponent {
 
   isRouteFocused = (route, title = null) => {
     const { state } = this.props.navigation
-    const focusedRoute = get(state.routes[state.index], ['routes', '0', 'routeName'])
-    const focusedTitle = get(state.routes[state.index], ['routes', '0', 'params', 'title'])
+    console.log(state)
+    const index = get(state.routes, ['0', 'index'])
+    const focusedRoute = get(state.routes, ['0', 'routes', index, 'routeName'])
+    const focusedTitle = get(state.routes, ['0', 'routes', index, 'params', 'title'])
     if (title) {
       return isEqual([route, title],[focusedRoute, focusedTitle])
     }
@@ -43,12 +47,13 @@ export default class DrawerView extends React.PureComponent {
     return get(state.routes, ['0', 'routes', '0', 'params', title])
   }
 
-  navigateTo = (route, title, list = null) => () => {
-    if (this.isRouteFocused(route,title)) {
+  navigateTo = (route, title = null, list = null) => () => {
+    const params = omitBy({ title: title, list: list }, isEmpty)
+    if (this.isRouteFocused(route, title)) {
       return this.props.navigation.closeDrawer()
     }
     this.props.navigation.closeDrawer()
-    this.props.navigation.navigate(route, { title: title, list: list })
+    this.props.navigation.navigate(route, params)
   }
 
   render() {
@@ -65,7 +70,6 @@ export default class DrawerView extends React.PureComponent {
           <DrawerHeader text={this.state.username} />
           <HeaderCell text={Strings.posts.title} />
           <DrawerCell
-            route={postsRoute}
             icon={Icons.all}
             title={Strings.posts.all}
             count={this.routeCount('allCount')}
@@ -73,7 +77,6 @@ export default class DrawerView extends React.PureComponent {
             navigateTo={this.navigateTo(postsRoute, Strings.posts.all, 'allPosts')}
           />
           <DrawerCell
-            route={postsRoute}
             icon={Icons.unread}
             title={Strings.posts.unread}
             count={this.routeCount('unreadCount')}
@@ -81,7 +84,6 @@ export default class DrawerView extends React.PureComponent {
             navigateTo={this.navigateTo(postsRoute, Strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
-            route={postsRoute}
             icon={Icons.private}
             title={Strings.posts.private}
             count={this.routeCount('privateCount')}
@@ -89,7 +91,6 @@ export default class DrawerView extends React.PureComponent {
             navigateTo={this.navigateTo(postsRoute, Strings.posts.private, 'privatePosts')}
           />
           <DrawerCell
-            route={postsRoute}
             icon={Icons.public}
             title={Strings.posts.public}
             count={this.routeCount('publicCount')}
@@ -99,11 +100,10 @@ export default class DrawerView extends React.PureComponent {
 
           <HeaderCell text={Strings.common.simplepin} />
           <DrawerCell
-            route={settingsRoute}
             icon={Icons.settings}
             title={Strings.settings.title}
-            isFocused={this.isRouteFocused(settingsRoute, Strings.settings.title)}
-            navigateTo={this.navigateTo(settingsRoute, Strings.settings.title)}
+            isFocused={this.isRouteFocused(settingsRoute)}
+            navigateTo={this.navigateTo(settingsRoute)}
           />
         </ScrollView>
       </SafeAreaView>

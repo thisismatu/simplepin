@@ -1,4 +1,5 @@
 import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
 import AuthLoadingView from 'app/views/AuthLoadingView'
 import LoginView from 'app/views/LoginView'
 import PostsView from 'app/views/PostsView'
@@ -18,14 +19,20 @@ const headerStyles = {
   headerTitleStyle: { color: Base.color.gray4 },
 }
 
-const PostsStack = createStackNavigator(
+const MainStack = createStackNavigator(
   {
     Posts: PostsView,
+    Settings: SettingsView,
   },
   {
     initialRouteName: 'Posts',
     initialRouteParams: { title: Strings.posts.all, list: 'allPosts' },
     navigationOptions: headerStyles,
+    transitionConfig: () => ({
+      screenInterpolator: (sceneProps) => {
+        return StackViewStyleInterpolator.forFade(sceneProps)
+      },
+    }),
   }
 )
 
@@ -47,19 +54,9 @@ const AddStack = createStackNavigator(
   }
 )
 
-const SettingsStack = createStackNavigator(
-  {
-    Settings: SettingsView,
-  },
-  {
-    navigationOptions: headerStyles,
-  }
-)
-
 const AppDrawer = createDrawerNavigator(
   {
-    PostsStack: PostsStack,
-    SettingsStack: SettingsStack,
+    MainStack: MainStack,
   },
   {
     contentComponent: DrawerView,
