@@ -113,7 +113,11 @@ export default class PostsView extends React.Component {
   updatePost = async (post) => {
     const index = findIndex(this.state.allPosts, ['hash', post.hash])
     const newCollection = this.state.allPosts
-    newCollection[index] = post
+    if (index === -1) {
+      newCollection.unshift(post)
+    } else {
+      newCollection[index] = post
+    }
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
