@@ -56,7 +56,7 @@ export default class PostsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiToken: '',
+      apiToken: null,
       allPosts: null,
       unreadPosts: null,
       privatePosts: null,

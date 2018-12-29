@@ -18,7 +18,7 @@ export default class LoginView extends React.Component {
     super(props)
     this.state = {
       appState: AppState.currentState,
-      apiToken: '',
+      apiToken: null,
       clipboardContent: null,
       loading: false,
     }
