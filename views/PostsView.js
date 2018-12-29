@@ -49,7 +49,7 @@ export default class PostsView extends React.Component {
     return {
       title: navigation.getParam('title', Strings.posts.all),
       headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
-      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { onSubmit: navigation.getParam('onSubmit') })} icon={Icons.add} />,
+      headerRight: <NavigationButton onPress={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })} icon={Icons.add} />,
     }
   }
 
@@ -239,7 +239,7 @@ export default class PostsView extends React.Component {
   onEditPost = post => () => {
     const { navigation } = this.props
     this.toggleModal()
-    navigation.navigate('Edit', { post: post, onSubmit: navigation.getParam('onSubmit') })
+    navigation.navigate('Add', { post: post, onSubmit: navigation.getParam('onSubmit') })
   }
 
   onDeletePost = post => () => {
@@ -316,7 +316,7 @@ export default class PostsView extends React.Component {
     if (!allPosts && !refreshing) {
       const { navigation } = this.props
       return <EmptyState
-        action={() => navigation.navigate('Edit', { onSubmit: navigation.state.params.onSubmit })}
+        action={() => navigation.navigate('Add', { onSubmit: navigation.state.params.onSubmit })}
         actionText={Strings.add.titleAdd}
         icon={Icons.simplepin}
         subtitle={Strings.common.noPostsMessage}

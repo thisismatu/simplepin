@@ -38,9 +38,9 @@ const BrowserStack = createStackNavigator(
   }
 )
 
-const EditStack = createStackNavigator(
+const AddStack = createStackNavigator(
   {
-    Edit: AddPostView,
+    Add: AddPostView,
   },
   {
     navigationOptions: headerStyles,
@@ -70,7 +70,7 @@ const AppStack = createStackNavigator(
   {
     AppDrawer: AppDrawer,
     BrowserStack: BrowserStack,
-    EditStack: EditStack,
+    AddStack: AddStack,
   },
   {
     mode: 'modal',
