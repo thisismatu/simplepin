@@ -24,30 +24,25 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
-    const post = props.navigation.getParam('post', {})
-    this.state = {
-      isEditing: !isEmpty(post),
-      description: post.description || '',
-      extended: post.extended || '',
-      hash: post.hash || '',
-      href: post.href,
-      meta: post.meta,
-      shared: post.shared,
-      tags: post.tags,
-      time: post.time || new Date(),
-      toread: post.toread,
-    }
+    this.state = { isEditing: false }
   }
 
   componentDidMount() {
-    if (!this.state.isEditing) {
-      Storage.userPreferences().then(value => {
-        this.setState({
-          shared: !value.privateByDefault,
-          toread: value.unreadByDefault,
-        })
+    const post = this.props.navigation.getParam('post', {})
+    Storage.userPreferences().then(value => {
+      this.setState({
+        isEditing: !isEmpty(post),
+        description: post.description || '',
+        extended: post.extended || '',
+        hash: post.hash || '',
+        href: post.href || '',
+        meta: post.meta || '',
+        shared: post.shared || !value.privateByDefault,
+        tags: post.tags || [],
+        time: post.time || new Date(),
+        toread: post.toread || value.unreadByDefault,
       })
-    }
+    })
   }
 
   isValidPost = () => {
