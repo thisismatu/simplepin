@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler } from 'react-native'
 import PropTypes from 'prop-types'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
@@ -54,6 +54,15 @@ export default class AddPostView extends React.Component {
         }, () => this.setInitialState(this.state))
       })
     }
+    if (isAndroid) {
+      BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
+    }
+  }
+
+  componentWillUnmount() {
+    if (isAndroid) {
+      BackHandler.removeEventListener('hardwareBackPress')
+    }
   }
 
   setInitialState = (currentState) => {
@@ -73,6 +82,11 @@ export default class AddPostView extends React.Component {
         ]
       )
     }
+  }
+
+  onAndroidBack = () => {
+    this.onUnsavedDismiss()
+    return true
   }
 
   isValidPost = () => {
