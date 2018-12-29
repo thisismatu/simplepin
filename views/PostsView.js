@@ -49,8 +49,7 @@ export default class PostsView extends React.Component {
     return {
       title: navigation.getParam('title', Strings.posts.all),
       headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
-      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { title: Strings.edit.titleAdd })} icon={Icons.add}
-      />,
+      headerRight: <NavigationButton onPress={() => navigation.navigate('Edit', { title: Strings.edit.titleAdd, onSubmit: navigation.state.params.onSubmit })} icon={Icons.add} />,
     }
   }
 
@@ -78,6 +77,7 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
+    this.props.navigation.setParams({ onSubmit: this.onSubmitEditPost.bind(this) })
     Storage.userPreferences()
       .then((value) => this.setState(value))
       .then(() => this.onRefresh())
@@ -228,12 +228,13 @@ export default class PostsView extends React.Component {
     this.updatePost(post)
   }
 
+  onSubmitEditPost = (post) => {
     this.updatePost(post)
   }
 
   onEditPost = post => () => {
     this.toggleModal()
-    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post, isEditing: true })
+    this.props.navigation.navigate('Edit', { title: Strings.edit.titleEdit, post: post, isEditing: true, onSubmit: this.onSubmitEditPost.bind(this) })
   }
 
   onDeletePost = post => () => {

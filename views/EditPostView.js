@@ -2,6 +2,8 @@ import React from 'react'
 import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import compact from 'lodash/compact'
+import isEmpty from 'lodash/isEmpty'
+import isUrl from 'is-url'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
@@ -24,9 +26,11 @@ export default class EditPostView extends React.Component {
     const post = props.navigation.getParam('post', {})
     this.isEditing = props.navigation.getParam('isEditing', false)
     this.state = {
-      description: post.description,
-      extended: post.extended,
+      description: post.description || '',
+      extended: post.extended || '',
+      hash: post.hash || '',
       href: post.href,
+      meta: post.meta,
       shared: post.shared,
       tags: post.tags,
       time: post.time || new Date(),
@@ -45,16 +49,21 @@ export default class EditPostView extends React.Component {
     }
   }
 
+  isValidPost = () => {
+    const { href, description } = this.state
+    return isUrl(href) && !isEmpty(description)
+  }
+
   onHrefChange = (evt) => {
     this.setState({ href: evt.nativeEvent.text.trim() })
   }
 
   onDescriptionChange = (evt) => {
-    this.setState({ description: evt.nativeEvent.text.trim() })
+    this.setState({ description: evt.nativeEvent.text })
   }
 
   onExtendedChange = (evt) => {
-    this.setState({ extended: evt.nativeEvent.text.trim() })
+    this.setState({ extended: evt.nativeEvent.text })
   }
 
   onTagsChange = (evt) => {
@@ -71,8 +80,13 @@ export default class EditPostView extends React.Component {
 
   onAddEdit = () => {
     const post = this.state
-    post.tags = compact(post.tags)
-    console.log(post)
+    const tags = compact(post.tags)
+    post.description = post.description.trim()
+    post.extended = post.description.trim()
+    post.tags = !isEmpty(tags) ? tags : null
+    post.meta = Math.random().toString(36) // PostCell change detection
+    this.props.navigation.state.params.onSubmit(post)
+    this.props.navigation.dismiss()
   }
 
   render() {
@@ -83,93 +97,90 @@ export default class EditPostView extends React.Component {
     return (
       <SafeAreaView style={styles.safeArea}>
         <ScrollView contentContainerStyle={styles.container} style={styles.list}>
-          <View style={styles.section}>
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onChange={this.onHrefChange}
-              placeholder="URL"
-              placeholderTextColor = {Base.color.gray2}
-              returnKeyType="next"
-              style={styles.textInput}
-              underlineColorAndroid="transparent"
-              value={href}
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onHrefChange}
+            placeholder="URL"
+            placeholderTextColor = {Base.color.gray2}
+            returnKeyType="next"
+            style={styles.textInput}
+            underlineColorAndroid="transparent"
+            value={href}
+          />
+          <Separator />
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onDescriptionChange}
+            placeholder="Title"
+            placeholderTextColor = {Base.color.gray2}
+            returnKeyType="next"
+            style={styles.textInput}
+            underlineColorAndroid="transparent"
+            value={description}
+          />
+          <Separator />
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            multiline={true}
+            onChange={this.onExtendedChange}
+            placeholder="Description"
+            placeholderTextColor = {Base.color.gray2}
+            returnKeyType="next"
+            style={[styles.textInput, styles.textArea]}
+            textAlignVertical="top"
+            underlineColorAndroid="transparent"
+            value={extended}
+          />
+          <Separator />
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onTagsChange}
+            placeholder="Tags"
+            placeholderTextColor = {Base.color.gray2}
+            returnKeyType="done"
+            style={styles.textInput}
+            underlineColorAndroid="transparent"
+            value={tags ? tags.join(' ') : null}
+          />
+          <Separator />
+          <View style={styles.cell}>
+            <Text style={styles.text}>Private</Text>
+            <Switch
+              style={styles.switch}
+              trackColor={{ true: track }}
+              thumbColor={thumb(!shared)}
+              onValueChange={this.onShared}
+              value={!shared}
             />
-            <Separator />
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onChange={this.onDescriptionChange}
-              placeholder="Title"
-              placeholderTextColor = {Base.color.gray2}
-              returnKeyType="next"
-              style={styles.textInput}
-              underlineColorAndroid="transparent"
-              value={description}
-            />
-            <Separator />
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              multiline={true}
-              onChange={this.onExtendedChange}
-              placeholder="Description"
-              placeholderTextColor = {Base.color.gray2}
-              returnKeyType="next"
-              style={[styles.textInput, styles.textArea]}
-              underlineColorAndroid="transparent"
-              value={extended}
-            />
-            <Separator />
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              enablesReturnKeyAutomatically={true}
-              onChange={this.onTagsChange}
-              placeholder="Tags"
-              placeholderTextColor = {Base.color.gray2}
-              returnKeyType="done"
-              style={styles.textInput}
-              underlineColorAndroid="transparent"
-              value={tags ? tags.join(' ') : null}
-            />
-            <Separator />
-            <View style={styles.cell}>
-              <Text style={styles.text}>Private</Text>
-              <Switch
-                style={styles.switch}
-                trackColor={{ true: track }}
-                thumbColor={thumb(!shared)}
-                onValueChange={this.onShared}
-                value={!shared}
-              />
-            </View>
-            <Separator />
-            <View style={styles.cell}>
-              <Text style={styles.text}>Read later</Text>
-              <Switch
-                style={styles.switch}
-                trackColor={{ true: track }}
-                thumbColor={thumb(toread)}
-                onValueChange={this.onToread}
-                value={toread}
-              />
-            </View>
-            <Separator />
           </View>
-          <View style={[styles.section, { paddingHorizontal: Base.padding.medium }]}>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              // disabled={!href && !description}
-              style={[styles.button, !href && !description && styles.disabled]}
-              onPress={() => this.onAddEdit()}
-            >
-              <Text style={styles.buttonText}>Add</Text>
-            </TouchableOpacity>
+          <Separator />
+          <View style={styles.cell}>
+            <Text style={styles.text}>Read later</Text>
+            <Switch
+              style={styles.switch}
+              trackColor={{ true: track }}
+              thumbColor={thumb(toread)}
+              onValueChange={this.onToread}
+              value={toread}
+            />
           </View>
+          <Separator />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            disabled={!this.isValidPost()}
+            style={[styles.button, !this.isValidPost() && styles.disabled]}
+            onPress={() => this.onAddEdit()}
+          >
+            <Text style={styles.buttonText}>{ this.isEditing ? 'Save' : 'Add' }</Text>
+          </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
     )
@@ -178,17 +189,6 @@ export default class EditPostView extends React.Component {
 
 EditPostView.propTypes = {
   navigation: PropTypes.object.isRequired,
-  post: PropTypes.shape({
-    description: PropTypes.string.isRequired,
-    extended: PropTypes.string,
-    hash: PropTypes.string.isRequired,
-    href: PropTypes.string.isRequired,
-    meta: PropTypes.string.isRequired,
-    shared: PropTypes.bool.isRequired,
-    tags: PropTypes.array,
-    time: PropTypes.object.isRequired,
-    toread: PropTypes.bool.isRequired,
-  }),
 }
 
 const styles = StyleSheet.create({
@@ -197,13 +197,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   container: {
-    paddingBottom: Base.padding.large,
+    paddingVertical: Base.padding.medium,
   },
   list: {
     backgroundColor: Base.color.white,
-  },
-  section: {
-    paddingVertical: Base.padding.medium,
   },
   cell: {
     flex: 1,
@@ -233,10 +230,12 @@ const styles = StyleSheet.create({
     marginRight: isAndroid ? 12 : Base.padding.medium,
   },
   button: {
+    flex: 1,
     backgroundColor: Base.color.blue2,
     borderRadius: Base.radius.medium,
     paddingHorizontal: Base.padding.medium,
-    width: '100%',
+    marginHorizontal: Base.padding.medium,
+    marginTop: Base.padding.huge,
   },
   buttonText: {
     color: Base.color.white,
