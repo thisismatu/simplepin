@@ -75,8 +75,13 @@ const postsDelete = (post, token) => {
   return fetchWithErrorHandling(postsDeleteUrl(params))
 }
 
+const mockUpdate = () => {
+  const now = new Date()
+  return { 'update_time': now.toISOString() }
+}
+
 const mockPostsAll = () => {
-  const mock = 'http://192.168.43.166:3000/posts.json'
+  const mock = 'http://192.168.86.29:3000/posts.json'
   return fetchWithErrorHandling(mock)
 }
 
@@ -87,4 +92,5 @@ export default {
   postsAdd,
   postsDelete,
   mockPostsAll,
+  mockUpdate,
 }
