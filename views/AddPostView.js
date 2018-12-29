@@ -62,7 +62,7 @@ export default class AddPostView extends React.Component {
 
   onUnsavedDismiss = () => {
     if (isEqual(this.initialState, this.state)) {
-      return this.props.navigation.dismiss()
+      this.props.navigation.dismiss()
     } else {
       Alert.alert(
         this.isEditing ? Strings.add.discardEdit : Strings.add.discardAdd,
@@ -126,9 +126,11 @@ export default class AddPostView extends React.Component {
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
+            blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onHrefChange}
-            placeholder={Strings.add.placeholderUrl}
+            onSubmitEditing={() => { this.descriptionInput.focus() }}
+            placeholder={Strings.add.placeholderHref}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="next"
             style={styles.textInput}
@@ -139,10 +141,13 @@ export default class AddPostView extends React.Component {
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
+            blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onDescriptionChange}
-            placeholder={Strings.add.placeholderTitle}
+            onSubmitEditing={() => { this.extendedInput.focus() }}
+            placeholder={Strings.add.placeholderDescription}
             placeholderTextColor = {Base.color.gray2}
+            ref={(input) => {this.descriptionInput = input}}
             returnKeyType="next"
             style={styles.textInput}
             underlineColorAndroid="transparent"
@@ -152,11 +157,14 @@ export default class AddPostView extends React.Component {
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
+            blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             multiline={true}
             onChange={this.onExtendedChange}
-            placeholder={Strings.add.placeholderDescription}
+            onSubmitEditing={() => { this.tagsInput.focus() }}
+            placeholder={Strings.add.placeholderExtended}
             placeholderTextColor = {Base.color.gray2}
+            ref={(input) => {this.extendedInput = input}}
             returnKeyType="next"
             style={[styles.textInput, styles.textArea]}
             textAlignVertical="top"
@@ -167,10 +175,12 @@ export default class AddPostView extends React.Component {
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
+            blurOnSubmit={true}
             enablesReturnKeyAutomatically={true}
             onChange={this.onTagsChange}
             placeholder={Strings.add.placeholderTags}
             placeholderTextColor = {Base.color.gray2}
+            ref={(input) => {this.tagsInput = input}}
             returnKeyType="done"
             style={styles.textInput}
             underlineColorAndroid="transparent"
