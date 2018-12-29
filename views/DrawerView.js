@@ -13,7 +13,7 @@ import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 
-export default class DrawerView extends React.Component {
+export default class DrawerView extends React.PureComponent {
   constructor(props) {
     super(props)
     this.state = {
