@@ -18,7 +18,7 @@ export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('post') ? Strings.add.titleEdit : Strings.add.titleAdd,
-      headerLeft: <NavigationButton onPress={navigation.getParam('onDismiss')} icon={Icons.close} />,
+      headerRight: <NavigationButton onPress={navigation.getParam('onDismiss')} icon={Icons.close} />,
     }
   }
 
