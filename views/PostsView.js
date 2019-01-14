@@ -84,7 +84,7 @@ export default class PostsView extends React.Component {
   }
 
   checkForUpdates = async () => {
-    const response = await Api.update(this.state.apiToken)
+    const response = await Api.postsUpdate(this.state.apiToken)
     if (response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)

@@ -3,13 +3,16 @@ import { replacer } from 'app/util/JsonUtils'
 
 const server = 'https://api.pinboard.in/v1'
 
-const loginUrl = (parameters) => `${server}/user/api_token/?${parameters}`
-const updateUrl = (parameters) => `${server}/posts/update/?${parameters}`
+const userTokenUrl = (parameters) => `${server}/user/api_token/?${parameters}`
+const userSecretUrl = (parameters) => `${server}/user/secret/?${parameters}`
+const postsUpdateUrl = (parameters) => `${server}/posts/update/?${parameters}`
 const postsAllUrl = (parameters) => `${server}/posts/all/?${parameters}`
 const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
 const postsDeleteUrl = (parameters) => `${server}/posts/delete/?${parameters}`
+const postsStarredUrl = (secret, username) => `https://feeds.pinboard.in/rss/secret:${secret}/u:${username}/starred/`
 
 const handleResponse = (response) => {
+  console.log('STATUS', response.status)
   if (!response.ok) {
     console.warn(response.status)
     return Promise.resolve({ ok: 0, error: response.status })
@@ -18,27 +21,37 @@ const handleResponse = (response) => {
 }
 
 const fetchWithErrorHandling = (url) => {
+  console.log('FETCH', url)
   return fetch(url)
     .catch(e => ({ ok: 0, error: e }))
     .then(handleResponse)
 }
 
-const login = (token) => {
+const userToken = (token) => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(loginUrl(params))
+  return fetchWithErrorHandling(userTokenUrl(params))
 }
 
-const update = (token) => {
+const userSecret = (token) => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(updateUrl(params))
+  return fetchWithErrorHandling(userSecretUrl(params))
+}
+
+const postsUpdate = (token) => {
+  const data = {
+    format: 'json',
+    auth_token: token,
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(postsUpdateUrl(params))
 }
 
 const postsAll = (token) => {
@@ -75,6 +88,11 @@ const postsDelete = (post, token) => {
   return fetchWithErrorHandling(postsDeleteUrl(params))
 }
 
+const postsStarred = (secret, token) => {
+  const username = token.split(':')[0]
+  return fetchWithErrorHandling(postsStarredUrl(secret, username))
+}
+
 const mockUpdate = () => {
   const now = new Date()
   return { 'update_time': now.toISOString() }
@@ -86,11 +104,13 @@ const mockPostsAll = () => {
 }
 
 export default {
-  login,
-  update,
+  userToken,
+  userSecret,
+  postsUpdate,
   postsAll,
   postsAdd,
   postsDelete,
+  postsStarred,
   mockPostsAll,
   mockUpdate,
 }

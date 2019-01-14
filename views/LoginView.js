@@ -46,7 +46,7 @@ export default class LoginView extends React.Component {
 
   onSubmit = async () => {
     this.setState({ loading: true })
-    const response = await Api.login(this.state.apiToken)
+    const response = await Api.userToken(this.state.apiToken)
     if (response.ok === 0) {
       this.setState({ loading: false })
       handleLoginResponseError(response.error)
