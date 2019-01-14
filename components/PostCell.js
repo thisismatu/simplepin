@@ -9,11 +9,12 @@ import Icons from 'app/style/Icons'
 
 class Tag extends React.PureComponent {
   render() {
-    const { tag, index } = this.props
+    const { tag, index, onTagPress } = this.props
     const isPrivateTag = startsWith(tag, '.')
     return(
       <TouchableOpacity
         activeOpacity={0.5}
+        onPress={onTagPress(tag)}
         style={[styles.tagContainer, index === 0 && styles.firstTag]}
       >
         <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
@@ -27,11 +28,12 @@ class Tag extends React.PureComponent {
 Tag.propTypes = {
   tag: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
+  onTagPress: PropTypes.func.isRequired,
 }
 
 export default class PostCell extends React.PureComponent {
   render() {
-    const { post, tagOrder, exactDate, onCellPress, onCellLongPress } = this.props
+    const { post, tagOrder, exactDate, onTagPress, onCellPress, onCellLongPress } = this.props
     const tags = post.tags && tagOrder  ? post.tags.sort() : post.tags
     return (
       <TouchableOpacity
@@ -65,6 +67,7 @@ export default class PostCell extends React.PureComponent {
             <Tag
               tag={item}
               index={index}
+              onTagPress={onTagPress}
             />
           }
           showsHorizontalScrollIndicator={false}
@@ -80,6 +83,7 @@ export default class PostCell extends React.PureComponent {
 }
 
 PostCell.propTypes = {
+  onTagPress: PropTypes.func.isRequired,
   onCellPress: PropTypes.func.isRequired,
   onCellLongPress: PropTypes.func.isRequired,
   exactDate: PropTypes.bool.isRequired,

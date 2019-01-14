@@ -142,14 +142,16 @@ export default class PostsView extends React.Component {
     }
   }
 
-  filterSearchResults = (text) => {
+  filterSearchResults = (text, tags = false) => {
     return filter(this.currentList(), post => {
+      const tagData = post.tags ? post.tags.join(' ').toLowerCase() : ''
       const postData = `
         ${post.description.toLowerCase()}
         ${post.extended.toLowerCase()}
         ${post.tags ? post.tags.join(' ').toLowerCase() : ''}
       `
-      return postData.includes(text.toLocaleString())
+      const returnData = tags ? tagData : postData
+      return returnData.includes(text.toLocaleString())
     })
   }
 
@@ -184,14 +186,14 @@ export default class PostsView extends React.Component {
     this.setState({ refreshing: false })
   }
 
-  onSearchChange = (evt) => {
+  onSearchChange = (evt, tags) => {
     const searchQuery = evt.nativeEvent ? evt.nativeEvent.text : evt
     const searchQueryArray = searchQuery.toLowerCase().split(' ')
     this.setState({
       searchQuery: searchQuery,
       isSearchActive: searchQuery === '' ? false : true,
     })
-    const allResults = map(searchQueryArray, text => this.filterSearchResults(text))
+    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
     const queryCounts = lodash(allResults)
       .map((res, i) => [searchQueryArray[i], res.length])
       .fromPairs()
@@ -209,6 +211,11 @@ export default class PostsView extends React.Component {
     if (similarResults.searchResults.length > 0) {
       this.setState(similarResults)
     }
+  }
+
+  onTagPress = tag => () => {
+    this.onSearchChange(tag, true)
+    this.flatList.scrollToOffset({ offset: 0, animated: false })
   }
 
   onCellPress = post => () => {
@@ -276,6 +283,7 @@ export default class PostsView extends React.Component {
       <PostCell
         post={item}
         changeDetection={item.meta}
+        onTagPress={this.onTagPress}
         onCellPress={this.onCellPress}
         onCellLongPress={this.onCellLongPress}
         exactDate={this.state.exactDate}
@@ -331,6 +339,7 @@ export default class PostsView extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <FlatList
+          ref={(ref) => this.flatList = ref}
           contentContainerStyle={[styles.container, !hasData && { flex: 1 }]}
           data={data}
           initialNumToRender={8}
