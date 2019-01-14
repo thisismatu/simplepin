@@ -11,17 +11,15 @@ const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
 const postsDeleteUrl = (parameters) => `${server}/posts/delete/?${parameters}`
 const postsStarredUrl = (secret, username) => `https://feeds.pinboard.in/rss/secret:${secret}/u:${username}/starred/`
 
-const handleResponse = (response) => {
-  console.log('STATUS', response.status)
+const handleResponse = (response, rss = false) => {
   if (!response.ok) {
     console.warn(response.status)
     return Promise.resolve({ ok: 0, error: response.status })
   }
-  return response.json()
+  return rss ? response.text() : response.json()
 }
 
 const fetchWithErrorHandling = (url) => {
-  console.log('FETCH', url)
   return fetch(url)
     .catch(e => ({ ok: 0, error: e }))
     .then(handleResponse)
@@ -90,7 +88,9 @@ const postsDelete = (post, token) => {
 
 const postsStarred = (secret, token) => {
   const username = token.split(':')[0]
-  return fetchWithErrorHandling(postsStarredUrl(secret, username))
+  return fetch(postsStarredUrl(secret, username))
+    .catch(e => ({ ok: 0, error: e }))
+    .then(response => handleResponse(response, true))
 }
 
 const mockUpdate = () => {

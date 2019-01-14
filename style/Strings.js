@@ -8,7 +8,7 @@ const Strings = {
     edit: 'Edit',
     markAs: 'Mark as',
     search: 'Search…',
-    noPosts: 'No bookmarks yet',
+    noPosts: 'No bookmarks',
     noPostsMessage: 'Add bookmarks directly from the browser or by tapping the add button below',
     noResults: 'No results for',
     tryAgain: 'Try again',
@@ -38,6 +38,7 @@ const Strings = {
     private: 'Private',
     public: 'Public',
     unread: 'Unread',
+    starred: 'Starred',
   },
   settings: {
     title: 'Settings',

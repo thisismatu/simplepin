@@ -1,6 +1,7 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
+import * as rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
 import fromPairs from 'lodash/fromPairs'
 import intersection from 'lodash/intersection'
@@ -11,6 +12,9 @@ import omit from 'lodash/omit'
 import reject from 'lodash/reject'
 import uniqBy from 'lodash/uniqBy'
 import findIndex from 'lodash/findIndex'
+import get from 'lodash/get'
+import includes from 'lodash/includes'
+import isEmpty from 'lodash/isEmpty'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -26,12 +30,12 @@ import Strings from 'app/style/Strings'
 import Icons from 'app/style/Icons'
 
 const filterPosts = (obj) => {
-  const unique = uniqBy(obj, 'hash')
   return {
-    allPosts: unique,
-    unreadPosts: filter(unique, ['toread', true]),
-    privatePosts: filter(unique, ['shared', false]),
-    publicPosts: filter(unique, ['shared', true]),
+    allPosts: obj,
+    unreadPosts: filter(obj, ['toread', true]),
+    privatePosts: filter(obj, ['shared', false]),
+    publicPosts: filter(obj, ['shared', true]),
+    starredPosts: filter(obj, ['starred', true]),
   }
 }
 
@@ -41,6 +45,7 @@ const postsCount = (obj) => {
     unreadCount: obj.unreadPosts.length,
     privateCount: obj.privatePosts.length,
     publicCount: obj.publicPosts.length,
+    starredCount: obj.starredPosts.length,
   }
 }
 
@@ -97,13 +102,31 @@ export default class PostsView extends React.Component {
 
   fetchPosts = async () => {
     const response = await Api.postsAll(this.state.apiToken)
+    const secret = await Api.userSecret(this.state.apiToken)
+    const starred = await Api.postsStarred(secret.result, this.state.apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
+    } else if (secret.ok === 0 || starred.ok === 0) {
+      const jsonString = JSON.stringify(response)
+      const jsonObject = JSON.parse(jsonString, reviver)
+      const newData = filterPosts(uniqBy(jsonObject, 'hash'))
+      const newDataCount = postsCount(newData)
+      this.setState({ ...newData, searchResults: this.currentList(true) })
+      this.props.navigation.setParams(newDataCount)
     } else {
-      const str = JSON.stringify(response)
-      const obj = JSON.parse(str, reviver)
-      const newData = filterPosts(obj)
+      const rssObject = await rssParser.parse(starred)
+      const jsonString = JSON.stringify(response)
+      const jsonObject = JSON.parse(jsonString, reviver)
+      const starredLinks = map(rssObject.items, item => get(item.links, ['0', 'url']))
+      const uniqPostsStarred = lodash(jsonObject)
+        .uniqBy('hash')
+        .map(o => {
+          o.starred = includes(starredLinks, o.href)
+          return o
+        })
+        .value()
+      const newData = filterPosts(uniqPostsStarred)
       const newDataCount = postsCount(newData)
       this.setState({ ...newData, searchResults: this.currentList(true) })
       this.props.navigation.setParams(newDataCount)
@@ -302,7 +325,7 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { apiToken, allPosts, refreshing, pinboardDown, isSearchActive, searchQuery } = this.state
+    const { apiToken, refreshing, pinboardDown, isSearchActive, searchQuery } = this.state
     if (!apiToken) { return null }
     if (isSearchActive) {
       const similarResults = this.similarSearchResults()
@@ -321,7 +344,7 @@ export default class PostsView extends React.Component {
         subtitle={Strings.error.pinboardDown}
         title={Strings.error.troubleConnecting} />
     }
-    if (!allPosts && !refreshing) {
+    if (isEmpty(this.currentList()) && !refreshing) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}

@@ -83,6 +83,13 @@ export default class DrawerView extends React.PureComponent {
             navigateTo={this.navigateTo(postsRoute, Strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
+            icon={Icons.starred}
+            title={Strings.posts.starred}
+            count={this.routeCount('starredCount')}
+            isFocused={this.isRouteFocused(postsRoute, Strings.posts.starred)}
+            navigateTo={this.navigateTo(postsRoute, Strings.posts.starred, 'starredPosts')}
+          />
+          <DrawerCell
             icon={Icons.private}
             title={Strings.posts.private}
             count={this.routeCount('privateCount')}
@@ -96,7 +103,6 @@ export default class DrawerView extends React.PureComponent {
             isFocused={this.isRouteFocused(postsRoute, Strings.posts.public)}
             navigateTo={this.navigateTo(postsRoute, Strings.posts.public, 'publicPosts')}
           />
-
           <HeaderCell text={Strings.common.simplepin} />
           <DrawerCell
             icon={Icons.settings}

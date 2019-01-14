@@ -46,11 +46,6 @@ export default class PostCell extends React.PureComponent {
           ? <View style={styles.unread} />
           : null
         }
-        {
-          !post.shared
-          ? <Image source={Icons.privateSmall} style={styles.private} />
-          : null
-        }
         <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
         {
           post.extended
@@ -77,6 +72,10 @@ export default class PostCell extends React.PureComponent {
           time={post.time}
           exactDate={exactDate}
         />
+        <View style={styles.statusContainer}>
+          { post.starred ? <Image source={Icons.starredSmall} style={styles.starred} /> : null }
+          { !post.shared ? <Image source={Icons.privateSmall} style={styles.private} /> : null }
+        </View>
       </TouchableOpacity>
     )
   }
@@ -96,6 +95,7 @@ PostCell.propTypes = {
     href: PropTypes.string.isRequired,
     meta: PropTypes.string.isRequired,
     shared: PropTypes.bool.isRequired,
+    starred: PropTypes.bool,
     tags: PropTypes.array,
     time: PropTypes.object.isRequired,
     toread: PropTypes.bool.isRequired,
@@ -113,12 +113,26 @@ const styles = StyleSheet.create({
     width: 9,
   },
   private: {
-    bottom: 13,
     height: 18,
-    position: 'absolute',
-    right: 13,
     tintColor: Base.color.black36,
     width: 18,
+    marginLeft: 2,
+  },
+  starred: {
+    height: 18,
+    tintColor: Base.color.black36,
+    width: 18,
+    marginRight: 2,
+  },
+  statusContainer: {
+    bottom: 13,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 18,
+    position: 'absolute',
+    right: 14,
+    width: 40,
   },
   title: {
     color: Base.color.gray4,
