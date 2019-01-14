@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
 import PropTypes from 'prop-types'
-import * as rssParser from 'react-native-rss-parser'
+import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
 import fromPairs from 'lodash/fromPairs'
 import intersection from 'lodash/intersection'
