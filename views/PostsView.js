@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking } from 'react-native'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
@@ -71,6 +71,7 @@ export default class PostsView extends React.Component {
       markAsRead: false,
       exactDate: false,
       tagOrder: false,
+      openLinksInApp: true,
       modalVisible: false,
       selectedPost: {},
       isSearchActive: false,
@@ -242,7 +243,12 @@ export default class PostsView extends React.Component {
   }
 
   onCellPress = post => () => {
-    this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
+    console.log('onCellPress', this.state.openLinksInApp)
+    if (this.state.openLinksInApp) {
+      this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
+    } else {
+      Linking.openURL(post.href)
+    }
     if (this.state.markAsRead && post.toread) {
       post.toread = !post.toread
       post.meta = Math.random().toString(36) // PostCell change detection
@@ -357,6 +363,7 @@ export default class PostsView extends React.Component {
   }
 
   render() {
+    Storage.userPreferences().then((value) => this.setState(value)) // todo: is there a better place for this?! seems to cause a empty state flash…
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
     const hasData = data && data.length
     return (

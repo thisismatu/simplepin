@@ -28,11 +28,12 @@ export default class SettingsView extends React.Component {
       tagOrder: false,
       privateByDefault: false,
       unreadByDefault: false,
+      openLinksInApp: true,
     }
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => this.setState(value))
+    Storage.userPreferences().then((value) => this.setState(value)) // todo: settings switches flash
   }
 
   onMarkAsRead = (value) => {
@@ -60,6 +61,11 @@ export default class SettingsView extends React.Component {
     this.setState({ unreadByDefault: value })
   }
 
+  onOpenLinksInApp = (value) => {
+    Storage.setOpenLinksInApp(value)
+    this.setState({ openLinksInApp: value })
+  }
+
   logout = () => {
     Alert.alert(
       Strings.settings.logout + '?',
@@ -77,7 +83,6 @@ export default class SettingsView extends React.Component {
   render() {
     const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
-
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.list}>
         <HeaderCell text={Strings.settings.general} />
@@ -115,18 +120,14 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <HeaderCell text={Strings.settings.browser} />
-        <Separator />
         <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.defaultBrowser}</Text>
-          <Text style={styles.secondary}>Browser</Text>
-        </View>
-        <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.openLinksInDefaultBrowser}</Text>
+          <Text style={styles.text}>{Strings.settings.openLinksInApp}</Text>
           <Switch
             style={styles.switch}
+            thumbColor={thumb(this.state.openLinksInApp)}
             trackColor={{ true: track }}
+            onValueChange={this.onOpenLinksInApp}
+            value={this.state.openLinksInApp}
           />
         </View>
         <Separator />

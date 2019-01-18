@@ -7,6 +7,7 @@ const keys = {
   tagOrder: '@Simplepin:tagOrder',
   privateByDefault: '@Simplepin:privateByDefault',
   unreadByDefault: '@Simplepin:unreadByDefault',
+  openLinksInApp: '@Simplepin:openLinksInApp',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
@@ -65,6 +66,16 @@ const setUnreadByDefault = async (unreadByDefault) => {
   await AsyncStorage.setItem(keys.unreadByDefault, value)
 }
 
+const openLinksInApp = async () => {
+  const value = await AsyncStorage.getItem(keys.openLinksInApp)
+  return JSON.parse(value) !== false
+}
+
+const setOpenLinksInApp = async (openLinksInApp) => {
+  const value = JSON.stringify(openLinksInApp)
+  await AsyncStorage.setItem(keys.openLinksInApp, value)
+}
+
 const userPreferences = async () => {
   const obj = {
     apiToken: await apiToken(),
@@ -73,6 +84,7 @@ const userPreferences = async () => {
     tagOrder: await tagOrder(),
     privateByDefault: await privateByDefault(),
     unreadByDefault: await unreadByDefault(),
+    openLinksInApp: await openLinksInApp(),
   }
   return obj
 }
@@ -92,6 +104,8 @@ export default {
   setPrivateByDefault,
   unreadByDefault,
   setUnreadByDefault,
+  openLinksInApp,
+  setOpenLinksInApp,
   userPreferences,
   clear,
 }
