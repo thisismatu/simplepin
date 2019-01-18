@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
@@ -57,6 +57,10 @@ export default class LoginView extends React.Component {
     }
   }
 
+  onShowToken = () => {
+    Linking.openURL('https://m.pinboard.in/settings/password')
+  }
+
   checkClipboardForApiToken = async () => {
     const clipboardContent = await Clipboard.getString()
     this.setState({ clipboardContent: clipboardContent.trim() })
@@ -98,7 +102,7 @@ export default class LoginView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           style={styles.tokenButton}
-          onPress={() => console.log('Show API token')}
+          onPress={this.onShowToken}
         >
           <Text style={styles.tokenButtonText}>{Strings.login.token}</Text>
         </TouchableOpacity>
