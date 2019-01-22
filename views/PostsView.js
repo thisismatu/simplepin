@@ -260,10 +260,10 @@ export default class PostsView extends React.Component {
 
   onCellPress = post => () => {
     const { openLinksInApp, markAsRead } = this.state.preferences
-    if (openLinksInApp) {
-      this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
-    } else {
+    if (!openLinksInApp || includes(post.href, '.pdf')) {
       Linking.openURL(post.href)
+    } else {
+      this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     }
     if (markAsRead && post.toread) {
       post.toread = !post.toread

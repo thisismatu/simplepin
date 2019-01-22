@@ -37,6 +37,7 @@ export default class BrowserView extends React.Component {
   }
 
   onNavigationStateChange = (navState) => {
+    //Todo: this isn't called on SPA sites, need to inject some JS for that…
     this.setState({
       canGoBack: navState.canGoBack,
       canGoForward: navState.canGoForward,
@@ -89,6 +90,7 @@ export default class BrowserView extends React.Component {
             source={{ uri: this.state.url }}
             startInLoadingState={true}
             onNavigationStateChange={this.onNavigationStateChange}
+            originWhitelist={['*']}
           />
           { isAndroid ? null : this.renderToolbar() }
         </View>
