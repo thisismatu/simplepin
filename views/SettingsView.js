@@ -33,7 +33,7 @@ export default class SettingsView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((value) => this.setState(value)) // todo: settings switches flash
+    Storage.userPreferences().then((prefs) => this.setState(prefs))
   }
 
   onMarkAsRead = (value) => {

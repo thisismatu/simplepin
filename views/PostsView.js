@@ -15,6 +15,7 @@ import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
 import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import Api from 'app/Api'
 import Storage from 'app/util/Storage'
 import { reviver } from 'app/util/JsonUtils'
@@ -61,17 +62,12 @@ export default class PostsView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      apiToken: null,
+      isLoading: false,
       allPosts: null,
       unreadPosts: null,
       privatePosts: null,
       publicPosts: null,
-      refreshing: false,
       lastUpdateTime: null,
-      markAsRead: false,
-      exactDate: false,
-      tagOrder: false,
-      openLinksInApp: true,
       modalVisible: false,
       selectedPost: {},
       isSearchActive: false,
@@ -79,18 +75,34 @@ export default class PostsView extends React.Component {
       searchQueryCounts: null,
       searchResults: null,
       pinboardDown: false,
+      preferences: {
+        apiToken: null,
+        exactDate: false,
+        markAsRead: false,
+        tagOrder: false,
+        openLinksInApp: true,
+      },
     }
   }
 
   componentDidMount() {
     this.props.navigation.setParams({ onSubmit: this.onSubmitAddPost })
     Storage.userPreferences()
-      .then((value) => this.setState(value))
+      .then((prefs) => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    Storage.userPreferences().then((prefs) => {
+      if (!isEqual(prevState.preferences, prefs)) {
+        this.setState({ preferences: prefs })
+      }
+    })
+  }
+
   checkForUpdates = async () => {
-    const response = await Api.postsUpdate(this.state.apiToken)
+    const { apiToken } = this.state.preferences
+    const response = await Api.postsUpdate(apiToken)
     if (response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -102,9 +114,10 @@ export default class PostsView extends React.Component {
   }
 
   fetchPosts = async () => {
-    const response = await Api.postsAll(this.state.apiToken)
-    const secret = await Api.userSecret(this.state.apiToken)
-    const starred = await Api.postsStarred(secret.result, this.state.apiToken)
+    const { apiToken } = this.state.preferences
+    const response = await Api.postsAll(apiToken)
+    const secret = await Api.userSecret(apiToken)
+    const starred = await Api.postsStarred(secret.result, apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -135,6 +148,7 @@ export default class PostsView extends React.Component {
   }
 
   addPost = async (post) => {
+    const { apiToken } = this.state.preferences
     const index = findIndex(this.state.allPosts, ['hash', post.hash])
     const newCollection = this.state.allPosts
     if (index === -1) {
@@ -146,7 +160,7 @@ export default class PostsView extends React.Component {
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const response = await Api.postsAdd(post, this.state.apiToken)
+    const response = await Api.postsAdd(post, apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -154,12 +168,13 @@ export default class PostsView extends React.Component {
   }
 
   deletePost = async (post) => {
+    const { apiToken } = this.state.preferences
     const newCollection = reject(this.state.allPosts, { href: post.href })
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const response = await Api.postsDelete(post, this.state.apiToken)
+    const response = await Api.postsDelete(post, apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -202,12 +217,12 @@ export default class PostsView extends React.Component {
   }
 
   onRefresh = async () => {
-    this.setState({ refreshing: true })
+    this.setState({ isLoading: true })
     const hasUpdates = await this.checkForUpdates()
     if (hasUpdates) {
       await this.fetchPosts()
     }
-    this.setState({ refreshing: false })
+    this.setState({ isLoading: false })
   }
 
   onSearchChange = (evt, tags) => {
@@ -243,13 +258,13 @@ export default class PostsView extends React.Component {
   }
 
   onCellPress = post => () => {
-    console.log('onCellPress', this.state.openLinksInApp)
-    if (this.state.openLinksInApp) {
+    const { openLinksInApp, markAsRead } = this.state.preferences
+    if (openLinksInApp) {
       this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     } else {
       Linking.openURL(post.href)
     }
-    if (this.state.markAsRead && post.toread) {
+    if (markAsRead && post.toread) {
       post.toread = !post.toread
       post.meta = Math.random().toString(36) // PostCell change detection
       this.addPost(post)
@@ -315,8 +330,8 @@ export default class PostsView extends React.Component {
         onTagPress={this.onTagPress}
         onCellPress={this.onCellPress}
         onCellLongPress={this.onCellLongPress}
-        exactDate={this.state.exactDate}
-        tagOrder={this.state.tagOrder}
+        exactDate={this.state.preferences.exactDate}
+        tagOrder={this.state.preferences.tagOrder}
       />
     )
   }
@@ -324,14 +339,15 @@ export default class PostsView extends React.Component {
   renderRefreshControl = () => {
     return (
       <RefreshControl
-        refreshing={this.state.refreshing}
+        refreshing={this.state.isLoading}
         onRefresh={this.onRefresh}
       />
     )
   }
 
   renderEmptyState = () => {
-    const { apiToken, refreshing, pinboardDown, isSearchActive, searchQuery } = this.state
+    const { isLoading, pinboardDown, isSearchActive, searchQuery } = this.state
+    const { apiToken } = this.state.preferences
     if (!apiToken) { return null }
     if (isSearchActive) {
       const similarResults = this.similarSearchResults()
@@ -350,7 +366,7 @@ export default class PostsView extends React.Component {
         subtitle={Strings.error.pinboardDown}
         title={Strings.error.troubleConnecting} />
     }
-    if (isEmpty(this.currentList()) && !refreshing) {
+    if (isEmpty(this.currentList()) && !isLoading) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
@@ -363,7 +379,6 @@ export default class PostsView extends React.Component {
   }
 
   render() {
-    Storage.userPreferences().then((value) => this.setState(value)) // todo: is there a better place for this?! seems to cause a empty state flash…
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
     const hasData = data && data.length
     return (

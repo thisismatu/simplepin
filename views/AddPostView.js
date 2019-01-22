@@ -47,10 +47,10 @@ export default class AddPostView extends React.Component {
       this.isEditing = true
       this.setState(post, () => this.setInitialState(this.state))
     } else {
-      Storage.userPreferences().then(value => {
+      Storage.userPreferences().then(prefs => {
         this.setState({
-          shared: !value.privateByDefault,
-          toread: value.unreadByDefault,
+          shared: !prefs.privateByDefault,
+          toread: prefs.unreadByDefault,
         }, () => this.setInitialState(this.state))
       })
     }
