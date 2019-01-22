@@ -185,6 +185,7 @@ export default class PostsView extends React.Component {
     return filter(this.currentList(), post => {
       const tagData = post.tags ? post.tags.join(' ').toLowerCase() : ''
       const postData = `
+        ${post.href.toLowerCase()}
         ${post.description.toLowerCase()}
         ${post.extended.toLowerCase()}
         ${post.tags ? post.tags.join(' ').toLowerCase() : ''}
