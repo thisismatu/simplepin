@@ -6,7 +6,7 @@ import Base from 'app/style/Base'
 export default class HeaderCell extends React.PureComponent {
   render() {
     return (
-      <View style={styles.header}>
+      <View style={[styles.header, this.props.style]}>
         <Text style={styles.text}>{this.props.text}</Text>
       </View>
     )
@@ -15,6 +15,7 @@ export default class HeaderCell extends React.PureComponent {
 
 HeaderCell.propTypes = {
   text: PropTypes.string.isRequired,
+  style: PropTypes.object,
 }
 
 const styles = StyleSheet.create({

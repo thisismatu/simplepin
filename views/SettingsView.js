@@ -85,7 +85,10 @@ export default class SettingsView extends React.Component {
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
     return (
       <ScrollView contentContainerStyle={styles.container} style={styles.list}>
-        <HeaderCell text={Strings.settings.general} />
+        <HeaderCell
+          text={Strings.settings.general}
+          style={{ marginTop: Base.padding.medium }}
+        />
         <Separator />
         <View style={styles.cell}>
           <Text style={styles.text}>{Strings.settings.privateByDefault}</Text>
@@ -131,7 +134,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <HeaderCell text={Strings.settings.display} />
+        <HeaderCell
+          text={Strings.settings.display}
+          style={{ marginTop: Base.padding.medium }}
+        />
         <Separator />
         <View style={styles.cell}>
           <Text style={styles.text}>{Strings.settings.exactDates}</Text>
@@ -155,7 +161,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <HeaderCell text={Strings.settings.other} />
+        <HeaderCell
+          text={Strings.settings.other}
+          style={{ marginTop: Base.padding.medium }}
+        />
         <Separator />
         <View style={styles.cell}>
           <Text style={styles.text}>{Strings.settings.version}</Text>
