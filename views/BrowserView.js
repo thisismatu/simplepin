@@ -83,6 +83,16 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
+          onPress={this.onShare}
+          style={styles.button}
+        >
+          <Image
+            source={Icons.share}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
           disabled={!this.state.canGoForward}
           onPress={() => this.webview.goForward()}
           style={styles.button}
@@ -90,16 +100,6 @@ export default class BrowserView extends React.Component {
           <Image
             source={Icons.right}
             style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={this.onShare}
-          style={styles.button}
-        >
-          <Image
-            source={Icons.share}
-            style={styles.icon}
           />
         </TouchableOpacity>
       </View>
