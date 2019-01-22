@@ -1,6 +1,7 @@
 import React from 'react'
-import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler } from 'react-native'
+import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler, Share } from 'react-native'
 import PropTypes from 'prop-types'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import NavigationButton from 'app/components/NavigationButton'
 import Base from 'app/style/Base'
 import Icons from 'app/style/Icons'
@@ -18,6 +19,7 @@ export default class BrowserView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      title: this.props.navigation.getParam('title', ''),
       url: this.props.navigation.getParam('url', ''),
       canGoBack: false,
       canGoForward: false,
@@ -52,6 +54,19 @@ export default class BrowserView extends React.Component {
     return false
   }
 
+  onShare = () => {
+    Share.share({
+      ...Platform.select({
+        ios: { url: this.state.url },
+        android: { message: this.state.url },
+      }),
+      title: this.state.title,
+    },
+    {
+      dialogTitle: 'Share',
+    })
+  }
+
   renderToolbar() {
     return (
       <View style={styles.toolbar}>
@@ -77,6 +92,16 @@ export default class BrowserView extends React.Component {
             style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
           />
         </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={this.onShare}
+          style={styles.button}
+        >
+          <Image
+            source={Icons.share}
+            style={styles.icon}
+          />
+        </TouchableOpacity>
       </View>
     )
   }
@@ -92,7 +117,7 @@ export default class BrowserView extends React.Component {
             onNavigationStateChange={this.onNavigationStateChange}
             originWhitelist={['*']}
           />
-          { isAndroid ? null : this.renderToolbar() }
+          { this.renderToolbar() }
         </View>
       </SafeAreaView>
     )
@@ -115,11 +140,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    height: 40,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: Base.color.black12,
     backgroundColor: Base.color.white,
     paddingHorizontal: Base.padding.medium,
+    ...ifIphoneX({
+      paddingTop: 12,
+    }, {
+      height: Base.row.medium,
+    }),
   },
   button: {
     justifyContent: 'center',

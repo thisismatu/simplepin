@@ -14,6 +14,7 @@ const Icons = {
   searchLarge: require('app/assets/ic-search-large.png'),
   searchSmall: require('app/assets/ic-search-small.png'),
   settings: require('app/assets/ic-settings.png'),
+  share: require('app/assets/ic-share.png'),
   simplepin: require('app/assets/ic-simplepin.png'),
   starred: require('app/assets/ic-star.png'),
   starredSmall: require('app/assets/ic-star-small.png'),
