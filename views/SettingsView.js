@@ -28,7 +28,7 @@ export default class SettingsView extends React.Component {
       tagOrder: false,
       privateByDefault: false,
       unreadByDefault: false,
-      openLinksInApp: true,
+      openLinksExternal: false,
     }
   }
 
@@ -61,9 +61,9 @@ export default class SettingsView extends React.Component {
     this.setState({ unreadByDefault: value })
   }
 
-  onOpenLinksInApp = (value) => {
-    Storage.setOpenLinksInApp(value)
-    this.setState({ openLinksInApp: value })
+  onOpenLinksExternal = (value) => {
+    Storage.setOpenLinksExternal(value)
+    this.setState({ openLinksExternal: value })
   }
 
   logout = () => {
@@ -124,13 +124,13 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.openLinksInApp}</Text>
+          <Text style={styles.text}>{Strings.settings.openLinksExternal}</Text>
           <Switch
             style={styles.switch}
-            thumbColor={thumb(this.state.openLinksInApp)}
+            thumbColor={thumb(this.state.openLinksExternal)}
             trackColor={{ true: track }}
-            onValueChange={this.onOpenLinksInApp}
-            value={this.state.openLinksInApp}
+            onValueChange={this.onOpenLinksExternal}
+            value={this.state.openLinksExternal}
           />
         </View>
         <Separator />

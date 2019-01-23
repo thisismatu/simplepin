@@ -7,7 +7,7 @@ const keys = {
   tagOrder: '@Simplepin:tagOrder',
   privateByDefault: '@Simplepin:privateByDefault',
   unreadByDefault: '@Simplepin:unreadByDefault',
-  openLinksInApp: '@Simplepin:openLinksInApp',
+  openLinksExternal: '@Simplepin:openLinksExternal',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
@@ -66,14 +66,14 @@ const setUnreadByDefault = async (unreadByDefault) => {
   await AsyncStorage.setItem(keys.unreadByDefault, value)
 }
 
-const openLinksInApp = async () => {
-  const value = await AsyncStorage.getItem(keys.openLinksInApp)
-  return JSON.parse(value) !== false
+const openLinksExternal = async () => {
+  const value = await AsyncStorage.getItem(keys.openLinksExternal)
+  return !!JSON.parse(value)
 }
 
-const setOpenLinksInApp = async (openLinksInApp) => {
-  const value = JSON.stringify(openLinksInApp)
-  await AsyncStorage.setItem(keys.openLinksInApp, value)
+const setOpenLinksExternal = async (openLinksExternal) => {
+  const value = JSON.stringify(openLinksExternal)
+  await AsyncStorage.setItem(keys.openLinksExternal, value)
 }
 
 const userPreferences = async () => {
@@ -84,7 +84,7 @@ const userPreferences = async () => {
     tagOrder: await tagOrder(),
     privateByDefault: await privateByDefault(),
     unreadByDefault: await unreadByDefault(),
-    openLinksInApp: await openLinksInApp(),
+    openLinksExternal: await openLinksExternal(),
   }
   return obj
 }
@@ -104,8 +104,8 @@ export default {
   setPrivateByDefault,
   unreadByDefault,
   setUnreadByDefault,
-  openLinksInApp,
-  setOpenLinksInApp,
+  openLinksExternal,
+  setOpenLinksExternal,
   userPreferences,
   clear,
 }

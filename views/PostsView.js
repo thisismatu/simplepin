@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking, Vibration } from 'react-native'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
@@ -80,7 +80,7 @@ export default class PostsView extends React.Component {
         exactDate: false,
         markAsRead: false,
         tagOrder: false,
-        openLinksInApp: true,
+        openLinksExternal: true,
       },
     }
   }
@@ -259,8 +259,8 @@ export default class PostsView extends React.Component {
   }
 
   onCellPress = post => () => {
-    const { openLinksInApp, markAsRead } = this.state.preferences
-    if (!openLinksInApp || includes(post.href, '.pdf')) {
+    const { openLinksExternal, markAsRead } = this.state.preferences
+    if (openLinksExternal || includes(post.href, '.pdf')) {
       Linking.openURL(post.href)
     } else {
       this.props.navigation.navigate('Browser', { title: post.description, url: post.href })

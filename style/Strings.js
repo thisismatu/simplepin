@@ -46,7 +46,7 @@ const Strings = {
     privateByDefault: 'Private by default',
     unreadByDefault: 'Unread by default',
     markAsReadWhenOpened: 'Mark as read when opened',
-    openLinksInApp: 'Open links in Simplepin',
+    openLinksExternal: 'Open links with external browser',
     display: 'Display',
     exactDates: 'Exact dates',
     sortTagsAlphabetically: 'Sort tags alphabetically',
