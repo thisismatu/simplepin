@@ -273,6 +273,7 @@ export default class PostsView extends React.Component {
   }
 
   onCellLongPress = post => () => {
+    Vibration.vibrate(5)
     this.toggleModal()
     this.setState({ selectedPost: post })
   }
