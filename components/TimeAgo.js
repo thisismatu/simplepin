@@ -1,18 +1,19 @@
 import React from 'react'
 import { Text } from 'react-native'
+import { Localization } from 'expo-localization'
 import PropTypes from 'prop-types'
 
 export default class TimeAgo extends React.PureComponent {
-  pluralize(number, string) {
+  pluralize = (number, string) => {
     if (number === 1) {
       return `${number} ${string} ago`
     }
     return `${number} ${string}s ago`
   }
 
-  format(date, exactDate) {
+  format = (date, exactDate) => {
     if (!date) { return null }
-    if (exactDate) { return date.toLocaleString() }
+    if (exactDate) { return date.toLocaleString(Localization.locale) }
 
     const today = new Date()
     const seconds = Math.floor((today - date) / 1000)
@@ -33,7 +34,7 @@ export default class TimeAgo extends React.PureComponent {
     } else if (weeks < 13) {
       return this.pluralize(weeks, 'week')
     } else {
-      return date.toLocaleDateString('en-EN', options)
+      return date.toLocaleDateString(Localization.locale, options)
     }
   }
 
