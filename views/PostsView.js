@@ -191,7 +191,7 @@ export default class PostsView extends React.Component {
         ${post.tags ? post.tags.join(' ').toLowerCase() : ''}
       `
       const returnData = tags ? tagData : postData
-      return returnData.includes(text.toLocaleString())
+      return returnData.includes(text)
     })
   }
 
