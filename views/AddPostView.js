@@ -1,10 +1,20 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
+import lodash from 'lodash/lodash'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
+import flattenDeep from 'lodash/flattenDeep'
+import uniq from 'lodash/uniq'
+import omit from 'lodash/omit'
+import filter from 'lodash/filter'
+import keys from 'lodash/keys'
+import last from 'lodash/last'
+import difference from 'lodash/difference'
 import isUrl from 'is-url'
+import Api from 'app/Api'
+import { handleResponseError } from 'app/util/ErrorUtils'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
@@ -26,7 +36,12 @@ export default class AddPostView extends React.Component {
     super(props)
     this.isEditing = false
     this.initialState = {}
+    this.suggestedTags = []
     this.state = {
+      enabled: true,
+      searchResults: [],
+      searchHeight: 200,
+      searchVisible: false,
       description: '',
       extended: '',
       hash: '',
@@ -57,6 +72,7 @@ export default class AddPostView extends React.Component {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
+    this.fetchTags()
   }
 
   componentWillUnmount() {
@@ -67,6 +83,23 @@ export default class AddPostView extends React.Component {
 
   setInitialState = (currentState) => {
     this.initialState = currentState
+  }
+
+  fetchTags = async () => {
+    const apiToken = await Storage.apiToken()
+    const response = await Api.tagsAll(apiToken)
+    const suggested = await Api.tagsSuggested(this.state.href, apiToken)
+    if(response.ok === 0) {
+      handleResponseError(response.error, this.props.navigation)
+    } else {
+      const combined = [keys(response), suggested.popular, suggested.recommended]
+      const tags = lodash(combined)
+        .flattenDeep()
+        .compact()
+        .uniq()
+        .value()
+      this.suggestedTags = tags
+    }
   }
 
   onUnsavedDismiss = () => {
@@ -107,7 +140,17 @@ export default class AddPostView extends React.Component {
   }
 
   onTagsChange = (evt) => {
-    this.setState({ tags: evt.nativeEvent.text.split(' ') })
+    const tags = evt.nativeEvent.text.split(' ')
+    this.setState({ tags: tags, searchVisible: true })
+    if (!isEmpty(tags)) {
+      const lastTag = last(tags)
+      const unusedTags = difference(this.suggestedTags, this.state.tags)
+      const results = filter(unusedTags, tag => tag.includes(lastTag))
+      this.setState({ searchResults: results })
+    }
+    if (isEmpty(compact(tags)) && last(tags) === '') {
+      this.setState({ searchVisible: false })
+    }
   }
 
   onShared = (value) => {
@@ -119,7 +162,7 @@ export default class AddPostView extends React.Component {
   }
 
   onSubmit = () => {
-    const post = this.state
+    const post = omit(this.state, ['searchResults', 'enabled', 'searchHeight', 'searchVisible'])
     const tags = compact(post.tags)
     post.description = post.description.trim()
     post.extended = post.extended.trim()
@@ -129,14 +172,58 @@ export default class AddPostView extends React.Component {
     this.props.navigation.dismiss()
   }
 
+  renderSearchResultItem = (tag) => {
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => {
+          const tags = this.state.tags
+          const lastIndex = tags.length - 1
+          tags[lastIndex] = tag
+          this.setState({ tags: tags, searchVisible: false })}
+        }
+        style={{ padding: 8 }}
+      >
+        <Text>{tag}</Text>
+      </TouchableOpacity>
+    )
+  }
+
+  renderSearchResults = () => {
+    return (
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => this.setState({ searchVisible: false })}
+        style={{ top: 0, left: 0, right: 0, bottom: 0, position: 'absolute' }}
+      >
+        <FlatList
+          ref={(ref) => this.flatList = ref}
+          data={this.state.searchResults}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => this.renderSearchResultItem(item)}
+          keyboardShouldPersistTaps="always"
+          keyboardDismissMode="on-drag"
+          onTouchStart={() => this.setState({ enabled: false }) }
+          onMomentumScrollEnd={() => this.setState({ enabled: true }) }
+          onScrollEndDrag={() => this.setState({ enabled: true }) }
+          style={{ height: this.state.searchHeight, width: '100%', position: 'absolute', backgroundColor: '#eee', zIndex: 9999 }}
+        />
+      </TouchableOpacity>
+    )
+  }
+
   render() {
-    const { description, extended, href, shared, tags, toread } = this.state
+    const { description, extended, href, shared, tags, toread, searchResults } = this.state
     const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
 
     return (
       <SafeAreaView style={styles.safeArea}>
-        <ScrollView contentContainerStyle={styles.container} style={styles.list}>
+        <ScrollView
+          scrollEnabled={this.state.enabled}
+          contentContainerStyle={styles.container}
+          style={styles.list}
+        >
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -192,6 +279,7 @@ export default class AddPostView extends React.Component {
             blurOnSubmit={true}
             enablesReturnKeyAutomatically={true}
             onChange={this.onTagsChange}
+            onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
             placeholder={Strings.add.placeholderTags}
             placeholderTextColor = {Base.color.gray2}
             ref={(input) => {this.tagsInput = input}}
@@ -233,6 +321,7 @@ export default class AddPostView extends React.Component {
               {this.isEditing ? Strings.add.buttonSave : Strings.add.buttonAdd}
             </Text>
           </TouchableOpacity>
+          { this.state.searchVisible && this.renderSearchResults() }
         </ScrollView>
       </SafeAreaView>
     )
