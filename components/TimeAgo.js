@@ -1,7 +1,10 @@
 import React from 'react'
 import { Text } from 'react-native'
-import { Localization } from 'expo-localization'
 import PropTypes from 'prop-types'
+import { Localization } from 'expo-localization'
+import moment from 'moment'
+
+moment.locale(Localization.locale)
 
 export default class TimeAgo extends React.PureComponent {
   pluralize = (number, string) => {
@@ -11,9 +14,8 @@ export default class TimeAgo extends React.PureComponent {
     return `${number} ${string}s ago`
   }
 
-  format = (date, exactDate) => {
+  format = (date) => {
     if (!date) { return null }
-    if (exactDate) { return date.toLocaleString(Localization.locale) }
 
     const today = new Date()
     const seconds = Math.floor((today - date) / 1000)
@@ -21,7 +23,6 @@ export default class TimeAgo extends React.PureComponent {
     const hours = Math.floor(minutes / 60)
     const days = Math.floor(hours / 24)
     const weeks = Math.floor(days / 7)
-    const options = { year: 'numeric', month: 'long' }
 
     if (seconds < 60) {
       return 'just now'
@@ -34,14 +35,17 @@ export default class TimeAgo extends React.PureComponent {
     } else if (weeks < 13) {
       return this.pluralize(weeks, 'week')
     } else {
-      return date.toLocaleDateString(Localization.locale, options)
+      return moment(date).format('MMMM Y')
     }
   }
 
   render() {
     const { style, time, exactDate } = this.props
+    if (exactDate) {
+      return <Text style={style}>{moment(time).format('L LT')}</Text>
+    }
     return (
-      <Text style={style}>{this.format(time, exactDate)}</Text>
+      <Text style={style}>{this.format(time)}</Text>
     )
   }
 }
