@@ -7,7 +7,33 @@ import Strings from 'app/style/Strings'
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
-export default class BottomSheet extends React.PureComponent {
+const ModalTitle = ({ title }) => {
+  return (
+    <View style={styles.cell}>
+      <Text
+        style={styles.title}
+        numberOfLines={1}
+        ellipsizeMode="tail"
+      >
+        {title}
+      </Text>
+    </View>
+  )
+}
+
+const ModalOption = ({ title, onPress }) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      style={styles.cell}
+      onPress={onPress}
+    >
+      <Text style={styles.text}>{title}</Text>
+    </TouchableOpacity>
+  )
+}
+
+class BottomSheet extends React.PureComponent {
   constructor() {
     super(...arguments)
     this.state = { visible: this.props.visible }
@@ -46,8 +72,6 @@ export default class BottomSheet extends React.PureComponent {
   }
 
   render() {
-    const { post } = this.props
-    const toread = post.toread ? 'read' : 'unread'
     return (
       <Modal
         animationType="none"
@@ -64,43 +88,7 @@ export default class BottomSheet extends React.PureComponent {
             style={this.overlayStyle}
           />
           <Animated.View style={this.contentStyle}>
-            <View style={styles.cell}>
-              <Text
-                style={styles.title}
-                numberOfLines={1}
-                ellipsizeMode="tail"
-              >
-                {post.description}
-              </Text>
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={this.props.onToggleToread(post)}
-            >
-              <Text style={styles.text}>{Strings.common.markAs} {toread}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={this.props.onEditPost(post)}
-            >
-              <Text style={styles.text}>{Strings.common.edit}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={this.props.onDeletePost(post)}
-            >
-              <Text style={styles.text}>{Strings.common.delete}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.5}
-              style={styles.cell}
-              onPress={this.props.onClose}
-            >
-              <Text style={styles.text}>{Strings.common.cancel}</Text>
-            </TouchableOpacity>
+            {this.props.children}
           </Animated.View>
         </View>
       </Modal>
@@ -111,10 +99,7 @@ export default class BottomSheet extends React.PureComponent {
 BottomSheet.propTypes = {
   visible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onToggleToread: PropTypes.func.isRequired,
-  onEditPost: PropTypes.func.isRequired,
-  onDeletePost: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 }
 
 const styles = StyleSheet.create({
@@ -159,3 +144,7 @@ const styles = StyleSheet.create({
     marginTop: Base.padding.tiny,
   },
 })
+
+BottomSheet.Title = ModalTitle
+BottomSheet.Option = ModalOption
+export default BottomSheet

@@ -253,6 +253,10 @@ export default class PostsView extends React.Component {
     }
   }
 
+  onSubmitAddPost = (post) => {
+    this.addPost(post)
+  }
+
   onTagPress = tag => () => {
     this.onSearchChange(tag, true)
     this.flatList.scrollToOffset({ offset: 0, animated: false })
@@ -278,24 +282,23 @@ export default class PostsView extends React.Component {
     this.setState({ selectedPost: post })
   }
 
-  onToggleToread = post => () => {
+  onToggleToread = () => {
+    const post = this.state.selectedPost
     this.toggleModal()
     post.toread = !post.toread
     post.meta = Math.random().toString(36) // PostCell change detection
     this.addPost(post)
   }
 
-  onSubmitAddPost = (post) => {
-    this.addPost(post)
-  }
-
-  onEditPost = post => () => {
+  onEditPost = () => {
     const { navigation } = this.props
+    const post = this.state.selectedPost
     this.toggleModal()
     navigation.navigate('Add', { post: post, onSubmit: navigation.getParam('onSubmit') })
   }
 
-  onDeletePost = post => () => {
+  onDeletePost = () => {
+    const post = this.state.selectedPost
     Alert.alert(
       Strings.common.deletePost,
       post.description,
@@ -381,6 +384,7 @@ export default class PostsView extends React.Component {
   }
 
   render() {
+    const { selectedPost } = this.state
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
     const hasData = data && data.length
     return (
@@ -400,14 +404,13 @@ export default class PostsView extends React.Component {
           ListEmptyComponent={this.renderEmptyState()}
           ListHeaderComponent={this.renderListHeader()}
         />
-        <BottomSheet
-          visible={this.state.modalVisible}
-          onClose={this.toggleModal}
-          onToggleToread={this.onToggleToread}
-          onEditPost={this.onEditPost}
-          onDeletePost={this.onDeletePost}
-          post={this.state.selectedPost}
-        />
+        <BottomSheet visible={this.state.modalVisible} onClose={this.toggleModal}>
+          <BottomSheet.Title title={selectedPost.description} />
+          <BottomSheet.Option title={`${Strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
+          <BottomSheet.Option title={Strings.common.edit} onPress={this.onEditPost} />
+          <BottomSheet.Option title={Strings.common.delete} onPress={this.onDeletePost} />
+          <BottomSheet.Option title={Strings.common.cancel} onPress={this.toggleModal} />
+        </BottomSheet>
       </View>
     )
   }
