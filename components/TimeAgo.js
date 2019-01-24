@@ -4,6 +4,12 @@ import { Localization } from 'expo-localization'
 import PropTypes from 'prop-types'
 
 export default class TimeAgo extends React.PureComponent {
+  localeDate = (date, exactDate) => {
+    const short = { year: 'numeric', month: 'long' }
+    const long = { year: 'numeric', month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+    return date.toLocaleDateString(Localization.locale, exactDate ? long : short)
+  }
+
   pluralize = (number, string) => {
     if (number === 1) {
       return `${number} ${string} ago`
@@ -13,7 +19,7 @@ export default class TimeAgo extends React.PureComponent {
 
   format = (date, exactDate) => {
     if (!date) { return null }
-    if (exactDate) { return date.toLocaleString(Localization.locale) }
+    if (exactDate) { return this.localeDate(date, exactDate) }
 
     const today = new Date()
     const seconds = Math.floor((today - date) / 1000)
@@ -34,7 +40,7 @@ export default class TimeAgo extends React.PureComponent {
     } else if (weeks < 13) {
       return this.pluralize(weeks, 'week')
     } else {
-      return date.toLocaleDateString(Localization.locale, options)
+      return this.localeDate(date, exactDate)
     }
   }
 
