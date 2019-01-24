@@ -10,6 +10,8 @@ const postsAllUrl = (parameters) => `${server}/posts/all/?${parameters}`
 const postsAddUrl = (parameters) => `${server}/posts/add/?${parameters}`
 const postsDeleteUrl = (parameters) => `${server}/posts/delete/?${parameters}`
 const postsStarredUrl = (secret, username) => `https://feeds.pinboard.in/rss/secret:${secret}/u:${username}/starred/`
+const tagsAllUrl = (parameters) => `${server}/tags/get/?${parameters}`
+const tagsSuggestedUrl = (parameters) => `${server}/posts/suggest/?${parameters}`
 
 const handleResponse = (response, rss = false) => {
   if (!response.ok) {
@@ -93,6 +95,25 @@ const postsStarred = (secret, token) => {
     .then(response => handleResponse(response, true))
 }
 
+const tagsAll = (token) => {
+  const data = {
+    format: 'json',
+    auth_token: token,
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(tagsAllUrl(params))
+}
+
+const tagsSuggested = (url, token) => {
+  const data = {
+    url: url,
+    format: 'json',
+    auth_token: token,
+  }
+  const params = queryString.stringify(data)
+  return fetchWithErrorHandling(tagsSuggestedUrl(params))
+}
+
 const mockUpdate = () => {
   const now = new Date()
   return { 'update_time': now.toISOString() }
@@ -111,6 +132,8 @@ export default {
   postsAdd,
   postsDelete,
   postsStarred,
+  tagsAll,
+  tagsSuggested,
   mockPostsAll,
   mockUpdate,
 }
