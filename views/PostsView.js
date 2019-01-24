@@ -401,7 +401,7 @@ export default class PostsView extends React.Component {
           ListHeaderComponent={this.renderListHeader()}
         />
         <BottomSheet
-          modalVisible={this.state.modalVisible}
+          visible={this.state.modalVisible}
           onClose={this.toggleModal}
           onToggleToread={this.onToggleToread}
           onEditPost={this.onEditPost}
