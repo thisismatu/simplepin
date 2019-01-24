@@ -76,9 +76,9 @@ const postsAdd = (post, token) => {
   return fetchWithErrorHandling(postsAddUrl(params))
 }
 
-const postsDelete = (post, token) => {
+const postsDelete = (url, token) => {
   const data = {
-    url: post.href,
+    url: url,
     format: 'json',
     auth_token: token,
   }

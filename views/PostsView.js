@@ -174,7 +174,7 @@ export default class PostsView extends React.Component {
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const response = await Api.postsDelete(post, apiToken)
+    const response = await Api.postsDelete(post.href, apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
