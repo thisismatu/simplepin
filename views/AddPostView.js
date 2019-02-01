@@ -145,9 +145,8 @@ export default class AddPostView extends React.Component {
     this.setState({ tags: tags, searchVisible: true })
     if (!isEmpty(tags)) {
       const lastTag = last(tags)
-      const unusedTags = (array) => difference(array, this.state.tags)
-      const suggestedTagsResults = filter(unusedTags(this.suggestedTags), tag => tag.includes(lastTag))
-      const userTagsResults = filter(unusedTags([this.suggestedTags, this.userTags]), tag => tag.includes(lastTag))
+      const suggestedTagsResults = filter(difference(this.suggestedTags, this.state.tags), tag => tag.includes(lastTag))
+      const userTagsResults = filter(difference(this.userTags, flattenDeep([this.state.tags, this.suggestedTags])), tag => tag.includes(lastTag))
       this.setState({ searchResults: {
         suggested: suggestedTagsResults,
         user: userTagsResults,
