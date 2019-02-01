@@ -93,6 +93,7 @@ export default class LoginView extends React.Component {
             underlineColorAndroid="transparent"
             value={this.state.apiToken}
             onChange={this.onChange}
+            onSubmitEditing={this.onSubmit}
           />
           <TouchableOpacity
             activeOpacity={0.5}
