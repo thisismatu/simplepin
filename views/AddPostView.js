@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler, FlatList } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import compact from 'lodash/compact'
@@ -37,6 +37,7 @@ export default class AddPostView extends React.Component {
     this.isEditing = false
     this.initialState = {}
     this.suggestedTags = []
+    this.userTags = []
     this.state = {
       enabled: true,
       searchResults: [],
@@ -92,13 +93,13 @@ export default class AddPostView extends React.Component {
     if(response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     } else {
-      const combined = [keys(response), suggested.popular, suggested.recommended]
-      const tags = lodash(combined)
+      const suggestedTags = lodash([suggested[0].popular, suggested[1].recommended])
         .flattenDeep()
         .compact()
         .uniq()
         .value()
-      this.suggestedTags = tags
+      this.suggestedTags = suggestedTags
+      this.userTags = keys(response)
     }
   }
 
@@ -144,9 +145,13 @@ export default class AddPostView extends React.Component {
     this.setState({ tags: tags, searchVisible: true })
     if (!isEmpty(tags)) {
       const lastTag = last(tags)
-      const unusedTags = difference(this.suggestedTags, this.state.tags)
-      const results = filter(unusedTags, tag => tag.includes(lastTag))
-      this.setState({ searchResults: results })
+      const unusedTags = (array) => difference(array, this.state.tags)
+      const suggestedTagsResults = filter(unusedTags(this.suggestedTags), tag => tag.includes(lastTag))
+      const userTagsResults = filter(unusedTags([this.suggestedTags, this.userTags]), tag => tag.includes(lastTag))
+      this.setState({ searchResults: {
+        suggested: suggestedTagsResults,
+        user: userTagsResults,
+      } })
     }
     if (isEmpty(compact(tags)) && last(tags) === '') {
       this.setState({ searchVisible: false })
@@ -162,7 +167,8 @@ export default class AddPostView extends React.Component {
   }
 
   onSubmit = () => {
-    const post = omit(this.state, ['searchResults', 'enabled', 'searchHeight', 'searchVisible'])
+    const ignore = ['searchResults', 'enabled', 'searchHeight', 'searchVisible']
+    const post = omit(this.state, ignore)
     const tags = compact(post.tags)
     post.description = post.description.trim()
     post.extended = post.extended.trim()
@@ -172,7 +178,7 @@ export default class AddPostView extends React.Component {
     this.props.navigation.dismiss()
   }
 
-  renderSearchResultItem = (tag) => {
+  renderSearchResultItem = (tag, suggested) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
@@ -182,25 +188,29 @@ export default class AddPostView extends React.Component {
           tags[lastIndex] = tag
           this.setState({ tags: tags, searchVisible: false })}
         }
-        style={{ padding: 8 }}
+        style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 8 }}
       >
         <Text>{tag}</Text>
+        { suggested ? <Text style={{ marginLeft: 4, color: Base.color.gray3, fontSize: 12 }}>Suggested</Text> : null }
       </TouchableOpacity>
     )
   }
 
   renderSearchResults = () => {
+    const { searchResults } = this.state
     return (
       <TouchableOpacity
         activeOpacity={1}
         onPress={() => this.setState({ searchVisible: false })}
         style={{ top: 0, left: 0, right: 0, bottom: 0, position: 'absolute' }}
       >
-        <FlatList
+        <SectionList
           ref={(ref) => this.flatList = ref}
-          data={this.state.searchResults}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => this.renderSearchResultItem(item)}
+          sections={[
+            { title: 'suggested', data: searchResults.suggested, renderItem: ({ item }) => this.renderSearchResultItem(item, true) },
+            { title: 'tags', data: searchResults.user, renderItem: ({ item }) => this.renderSearchResultItem(item) },
+          ]}
+          keyExtractor={(item, index) => item + index}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="on-drag"
           onTouchStart={() => this.setState({ enabled: false }) }
