@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking, Vibration } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking, Vibration, Keyboard } from 'react-native'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
@@ -54,7 +54,7 @@ export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', Strings.posts.all),
-      headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
+      headerLeft: <NavigationButton onPress={navigation.getParam('openDrawer')} icon={Icons.menu} />,
       headerRight: <NavigationButton onPress={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })} icon={Icons.add} />,
     }
   }
@@ -87,6 +87,7 @@ export default class PostsView extends React.Component {
 
   componentDidMount() {
     this.props.navigation.setParams({ onSubmit: this.onSubmitAddPost })
+    this.props.navigation.setParams({ openDrawer: this.openDrawer })
     Storage.userPreferences()
       .then((prefs) => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
@@ -211,6 +212,12 @@ export default class PostsView extends React.Component {
       return this.filterSearchResults(this.state.searchQuery)
     }
     return this.state[current]
+  }
+
+  openDrawer = () => {
+    Keyboard.dismiss()
+    this.onSearchChange('')
+    this.props.navigation.openDrawer()
   }
 
   toggleModal = () => {
