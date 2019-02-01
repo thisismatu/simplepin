@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, KeyboardAvoidingView, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
@@ -76,8 +76,10 @@ export default class LoginView extends React.Component {
       <SafeAreaView style={styles.root}>
         <KeyboardAvoidingView style={styles.container} behavior="padding">
           <Image source={Icons.simplepin} style={styles.icon} />
-          <Text style={styles.title}>{Strings.login.title}</Text>
-          <Text style={styles.text}>{Strings.login.text}</Text>
+          <View style={{ width: '100%' }}>
+            <Text style={styles.title}>{Strings.login.title}</Text>
+            <Text style={styles.text}>{Strings.login.text}</Text>
+          </View>
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
