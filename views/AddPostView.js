@@ -1,5 +1,6 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, ScrollView, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import compact from 'lodash/compact'
@@ -227,11 +228,11 @@ export default class AddPostView extends React.Component {
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
 
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <ScrollView
+      <SafeAreaView style={s.safeArea}>
+        <KeyboardAwareScrollView
           scrollEnabled={this.state.enabled}
-          contentContainerStyle={styles.container}
-          style={styles.list}
+          contentContainerStyle={s.container}
+          style={s.list}
         >
           <TextInput
             autoCapitalize="none"
@@ -243,7 +244,7 @@ export default class AddPostView extends React.Component {
             placeholder={Strings.add.placeholderHref}
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="next"
-            style={styles.textInput}
+            style={s.textInput}
             underlineColorAndroid="transparent"
             value={href}
           />
@@ -259,7 +260,7 @@ export default class AddPostView extends React.Component {
             placeholderTextColor = {Base.color.gray2}
             ref={(input) => {this.descriptionInput = input}}
             returnKeyType="next"
-            style={styles.textInput}
+            style={s.textInput}
             underlineColorAndroid="transparent"
             value={description}
           />
@@ -276,7 +277,7 @@ export default class AddPostView extends React.Component {
             placeholderTextColor = {Base.color.gray2}
             ref={(input) => {this.extendedInput = input}}
             returnKeyType="next"
-            style={[styles.textInput, styles.textArea]}
+            style={[s.textInput, s.textArea]}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
             value={extended}
@@ -293,15 +294,15 @@ export default class AddPostView extends React.Component {
             placeholderTextColor = {Base.color.gray2}
             ref={(input) => {this.tagsInput = input}}
             returnKeyType="done"
-            style={styles.textInput}
+            style={s.textInput}
             underlineColorAndroid="transparent"
             value={tags ? tags.join(' ') : null}
           />
           <Separator />
-          <View style={styles.cell}>
-            <Text style={styles.text}>{Strings.posts.private}</Text>
+          <View style={s.cell}>
+            <Text style={s.text}>{Strings.posts.private}</Text>
             <Switch
-              style={styles.switch}
+              style={s.switch}
               trackColor={{ true: track }}
               thumbColor={thumb(!shared)}
               onValueChange={this.onShared}
@@ -309,10 +310,10 @@ export default class AddPostView extends React.Component {
             />
           </View>
           <Separator />
-          <View style={styles.cell}>
-            <Text style={styles.text}>{Strings.add.readLater}</Text>
+          <View style={s.cell}>
+            <Text style={s.text}>{Strings.add.readLater}</Text>
             <Switch
-              style={styles.switch}
+              style={s.switch}
               trackColor={{ true: track }}
               thumbColor={thumb(toread)}
               onValueChange={this.onToread}
@@ -323,15 +324,15 @@ export default class AddPostView extends React.Component {
           <TouchableOpacity
             activeOpacity={0.5}
             disabled={!this.isValidPost()}
-            style={[styles.button, !this.isValidPost() && styles.disabled]}
+            style={[s.button, !this.isValidPost() && s.disabled]}
             onPress={() => this.onSubmit()}
           >
-            <Text style={styles.buttonText}>
+            <Text style={s.buttonText}>
               {this.isEditing ? Strings.add.buttonSave : Strings.add.buttonAdd}
             </Text>
           </TouchableOpacity>
           { this.state.searchVisible && this.renderSearchResults() }
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </SafeAreaView>
     )
   }
@@ -341,7 +342,7 @@ AddPostView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   safeArea: {
     backgroundColor: Base.color.white,
     flex: 1,
