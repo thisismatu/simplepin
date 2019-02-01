@@ -9,9 +9,9 @@ const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpaci
 
 const ModalTitle = ({ title }) => {
   return (
-    <View style={styles.cell}>
+    <View style={s.cell}>
       <Text
-        style={styles.title}
+        style={s.title}
         numberOfLines={1}
         ellipsizeMode="tail"
       >
@@ -25,10 +25,10 @@ const ModalOption = ({ title, onPress }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={styles.cell}
+      style={s.cell}
       onPress={onPress}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={s.text}>{title}</Text>
     </TouchableOpacity>
   )
 }
@@ -38,8 +38,8 @@ class BottomSheet extends React.PureComponent {
     super(...arguments)
     this.state = { visible: this.props.visible }
     this.animation = new Animated.Value(0)
-    this.overlayStyle = StyleSheet.flatten([styles.overlay, { opacity: this.animation }])
-    this.contentStyle = StyleSheet.flatten([styles.content, {
+    this.overlayStyle = StyleSheet.flatten([s.overlay, { opacity: this.animation }])
+    this.contentStyle = StyleSheet.flatten([s.content, {
       transform: [{
         translateY: this.animation.interpolate({
           inputRange: [0, 1],
@@ -81,7 +81,7 @@ class BottomSheet extends React.PureComponent {
         hardwareAccelerated={true}
         supportedOrientations={['portrait', 'landscape']}
       >
-        <View style={styles.root}>
+        <View style={s.root}>
           <AnimatedTouchableOpacity
             activeOpacity={1}
             onPress={this.props.onClose}
@@ -102,7 +102,7 @@ BottomSheet.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',

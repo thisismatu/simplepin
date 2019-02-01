@@ -10,7 +10,7 @@ export default class NavigationButton extends React.PureComponent {
         activeOpacity={0.5}
         onPress={this.props.onPress}
       >
-        <Image source={this.props.icon} style={styles.menuButton} />
+        <Image source={this.props.icon} style={s.menuButton} />
       </TouchableOpacity>
     )
   }
@@ -21,7 +21,7 @@ NavigationButton.propTypes = {
   onPress: PropTypes.func,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   menuButton: {
     marginHorizontal: 12,
     marginVertical: Base.padding.small,

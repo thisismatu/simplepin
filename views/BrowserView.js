@@ -69,37 +69,37 @@ export default class BrowserView extends React.Component {
 
   renderToolbar() {
     return (
-      <View style={styles.toolbar}>
+      <View style={s.toolbar}>
         <TouchableOpacity
           activeOpacity={0.5}
           disabled={!this.state.canGoBack}
           onPress={() => this.webview.goBack()}
-          style={styles.button}
+          style={s.button}
         >
           <Image
             source={Icons.left}
-            style={[styles.icon, !this.state.canGoBack && styles.iconDisabled]}
+            style={[s.icon, !this.state.canGoBack && s.iconDisabled]}
           />
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={this.onShare}
-          style={styles.button}
+          style={s.button}
         >
           <Image
             source={Icons.share}
-            style={styles.icon}
+            style={s.icon}
           />
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
           disabled={!this.state.canGoForward}
           onPress={() => this.webview.goForward()}
-          style={styles.button}
+          style={s.button}
         >
           <Image
             source={Icons.right}
-            style={[styles.icon, !this.state.canGoForward && styles.iconDisabled]}
+            style={[s.icon, !this.state.canGoForward && s.iconDisabled]}
           />
         </TouchableOpacity>
       </View>
@@ -108,8 +108,8 @@ export default class BrowserView extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
+      <SafeAreaView style={s.safeArea}>
+        <View style={s.container}>
           <WebView
             ref={ref => this.webview = ref}
             source={{ uri: this.state.url }}
@@ -128,7 +128,7 @@ BrowserView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   safeArea: {
     backgroundColor: Base.color.white,
     flex: 1,

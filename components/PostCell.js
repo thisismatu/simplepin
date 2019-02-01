@@ -15,10 +15,10 @@ class Tag extends React.PureComponent {
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onTagPress(tag)}
-        style={[styles.tagContainer, index === 0 && styles.firstTag]}
+        style={[s.tagContainer, index === 0 && s.firstTag]}
       >
-        <View style={[styles.tag, isPrivateTag && styles.privateTag]}>
-          <Text style={[styles.tagText, isPrivateTag && styles.privateTagText]}>{tag}</Text>
+        <View style={[s.tag, isPrivateTag && s.privateTag]}>
+          <Text style={[s.tagText, isPrivateTag && s.privateTagText]}>{tag}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -43,13 +43,13 @@ export default class PostCell extends React.PureComponent {
       >
         {
           post.toread
-          ? <View style={styles.unread} />
+          ? <View style={s.unread} />
           : null
         }
-        <Text style={[styles.title, post.toread && styles.titleUnread]}>{post.description}</Text>
+        <Text style={[s.title, post.toread && s.titleUnread]}>{post.description}</Text>
         {
           post.extended
-          ? <Text style={styles.description}>{post.extended}</Text>
+          ? <Text style={s.description}>{post.extended}</Text>
           : null
         }
         <FlatList
@@ -57,7 +57,7 @@ export default class PostCell extends React.PureComponent {
           data={tags}
           horizontal={true}
           keyExtractor={(item, index) => index.toString()}
-          ListEmptyComponent={() => <View style={styles.emptyTagList} />}
+          ListEmptyComponent={() => <View style={s.emptyTagList} />}
           renderItem={({ item, index }) =>
             <Tag
               tag={item}
@@ -68,13 +68,13 @@ export default class PostCell extends React.PureComponent {
           showsHorizontalScrollIndicator={false}
         />
         <TimeAgo
-          style={styles.time}
+          style={s.time}
           time={post.time}
           exactDate={exactDate}
         />
-        <View style={styles.statusContainer}>
-          { post.starred ? <Image source={Icons.starredSmall} style={styles.starred} /> : null }
-          { !post.shared ? <Image source={Icons.privateSmall} style={styles.private} /> : null }
+        <View style={s.statusContainer}>
+          { post.starred ? <Image source={Icons.starredSmall} style={s.starred} /> : null }
+          { !post.shared ? <Image source={Icons.privateSmall} style={s.private} /> : null }
         </View>
       </TouchableOpacity>
     )
@@ -102,7 +102,7 @@ PostCell.propTypes = {
   }),
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   unread: {
     backgroundColor: Base.color.blue2,
     borderRadius: 5,

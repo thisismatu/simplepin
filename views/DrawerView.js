@@ -59,12 +59,12 @@ export default class DrawerView extends React.PureComponent {
     const postsRoute = 'Posts'
     const settingsRoute = 'Settings'
     return (
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={s.safeArea}>
         <ScrollView
           bounces={false}
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
-          style={styles.scrollView}
+          style={s.scrollView}
         >
           <DrawerHeader text={this.state.username} />
           <HeaderCell text={Strings.posts.title} />
@@ -120,7 +120,7 @@ DrawerView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   safeArea: {
     flex: 1,
   },

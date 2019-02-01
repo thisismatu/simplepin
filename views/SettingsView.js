@@ -84,16 +84,16 @@ export default class SettingsView extends React.Component {
     const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
     return (
-      <ScrollView contentContainerStyle={styles.container} style={styles.list}>
+      <ScrollView contentContainerStyle={s.container} style={s.list}>
         <HeaderCell
           text={Strings.settings.general}
           style={{ marginTop: Base.padding.medium }}
         />
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.privateByDefault}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.privateByDefault}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.privateByDefault)}
             trackColor={{ true: track }}
             onValueChange={this.onPrivateByDefault}
@@ -101,10 +101,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.unreadByDefault}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.unreadByDefault}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.unreadByDefault)}
             trackColor={{ true: track }}
             onValueChange={this.onUnreadByDefault}
@@ -112,10 +112,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.markAsReadWhenOpened}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.markAsReadWhenOpened}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.markAsRead)}
             trackColor={{ true: track }}
             onValueChange={this.onMarkAsRead}
@@ -123,10 +123,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.openLinksExternal}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.openLinksExternal}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.openLinksExternal)}
             trackColor={{ true: track }}
             onValueChange={this.onOpenLinksExternal}
@@ -139,10 +139,10 @@ export default class SettingsView extends React.Component {
           style={{ marginTop: Base.padding.medium }}
         />
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.exactDates}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.exactDates}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.exactDate)}
             trackColor={{ true: track }}
             onValueChange={this.onExactDate}
@@ -150,10 +150,10 @@ export default class SettingsView extends React.Component {
           />
         </View>
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.sortTagsAlphabetically}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.sortTagsAlphabetically}</Text>
           <Switch
-            style={styles.switch}
+            style={s.switch}
             thumbColor={thumb(this.state.tagOrder)}
             trackColor={{ true: track }}
             onValueChange={this.onTagOrder}
@@ -166,17 +166,17 @@ export default class SettingsView extends React.Component {
           style={{ marginTop: Base.padding.medium }}
         />
         <Separator />
-        <View style={styles.cell}>
-          <Text style={styles.text}>{Strings.settings.version}</Text>
-          <Text style={styles.secondary}>{expo.version}</Text>
+        <View style={s.cell}>
+          <Text style={s.text}>{Strings.settings.version}</Text>
+          <Text style={s.secondary}>{expo.version}</Text>
         </View>
         <Separator />
         <TouchableOpacity
           activeOpacity={0.5}
-          style={styles.cell}
+          style={s.cell}
           onPress={() => this.logout()}
         >
-          <Text style={styles.text}>{Strings.settings.logout}</Text>
+          <Text style={s.text}>{Strings.settings.logout}</Text>
         </TouchableOpacity>
         <Separator />
       </ScrollView>
@@ -188,7 +188,7 @@ SettingsView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     paddingBottom: Base.padding.large,
   },

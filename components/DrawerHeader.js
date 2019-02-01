@@ -10,13 +10,13 @@ const isAndroid = Platform.OS === 'android'
 export default class DrawerHeader extends React.PureComponent {
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.iconContainer}>
-          <Image source={Icons.simplepin} style={styles.icon} />
+      <View style={s.container}>
+        <View style={s.iconContainer}>
+          <Image source={Icons.simplepin} style={s.icon} />
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{Strings.common.simplepin}</Text>
-          { this.props.text ? <Text style={styles.subtitle}>{this.props.text}</Text> : null }
+        <View style={s.textContainer}>
+          <Text style={s.title}>{Strings.common.simplepin}</Text>
+          { this.props.text ? <Text style={s.subtitle}>{this.props.text}</Text> : null }
         </View>
       </View>
     )
@@ -27,7 +27,7 @@ DrawerHeader.propTypes = {
   text: PropTypes.string,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     alignItems: 'center',
     flex: 1,

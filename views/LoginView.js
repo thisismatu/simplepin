@@ -73,12 +73,12 @@ export default class LoginView extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.root}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
-          <Image source={Icons.simplepin} style={styles.icon} />
+      <SafeAreaView style={s.root}>
+        <KeyboardAvoidingView style={s.container} behavior="padding">
+          <Image source={Icons.simplepin} style={s.icon} />
           <View style={{ width: '100%' }}>
-            <Text style={styles.title}>{Strings.login.title}</Text>
-            <Text style={styles.text}>{Strings.login.text}</Text>
+            <Text style={s.title}>{Strings.login.title}</Text>
+            <Text style={s.text}>{Strings.login.text}</Text>
           </View>
           <TextInput
             autoCapitalize="none"
@@ -88,7 +88,7 @@ export default class LoginView extends React.Component {
             placeholderTextColor = {Base.color.gray2}
             returnKeyType="done"
             secureTextEntry={true}
-            style={styles.input}
+            style={s.input}
             textContentType="password"
             underlineColorAndroid="transparent"
             value={this.state.apiToken}
@@ -97,17 +97,17 @@ export default class LoginView extends React.Component {
           <TouchableOpacity
             activeOpacity={0.5}
             disabled={!this.state.apiToken}
-            style={[styles.loginButton, !this.state.apiToken && styles.disabled]}
+            style={[s.loginButton, !this.state.apiToken && s.disabled]}
             onPress={this.onSubmit}
           >
-            <Text style={styles.loginButtonText}>{Strings.login.button}</Text>
+            <Text style={s.loginButtonText}>{Strings.login.button}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
-            style={styles.tokenButton}
+            style={s.tokenButton}
             onPress={this.onShowToken}
           >
-            <Text style={styles.tokenButtonText}>{Strings.login.token}</Text>
+            <Text style={s.tokenButtonText}>{Strings.login.token}</Text>
           </TouchableOpacity>
           <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
         </KeyboardAvoidingView>
@@ -120,7 +120,7 @@ LoginView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   root: {
     flex: 1,
     backgroundColor: Base.color.white,

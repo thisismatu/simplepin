@@ -19,10 +19,10 @@ export default class EmptyState extends React.PureComponent {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        style={styles.button}
+        style={s.button}
         onPress={action}
       >
-        <Text style={styles.buttonText}>{actionText}</Text>
+        <Text style={s.buttonText}>{actionText}</Text>
       </TouchableOpacity>
     )
   }
@@ -31,10 +31,10 @@ export default class EmptyState extends React.PureComponent {
     const { icon, title, subtitle, action } = this.props
     const offset = icon ? this.state.topOffset + 64 : this.state.topOffset
     return (
-      <View style={[styles.empty, { paddingBottom: offset }]} onLayout={this.onLayout}>
-        { icon ? <Image source={icon} style={styles.icon} /> : null }
-        <Text style={styles.title}>{title}</Text>
-        { subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null }
+      <View style={[s.empty, { paddingBottom: offset }]} onLayout={this.onLayout}>
+        { icon ? <Image source={icon} style={s.icon} /> : null }
+        <Text style={s.title}>{title}</Text>
+        { subtitle ? <Text style={s.subtitle}>{subtitle}</Text> : null }
         <View style={{ height: Base.row.medium }}>
           { action ? this.renderAction() : null }
         </View>
@@ -51,7 +51,7 @@ EmptyState.propTypes = {
   actionText: PropTypes.string,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   empty: {
     flex: 1,
     justifyContent: 'center',

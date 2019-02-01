@@ -6,8 +6,8 @@ import Base from 'app/style/Base'
 export default class HeaderCell extends React.PureComponent {
   render() {
     return (
-      <View style={[styles.header, this.props.style]}>
-        <Text style={styles.text}>{this.props.text}</Text>
+      <View style={[s.header, this.props.style]}>
+        <Text style={s.text}>{this.props.text}</Text>
       </View>
     )
   }
@@ -18,7 +18,7 @@ HeaderCell.propTypes = {
   style: PropTypes.object,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',

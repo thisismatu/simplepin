@@ -398,13 +398,13 @@ export default class PostsView extends React.Component {
       <View style={{ flex: 1 }}>
         <FlatList
           ref={(ref) => this.flatList = ref}
-          contentContainerStyle={[styles.container, !hasData && { flex: 1 }]}
+          contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
           data={data}
           initialNumToRender={8}
           keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => this.renderPostCell(item)}
           refreshControl={this.renderRefreshControl()}
-          style={styles.list}
+          style={s.list}
           keyboardShouldPersistTaps="always"
           keyboardDismissMode="on-drag"
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
@@ -427,7 +427,7 @@ PostsView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container : {
     paddingTop: Base.padding.medium,
     paddingBottom: Base.padding.large,

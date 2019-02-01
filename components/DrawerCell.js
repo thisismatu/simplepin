@@ -8,13 +8,13 @@ export default class DrawerCell extends React.PureComponent {
     const { title, icon, count, isFocused } = this.props
     return (
       <TouchableOpacity
-        style={[styles.cell, isFocused && styles.active]}
+        style={[s.cell, isFocused && s.active]}
         activeOpacity={0.5}
         onPress={this.props.navigateTo}
       >
-        <Image source={icon} style={styles.icon} />
-        <Text style={styles.text}>{title}</Text>
-        { count ? <Text style={styles.secondary}>{count}</Text> : null }
+        <Image source={icon} style={s.icon} />
+        <Text style={s.text}>{title}</Text>
+        { count ? <Text style={s.secondary}>{count}</Text> : null }
       </TouchableOpacity>
     )
   }
@@ -28,7 +28,7 @@ DrawerCell.propTypes = {
   count: PropTypes.number,
 }
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   cell: {
     flex: 1,
     flexDirection: 'row',

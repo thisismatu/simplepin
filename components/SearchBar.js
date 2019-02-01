@@ -10,7 +10,7 @@ export default class SearchBar extends React.PureComponent {
     const { isSearchActive, searchQuery, onSearchChange, count } = this.props
     const icon = isSearchActive ? Icons.closeSmall : Icons.searchSmall
     return (
-      <View style={styles.container}>
+      <View style={s.container}>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
@@ -20,18 +20,18 @@ export default class SearchBar extends React.PureComponent {
           placeholder={Strings.common.search}
           placeholderTextColor = {Base.color.gray2}
           returnKeyType="done"
-          style={styles.textField}
+          style={s.textField}
           underlineColorAndroid="transparent"
           value={searchQuery}
         />
-        { isSearchActive > 0 ? <Text style={styles.count}>{count}</Text> : null }
+        { isSearchActive > 0 ? <Text style={s.count}>{count}</Text> : null }
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => onSearchChange('')}
-          style={styles.button}
+          style={s.button}
           disabled={!searchQuery}
         >
-          <Image source={icon} style={styles.icon} />
+          <Image source={icon} style={s.icon} />
         </TouchableOpacity>
       </View>
     )
@@ -49,7 +49,7 @@ const barHeight = Base.row.tiny
 const horizontalMargin = 12
 const iconSize = 18
 
-const styles = StyleSheet.create({
+const s = StyleSheet.create({
   container: {
     backgroundColor: Base.color.white,
     paddingBottom: Base.padding.tiny,
