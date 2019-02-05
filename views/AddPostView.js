@@ -25,6 +25,52 @@ import Icons from 'app/style/Icons'
 
 const isAndroid = Platform.OS === 'android'
 
+class ResultItem extends React.PureComponent {
+  render() {
+    const { tag, suggested, onPress } = this.props
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => onPress(tag)}
+        style={s.resultCell}
+      >
+        <Text style={s.resultText}>{tag}</Text>
+        {!!suggested && <Text style={s.suggestedText}>Suggested</Text>}
+      </TouchableOpacity>
+    )
+  }
+}
+
+ResultItem.propTypes = {
+  tag: PropTypes.string.isRequired,
+  suggested: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired,
+}
+
+class Tag extends React.PureComponent {
+  render() {
+    const { tag, onPress } = this.props
+    return (
+      <TouchableOpacity
+        key={tag}
+        activeOpacity={0.5}
+        onPress={() => onPress(tag)}
+        style={s.tagCell}
+      >
+        <View style={s.tag}>
+          <Text style={s.tagText}>{tag}</Text>
+          <Image source={Icons.closeSmall} style={s.tagIcon} />
+        </View>
+      </TouchableOpacity>
+    )
+  }
+}
+
+Tag.propTypes = {
+  tag: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+}
+
 export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const post = navigation.getParam('post')
@@ -152,6 +198,23 @@ export default class AddPostView extends React.Component {
     this.setState({ extended: evt.nativeEvent.text })
   }
 
+  removeTag = (tag) => {
+    const { tags } = this.state
+    const updatedTags = filter(tags, t =>  t !== tag)
+    this.setState({ tags: updatedTags })
+  }
+
+  selectTag = (tag) => {
+    const { tags } = this.state
+    tags.push(tag)
+    this.setState({
+      tags: tags,
+      searchVisible: false,
+      searchQuery: '',
+    })
+    this.tagsInput.focus()
+  }
+
   onTagsChange = (evt) => {
     const query = evt.nativeEvent.text
     this.setState({ searchQuery: query, searchVisible: true })
@@ -191,52 +254,28 @@ export default class AddPostView extends React.Component {
     this.props.navigation.dismiss()
   }
 
-  removeTag = (tag) => {
-    const { tags } = this.state
-    const updatedTags = filter(tags, t =>  t !== tag)
-    this.setState({ tags: updatedTags })
-  }
-
-  selectTag = (tag) => {
-    const { tags } = this.state
-    tags.push(tag)
-    this.setState({
-      tags: tags,
-      searchVisible: false,
-      searchQuery: '',
-    })
-    this.tagsInput.focus()
-  }
-
-  renderSearchResultItem = (tag, suggested) => {
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={() => this.selectTag(tag)}
-        style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 8 }}
-      >
-        <Text>{tag}</Text>
-        { suggested ? <Text style={{ marginLeft: 4, color: Base.color.gray3, fontSize: 12 }}>Suggested</Text> : null }
-      </TouchableOpacity>
-    )
-  }
-
   renderSearchResults = () => {
     const { searchResults } = this.state
     return (
       <SectionList
         ref={(ref) => this.flatList = ref}
-        sections={[
-          { title: 'suggested', data: searchResults.suggested, renderItem: ({ item }) => this.renderSearchResultItem(item, true) },
-          { title: 'tags', data: searchResults.user, renderItem: ({ item }) => this.renderSearchResultItem(item) },
-        ]}
+        sections={[{
+          title: 'suggested',
+          data: searchResults.suggested,
+          renderItem: ({ item }) => <ResultItem tag={item} suggested={true} onPress={this.selectTag} />,
+        }, {
+          title: 'tags',
+          data: searchResults.user,
+          renderItem: ({ item }) => <ResultItem tag={item} suggested={false} onPress={this.selectTag} />,
+        }]}
         keyExtractor={(item, index) => item + index}
         keyboardShouldPersistTaps="always"
         keyboardDismissMode="on-drag"
         onTouchStart={() => this.setState({ enabled: false }) }
         onMomentumScrollEnd={() => this.setState({ enabled: true }) }
         onScrollEndDrag={() => this.setState({ enabled: true }) }
-        style={{ position: 'absolute', top: 0, lef: 0, width: '100%', height: this.state.searchHeight, backgroundColor: '#eee', zIndex: 9999 }}
+        style={[s.resultList, { height: this.state.searchHeight }]}
+        contentContainerStyle={{ paddingVertical: Base.padding.small }}
       />
     )
   }
@@ -244,20 +283,8 @@ export default class AddPostView extends React.Component {
   renderTags = () => {
     const { tags } = this.state
     return (
-      <View style={{ paddingHorizontal: 12, paddingTop: 8, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
-        { map(tags, (tag) => {
-          return (
-            <TouchableOpacity
-              key={tag}
-              activeOpacity={0.5}
-              onPress={() => this.removeTag(tag)}
-              style={{ margin: 4, flexDirection: 'row', alignItems: 'center', backgroundColor: '#eee', borderRadius: 2 }}
-            >
-              <Text style={{ padding: 4 }}>{tag}</Text>
-              <Image source={Icons.closeSmall} />
-            </TouchableOpacity>
-          )
-        })}
+      <View style={s.tagContainer}>
+        {map(tags, (item) => <Tag key={item} tag={item} onPress={this.removeTag} />)}
       </View>
     )
   }
@@ -412,4 +439,55 @@ const s = StyleSheet.create({
   switch: {
     marginRight: isAndroid ? 12 : Base.padding.medium,
   },
+  tagContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 12,
+    paddingTop: Base.padding.small,
+  },
+  tagCell: {
+    padding: 4,
+  },
+  tag: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Base.color.blue1,
+    borderRadius: Base.radius.small,
+    paddingHorizontal: Base.padding.small,
+    paddingVertical: Base.padding.tiny,
+  },
+  tagText: {
+    color: Base.color.blue2,
+    fontSize: Base.font.small,
+    lineHeight: Base.line.small,
+  },
+  tagIcon: {
+    resizeMode: 'contain',
+    width: 12,
+    height: 12,
+    tintColor: Base.color.blue2,
+    marginLeft: 4,
+  },
+  resultList: {
+    position: 'absolute',
+    top: 0, left: 0,
+    width: '100%',
+    backgroundColor: Base.color.white,
+    zIndex: 9999,
+  },
+  resultCell: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: Base.padding.medium,
+    paddingVertical: Base.padding.small,
+  },
+  resultText: {
+    fontSize: Base.font.medium,
+    lineHeight: Base.line.medium,
+  },
+  suggestedText: {
+    color: Base.color.gray3,
+    fontSize: Base.font.small,
+  }
 })

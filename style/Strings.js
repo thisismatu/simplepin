@@ -62,7 +62,7 @@ const Strings = {
     placeholderHref: 'URL',
     placeholderDescription: 'Title',
     placeholderExtended: 'Description',
-    placeholderTags: 'Tags',
+    placeholderTags: 'Add tags',
     readLater: 'Read later',
     buttonAdd: 'Add',
     buttonSave: 'Save',
