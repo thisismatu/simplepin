@@ -12,7 +12,7 @@ export default class BrowserView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', ''),
-      headerRight: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
+      headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
     }
   }
 
