@@ -210,14 +210,18 @@ export default class AddPostView extends React.Component {
     this.setState({
       tags: tags,
       searchVisible: false,
+      enabled: true,
       searchQuery: '',
     })
-    this.tagsInput.focus()
   }
 
   onTagsChange = (evt) => {
     const query = evt.nativeEvent.text
-    this.setState({ searchQuery: query, searchVisible: true })
+    this.setState({
+      searchQuery: query,
+      searchVisible: true,
+      enabled: false,
+    })
     if (!isEmpty(query)) {
       const suggestedTagsResults = filter(difference(this.suggestedTags, this.state.tags), tag => tag.includes(query))
       const userTagsResults = filter(difference(this.userTags, flattenDeep([this.state.tags, this.suggestedTags])), tag => tag.includes(query))
@@ -226,10 +230,16 @@ export default class AddPostView extends React.Component {
         user: userTagsResults,
       } })
       if (isEmpty(flattenDeep([suggestedTagsResults, userTagsResults]))) {
-        this.setState({ searchVisible: false })
+        this.setState({
+          searchVisible: false,
+          enabled: true,
+        })
       }
     } else {
-      this.setState({ searchVisible: false })
+      this.setState({
+        searchVisible: false,
+        enabled: true,
+      })
     }
   }
 
@@ -270,10 +280,7 @@ export default class AddPostView extends React.Component {
         }]}
         keyExtractor={(item, index) => item + index}
         keyboardShouldPersistTaps="always"
-        keyboardDismissMode="on-drag"
-        onTouchStart={() => this.setState({ enabled: false }) }
-        onMomentumScrollEnd={() => this.setState({ enabled: true }) }
-        onScrollEndDrag={() => this.setState({ enabled: true }) }
+        keyboardDismissMode="none"
         style={[s.resultList, { height: this.state.searchHeight }]}
         contentContainerStyle={{ paddingVertical: Base.padding.small }}
       />
@@ -299,6 +306,7 @@ export default class AddPostView extends React.Component {
         <KeyboardAwareScrollView
           scrollEnabled={this.state.enabled}
           contentContainerStyle={s.container}
+          keyboardShouldPersistTaps="handled"
           style={s.list}
         >
           <TextInput
