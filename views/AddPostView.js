@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
+import { SafeAreaView, View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -11,7 +11,7 @@ import uniq from 'lodash/uniq'
 import omit from 'lodash/omit'
 import filter from 'lodash/filter'
 import keys from 'lodash/keys'
-import last from 'lodash/last'
+import map from 'lodash/map'
 import difference from 'lodash/difference'
 import isUrl from 'is-url'
 import Api from 'app/Api'
@@ -27,9 +27,17 @@ const isAndroid = Platform.OS === 'android'
 
 export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    const post = navigation.getParam('post')
     return {
-      title: navigation.getParam('post') ? Strings.add.titleEdit : Strings.add.titleAdd,
-      headerRight: <NavigationButton onPress={navigation.getParam('onDismiss')} icon={Icons.close} />,
+      title: post ? Strings.add.titleEdit : Strings.add.titleAdd,
+      headerLeft: <NavigationButton
+        onPress={navigation.getParam('onDismiss')}
+        icon={Icons.close}
+      />,
+      headerRight: <NavigationButton
+        onPress={navigation.getParam('onSave')}
+        text={post ? Strings.add.buttonSave : Strings.add.buttonAdd}
+      />,
     }
   }
 
@@ -41,6 +49,7 @@ export default class AddPostView extends React.Component {
     this.userTags = []
     this.state = {
       enabled: true,
+      searchQuery: '',
       searchResults: [],
       searchHeight: 200,
       searchVisible: false,
@@ -59,7 +68,6 @@ export default class AddPostView extends React.Component {
   componentDidMount() {
     const { navigation } = this.props
     const post = navigation.getParam('post')
-    navigation.setParams({ onDismiss: this.onUnsavedDismiss })
     if (post) {
       this.isEditing = true
       this.setState(post, () => this.setInitialState(this.state))
@@ -74,6 +82,10 @@ export default class AddPostView extends React.Component {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
+    navigation.setParams({
+      onDismiss: this.onUnsavedDismiss,
+      onSave: this.onSave,
+    })
     this.fetchTags()
   }
 
@@ -124,8 +136,7 @@ export default class AddPostView extends React.Component {
     return true
   }
 
-  isValidPost = () => {
-    const { href, description } = this.state
+  isValidPost = (href, description) => {
     return isUrl(href) && !isEmpty(description)
   }
 
@@ -142,18 +153,19 @@ export default class AddPostView extends React.Component {
   }
 
   onTagsChange = (evt) => {
-    const tags = evt.nativeEvent.text.split(' ')
-    this.setState({ tags: tags, searchVisible: true })
-    if (!isEmpty(tags)) {
-      const lastTag = last(tags)
-      const suggestedTagsResults = filter(difference(this.suggestedTags, this.state.tags), tag => tag.includes(lastTag))
-      const userTagsResults = filter(difference(this.userTags, flattenDeep([this.state.tags, this.suggestedTags])), tag => tag.includes(lastTag))
+    const query = evt.nativeEvent.text
+    this.setState({ searchQuery: query, searchVisible: true })
+    if (!isEmpty(query)) {
+      const suggestedTagsResults = filter(difference(this.suggestedTags, this.state.tags), tag => tag.includes(query))
+      const userTagsResults = filter(difference(this.userTags, flattenDeep([this.state.tags, this.suggestedTags])), tag => tag.includes(query))
       this.setState({ searchResults: {
         suggested: suggestedTagsResults,
         user: userTagsResults,
       } })
-    }
-    if (isEmpty(compact(tags)) && last(tags) === '') {
+      if (isEmpty(flattenDeep([suggestedTagsResults, userTagsResults]))) {
+        this.setState({ searchVisible: false })
+      }
+    } else {
       this.setState({ searchVisible: false })
     }
   }
@@ -166,10 +178,11 @@ export default class AddPostView extends React.Component {
     this.setState({ toread: value })
   }
 
-  onSubmit = () => {
+  onSave = () => {
     const ignore = ['searchResults', 'enabled', 'searchHeight', 'searchVisible']
     const post = omit(this.state, ignore)
     const tags = compact(post.tags)
+    if (!this.isValidPost(post.href, post.description)) { return }
     post.description = post.description.trim()
     post.extended = post.extended.trim()
     post.tags = !isEmpty(tags) ? tags : null
@@ -178,16 +191,28 @@ export default class AddPostView extends React.Component {
     this.props.navigation.dismiss()
   }
 
+  removeTag = (tag) => {
+    const { tags } = this.state
+    const updatedTags = filter(tags, t =>  t !== tag)
+    this.setState({ tags: updatedTags })
+  }
+
+  selectTag = (tag) => {
+    const { tags } = this.state
+    tags.push(tag)
+    this.setState({
+      tags: tags,
+      searchVisible: false,
+      searchQuery: '',
+    })
+    this.tagsInput.focus()
+  }
+
   renderSearchResultItem = (tag, suggested) => {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={() => {
-          const tags = this.state.tags
-          const lastIndex = tags.length - 1
-          tags[lastIndex] = tag
-          this.setState({ tags: tags, searchVisible: false })}
-        }
+        onPress={() => this.selectTag(tag)}
         style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 8 }}
       >
         <Text>{tag}</Text>
@@ -199,26 +224,41 @@ export default class AddPostView extends React.Component {
   renderSearchResults = () => {
     const { searchResults } = this.state
     return (
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => this.setState({ searchVisible: false })}
-        style={{ top: 0, left: 0, right: 0, bottom: 0, position: 'absolute' }}
-      >
-        <SectionList
-          ref={(ref) => this.flatList = ref}
-          sections={[
-            { title: 'suggested', data: searchResults.suggested, renderItem: ({ item }) => this.renderSearchResultItem(item, true) },
-            { title: 'tags', data: searchResults.user, renderItem: ({ item }) => this.renderSearchResultItem(item) },
-          ]}
-          keyExtractor={(item, index) => item + index}
-          keyboardShouldPersistTaps="always"
-          keyboardDismissMode="on-drag"
-          onTouchStart={() => this.setState({ enabled: false }) }
-          onMomentumScrollEnd={() => this.setState({ enabled: true }) }
-          onScrollEndDrag={() => this.setState({ enabled: true }) }
-          style={{ height: this.state.searchHeight, width: '100%', position: 'absolute', backgroundColor: '#eee', zIndex: 9999 }}
-        />
-      </TouchableOpacity>
+      <SectionList
+        ref={(ref) => this.flatList = ref}
+        sections={[
+          { title: 'suggested', data: searchResults.suggested, renderItem: ({ item }) => this.renderSearchResultItem(item, true) },
+          { title: 'tags', data: searchResults.user, renderItem: ({ item }) => this.renderSearchResultItem(item) },
+        ]}
+        keyExtractor={(item, index) => item + index}
+        keyboardShouldPersistTaps="always"
+        keyboardDismissMode="on-drag"
+        onTouchStart={() => this.setState({ enabled: false }) }
+        onMomentumScrollEnd={() => this.setState({ enabled: true }) }
+        onScrollEndDrag={() => this.setState({ enabled: true }) }
+        style={{ position: 'absolute', top: 0, lef: 0, width: '100%', height: this.state.searchHeight, backgroundColor: '#eee', zIndex: 9999 }}
+      />
+    )
+  }
+
+  renderTags = () => {
+    const { tags } = this.state
+    return (
+      <View style={{ paddingHorizontal: 12, paddingTop: 8, flex: 1, flexDirection: 'row', flexWrap: 'wrap' }}>
+        { map(tags, (tag) => {
+          return (
+            <TouchableOpacity
+              key={tag}
+              activeOpacity={0.5}
+              onPress={() => this.removeTag(tag)}
+              style={{ margin: 4, flexDirection: 'row', alignItems: 'center', backgroundColor: '#eee', borderRadius: 2 }}
+            >
+              <Text style={{ padding: 4 }}>{tag}</Text>
+              <Image source={Icons.closeSmall} />
+            </TouchableOpacity>
+          )
+        })}
+      </View>
     )
   }
 
@@ -283,12 +323,14 @@ export default class AddPostView extends React.Component {
             value={extended}
           />
           <Separator />
+          { !isEmpty(tags) && this.renderTags() }
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
-            blurOnSubmit={true}
+            blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onTagsChange}
+            onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
             onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
             placeholder={Strings.add.placeholderTags}
             placeholderTextColor = {Base.color.gray2}
@@ -296,7 +338,7 @@ export default class AddPostView extends React.Component {
             returnKeyType="done"
             style={s.textInput}
             underlineColorAndroid="transparent"
-            value={tags ? tags.join(' ') : null}
+            value={this.state.searchQuery}
           />
           <Separator />
           <View style={s.cell}>
@@ -321,16 +363,6 @@ export default class AddPostView extends React.Component {
             />
           </View>
           <Separator />
-          <TouchableOpacity
-            activeOpacity={0.5}
-            disabled={!this.isValidPost()}
-            style={[s.button, !this.isValidPost() && s.disabled]}
-            onPress={() => this.onSubmit()}
-          >
-            <Text style={s.buttonText}>
-              {this.isEditing ? Strings.add.buttonSave : Strings.add.buttonAdd}
-            </Text>
-          </TouchableOpacity>
           { this.state.searchVisible && this.renderSearchResults() }
         </KeyboardAwareScrollView>
       </SafeAreaView>
@@ -379,23 +411,5 @@ const s = StyleSheet.create({
   },
   switch: {
     marginRight: isAndroid ? 12 : Base.padding.medium,
-  },
-  button: {
-    flex: 1,
-    backgroundColor: Base.color.blue2,
-    borderRadius: Base.radius.medium,
-    paddingHorizontal: Base.padding.medium,
-    marginHorizontal: Base.padding.medium,
-    marginTop: Base.padding.huge,
-  },
-  buttonText: {
-    color: Base.color.white,
-    fontSize: Base.font.large,
-    fontWeight: Base.font.bold,
-    lineHeight: Base.row.medium,
-    textAlign: 'center',
-  },
-  disabled: {
-    opacity: 0.3,
   },
 })
