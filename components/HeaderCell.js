@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
+import { color, padding, font, row } from 'app/style/style'
 
 export default class HeaderCell extends React.PureComponent {
   render() {
@@ -22,13 +22,13 @@ const s = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: Base.row.medium,
-    marginTop: Base.padding.small,
-    paddingHorizontal: Base.padding.medium,
+    height: row.medium,
+    marginTop: padding.small,
+    paddingHorizontal: padding.medium,
   },
   text: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    fontWeight: Base.font.bold,
+    color: color.gray4,
+    fontSize: font.large,
+    fontWeight: font.bold,
   },
 })

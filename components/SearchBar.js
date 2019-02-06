@@ -1,14 +1,13 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
-import Icons from 'app/style/Icons'
-import Strings from 'app/style/Strings'
+import { color, padding, font, row, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 export default class SearchBar extends React.PureComponent {
   render() {
     const { isSearchActive, searchQuery, onSearchChange, count } = this.props
-    const icon = isSearchActive ? Icons.closeSmall : Icons.searchSmall
+    const icon = isSearchActive ? icons.closeSmall : icons.searchSmall
     return (
       <View style={s.container}>
         <TextInput
@@ -17,8 +16,8 @@ export default class SearchBar extends React.PureComponent {
           clearButtonMode="never"
           enablesReturnKeyAutomatically={true}
           onChange={onSearchChange}
-          placeholder={Strings.common.search}
-          placeholderTextColor = {Base.color.gray2}
+          placeholder={strings.common.search}
+          placeholderTextColor = {color.gray2}
           returnKeyType="done"
           style={s.textField}
           underlineColorAndroid="transparent"
@@ -45,26 +44,26 @@ SearchBar.propTypes = {
   count: PropTypes.number,
 }
 
-const barHeight = Base.row.tiny
+const barHeight = row.tiny
 const horizontalMargin = 12
 const iconSize = 18
 
 const s = StyleSheet.create({
   container: {
-    backgroundColor: Base.color.white,
-    paddingBottom: Base.padding.tiny,
+    backgroundColor: color.white,
+    paddingBottom: padding.tiny,
     paddingHorizontal: horizontalMargin,
   },
   textField: {
-    backgroundColor: Base.color.gray0,
+    backgroundColor: color.gray0,
     borderRadius: 100,
-    color: Base.color.gray4,
+    color: color.gray4,
     height: barHeight,
-    paddingHorizontal: Base.padding.medium,
+    paddingHorizontal: padding.medium,
   },
   count: {
-    color: Base.color.black36,
-    fontSize: Base.font.small,
+    color: color.black36,
+    fontSize: font.small,
     lineHeight: barHeight,
     position: 'absolute',
     top: 0,
@@ -81,6 +80,6 @@ const s = StyleSheet.create({
   },
   icon: {
     marginLeft: - horizontalMargin / 4,
-    tintColor: Base.color.black36,
+    tintColor: color.black36,
   },
 })

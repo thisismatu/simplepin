@@ -26,9 +26,8 @@ import Separator from 'app/components/Separator'
 import BottomSheet from 'app/components/BottomSheet'
 import SearchBar from 'app/components/SearchBar'
 import EmptyState from 'app/components/EmptyState'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
-import Icons from 'app/style/Icons'
+import { color, padding, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const filterPosts = (obj) => {
   return {
@@ -53,9 +52,9 @@ const postsCount = (obj) => {
 export default class PostsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam('title', Strings.posts.all),
-      headerLeft: <NavigationButton onPress={navigation.getParam('openDrawer')} icon={Icons.menu} />,
-      headerRight: <NavigationButton onPress={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })} icon={Icons.add} />,
+      title: navigation.getParam('title', strings.posts.all),
+      headerLeft: <NavigationButton onPress={navigation.getParam('openDrawer')} icon={icons.menu} />,
+      headerRight: <NavigationButton onPress={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })} icon={icons.add} />,
     }
   }
 
@@ -307,11 +306,11 @@ export default class PostsView extends React.Component {
   onDeletePost = () => {
     const post = this.state.selectedPost
     Alert.alert(
-      Strings.common.deletePost,
+      strings.common.deletePost,
       post.description,
       [
-        { text: Strings.common.cancel, style: 'cancel' },
-        { text: Strings.common.delete,
+        { text: strings.common.cancel, style: 'cancel' },
+        { text: strings.common.delete,
           onPress: () => {
             this.toggleModal()
             this.deletePost(post)
@@ -366,26 +365,26 @@ export default class PostsView extends React.Component {
       return <EmptyState
         action={ similarResults.searchResults.length > 0 ? this.onShowSimilarResults : undefined }
         actionText={`Show results for “${similarResults.searchQuery}”`}
-        icon={Icons.searchLarge}
+        icon={icons.searchLarge}
         subtitle={`“${searchQuery}“`}
-        title={Strings.common.noResults} />
+        title={strings.common.noResults} />
     }
     if (pinboardDown) {
       return <EmptyState
         action={this.onRefresh}
-        actionText={Strings.common.tryAgain}
-        icon={Icons.offlineLarge}
-        subtitle={Strings.error.pinboardDown}
-        title={Strings.error.troubleConnecting} />
+        actionText={strings.common.tryAgain}
+        icon={icons.offlineLarge}
+        subtitle={strings.error.pinboardDown}
+        title={strings.error.troubleConnecting} />
     }
     if (isEmpty(this.currentList()) && !isLoading) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
-        actionText={Strings.add.titleAdd}
-        icon={Icons.simplepin}
-        subtitle={Strings.common.noPostsMessage}
-        title={Strings.common.noPosts} />
+        actionText={strings.add.titleAdd}
+        icon={icons.simplepin}
+        subtitle={strings.common.noPostsMessage}
+        title={strings.common.noPosts} />
     }
     return null
   }
@@ -407,16 +406,16 @@ export default class PostsView extends React.Component {
           style={s.list}
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
-          ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
+          ItemSeparatorComponent={() => <Separator left={padding.large} />}
           ListEmptyComponent={this.renderEmptyState()}
           ListHeaderComponent={this.renderListHeader()}
         />
         <BottomSheet visible={this.state.modalVisible} onClose={this.toggleModal}>
           <BottomSheet.Title title={selectedPost.description} />
-          <BottomSheet.Option title={`${Strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
-          <BottomSheet.Option title={Strings.common.edit} onPress={this.onEditPost} />
-          <BottomSheet.Option title={Strings.common.delete} onPress={this.onDeletePost} />
-          <BottomSheet.Option title={Strings.common.cancel} onPress={this.toggleModal} />
+          <BottomSheet.Option title={`${strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
+          <BottomSheet.Option title={strings.common.edit} onPress={this.onEditPost} />
+          <BottomSheet.Option title={strings.common.delete} onPress={this.onDeletePost} />
+          <BottomSheet.Option title={strings.common.cancel} onPress={this.toggleModal} />
         </BottomSheet>
       </View>
     )
@@ -429,10 +428,10 @@ PostsView.propTypes = {
 
 const s = StyleSheet.create({
   container : {
-    paddingTop: Base.padding.medium,
-    paddingBottom: Base.padding.large,
+    paddingTop: padding.medium,
+    paddingBottom: padding.large,
   },
   list: {
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
   },
 })

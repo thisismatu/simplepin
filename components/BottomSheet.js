@@ -2,8 +2,7 @@ import React from 'react'
 import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
+import { color, padding, font, row, radius } from 'app/style/style'
 
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
@@ -112,17 +111,17 @@ const s = StyleSheet.create({
   overlay: {
     position: 'absolute',
     top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: Base.color.black36,
+    backgroundColor: color.black36,
   },
   content: {
     width: '100%',
     flexDirection: 'column',
-    backgroundColor: Base.color.white,
-    borderTopLeftRadius: Base.radius.large,
-    borderTopRightRadius: Base.radius.large,
+    backgroundColor: color.white,
+    borderTopLeftRadius: radius.large,
+    borderTopRightRadius: radius.large,
     elevation: 8,
-    paddingBottom: Math.max(getBottomSpace(), Base.padding.small),
-    paddingTop: Base.padding.small,
+    paddingBottom: Math.max(getBottomSpace(), padding.small),
+    paddingTop: padding.small,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.15,
@@ -131,17 +130,17 @@ const s = StyleSheet.create({
   cell: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: Base.row.large,
-    paddingHorizontal: Base.padding.medium,
+    height: row.large,
+    paddingHorizontal: padding.medium,
   },
   text: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
+    color: color.gray4,
+    fontSize: font.large,
   },
   title: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    marginTop: Base.padding.tiny,
+    color: color.gray3,
+    fontSize: font.medium,
+    marginTop: padding.tiny,
   },
 })
 

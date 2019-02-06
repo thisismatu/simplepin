@@ -10,8 +10,8 @@ import Storage from 'app/util/Storage'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
-import Strings from 'app/style/Strings'
-import Icons from 'app/style/Icons'
+import { icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -67,46 +67,46 @@ export default class DrawerView extends React.PureComponent {
           style={s.scrollView}
         >
           <DrawerHeader text={this.state.username} />
-          <HeaderCell text={Strings.posts.title} />
+          <HeaderCell text={strings.posts.title} />
           <DrawerCell
-            icon={Icons.all}
-            title={Strings.posts.all}
+            icon={icons.all}
+            title={strings.posts.all}
             count={this.routeCount('allCount')}
-            isFocused={this.isRouteFocused(postsRoute, Strings.posts.all)}
-            navigateTo={this.navigateTo(postsRoute, Strings.posts.all, 'allPosts')}
+            isFocused={this.isRouteFocused(postsRoute, strings.posts.all)}
+            navigateTo={this.navigateTo(postsRoute, strings.posts.all, 'allPosts')}
           />
           <DrawerCell
-            icon={Icons.unread}
-            title={Strings.posts.unread}
+            icon={icons.unread}
+            title={strings.posts.unread}
             count={this.routeCount('unreadCount')}
-            isFocused={this.isRouteFocused(postsRoute, Strings.posts.unread)}
-            navigateTo={this.navigateTo(postsRoute, Strings.posts.unread, 'unreadPosts')}
+            isFocused={this.isRouteFocused(postsRoute, strings.posts.unread)}
+            navigateTo={this.navigateTo(postsRoute, strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
-            icon={Icons.starred}
-            title={Strings.posts.starred}
+            icon={icons.starred}
+            title={strings.posts.starred}
             count={this.routeCount('starredCount')}
-            isFocused={this.isRouteFocused(postsRoute, Strings.posts.starred)}
-            navigateTo={this.navigateTo(postsRoute, Strings.posts.starred, 'starredPosts')}
+            isFocused={this.isRouteFocused(postsRoute, strings.posts.starred)}
+            navigateTo={this.navigateTo(postsRoute, strings.posts.starred, 'starredPosts')}
           />
           <DrawerCell
-            icon={Icons.private}
-            title={Strings.posts.private}
+            icon={icons.private}
+            title={strings.posts.private}
             count={this.routeCount('privateCount')}
-            isFocused={this.isRouteFocused(postsRoute, Strings.posts.private)}
-            navigateTo={this.navigateTo(postsRoute, Strings.posts.private, 'privatePosts')}
+            isFocused={this.isRouteFocused(postsRoute, strings.posts.private)}
+            navigateTo={this.navigateTo(postsRoute, strings.posts.private, 'privatePosts')}
           />
           <DrawerCell
-            icon={Icons.public}
-            title={Strings.posts.public}
+            icon={icons.public}
+            title={strings.posts.public}
             count={this.routeCount('publicCount')}
-            isFocused={this.isRouteFocused(postsRoute, Strings.posts.public)}
-            navigateTo={this.navigateTo(postsRoute, Strings.posts.public, 'publicPosts')}
+            isFocused={this.isRouteFocused(postsRoute, strings.posts.public)}
+            navigateTo={this.navigateTo(postsRoute, strings.posts.public, 'publicPosts')}
           />
-          <HeaderCell text={Strings.common.simplepin} />
+          <HeaderCell text={strings.common.simplepin} />
           <DrawerCell
-            icon={Icons.settings}
-            title={Strings.settings.title}
+            icon={icons.settings}
+            title={strings.settings.title}
             isFocused={this.isRouteFocused(settingsRoute)}
             navigateTo={this.navigateTo(settingsRoute)}
           />

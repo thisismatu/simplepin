@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
+import { color, padding } from 'app/style/style'
 
 export default class Separator extends React.PureComponent {
   render() {
@@ -10,7 +10,7 @@ export default class Separator extends React.PureComponent {
         style={{
           marginRight: this.props.right,
           marginLeft: this.props.left,
-          borderBottomColor: Base.color.black12,
+          borderBottomColor: color.black12,
           borderBottomWidth: StyleSheet.hairlineWidth,
         }}
       />
@@ -24,6 +24,6 @@ Separator.propTypes = {
 }
 
 Separator.defaultProps = {
-  left: Base.padding.medium,
-  right: Base.padding.medium,
+  left: padding.medium,
+  right: padding.medium,
 }

@@ -3,8 +3,7 @@ import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platf
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import NavigationButton from 'app/components/NavigationButton'
-import Base from 'app/style/Base'
-import Icons from 'app/style/Icons'
+import { color, padding, row, icons } from 'app/style/style'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -12,7 +11,7 @@ export default class BrowserView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: navigation.getParam('title', ''),
-      headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={Icons.close} />,
+      headerLeft: <NavigationButton onPress={() => navigation.dismiss()} icon={icons.close} />,
     }
   }
 
@@ -77,7 +76,7 @@ export default class BrowserView extends React.Component {
           style={s.button}
         >
           <Image
-            source={Icons.left}
+            source={icons.left}
             style={[s.icon, !this.state.canGoBack && s.iconDisabled]}
           />
         </TouchableOpacity>
@@ -87,7 +86,7 @@ export default class BrowserView extends React.Component {
           style={s.button}
         >
           <Image
-            source={Icons.share}
+            source={icons.share}
             style={s.icon}
           />
         </TouchableOpacity>
@@ -98,7 +97,7 @@ export default class BrowserView extends React.Component {
           style={s.button}
         >
           <Image
-            source={Icons.right}
+            source={icons.right}
             style={[s.icon, !this.state.canGoForward && s.iconDisabled]}
           />
         </TouchableOpacity>
@@ -130,7 +129,7 @@ BrowserView.propTypes = {
 
 const s = StyleSheet.create({
   safeArea: {
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
     flex: 1,
   },
   container: {
@@ -141,13 +140,13 @@ const s = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Base.color.black12,
-    backgroundColor: Base.color.white,
-    paddingHorizontal: Base.padding.medium,
+    borderTopColor: color.black12,
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
     ...ifIphoneX({
       paddingTop: 12,
     }, {
-      height: Base.row.medium,
+      height: row.medium,
     }),
   },
   button: {
@@ -155,9 +154,9 @@ const s = StyleSheet.create({
     alignItems: 'stretch',
   },
   icon: {
-    tintColor: Base.color.blue2,
+    tintColor: color.blue2,
   },
   iconDisabled: {
-    tintColor: Base.color.gray1,
+    tintColor: color.gray1,
   },
 })

@@ -19,9 +19,8 @@ import { handleResponseError } from 'app/util/ErrorUtils'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
-import Icons from 'app/style/Icons'
+import { color, padding, font, line, row, radius, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -59,7 +58,7 @@ class Tag extends React.PureComponent {
       >
         <View style={s.tag}>
           <Text style={s.tagText}>{tag}</Text>
-          <Image source={Icons.closeSmall} style={s.tagIcon} />
+          <Image source={icons.closeSmall} style={s.tagIcon} />
         </View>
       </TouchableOpacity>
     )
@@ -75,14 +74,14 @@ export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const post = navigation.getParam('post')
     return {
-      title: post ? Strings.add.titleEdit : Strings.add.titleAdd,
+      title: post ? strings.add.titleEdit : strings.add.titleAdd,
       headerLeft: <NavigationButton
         onPress={navigation.getParam('onDismiss')}
-        icon={Icons.close}
+        icon={icons.close}
       />,
       headerRight: <NavigationButton
         onPress={navigation.getParam('onSave')}
-        text={post ? Strings.add.buttonSave : Strings.add.buttonAdd}
+        text={post ? strings.add.buttonSave : strings.add.buttonAdd}
       />,
     }
   }
@@ -167,11 +166,11 @@ export default class AddPostView extends React.Component {
       this.props.navigation.dismiss()
     } else {
       Alert.alert(
-        this.isEditing ? Strings.add.discardEdit : Strings.add.discardAdd,
+        this.isEditing ? strings.add.discardEdit : strings.add.discardAdd,
         null,
         [
-          { text: Strings.common.cancel, style: 'cancel' },
-          { text: Strings.common.ok, onPress: () => this.props.navigation.dismiss() },
+          { text: strings.common.cancel, style: 'cancel' },
+          { text: strings.common.ok, onPress: () => this.props.navigation.dismiss() },
         ]
       )
     }
@@ -282,7 +281,7 @@ export default class AddPostView extends React.Component {
         keyboardShouldPersistTaps="always"
         keyboardDismissMode="none"
         style={[s.resultList, { height: this.state.searchHeight }]}
-        contentContainerStyle={{ paddingVertical: Base.padding.small }}
+        contentContainerStyle={{ paddingVertical: padding.small }}
       />
     )
   }
@@ -298,8 +297,8 @@ export default class AddPostView extends React.Component {
 
   render() {
     const { description, extended, href, shared, tags, toread, searchResults } = this.state
-    const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
-    const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
+    const track = isAndroid ? color.blue2 + '88' : color.blue2
+    const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
 
     return (
       <SafeAreaView style={s.safeArea}>
@@ -316,8 +315,8 @@ export default class AddPostView extends React.Component {
             enablesReturnKeyAutomatically={true}
             onChange={this.onHrefChange}
             onSubmitEditing={() => { this.descriptionInput.focus() }}
-            placeholder={Strings.add.placeholderHref}
-            placeholderTextColor = {Base.color.gray2}
+            placeholder={strings.add.placeholderHref}
+            placeholderTextColor = {color.gray2}
             returnKeyType="next"
             style={s.textInput}
             underlineColorAndroid="transparent"
@@ -331,8 +330,8 @@ export default class AddPostView extends React.Component {
             enablesReturnKeyAutomatically={true}
             onChange={this.onDescriptionChange}
             onSubmitEditing={() => { this.extendedInput.focus() }}
-            placeholder={Strings.add.placeholderDescription}
-            placeholderTextColor = {Base.color.gray2}
+            placeholder={strings.add.placeholderDescription}
+            placeholderTextColor = {color.gray2}
             ref={(input) => {this.descriptionInput = input}}
             returnKeyType="next"
             style={s.textInput}
@@ -348,8 +347,8 @@ export default class AddPostView extends React.Component {
             multiline={true}
             onChange={this.onExtendedChange}
             onSubmitEditing={() => { this.tagsInput.focus() }}
-            placeholder={Strings.add.placeholderExtended}
-            placeholderTextColor = {Base.color.gray2}
+            placeholder={strings.add.placeholderExtended}
+            placeholderTextColor = {color.gray2}
             ref={(input) => {this.extendedInput = input}}
             returnKeyType="next"
             style={[s.textInput, s.textArea]}
@@ -367,8 +366,8 @@ export default class AddPostView extends React.Component {
             onChange={this.onTagsChange}
             onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
             onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
-            placeholder={Strings.add.placeholderTags}
-            placeholderTextColor = {Base.color.gray2}
+            placeholder={strings.add.placeholderTags}
+            placeholderTextColor = {color.gray2}
             ref={(input) => {this.tagsInput = input}}
             returnKeyType="done"
             style={s.textInput}
@@ -377,7 +376,7 @@ export default class AddPostView extends React.Component {
           />
           <Separator />
           <View style={s.cell}>
-            <Text style={s.text}>{Strings.posts.private}</Text>
+            <Text style={s.text}>{strings.posts.private}</Text>
             <Switch
               style={s.switch}
               trackColor={{ true: track }}
@@ -388,7 +387,7 @@ export default class AddPostView extends React.Component {
           </View>
           <Separator />
           <View style={s.cell}>
-            <Text style={s.text}>{Strings.add.readLater}</Text>
+            <Text style={s.text}>{strings.add.readLater}</Text>
             <Switch
               style={s.switch}
               trackColor={{ true: track }}
@@ -411,33 +410,33 @@ AddPostView.propTypes = {
 
 const s = StyleSheet.create({
   safeArea: {
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
     flex: 1,
   },
   container: {
-    paddingVertical: Base.padding.medium,
+    paddingVertical: padding.medium,
   },
   list: {
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
   },
   cell: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Base.row.medium,
+    height: row.medium,
   },
   text: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    paddingLeft: Base.padding.medium,
+    color: color.gray4,
+    fontSize: font.large,
+    paddingLeft: padding.medium,
   },
   textInput: {
-    backgroundColor: Base.color.white,
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    height: Base.row.medium,
-    paddingHorizontal: Base.padding.medium,
+    backgroundColor: color.white,
+    color: color.gray4,
+    fontSize: font.large,
+    height: row.medium,
+    paddingHorizontal: padding.medium,
     width: '100%',
   },
   textArea: {
@@ -445,13 +444,13 @@ const s = StyleSheet.create({
     marginVertical: 9,
   },
   switch: {
-    marginRight: isAndroid ? 12 : Base.padding.medium,
+    marginRight: isAndroid ? 12 : padding.medium,
   },
   tagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: 12,
-    paddingTop: Base.padding.small,
+    paddingTop: padding.small,
   },
   tagCell: {
     padding: 4,
@@ -459,43 +458,43 @@ const s = StyleSheet.create({
   tag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Base.color.blue1,
-    borderRadius: Base.radius.small,
-    paddingHorizontal: Base.padding.small,
-    paddingVertical: Base.padding.tiny,
+    backgroundColor: color.blue1,
+    borderRadius: radius.small,
+    paddingHorizontal: padding.small,
+    paddingVertical: padding.tiny,
   },
   tagText: {
-    color: Base.color.blue2,
-    fontSize: Base.font.small,
-    lineHeight: Base.line.small,
+    color: color.blue2,
+    fontSize: font.small,
+    lineHeight: line.small,
   },
   tagIcon: {
     resizeMode: 'contain',
     width: 12,
     height: 12,
-    tintColor: Base.color.blue2,
+    tintColor: color.blue2,
     marginLeft: 4,
   },
   resultList: {
     position: 'absolute',
     top: 0, left: 0,
     width: '100%',
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
     zIndex: 9999,
   },
   resultCell: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: Base.padding.medium,
-    paddingVertical: Base.padding.small,
+    paddingHorizontal: padding.medium,
+    paddingVertical: padding.small,
   },
   resultText: {
-    fontSize: Base.font.medium,
-    lineHeight: Base.line.medium,
+    fontSize: font.medium,
+    lineHeight: line.medium,
   },
   suggestedText: {
-    color: Base.color.gray3,
-    fontSize: Base.font.small,
+    color: color.gray3,
+    fontSize: font.small,
   }
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
+import { color, padding, font, line, row } from 'app/style/style'
 
 export default class EmptyState extends React.PureComponent {
   constructor (props) {
@@ -35,7 +35,7 @@ export default class EmptyState extends React.PureComponent {
         { icon ? <Image source={icon} style={s.icon} /> : null }
         <Text style={s.title}>{title}</Text>
         { subtitle ? <Text style={s.subtitle}>{subtitle}</Text> : null }
-        <View style={{ height: Base.row.medium }}>
+        <View style={{ height: row.medium }}>
           { action ? this.renderAction() : null }
         </View>
       </View>
@@ -56,33 +56,33 @@ const s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: Base.padding.large,
+    paddingHorizontal: padding.large,
   },
   icon: {
-    marginBottom: Base.padding.medium,
-    tintColor: Base.color.black36,
+    marginBottom: padding.medium,
+    tintColor: color.black36,
   },
   title: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    fontWeight: Base.font.bold,
+    color: color.gray4,
+    fontSize: font.large,
+    fontWeight: font.bold,
     textAlign: 'center',
   },
   subtitle: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    marginTop: Base.padding.small,
-    lineHeight: Base.line.medium,
+    color: color.gray3,
+    fontSize: font.medium,
+    marginTop: padding.small,
+    lineHeight: line.medium,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: Base.color.white,
-    paddingHorizontal: Base.padding.medium,
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
   },
   buttonText: {
-    color: Base.color.blue2,
-    fontSize: Base.font.medium,
+    color: color.blue2,
+    fontSize: font.medium,
     fontWeight: '500',
-    lineHeight: Base.row.medium,
+    lineHeight: row.medium,
   },
 })

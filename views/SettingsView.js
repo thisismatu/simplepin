@@ -5,9 +5,8 @@ import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
-import Icons from 'app/style/Icons'
+import { color, padding, font, row, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')
@@ -15,8 +14,8 @@ const { expo } = require('app/app.json')
 export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: Strings.settings.title,
-      headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={Icons.menu} />,
+      title: strings.settings.title,
+      headerLeft: <NavigationButton onPress={() => navigation.openDrawer()} icon={icons.menu} />,
     }
   }
 
@@ -68,11 +67,11 @@ export default class SettingsView extends React.Component {
 
   logout = () => {
     Alert.alert(
-      Strings.settings.logout + '?',
+      strings.settings.logout + '?',
       null,
       [
-        { text: Strings.common.cancel, style: 'cancel' },
-        { text: Strings.settings.logout, onPress: () => {
+        { text: strings.common.cancel, style: 'cancel' },
+        { text: strings.settings.logout, onPress: () => {
           Storage.clear()
           this.props.navigation.navigate('AuthLoading')
         }, style: 'destructive' },
@@ -81,17 +80,17 @@ export default class SettingsView extends React.Component {
   }
 
   render() {
-    const track = isAndroid ? Base.color.blue2 + '88' : Base.color.blue2
-    const thumb = (isEnabled) => isAndroid && isEnabled ? Base.color.blue2 : null
+    const track = isAndroid ? color.blue2 + '88' : color.blue2
+    const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
     return (
       <ScrollView contentContainerStyle={s.container} style={s.list}>
         <HeaderCell
-          text={Strings.settings.general}
-          style={{ marginTop: Base.padding.medium }}
+          text={strings.settings.general}
+          style={{ marginTop: padding.medium }}
         />
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.privateByDefault}</Text>
+          <Text style={s.text}>{strings.settings.privateByDefault}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.privateByDefault)}
@@ -102,7 +101,7 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.unreadByDefault}</Text>
+          <Text style={s.text}>{strings.settings.unreadByDefault}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.unreadByDefault)}
@@ -113,7 +112,7 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.markAsReadWhenOpened}</Text>
+          <Text style={s.text}>{strings.settings.markAsReadWhenOpened}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.markAsRead)}
@@ -124,7 +123,7 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.openLinksExternal}</Text>
+          <Text style={s.text}>{strings.settings.openLinksExternal}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.openLinksExternal)}
@@ -135,12 +134,12 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <HeaderCell
-          text={Strings.settings.display}
-          style={{ marginTop: Base.padding.medium }}
+          text={strings.settings.display}
+          style={{ marginTop: padding.medium }}
         />
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.exactDates}</Text>
+          <Text style={s.text}>{strings.settings.exactDates}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.exactDate)}
@@ -151,7 +150,7 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.sortTagsAlphabetically}</Text>
+          <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
           <Switch
             style={s.switch}
             thumbColor={thumb(this.state.tagOrder)}
@@ -162,12 +161,12 @@ export default class SettingsView extends React.Component {
         </View>
         <Separator />
         <HeaderCell
-          text={Strings.settings.other}
-          style={{ marginTop: Base.padding.medium }}
+          text={strings.settings.other}
+          style={{ marginTop: padding.medium }}
         />
         <Separator />
         <View style={s.cell}>
-          <Text style={s.text}>{Strings.settings.version}</Text>
+          <Text style={s.text}>{strings.settings.version}</Text>
           <Text style={s.secondary}>{expo.version}</Text>
         </View>
         <Separator />
@@ -176,7 +175,7 @@ export default class SettingsView extends React.Component {
           style={s.cell}
           onPress={() => this.logout()}
         >
-          <Text style={s.text}>{Strings.settings.logout}</Text>
+          <Text style={s.text}>{strings.settings.logout}</Text>
         </TouchableOpacity>
         <Separator />
       </ScrollView>
@@ -190,41 +189,41 @@ SettingsView.propTypes = {
 
 const s = StyleSheet.create({
   container: {
-    paddingBottom: Base.padding.large,
+    paddingBottom: padding.large,
   },
   list: {
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
   },
   cell: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Base.row.medium,
+    height: row.medium,
   },
   text: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    paddingLeft: Base.padding.medium,
+    color: color.gray4,
+    fontSize: font.large,
+    paddingLeft: padding.medium,
   },
   switch: {
-    marginRight: isAndroid ? 12 : Base.padding.medium,
+    marginRight: isAndroid ? 12 : padding.medium,
   },
   secondary: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    paddingRight: Base.padding.medium,
+    color: color.gray3,
+    fontSize: font.medium,
+    paddingRight: padding.medium,
   },
   header: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    fontWeight: Base.font.bold,
-    paddingHorizontal: Base.padding.medium,
+    color: color.gray4,
+    fontSize: font.large,
+    fontWeight: font.bold,
+    paddingHorizontal: padding.medium,
   },
   version: {
-    fontSize: Base.font.small,
-    color: Base.color.gray3,
-    paddingVertical: Base.padding.large,
-    paddingHorizontal: Base.padding.medium,
+    fontSize: font.small,
+    color: color.gray3,
+    paddingVertical: padding.large,
+    paddingHorizontal: padding.medium,
   },
 })

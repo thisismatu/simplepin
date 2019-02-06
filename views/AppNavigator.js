@@ -8,18 +8,18 @@ import BrowserView from 'app/views/BrowserView'
 import DrawerView from 'app/views/DrawerView'
 import SettingsView from 'app/views/SettingsView'
 import AddPostView from 'app/views/AddPostView'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
+import { color } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
 const headerStyles = {
   headerStyle: {
-    backgroundColor: Base.color.white,
-    borderBottomColor: Base.color.black12,
+    backgroundColor: color.white,
+    borderBottomColor: color.black12,
   },
-  headerTintColor: Base.color.blue2,
-  headerTitleStyle: { color: Base.color.gray4 },
+  headerTintColor: color.blue2,
+  headerTitleStyle: { color: color.gray4 },
 }
 
 const MainStack = createStackNavigator(
@@ -29,7 +29,7 @@ const MainStack = createStackNavigator(
   },
   {
     initialRouteName: 'Posts',
-    initialRouteParams: { title: Strings.posts.all, list: 'allPosts' },
+    initialRouteParams: { title: strings.posts.all, list: 'allPosts' },
     navigationOptions: headerStyles,
     transitionConfig: () => ({
       screenInterpolator: (sceneProps) => {

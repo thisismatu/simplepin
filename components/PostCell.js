@@ -3,8 +3,7 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
 import TimeAgo from 'app/components/TimeAgo'
-import Base from 'app/style/Base'
-import Icons from 'app/style/Icons'
+import { color, padding, font, line, radius, icons } from 'app/style/style'
 
 class Tag extends React.PureComponent {
   render() {
@@ -72,8 +71,8 @@ export default class PostCell extends React.PureComponent {
           exactDate={exactDate}
         />
         <View style={s.statusContainer}>
-          { post.starred ? <Image source={Icons.starredSmall} style={s.starred} /> : null }
-          { !post.shared ? <Image source={Icons.privateSmall} style={s.private} /> : null }
+          { post.starred ? <Image source={icons.starredSmall} style={s.starred} /> : null }
+          { !post.shared ? <Image source={icons.privateSmall} style={s.private} /> : null }
         </View>
       </TouchableOpacity>
     )
@@ -103,7 +102,7 @@ PostCell.propTypes = {
 
 const s = StyleSheet.create({
   unread: {
-    backgroundColor: Base.color.blue2,
+    backgroundColor: color.blue2,
     borderRadius: 5,
     height: 9,
     left: 8,
@@ -113,13 +112,13 @@ const s = StyleSheet.create({
   },
   private: {
     height: 18,
-    tintColor: Base.color.black36,
+    tintColor: color.black36,
     width: 18,
     marginLeft: 2,
   },
   starred: {
     height: 18,
-    tintColor: Base.color.black36,
+    tintColor: color.black36,
     width: 18,
     marginRight: 2,
   },
@@ -134,57 +133,57 @@ const s = StyleSheet.create({
     width: 40,
   },
   title: {
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
-    lineHeight: Base.line.large,
+    color: color.gray4,
+    fontSize: font.large,
+    lineHeight: line.large,
     paddingTop: 12,
-    paddingLeft: Base.padding.large,
-    paddingRight: Base.padding.medium,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
   },
   titleUnread: {
-    fontWeight: Base.font.bold,
+    fontWeight: font.bold,
   },
   description: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    lineHeight: Base.line.medium,
-    paddingTop: Base.padding.tiny,
-    paddingLeft: Base.padding.large,
-    paddingRight: Base.padding.medium,
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
+    paddingTop: padding.tiny,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
   },
   time: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    lineHeight: Base.line.medium,
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
     paddingBottom: 12,
-    paddingLeft: Base.padding.large,
-    paddingRight: Base.padding.medium,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
   },
   emptyTagList: {
     height: 4,
   },
   firstTag: {
-    marginLeft: Base.padding.large - Base.padding.tiny,
+    marginLeft: padding.large - padding.tiny,
   },
   tagContainer: {
-    paddingHorizontal: Base.padding.tiny,
+    paddingHorizontal: padding.tiny,
     paddingVertical: 6,
   },
   tag: {
-    backgroundColor: Base.color.blue1,
-    borderRadius: Base.radius.small,
-    paddingHorizontal: Base.padding.small,
-    paddingVertical: Base.padding.tiny,
+    backgroundColor: color.blue1,
+    borderRadius: radius.small,
+    paddingHorizontal: padding.small,
+    paddingVertical: padding.tiny,
   },
   tagText: {
-    color: Base.color.blue2,
-    fontSize: Base.font.small,
-    lineHeight: Base.line.small,
+    color: color.blue2,
+    fontSize: font.small,
+    lineHeight: line.small,
   },
   privateTag: {
-    backgroundColor: Base.color.gray1,
+    backgroundColor: color.gray1,
   },
   privateTagText: {
-    color: Base.color.gray3,
+    color: color.gray3,
   },
 })

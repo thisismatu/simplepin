@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
+import { color, padding, font } from 'app/style/style'
 
 export default class NavigationButton extends React.PureComponent {
   render() {
@@ -27,20 +27,20 @@ NavigationButton.propTypes = {
 
 const s = StyleSheet.create({
   button: {
-    padding: Base.padding.small,
+    padding: padding.small,
   },
   icon: {
-    tintColor: Base.color.blue2,
+    tintColor: color.blue2,
     resizeMode: 'contain',
     marginHorizontal: 4,
     width: 24,
     height: 24,
   },
   text: {
-    color: Base.color.blue2,
+    color: color.blue2,
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: Base.font.bold,
-    marginHorizontal: Base.padding.small,
+    fontWeight: font.bold,
+    marginHorizontal: padding.small,
   },
 })

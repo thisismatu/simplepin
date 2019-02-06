@@ -1,9 +1,8 @@
 import React from 'react'
 import { StyleSheet, Platform, View, Text, Image } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
-import Icons from 'app/style/Icons'
-import Strings from 'app/style/Strings'
+import { color, padding, font, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -12,10 +11,10 @@ export default class DrawerHeader extends React.PureComponent {
     return (
       <View style={s.container}>
         <View style={s.iconContainer}>
-          <Image source={Icons.simplepin} style={s.icon} />
+          <Image source={icons.simplepin} style={s.icon} />
         </View>
         <View style={s.textContainer}>
-          <Text style={s.title}>{Strings.common.simplepin}</Text>
+          <Text style={s.title}>{strings.common.simplepin}</Text>
           { this.props.text ? <Text style={s.subtitle}>{this.props.text}</Text> : null }
         </View>
       </View>
@@ -32,29 +31,29 @@ const s = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    paddingBottom: Base.padding.tiny,
-    paddingHorizontal: Base.padding.medium,
-    paddingTop: isAndroid ? Base.padding.large : Base.padding.medium,
+    paddingBottom: padding.tiny,
+    paddingHorizontal: padding.medium,
+    paddingTop: isAndroid ? padding.large : padding.medium,
   },
   iconContainer: {
-    backgroundColor: Base.color.blue2,
+    backgroundColor: color.blue2,
     borderRadius: 100,
-    marginRight: Base.padding.medium,
+    marginRight: padding.medium,
     padding: 12,
   },
   icon:  {
     height: 32,
-    tintColor: Base.color.white,
+    tintColor: color.white,
     width: 32,
   },
   title: {
-    color: Base.color.gray5,
-    fontSize: Base.font.huge,
-    fontWeight: Base.font.bold,
+    color: color.gray5,
+    fontSize: font.huge,
+    fontWeight: font.bold,
   },
   subtitle: {
     marginTop: 2,
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
+    color: color.gray3,
+    fontSize: font.medium,
   },
 })

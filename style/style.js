@@ -1,4 +1,53 @@
-const Icons = {
+export const color = {
+  blue1: '#E0F0FF',
+  blue2: '#0066CC',
+  gray0: '#F2F2F2',
+  gray1: '#E5E5E5',
+  gray2: '#AAAAAA',
+  gray3: '#757575',
+  gray4: '#111111',
+  white: '#FFFFFF',
+  black12: 'rgba(0,0,0,0.12)',
+  black36: 'rgba(0,0,0,0.36)',
+}
+
+export const padding = {
+  tiny: 4,
+  small: 8,
+  medium: 16,
+  large: 24,
+  huge: 32,
+}
+
+export const font = {
+  small: 12,
+  medium: 14,
+  large: 16,
+  huge: 20,
+  bold: '600',
+  regular: '400',
+}
+
+export const line = {
+  small: 16,
+  medium: 20,
+  large: 22,
+}
+
+export const row = {
+  tiny: 36,
+  small: 40,
+  medium: 48,
+  large: 56,
+}
+
+export const radius = {
+  small: 2,
+  medium: 4,
+  large: 8,
+}
+
+export const icons = {
   add: require('app/assets/ic-add.png'),
   all: require('app/assets/ic-all.png'),
   close: require('app/assets/ic-close.png'),
@@ -20,5 +69,3 @@ const Icons = {
   starredSmall: require('app/assets/ic-star-small.png'),
   unread: require('app/assets/ic-unread.png'),
 }
-
-export default Icons

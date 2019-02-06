@@ -1,6 +1,6 @@
 import { Alert } from 'react-native'
 import Storage from 'app/util/Storage'
-import Strings from 'app/style/Strings'
+import strings from 'app/style/strings'
 
 const logout = (navigation) => {
   Storage.clear()
@@ -12,13 +12,13 @@ export const handleLoginResponseError = (error) => {
     case 401:
     case 500:
       return Alert.alert(
-        Strings.error.loginFailed,
-        Strings.error.incorrectToken,
+        strings.error.loginFailed,
+        strings.error.incorrectToken,
       )
     default:
       return Alert.alert(
-        Strings.error.somethingWrong,
-        Strings.error.tryAgainLater,
+        strings.error.somethingWrong,
+        strings.error.tryAgainLater,
       )
   }
 }
@@ -27,26 +27,26 @@ export const handleResponseError = (error, navigation) => {
   switch (error) {
     case 401:
       return Alert.alert(
-        Strings.error.invalidToken,
-        Strings.error.logInAgain,
-        [{ text: Strings.common.ok, onPress: () => logout(navigation) }],
+        strings.error.invalidToken,
+        strings.error.logInAgain,
+        [{ text: strings.common.ok, onPress: () => logout(navigation) }],
         { cancelable: false }
       )
     case 429:
       return Alert.alert(
-        Strings.error.tooManyRequests,
-        Strings.error.tryAgainLater,
+        strings.error.tooManyRequests,
+        strings.error.tryAgainLater,
       )
     case 500:
     case 503:
       return Alert.alert(
-        Strings.error.troubleConnecting,
-        Strings.error.pinboardDown,
+        strings.error.troubleConnecting,
+        strings.error.pinboardDown,
       )
     default:
       return Alert.alert(
-        Strings.error.somethingWrong,
-        Strings.error.tryAgainLater,
+        strings.error.somethingWrong,
+        strings.error.tryAgainLater,
       )
   }
 }

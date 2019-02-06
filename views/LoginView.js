@@ -4,14 +4,13 @@ import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
 import Api from 'app/Api'
-import Base from 'app/style/Base'
-import Strings from 'app/style/Strings'
-import Icons from 'app/style/Icons'
+import { color, padding, font, line, row, radius, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 export default class LoginView extends React.Component {
   static navigationOptions = {
     header: null,
-    title: Strings.login.title,
+    title: strings.login.title,
   }
 
   constructor(props) {
@@ -75,17 +74,17 @@ export default class LoginView extends React.Component {
     return (
       <SafeAreaView style={s.root}>
         <KeyboardAvoidingView style={s.container} behavior="padding">
-          <Image source={Icons.simplepin} style={s.icon} />
+          <Image source={icons.simplepin} style={s.icon} />
           <View style={{ width: '100%' }}>
-            <Text style={s.title}>{Strings.login.title}</Text>
-            <Text style={s.text}>{Strings.login.text}</Text>
+            <Text style={s.title}>{strings.login.title}</Text>
+            <Text style={s.text}>{strings.login.text}</Text>
           </View>
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
             enablesReturnKeyAutomatically={true}
-            placeholder={Strings.login.placeholder}
-            placeholderTextColor = {Base.color.gray2}
+            placeholder={strings.login.placeholder}
+            placeholderTextColor = {color.gray2}
             returnKeyType="done"
             secureTextEntry={true}
             style={s.input}
@@ -101,14 +100,14 @@ export default class LoginView extends React.Component {
             style={[s.loginButton, !this.state.apiToken && s.disabled]}
             onPress={this.onSubmit}
           >
-            <Text style={s.loginButtonText}>{Strings.login.button}</Text>
+            <Text style={s.loginButtonText}>{strings.login.button}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.5}
             style={s.tokenButton}
             onPress={this.onShowToken}
           >
-            <Text style={s.tokenButtonText}>{Strings.login.token}</Text>
+            <Text style={s.tokenButtonText}>{strings.login.token}</Text>
           </TouchableOpacity>
           <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
         </KeyboardAvoidingView>
@@ -124,67 +123,67 @@ LoginView.propTypes = {
 const s = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: Base.color.white,
+    backgroundColor: color.white,
   },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: Base.padding.huge,
+    padding: padding.huge,
   },
   icon: {
-    marginBottom: Base.padding.medium,
-    tintColor: Base.color.blue2,
+    marginBottom: padding.medium,
+    tintColor: color.blue2,
   },
   title: {
-    color: Base.color.gray4,
-    fontSize: Base.font.huge,
-    fontWeight: Base.font.bold,
-    marginBottom: Base.padding.medium,
+    color: color.gray4,
+    fontSize: font.huge,
+    fontWeight: font.bold,
+    marginBottom: padding.medium,
     textAlign: 'center',
   },
   text: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    lineHeight: Base.line.medium,
-    marginBottom: Base.padding.large,
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
+    marginBottom: padding.large,
     textAlign: 'center',
   },
   input: {
-    backgroundColor: Base.color.white,
-    borderColor: Base.color.black12,
-    borderRadius: Base.radius.medium,
+    backgroundColor: color.white,
+    borderColor: color.black12,
+    borderRadius: radius.medium,
     borderWidth: 1,
-    color: Base.color.gray4,
-    fontSize: Base.font.medium,
-    height: Base.row.medium,
-    marginBottom: Base.padding.large,
+    color: color.gray4,
+    fontSize: font.medium,
+    height: row.medium,
+    marginBottom: padding.large,
     textAlign: 'center',
     width: '100%',
   },
   loginButton: {
-    backgroundColor: Base.color.blue2,
-    borderRadius: Base.radius.medium,
-    marginBottom: Base.padding.large,
-    paddingHorizontal: Base.padding.medium,
+    backgroundColor: color.blue2,
+    borderRadius: radius.medium,
+    marginBottom: padding.large,
+    paddingHorizontal: padding.medium,
     width: '100%',
   },
   loginButtonText: {
-    color: Base.color.white,
-    fontSize: Base.font.large,
-    fontWeight: Base.font.bold,
-    lineHeight: Base.row.medium,
+    color: color.white,
+    fontSize: font.large,
+    fontWeight: font.bold,
+    lineHeight: row.medium,
     textAlign: 'center',
   },
   tokenButton: {
-    backgroundColor: Base.color.white,
-    paddingHorizontal: Base.padding.medium,
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
     width: '100%',
   },
   tokenButtonText: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
-    lineHeight: Base.row.medium,
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: row.medium,
     textAlign: 'center',
   },
   disabled: {

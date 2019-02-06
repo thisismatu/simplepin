@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import Base from 'app/style/Base'
+import { color, padding, font, row } from 'app/style/style'
 
 export default class DrawerCell extends React.PureComponent {
   render() {
@@ -34,25 +34,25 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: Base.row.medium,
-    paddingHorizontal: Base.padding.medium,
+    height: row.medium,
+    paddingHorizontal: padding.medium,
   },
   active: {
-    backgroundColor: Base.color.blue1,
+    backgroundColor: color.blue1,
   },
   icon: {
     height: 24,
-    tintColor: Base.color.black36,
+    tintColor: color.black36,
     width: 24,
-    marginRight: Base.padding.medium,
+    marginRight: padding.medium,
   },
   text: {
     flexGrow: 1,
-    color: Base.color.gray4,
-    fontSize: Base.font.large,
+    color: color.gray4,
+    fontSize: font.large,
   },
   secondary: {
-    color: Base.color.gray3,
-    fontSize: Base.font.medium,
+    color: color.gray3,
+    fontSize: font.medium,
   },
 })
