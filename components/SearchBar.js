@@ -23,7 +23,7 @@ export default class SearchBar extends React.PureComponent {
           underlineColorAndroid="transparent"
           value={searchQuery}
         />
-        { isSearchActive > 0 ? <Text style={s.count}>{count}</Text> : null }
+        {isSearchActive > 0 && <Text style={s.count}>{count}</Text>}
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={() => onSearchChange('')}

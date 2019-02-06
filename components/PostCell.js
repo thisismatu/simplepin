@@ -71,8 +71,8 @@ export default class PostCell extends React.PureComponent {
           exactDate={exactDate}
         />
         <View style={s.statusContainer}>
-          { post.starred ? <Image source={icons.starredSmall} style={s.starred} /> : null }
-          { !post.shared ? <Image source={icons.privateSmall} style={s.private} /> : null }
+          {!!post.starred && <Image source={icons.starredSmall} style={s.starred} />}
+          {!post.shared ? <Image source={icons.privateSmall} style={s.private} /> : null}
         </View>
       </TouchableOpacity>
     )

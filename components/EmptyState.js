@@ -32,11 +32,11 @@ export default class EmptyState extends React.PureComponent {
     const offset = icon ? this.state.topOffset + 64 : this.state.topOffset
     return (
       <View style={[s.empty, { paddingBottom: offset }]} onLayout={this.onLayout}>
-        { icon ? <Image source={icon} style={s.icon} /> : null }
+        {!!icon && <Image source={icon} style={s.icon} />}
         <Text style={s.title}>{title}</Text>
-        { subtitle ? <Text style={s.subtitle}>{subtitle}</Text> : null }
-        <View style={{ height: row.medium }}>
-          { action ? this.renderAction() : null }
+        {!!subtitle && <Text style={s.subtitle}>{subtitle}</Text>}
+        <View style={s.buttonRow}>
+          {!!action && this.renderAction()}
         </View>
       </View>
     )
@@ -74,6 +74,9 @@ const s = StyleSheet.create({
     marginTop: padding.small,
     lineHeight: line.medium,
     textAlign: 'center',
+  },
+  buttonRow:  {
+    height: row.medium
   },
   button: {
     backgroundColor: color.white,

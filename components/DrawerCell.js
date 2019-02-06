@@ -14,7 +14,7 @@ export default class DrawerCell extends React.PureComponent {
       >
         <Image source={icon} style={s.icon} />
         <Text style={s.text}>{title}</Text>
-        { count ? <Text style={s.secondary}>{count}</Text> : null }
+        {!!count && <Text style={s.secondary}>{count}</Text>}
       </TouchableOpacity>
     )
   }

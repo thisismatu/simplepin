@@ -6,6 +6,7 @@ import strings from 'app/style/strings'
 
 export default class DrawerHeader extends React.PureComponent {
   render() {
+    const { text } = this.props
     return (
       <View style={s.container}>
         <View style={s.iconContainer}>
@@ -13,7 +14,7 @@ export default class DrawerHeader extends React.PureComponent {
         </View>
         <View style={s.textContainer}>
           <Text style={s.title}>{strings.common.simplepin}</Text>
-          { this.props.text ? <Text style={s.subtitle}>{this.props.text}</Text> : null }
+          {!!text && <Text style={s.subtitle}>{text}</Text>}
         </View>
       </View>
     )
