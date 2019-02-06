@@ -405,7 +405,7 @@ export default class PostsView extends React.Component {
           renderItem={({ item }) => this.renderPostCell(item)}
           refreshControl={this.renderRefreshControl()}
           style={s.list}
-          keyboardShouldPersistTaps="always"
+          keyboardShouldPersistTaps="handled"
           keyboardDismissMode="on-drag"
           ItemSeparatorComponent={() => <Separator left={Base.padding.large} />}
           ListEmptyComponent={this.renderEmptyState()}
