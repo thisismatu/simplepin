@@ -218,7 +218,7 @@ export default class AddPostView extends React.Component {
   onTagsChange = (evt) => {
     const query = evt.nativeEvent.text
     this.setState({
-      searchQuery: query,
+      searchQuery: query.trim(),
       searchVisible: true,
       enabled: false,
     })
