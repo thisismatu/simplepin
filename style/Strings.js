@@ -13,6 +13,8 @@ const strings = {
     noResults: 'No results for',
     tryAgain: 'Try again',
     showSimilar: 'Show similar',
+    giveFeedback: 'Give feedback',
+    rateTheApp: 'Rate the app',
   },
   error: {
     loginFailed: 'Login failed',

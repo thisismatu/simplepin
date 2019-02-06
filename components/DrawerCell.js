@@ -5,12 +5,12 @@ import { color, padding, font, row } from 'app/style/style'
 
 export default class DrawerCell extends React.PureComponent {
   render() {
-    const { title, icon, count, isFocused } = this.props
+    const { title, icon, count, isFocused, onPress } = this.props
     return (
       <TouchableOpacity
         style={[s.cell, isFocused && s.active]}
         activeOpacity={0.5}
-        onPress={this.props.navigateTo}
+        onPress={onPress}
       >
         <Image source={icon} style={s.icon} />
         <Text style={s.text}>{title}</Text>
@@ -21,9 +21,9 @@ export default class DrawerCell extends React.PureComponent {
 }
 
 DrawerCell.propTypes = {
-  isFocused: PropTypes.bool.isRequired,
-  navigateTo: PropTypes.func.isRequired,
+  onPress: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
+  isFocused: PropTypes.bool,
   icon: PropTypes.number,
   count: PropTypes.number,
 }

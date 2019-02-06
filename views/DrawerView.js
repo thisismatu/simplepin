@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, ScrollView, SafeAreaView, Platform } from 'react-native'
+import { StyleSheet, ScrollView, SafeAreaView, Platform, Linking } from 'react-native'
 import PropTypes from 'prop-types'
 import { Constants } from 'expo'
 import get from 'lodash/get'
@@ -14,6 +14,8 @@ import { icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
+const storeUrl = isAndroid ? 'https://play.google.com/store' : 'itms://itunes.apple.com/us/app/simplepin/id1107506693'
+const feedbackUrl = 'mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback'
 
 export default class DrawerView extends React.PureComponent {
   constructor(props) {
@@ -55,6 +57,10 @@ export default class DrawerView extends React.PureComponent {
     this.props.navigation.navigate(route, params)
   }
 
+  openUrl = (url) => {
+    Linking.openURL(url)
+  }
+
   render() {
     const postsRoute = 'Posts'
     const settingsRoute = 'Settings'
@@ -73,42 +79,52 @@ export default class DrawerView extends React.PureComponent {
             title={strings.posts.all}
             count={this.routeCount('allCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.all)}
-            navigateTo={this.navigateTo(postsRoute, strings.posts.all, 'allPosts')}
+            onPress={this.navigateTo(postsRoute, strings.posts.all, 'allPosts')}
           />
           <DrawerCell
             icon={icons.unread}
             title={strings.posts.unread}
             count={this.routeCount('unreadCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.unread)}
-            navigateTo={this.navigateTo(postsRoute, strings.posts.unread, 'unreadPosts')}
+            onPress={this.navigateTo(postsRoute, strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
             icon={icons.starred}
             title={strings.posts.starred}
             count={this.routeCount('starredCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.starred)}
-            navigateTo={this.navigateTo(postsRoute, strings.posts.starred, 'starredPosts')}
+            onPress={this.navigateTo(postsRoute, strings.posts.starred, 'starredPosts')}
           />
           <DrawerCell
             icon={icons.private}
             title={strings.posts.private}
             count={this.routeCount('privateCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.private)}
-            navigateTo={this.navigateTo(postsRoute, strings.posts.private, 'privatePosts')}
+            onPress={this.navigateTo(postsRoute, strings.posts.private, 'privatePosts')}
           />
           <DrawerCell
             icon={icons.public}
             title={strings.posts.public}
             count={this.routeCount('publicCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.public)}
-            navigateTo={this.navigateTo(postsRoute, strings.posts.public, 'publicPosts')}
+            onPress={this.navigateTo(postsRoute, strings.posts.public, 'publicPosts')}
           />
           <HeaderCell text={strings.common.simplepin} />
           <DrawerCell
             icon={icons.settings}
             title={strings.settings.title}
             isFocused={this.isRouteFocused(settingsRoute)}
-            navigateTo={this.navigateTo(settingsRoute)}
+            onPress={this.navigateTo(settingsRoute)}
+          />
+          <DrawerCell
+            icon={icons.message}
+            title={strings.common.giveFeedback}
+            onPress={() => this.openUrl(feedbackUrl)}
+          />
+          <DrawerCell
+            icon={icons.heart}
+            title={strings.common.rateTheApp}
+            onPress={() => this.openUrl(storeUrl)}
           />
         </ScrollView>
       </SafeAreaView>

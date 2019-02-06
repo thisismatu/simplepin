@@ -7,6 +7,8 @@ import Api from 'app/Api'
 import { color, padding, font, line, row, radius, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
+const pinboardUrl = 'https://m.pinboard.in/settings/password'
+
 export default class LoginView extends React.Component {
   static navigationOptions = {
     header: null,
@@ -57,7 +59,7 @@ export default class LoginView extends React.Component {
   }
 
   onShowToken = () => {
-    Linking.openURL('https://m.pinboard.in/settings/password')
+    Linking.openURL(pinboardUrl)
   }
 
   checkClipboardForApiToken = async () => {
