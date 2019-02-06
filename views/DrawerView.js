@@ -58,7 +58,9 @@ export default class DrawerView extends React.PureComponent {
   }
 
   openUrl = (url) => {
-    Linking.openURL(url)
+    Linking.canOpenURL(url).then(() => {
+      Linking.openURL(url)
+    })
   }
 
   render() {

@@ -271,7 +271,9 @@ export default class PostsView extends React.Component {
   onCellPress = post => () => {
     const { openLinksExternal, markAsRead } = this.state.preferences
     if (openLinksExternal || includes(post.href, '.pdf')) {
-      Linking.openURL(post.href)
+      Linking.canOpenURL(post.href).then(() => {
+        Linking.openURL(post.href)
+      })
     } else {
       this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     }

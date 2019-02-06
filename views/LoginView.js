@@ -59,7 +59,9 @@ export default class LoginView extends React.Component {
   }
 
   onShowToken = () => {
-    Linking.openURL(pinboardUrl)
+    Linking.canOpenURL(pinboardUrl).then(() => {
+      Linking.openURL(pinboardUrl)
+    })
   }
 
   checkClipboardForApiToken = async () => {
