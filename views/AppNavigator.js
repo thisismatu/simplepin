@@ -1,3 +1,4 @@
+import { Platform } from 'react-native'
 import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
 import AuthLoadingView from 'app/views/AuthLoadingView'
@@ -9,6 +10,8 @@ import SettingsView from 'app/views/SettingsView'
 import AddPostView from 'app/views/AddPostView'
 import Base from 'app/style/Base'
 import Strings from 'app/style/Strings'
+
+const isAndroid = Platform.OS === 'android'
 
 const headerStyles = {
   headerStyle: {
@@ -73,7 +76,7 @@ const AppStack = createStackNavigator(
     mode: 'modal',
     headerMode: 'none',
     navigationOptions: {
-      gesturesEnabled: false,
+      gesturesEnabled: !isAndroid,
     },
   }
 )
