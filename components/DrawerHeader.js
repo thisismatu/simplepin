@@ -1,10 +1,8 @@
 import React from 'react'
-import { StyleSheet, Platform, View, Text, Image } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, icons } from 'app/style/style'
 import strings from 'app/style/strings'
-
-const isAndroid = Platform.OS === 'android'
 
 export default class DrawerHeader extends React.PureComponent {
   render() {
@@ -33,7 +31,7 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     paddingBottom: padding.tiny,
     paddingHorizontal: padding.medium,
-    paddingTop: isAndroid ? padding.large : padding.medium,
+    paddingTop: padding.large,
   },
   iconContainer: {
     backgroundColor: color.blue2,

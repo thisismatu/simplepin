@@ -1,5 +1,6 @@
 import React from 'react'
-import { SafeAreaView, View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler, Share } from 'react-native'
+import { View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandler, Share } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import NavigationButton from 'app/components/NavigationButton'
@@ -107,7 +108,7 @@ export default class BrowserView extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={s.safeArea}>
+      <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
           <WebView
             ref={ref => this.webview = ref}

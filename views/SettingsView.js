@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
@@ -83,7 +83,10 @@ export default class SettingsView extends React.Component {
     const track = isAndroid ? color.blue2 + '88' : color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
     return (
-      <ScrollView contentContainerStyle={s.container} style={s.list}>
+      <ScrollView
+        contentContainerStyle={s.container}
+        contentInsetAdjustmentBehavior="always"
+      >
         <HeaderCell
           text={strings.settings.general}
           style={{ marginTop: padding.medium }}
@@ -190,8 +193,6 @@ SettingsView.propTypes = {
 const s = StyleSheet.create({
   container: {
     paddingBottom: padding.large,
-  },
-  list: {
     backgroundColor: color.white,
   },
   cell: {

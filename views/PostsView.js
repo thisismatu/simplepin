@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking, Vibration, Keyboard } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
@@ -396,22 +397,23 @@ export default class PostsView extends React.Component {
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
     const hasData = data && data.length
     return (
-      <View style={{ flex: 1 }}>
-        <FlatList
-          ref={(ref) => this.flatList = ref}
-          contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
-          data={data}
-          initialNumToRender={8}
-          keyExtractor={(item, index) => index.toString()}
-          renderItem={({ item }) => this.renderPostCell(item)}
-          refreshControl={this.renderRefreshControl()}
-          style={s.list}
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
-          ItemSeparatorComponent={() => <Separator left={padding.large} />}
-          ListEmptyComponent={this.renderEmptyState()}
-          ListHeaderComponent={this.renderListHeader()}
-        />
+      <View style={s.root}>
+        <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
+          <FlatList
+            ref={(ref) => this.flatList = ref}
+            contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
+            data={data}
+            initialNumToRender={8}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => this.renderPostCell(item)}
+            refreshControl={this.renderRefreshControl()}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="on-drag"
+            ItemSeparatorComponent={() => <Separator left={padding.large} />}
+            ListEmptyComponent={this.renderEmptyState()}
+            ListHeaderComponent={this.renderListHeader()}
+          />
+        </SafeAreaView>
         <BottomSheet visible={this.state.modalVisible} onClose={this.toggleModal}>
           <BottomSheet.Title title={selectedPost.description} />
           <BottomSheet.Option title={`${strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
@@ -429,11 +431,16 @@ PostsView.propTypes = {
 }
 
 const s = StyleSheet.create({
+  root: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
   container : {
     paddingTop: padding.medium,
     paddingBottom: padding.large,
-  },
-  list: {
-    backgroundColor: color.white,
   },
 })

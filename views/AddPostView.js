@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
+import { View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -296,110 +296,108 @@ export default class AddPostView extends React.Component {
   }
 
   render() {
-    const { description, extended, href, shared, tags, toread, searchResults } = this.state
+    const { description, extended, href, shared, tags, toread } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
 
     return (
-      <SafeAreaView style={s.safeArea}>
-        <KeyboardAwareScrollView
-          scrollEnabled={this.state.enabled}
-          contentContainerStyle={s.container}
-          keyboardShouldPersistTaps="handled"
-          style={s.list}
-        >
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            onChange={this.onHrefChange}
-            onSubmitEditing={() => { this.descriptionInput.focus() }}
-            placeholder={strings.add.placeholderHref}
-            placeholderTextColor = {color.gray2}
-            returnKeyType="next"
-            style={s.textInput}
-            underlineColorAndroid="transparent"
-            value={href}
+      <KeyboardAwareScrollView
+        scrollEnabled={this.state.enabled}
+        contentContainerStyle={s.container}
+        contentInsetAdjustmentBehavior="always"
+        keyboardShouldPersistTaps="handled"
+      >
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          onChange={this.onHrefChange}
+          onSubmitEditing={() => { this.descriptionInput.focus() }}
+          placeholder={strings.add.placeholderHref}
+          placeholderTextColor = {color.gray2}
+          returnKeyType="next"
+          style={s.textInput}
+          underlineColorAndroid="transparent"
+          value={href}
+        />
+        <Separator />
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          onChange={this.onDescriptionChange}
+          onSubmitEditing={() => { this.extendedInput.focus() }}
+          placeholder={strings.add.placeholderDescription}
+          placeholderTextColor = {color.gray2}
+          ref={(input) => {this.descriptionInput = input}}
+          returnKeyType="next"
+          style={s.textInput}
+          underlineColorAndroid="transparent"
+          value={description}
+        />
+        <Separator />
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          multiline={true}
+          onChange={this.onExtendedChange}
+          onSubmitEditing={() => { this.tagsInput.focus() }}
+          placeholder={strings.add.placeholderExtended}
+          placeholderTextColor = {color.gray2}
+          ref={(input) => {this.extendedInput = input}}
+          returnKeyType="next"
+          style={[s.textInput, s.textArea]}
+          textAlignVertical="top"
+          underlineColorAndroid="transparent"
+          value={extended}
+        />
+        <Separator />
+        { !isEmpty(tags) && this.renderTags() }
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          onChange={this.onTagsChange}
+          onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
+          onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
+          placeholder={strings.add.placeholderTags}
+          placeholderTextColor = {color.gray2}
+          ref={(input) => {this.tagsInput = input}}
+          returnKeyType="done"
+          style={s.textInput}
+          underlineColorAndroid="transparent"
+          value={this.state.searchQuery}
+        />
+        <Separator />
+        <View style={s.cell}>
+          <Text style={s.text}>{strings.posts.private}</Text>
+          <Switch
+            style={s.switch}
+            trackColor={{ true: track }}
+            thumbColor={thumb(!shared)}
+            onValueChange={this.onShared}
+            value={!shared}
           />
-          <Separator />
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            onChange={this.onDescriptionChange}
-            onSubmitEditing={() => { this.extendedInput.focus() }}
-            placeholder={strings.add.placeholderDescription}
-            placeholderTextColor = {color.gray2}
-            ref={(input) => {this.descriptionInput = input}}
-            returnKeyType="next"
-            style={s.textInput}
-            underlineColorAndroid="transparent"
-            value={description}
+        </View>
+        <Separator />
+        <View style={s.cell}>
+          <Text style={s.text}>{strings.add.readLater}</Text>
+          <Switch
+            style={s.switch}
+            trackColor={{ true: track }}
+            thumbColor={thumb(toread)}
+            onValueChange={this.onToread}
+            value={toread}
           />
-          <Separator />
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            multiline={true}
-            onChange={this.onExtendedChange}
-            onSubmitEditing={() => { this.tagsInput.focus() }}
-            placeholder={strings.add.placeholderExtended}
-            placeholderTextColor = {color.gray2}
-            ref={(input) => {this.extendedInput = input}}
-            returnKeyType="next"
-            style={[s.textInput, s.textArea]}
-            textAlignVertical="top"
-            underlineColorAndroid="transparent"
-            value={extended}
-          />
-          <Separator />
-          { !isEmpty(tags) && this.renderTags() }
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            onChange={this.onTagsChange}
-            onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
-            onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
-            placeholder={strings.add.placeholderTags}
-            placeholderTextColor = {color.gray2}
-            ref={(input) => {this.tagsInput = input}}
-            returnKeyType="done"
-            style={s.textInput}
-            underlineColorAndroid="transparent"
-            value={this.state.searchQuery}
-          />
-          <Separator />
-          <View style={s.cell}>
-            <Text style={s.text}>{strings.posts.private}</Text>
-            <Switch
-              style={s.switch}
-              trackColor={{ true: track }}
-              thumbColor={thumb(!shared)}
-              onValueChange={this.onShared}
-              value={!shared}
-            />
-          </View>
-          <Separator />
-          <View style={s.cell}>
-            <Text style={s.text}>{strings.add.readLater}</Text>
-            <Switch
-              style={s.switch}
-              trackColor={{ true: track }}
-              thumbColor={thumb(toread)}
-              onValueChange={this.onToread}
-              value={toread}
-            />
-          </View>
-          <Separator />
-          { this.state.searchVisible && this.renderSearchResults() }
-        </KeyboardAwareScrollView>
-      </SafeAreaView>
+        </View>
+        <Separator />
+        { this.state.searchVisible && this.renderSearchResults() }
+      </KeyboardAwareScrollView>
     )
   }
 }
@@ -409,14 +407,8 @@ AddPostView.propTypes = {
 }
 
 const s = StyleSheet.create({
-  safeArea: {
-    backgroundColor: color.white,
-    flex: 1,
-  },
   container: {
     paddingVertical: padding.medium,
-  },
-  list: {
     backgroundColor: color.white,
   },
   cell: {

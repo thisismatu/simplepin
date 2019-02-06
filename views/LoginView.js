@@ -76,46 +76,44 @@ export default class LoginView extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={s.root}>
-        <KeyboardAvoidingView style={s.container} behavior="padding">
-          <Image source={icons.simplepin} style={s.icon} />
-          <View style={{ width: '100%' }}>
-            <Text style={s.title}>{strings.login.title}</Text>
-            <Text style={s.text}>{strings.login.text}</Text>
-          </View>
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            enablesReturnKeyAutomatically={true}
-            placeholder={strings.login.placeholder}
-            placeholderTextColor = {color.gray2}
-            returnKeyType="done"
-            secureTextEntry={true}
-            style={s.input}
-            textContentType="password"
-            underlineColorAndroid="transparent"
-            value={this.state.apiToken}
-            onChange={this.onChange}
-            onSubmitEditing={this.onSubmit}
-          />
-          <TouchableOpacity
-            activeOpacity={0.5}
-            disabled={!this.state.apiToken}
-            style={[s.loginButton, !this.state.apiToken && s.disabled]}
-            onPress={this.onSubmit}
-          >
-            <Text style={s.loginButtonText}>{strings.login.button}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={s.tokenButton}
-            onPress={this.onShowToken}
-          >
-            <Text style={s.tokenButtonText}>{strings.login.token}</Text>
-          </TouchableOpacity>
-          <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
-        </KeyboardAvoidingView>
-      </SafeAreaView>
+      <KeyboardAvoidingView style={s.container} behavior="padding">
+        <Image source={icons.simplepin} style={s.icon} />
+        <View style={{ width: '100%' }}>
+          <Text style={s.title}>{strings.login.title}</Text>
+          <Text style={s.text}>{strings.login.text}</Text>
+        </View>
+        <TextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          enablesReturnKeyAutomatically={true}
+          placeholder={strings.login.placeholder}
+          placeholderTextColor = {color.gray2}
+          returnKeyType="done"
+          secureTextEntry={true}
+          style={s.input}
+          textContentType="password"
+          underlineColorAndroid="transparent"
+          value={this.state.apiToken}
+          onChange={this.onChange}
+          onSubmitEditing={this.onSubmit}
+        />
+        <TouchableOpacity
+          activeOpacity={0.5}
+          disabled={!this.state.apiToken}
+          style={[s.loginButton, !this.state.apiToken && s.disabled]}
+          onPress={this.onSubmit}
+        >
+          <Text style={s.loginButtonText}>{strings.login.button}</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={s.tokenButton}
+          onPress={this.onShowToken}
+        >
+          <Text style={s.tokenButtonText}>{strings.login.token}</Text>
+        </TouchableOpacity>
+        <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
+      </KeyboardAvoidingView>
     )
   }
 }
@@ -125,15 +123,12 @@ LoginView.propTypes = {
 }
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: padding.huge,
+    backgroundColor: color.white,
   },
   icon: {
     marginBottom: padding.medium,

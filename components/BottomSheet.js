@@ -4,6 +4,8 @@ import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
 import { color, padding, font, row, radius } from 'app/style/style'
 
+const dimensions = Dimensions.get('screen')
+const portraitWidth = Math.min(dimensions.width, dimensions.height)
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 const ModalTitle = ({ title }) => {
@@ -114,7 +116,7 @@ const s = StyleSheet.create({
     backgroundColor: color.black36,
   },
   content: {
-    width: '100%',
+    width: portraitWidth,
     flexDirection: 'column',
     backgroundColor: color.white,
     borderTopLeftRadius: radius.large,
