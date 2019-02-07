@@ -27,20 +27,22 @@ NavigationButton.propTypes = {
 
 const s = StyleSheet.create({
   button: {
-    padding: padding.small,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
   },
   icon: {
     tintColor: color.blue2,
-    resizeMode: 'contain',
-    marginHorizontal: 4,
-    width: 24,
-    height: 24,
+    resizeMode: 'center',
+    height: '100%',
+    width: 46,
   },
   text: {
+    alignSelf: 'center',
     color: color.blue2,
     fontSize: 16,
-    lineHeight: 24,
     fontWeight: font.bold,
-    marginHorizontal: padding.small,
+    marginHorizontal: 15,
   },
 })
