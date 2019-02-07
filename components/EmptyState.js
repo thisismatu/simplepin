@@ -21,7 +21,7 @@ export default class EmptyState extends React.PureComponent {
         activeOpacity={0.5}
         style={s.button}
         onPress={action}
-      >
+        >
         <Text style={s.buttonText}>{actionText}</Text>
       </TouchableOpacity>
     )
@@ -76,7 +76,7 @@ const s = StyleSheet.create({
     textAlign: 'center',
   },
   buttonRow:  {
-    height: row.medium
+    height: row.medium,
   },
   button: {
     backgroundColor: color.white,

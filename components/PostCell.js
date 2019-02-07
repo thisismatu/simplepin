@@ -14,7 +14,7 @@ class Tag extends React.PureComponent {
         activeOpacity={0.5}
         onPress={onTagPress(tag)}
         style={[s.tagContainer, index === 0 && s.firstTag]}
-      >
+        >
         <View style={[s.tag, isPrivateTag && s.privateTag]}>
           <Text style={[s.tagText, isPrivateTag && s.privateTagText]}>{tag}</Text>
         </View>
@@ -38,7 +38,7 @@ export default class PostCell extends React.PureComponent {
         activeOpacity={0.5}
         onPress={onCellPress(post)}
         onLongPress={onCellLongPress(post)}
-      >
+        >
         {
           post.toread
           ? <View style={s.unread} />
@@ -85,7 +85,6 @@ PostCell.propTypes = {
   onCellLongPress: PropTypes.func.isRequired,
   exactDate: PropTypes.bool.isRequired,
   tagOrder: PropTypes.bool.isRequired,
-  changeDetection: PropTypes.string.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,

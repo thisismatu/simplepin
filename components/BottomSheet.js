@@ -22,16 +22,23 @@ const ModalTitle = ({ title }) => {
   )
 }
 
+ModalTitle.propTypes = { title: PropTypes.string }
+
 const ModalOption = ({ title, onPress }) => {
   return (
     <TouchableOpacity
       activeOpacity={0.5}
       style={s.cell}
       onPress={onPress}
-    >
+      >
       <Text style={s.text}>{title}</Text>
     </TouchableOpacity>
   )
+}
+
+ModalOption.propTypes = {
+  title: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
 }
 
 class BottomSheet extends React.PureComponent {
@@ -81,7 +88,7 @@ class BottomSheet extends React.PureComponent {
         onRequestClose={this.props.onClose}
         hardwareAccelerated={true}
         supportedOrientations={['portrait', 'landscape']}
-      >
+        >
         <StatusBar backgroundColor={color.black36} />
         <View style={s.root}>
           <AnimatedTouchableOpacity

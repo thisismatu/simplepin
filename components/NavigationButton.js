@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, padding, font } from 'app/style/style'
+import { color, font } from 'app/style/style'
 
 export default class NavigationButton extends React.PureComponent {
   render() {
@@ -11,7 +11,7 @@ export default class NavigationButton extends React.PureComponent {
         activeOpacity={0.5}
         onPress={this.props.onPress}
         style={s.button}
-      >
+        >
         {!!icon && <Image source={icon} style={s.icon} />}
         {!!text && <Text style={s.text}>{text}</Text>}
       </TouchableOpacity>

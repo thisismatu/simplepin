@@ -1,5 +1,5 @@
 import React from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
@@ -87,7 +87,7 @@ export default class SettingsView extends React.Component {
         contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
         style={s.list}
-      >
+        >
         <HeaderCell
           text={strings.settings.general}
           style={{ marginTop: padding.medium }}

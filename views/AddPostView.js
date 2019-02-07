@@ -7,7 +7,7 @@ import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import flattenDeep from 'lodash/flattenDeep'
-import uniq from 'lodash/uniq'
+import uniq from 'lodash/uniq' // eslint-disable-line no-unused-vars
 import omit from 'lodash/omit'
 import filter from 'lodash/filter'
 import keys from 'lodash/keys'
@@ -32,7 +32,7 @@ class ResultItem extends React.PureComponent {
         activeOpacity={0.5}
         onPress={() => onPress(tag)}
         style={s.resultCell}
-      >
+        >
         <Text style={s.resultText}>{tag}</Text>
         {!!suggested && <Text style={s.suggestedText}>Suggested</Text>}
       </TouchableOpacity>
@@ -55,7 +55,7 @@ class Tag extends React.PureComponent {
         activeOpacity={0.5}
         onPress={() => onPress(tag)}
         style={s.tagCell}
-      >
+        >
         <View style={s.tag}>
           <Text style={s.tagText}>{tag}</Text>
           <Image source={icons.closeSmall} style={s.tagIcon} />
@@ -307,7 +307,7 @@ export default class AddPostView extends React.Component {
         contentInsetAdjustmentBehavior="always"
         keyboardShouldPersistTaps="handled"
         style={s.list}
-      >
+        >
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
@@ -491,5 +491,5 @@ const s = StyleSheet.create({
   suggestedText: {
     color: color.gray3,
     fontSize: font.small,
-  }
+  },
 })

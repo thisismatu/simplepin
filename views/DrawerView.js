@@ -74,7 +74,7 @@ export default class DrawerView extends React.PureComponent {
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
         style={s.list}
-      >
+        >
         <DrawerHeader text={this.state.username} />
         <HeaderCell text={strings.posts.title} />
         <DrawerCell
