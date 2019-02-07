@@ -306,6 +306,7 @@ export default class AddPostView extends React.Component {
         contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
         keyboardShouldPersistTaps="handled"
+        style={s.list}
       >
         <TextInput
           autoCapitalize="none"
@@ -409,6 +410,8 @@ AddPostView.propTypes = {
 const s = StyleSheet.create({
   container: {
     paddingVertical: padding.medium,
+  },
+  list: {
     backgroundColor: color.white,
   },
   cell: {

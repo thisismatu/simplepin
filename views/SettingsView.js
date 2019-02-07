@@ -86,6 +86,7 @@ export default class SettingsView extends React.Component {
       <ScrollView
         contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
+        style={s.list}
       >
         <HeaderCell
           text={strings.settings.general}
@@ -193,6 +194,8 @@ SettingsView.propTypes = {
 const s = StyleSheet.create({
   container: {
     paddingBottom: padding.large,
+  },
+  list: {
     backgroundColor: color.white,
   },
   cell: {

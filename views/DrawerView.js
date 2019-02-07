@@ -10,7 +10,7 @@ import Storage from 'app/util/Storage'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
-import { icons } from 'app/style/style'
+import { color, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
@@ -69,10 +69,11 @@ export default class DrawerView extends React.PureComponent {
     return (
       <ScrollView
         bounces={false}
+        contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
         showsHorizontalScrollIndicator={false}
         showsVerticalScrollIndicator={false}
-        style={s.container}
+        style={s.list}
       >
         <DrawerHeader text={this.state.username} />
         <HeaderCell text={strings.posts.title} />
@@ -140,5 +141,8 @@ DrawerView.propTypes = {
 const s = StyleSheet.create({
   container: {
     marginTop: isAndroid ? Constants.statusBarHeight : 0,
+  },
+  list: {
+    backgroundColor: color.white,
   },
 })
