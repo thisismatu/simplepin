@@ -10,7 +10,6 @@ export default class App extends React.Component {
           animated={true}
           backgroundColor="transparent"
           barStyle="dark-content"
-          showHideTransition="fade"
           translucent={true}
         />
         <AppNavigator />

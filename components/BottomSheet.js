@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions } from 'react-native'
+import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions, StatusBar } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
 import { color, padding, font, row, radius } from 'app/style/style'
@@ -82,6 +82,7 @@ class BottomSheet extends React.PureComponent {
         hardwareAccelerated={true}
         supportedOrientations={['portrait', 'landscape']}
       >
+        <StatusBar backgroundColor={color.black36} />
         <View style={s.root}>
           <AnimatedTouchableOpacity
             activeOpacity={1}
