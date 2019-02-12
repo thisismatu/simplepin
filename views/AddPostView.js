@@ -88,6 +88,10 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.listRef = React.createRef()
+    this.descriptionRef = React.createRef()
+    this.extendedRef = React.createRef()
+    this.tagsRef = React.createRef()
     this.isEditing = false
     this.initialState = {}
     this.suggestedTags = []
@@ -267,7 +271,7 @@ export default class AddPostView extends React.Component {
     const { searchResults } = this.state
     return (
       <SectionList
-        ref={(ref) => this.flatList = ref}
+        ref={this.listRef}
         sections={[{
           title: 'suggested',
           data: searchResults.suggested,
@@ -314,7 +318,7 @@ export default class AddPostView extends React.Component {
           blurOnSubmit={false}
           enablesReturnKeyAutomatically={true}
           onChange={this.onHrefChange}
-          onSubmitEditing={() => { this.descriptionInput.focus() }}
+          onSubmitEditing={() => { this.descriptionRef.focus() }}
           placeholder={strings.add.placeholderHref}
           placeholderTextColor = {color.gray2}
           returnKeyType="next"
@@ -329,10 +333,10 @@ export default class AddPostView extends React.Component {
           blurOnSubmit={false}
           enablesReturnKeyAutomatically={true}
           onChange={this.onDescriptionChange}
-          onSubmitEditing={() => { this.extendedInput.focus() }}
+          onSubmitEditing={() => { this.extendedRef.focus() }}
           placeholder={strings.add.placeholderDescription}
           placeholderTextColor = {color.gray2}
-          ref={(input) => {this.descriptionInput = input}}
+          ref={this.descriptionRef}
           returnKeyType="next"
           style={s.textInput}
           underlineColorAndroid="transparent"
@@ -346,10 +350,10 @@ export default class AddPostView extends React.Component {
           enablesReturnKeyAutomatically={true}
           multiline={true}
           onChange={this.onExtendedChange}
-          onSubmitEditing={() => { this.tagsInput.focus() }}
+          onSubmitEditing={() => { this.tagsRef.focus() }}
           placeholder={strings.add.placeholderExtended}
           placeholderTextColor = {color.gray2}
-          ref={(input) => {this.extendedInput = input}}
+          ref={this.extendedRef}
           returnKeyType="next"
           style={[s.textInput, s.textArea]}
           textAlignVertical="top"
@@ -368,7 +372,7 @@ export default class AddPostView extends React.Component {
           onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
           placeholder={strings.add.placeholderTags}
           placeholderTextColor = {color.gray2}
-          ref={(input) => {this.tagsInput = input}}
+          ref={this.tagsRef}
           returnKeyType="done"
           style={s.textInput}
           underlineColorAndroid="transparent"

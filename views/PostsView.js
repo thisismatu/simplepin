@@ -61,6 +61,7 @@ export default class PostsView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.listRef = React.createRef()
     this.state = {
       isLoading: false,
       allPosts: null,
@@ -266,7 +267,7 @@ export default class PostsView extends React.Component {
 
   onTagPress = tag => () => {
     this.onSearchChange(tag, true)
-    this.flatList.scrollToOffset({ offset: 0, animated: false })
+    this.listRef.scrollToOffset({ offset: 0, animated: false })
   }
 
   onCellPress = post => () => {
@@ -400,7 +401,7 @@ export default class PostsView extends React.Component {
       <View style={s.root}>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
           <FlatList
-            ref={(ref) => this.flatList = ref}
+            ref={this.listRef}
             contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
             data={data}
             initialNumToRender={8}

@@ -18,6 +18,7 @@ export default class BrowserView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.webViewRef = React.createRef()
     this.state = {
       title: this.props.navigation.getParam('title', ''),
       url: this.props.navigation.getParam('url', ''),
@@ -111,7 +112,7 @@ export default class BrowserView extends React.Component {
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
           <WebView
-            ref={ref => this.webview = ref}
+            ref={this.webViewRef}
             source={{ uri: this.state.url }}
             startInLoadingState={true}
             onNavigationStateChange={this.onNavigationStateChange}
