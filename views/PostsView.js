@@ -409,6 +409,7 @@ export default class PostsView extends React.Component {
             refreshControl={this.renderRefreshControl()}
             keyboardShouldPersistTaps="handled"
             keyboardDismissMode="on-drag"
+            style={s.list}
             ItemSeparatorComponent={() => <Separator left={padding.large} />}
             ListEmptyComponent={this.renderEmptyState()}
             ListHeaderComponent={this.renderListHeader()}
@@ -442,5 +443,8 @@ const s = StyleSheet.create({
   container : {
     paddingTop: padding.medium,
     paddingBottom: padding.large,
+  },
+  list: {
+    backgroundColor: color.white,
   },
 })
