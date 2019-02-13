@@ -5,10 +5,8 @@ import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
-import isEqual from 'lodash/isEqual'
 import flattenDeep from 'lodash/flattenDeep'
 import uniq from 'lodash/uniq' // eslint-disable-line no-unused-vars
-import omit from 'lodash/omit'
 import filter from 'lodash/filter'
 import keys from 'lodash/keys'
 import map from 'lodash/map'
@@ -88,29 +86,28 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.listRef = React.createRef()
-    this.descriptionRef = React.createRef()
-    this.extendedRef = React.createRef()
-    this.tagsRef = React.createRef()
-    this.isEditing = false
-    this.initialState = {}
-    this.suggestedTags = []
-    this.userTags = []
     this.state = {
-      enabled: true,
+      changes: 0,
+      isEditing: false,
+      suggestedTags: [],
+      userTags: [],
+      scrollEnabled: true,
       searchQuery: '',
-      searchResults: [],
+      searchResults: {},
       searchHeight: 200,
       searchVisible: false,
-      description: '',
-      extended: '',
-      hash: '',
-      href: '',
-      meta: '',
-      shared: true,
-      tags: [],
-      time: new Date(),
-      toread: false,
+      initialState: {},
+      post: {
+        description: '',
+        extended: '',
+        hash: '',
+        href: '',
+        meta: '',
+        shared: true,
+        tags: [],
+        time: new Date(),
+        toread: false,
+      },
     }
   }
 
@@ -118,14 +115,20 @@ export default class AddPostView extends React.Component {
     const { navigation } = this.props
     const post = navigation.getParam('post')
     if (post) {
-      this.isEditing = true
-      this.setState(post, () => this.setInitialState(this.state))
+      this.setState(state => {
+        state.isEditing = true
+        state.initialState = post
+        state.post = post
+        return state
+      })
     } else {
       Storage.userPreferences().then(prefs => {
-        this.setState({
-          shared: !prefs.privateByDefault,
-          toread: prefs.unreadByDefault,
-        }, () => this.setInitialState(this.state))
+        this.setState(state => {
+          state.post.shared = !prefs.privateByDefault
+          state.post.toread = prefs.unreadByDefault
+          state.initialState = state.post
+          return state
+        })
       })
     }
     if (isAndroid) {
@@ -144,14 +147,10 @@ export default class AddPostView extends React.Component {
     }
   }
 
-  setInitialState = (currentState) => {
-    this.initialState = currentState
-  }
-
   fetchTags = async () => {
     const apiToken = await Storage.apiToken()
     const response = await Api.tagsAll(apiToken)
-    const suggested = await Api.tagsSuggested(this.state.href, apiToken)
+    const suggested = await Api.tagsSuggested(this.state.post.href, apiToken)
     if(response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     } else {
@@ -160,21 +159,25 @@ export default class AddPostView extends React.Component {
         .compact()
         .uniq()
         .value()
-      this.suggestedTags = suggestedTags
-      this.userTags = keys(response)
+      this.setState({
+        suggestedTags: suggestedTags,
+        userTags: keys(response),
+      })
     }
   }
 
   onUnsavedDismiss = () => {
-    if (isEqual(this.initialState, this.state)) {
-      this.props.navigation.dismiss()
+    const { navigation } = this.props
+    const { changes, isEditing } = this.state
+    if (changes === 0) {
+      navigation.dismiss()
     } else {
       Alert.alert(
-        this.isEditing ? strings.add.discardEdit : strings.add.discardAdd,
+        isEditing ? strings.add.discardEdit : strings.add.discardAdd,
         null,
         [
           { text: strings.common.cancel, style: 'cancel' },
-          { text: strings.common.ok, onPress: () => this.props.navigation.dismiss() },
+          { text: strings.common.ok, onPress: () => navigation.dismiss() },
         ]
       )
     }
@@ -190,123 +193,147 @@ export default class AddPostView extends React.Component {
   }
 
   onHrefChange = (evt) => {
-    this.setState({ href: evt.nativeEvent.text.trim() })
+    const { text } = evt.nativeEvent
+    this.setState(state => {
+      state.post.href = text.trim()
+      state.changes += 1
+      return state
+    })
   }
 
   onDescriptionChange = (evt) => {
-    this.setState({ description: evt.nativeEvent.text })
+    const { text } = evt.nativeEvent
+    this.setState(state => {
+      state.post.description = text
+      state.changes += 1
+      return state
+    })
   }
 
   onExtendedChange = (evt) => {
-    this.setState({ extended: evt.nativeEvent.text })
+    const { text } = evt.nativeEvent
+    this.setState(state => {
+      state.post.extended = text
+      state.changes += 1
+      return state
+    })
   }
 
-  removeTag = (tag) => {
-    const { tags } = this.state
-    const updatedTags = filter(tags, t =>  t !== tag)
-    this.setState({ tags: updatedTags })
+  onShared = (value) => {
+    this.setState(state => {
+      state.post.shared = !value
+      state.changes += 1
+      return state
+    })
   }
 
-  selectTag = (tag) => {
-    const { tags } = this.state
-    tags.push(tag)
-    this.setState({
-      tags: tags,
-      searchVisible: false,
-      enabled: true,
-      searchQuery: '',
+  onToread = (value) => {
+    this.setState(state => {
+      state.post.toread = value
+      state.changes += 1
+      return state
     })
   }
 
   onTagsChange = (evt) => {
-    const query = evt.nativeEvent.text
+    const { text } = evt.nativeEvent
     this.setState({
-      searchQuery: query.trim(),
+      searchQuery: text.trim(),
       searchVisible: true,
-      enabled: false,
+      scrollEnabled: false,
     })
-    if (!isEmpty(query)) {
-      const suggestedTagsResults = filter(difference(this.suggestedTags, this.state.tags), tag => tag.includes(query))
-      const userTagsResults = filter(difference(this.userTags, flattenDeep([this.state.tags, this.suggestedTags])), tag => tag.includes(query))
-      this.setState({ searchResults: {
-        suggested: suggestedTagsResults,
-        user: userTagsResults,
-      } })
-      if (isEmpty(flattenDeep([suggestedTagsResults, userTagsResults]))) {
+    if (!isEmpty(text)) {
+      const { post, userTags, suggestedTags } = this.state
+      const suggestedTagsResults = filter(difference(suggestedTags, post.tags), tag => tag.includes(text))
+      const userTagsResults = filter(difference(userTags, flattenDeep([post.tags, suggestedTags])), tag => tag.includes(text))
+      this.setState(state => {
+        state.searchResults.suggested = suggestedTagsResults
+        state.searchResults.user = userTagsResults
+        return state
+      })
+      const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
+      if (isEmpty(searchResults)) {
         this.setState({
           searchVisible: false,
-          enabled: true,
+          scrollEnabled: true,
         })
       }
     } else {
       this.setState({
         searchVisible: false,
-        enabled: true,
+        scrollEnabled: true,
       })
     }
   }
 
-  onShared = (value) => {
-    this.setState({ shared: !value })
+  removeTag = (tagToRemove) => {
+    const { post } = this.state
+    const updatedTags = filter(post.tags, tag =>  tag !== tagToRemove)
+    this.setState(state => (state.post.tags = updatedTags, state))
   }
 
-  onToread = (value) => {
-    this.setState({ toread: value })
+  selectTag = (tag) => {
+    const { post } = this.state
+    post.tags.push(tag)
+    this.setState(state => {
+      state.post.tags = post.tags
+      state.searchVisible = false
+      state.scrollEnabled = true
+      state.searchQuery = ''
+      return state
+    })
   }
 
   onSave = () => {
-    const ignore = ['searchResults', 'enabled', 'searchHeight', 'searchVisible']
-    const post = omit(this.state, ignore)
+    const { navigation } = this.props
+    const { post } = this.state
     const tags = compact(post.tags)
     if (!this.isValidPost(post.href, post.description)) { return }
     post.description = post.description.trim()
     post.extended = post.extended.trim()
     post.tags = !isEmpty(tags) ? tags : null
     post.meta = Math.random().toString(36) // PostCell change detection
-    this.props.navigation.state.params.onSubmit(post)
-    this.props.navigation.dismiss()
+    navigation.state.params.onSubmit(post)
+    navigation.dismiss()
   }
 
   renderSearchResults = () => {
-    const { searchResults } = this.state
+    const { searchResults, searchHeight } = this.state
     return (
       <SectionList
-        ref={this.listRef}
         sections={[{
-          title: 'suggested',
           data: searchResults.suggested,
           renderItem: ({ item }) => <ResultItem tag={item} suggested={true} onPress={this.selectTag} />,
         }, {
-          title: 'tags',
           data: searchResults.user,
           renderItem: ({ item }) => <ResultItem tag={item} suggested={false} onPress={this.selectTag} />,
         }]}
         keyExtractor={(item, index) => item + index}
         keyboardShouldPersistTaps="always"
         keyboardDismissMode="none"
-        style={[s.resultList, { height: this.state.searchHeight }]}
+        style={[s.resultList, { height: searchHeight - 1 }]}
         contentContainerStyle={{ paddingVertical: padding.small }}
       />
     )
   }
 
   renderTags = () => {
-    const { tags } = this.state
+    const { post } = this.state
     return (
       <View style={s.tagContainer}>
-        {map(tags, (item) => <Tag key={item} tag={item} onPress={this.removeTag} />)}
+        {map(post.tags, (item) => <Tag key={item} tag={item} onPress={this.removeTag} />)}
       </View>
     )
   }
 
   render() {
-    const { description, extended, href, shared, tags, toread } = this.state
+    const { post, scrollEnabled, searchQuery, searchVisible } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
 
     return (
       <KeyboardAwareScrollView
-        scrollEnabled={this.state.enabled}
+        scrollEnabled={scrollEnabled}
         contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
         keyboardShouldPersistTaps="handled"
@@ -324,7 +351,7 @@ export default class AddPostView extends React.Component {
           returnKeyType="next"
           style={s.textInput}
           underlineColorAndroid="transparent"
-          value={href}
+          value={post.href}
         />
         <Separator />
         <TextInput
@@ -336,11 +363,11 @@ export default class AddPostView extends React.Component {
           onSubmitEditing={() => { this.extendedRef.focus() }}
           placeholder={strings.add.placeholderDescription}
           placeholderTextColor = {color.gray2}
-          ref={this.descriptionRef}
+          ref={input => this.descriptionRef = input}
           returnKeyType="next"
           style={s.textInput}
           underlineColorAndroid="transparent"
-          value={description}
+          value={post.description}
         />
         <Separator />
         <TextInput
@@ -353,15 +380,15 @@ export default class AddPostView extends React.Component {
           onSubmitEditing={() => { this.tagsRef.focus() }}
           placeholder={strings.add.placeholderExtended}
           placeholderTextColor = {color.gray2}
-          ref={this.extendedRef}
+          ref={input => this.extendedRef = input}
           returnKeyType="next"
           style={[s.textInput, s.textArea]}
           textAlignVertical="top"
           underlineColorAndroid="transparent"
-          value={extended}
+          value={post.extended}
         />
         <Separator />
-        { !isEmpty(tags) && this.renderTags() }
+        { !isEmpty(post.tags) && this.renderTags() }
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
@@ -372,11 +399,11 @@ export default class AddPostView extends React.Component {
           onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
           placeholder={strings.add.placeholderTags}
           placeholderTextColor = {color.gray2}
-          ref={this.tagsRef}
+          ref={input => this.tagsRef = input}
           returnKeyType="done"
           style={s.textInput}
           underlineColorAndroid="transparent"
-          value={this.state.searchQuery}
+          value={searchQuery}
         />
         <Separator />
         <View style={s.cell}>
@@ -384,9 +411,9 @@ export default class AddPostView extends React.Component {
           <Switch
             style={s.switch}
             trackColor={{ true: track }}
-            thumbColor={thumb(!shared)}
+            thumbColor={thumb(!post.shared)}
             onValueChange={this.onShared}
-            value={!shared}
+            value={!post.shared}
           />
         </View>
         <Separator />
@@ -395,13 +422,13 @@ export default class AddPostView extends React.Component {
           <Switch
             style={s.switch}
             trackColor={{ true: track }}
-            thumbColor={thumb(toread)}
+            thumbColor={thumb(post.toread)}
             onValueChange={this.onToread}
-            value={toread}
+            value={post.toread}
           />
         </View>
         <Separator />
-        { this.state.searchVisible && this.renderSearchResults() }
+        { searchVisible && this.renderSearchResults() }
       </KeyboardAwareScrollView>
     )
   }
