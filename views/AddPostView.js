@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
 import compact from 'lodash/compact'
 import isEmpty from 'lodash/isEmpty'
+import isEqual from 'lodash/isEqual'
 import flattenDeep from 'lodash/flattenDeep'
 import uniq from 'lodash/uniq' // eslint-disable-line no-unused-vars
 import filter from 'lodash/filter'
@@ -97,10 +98,10 @@ export default class AddPostView extends React.Component {
         }),
       }],
     }
+    this.unsavedChanges = false,
     this.state = {
       validHref: false,
       validDescription: false,
-      unsavedChanges: false,
       suggestedTags: [],
       userTags: [],
       scrollEnabled: true,
@@ -129,11 +130,10 @@ export default class AddPostView extends React.Component {
       this.setState({ post: post })
     } else {
       Storage.userPreferences().then(prefs => {
-        this.setState(state => {
-          state.post.shared = !prefs.privateByDefault
-          state.post.toread = prefs.unreadByDefault
-          return state
-        })
+        const post = { ...this.state.post }
+        post.shared = !prefs.privateByDefault
+        post.toread = prefs.unreadByDefault
+        this.setState({ post })
       })
     }
     if (isAndroid) {
@@ -144,6 +144,12 @@ export default class AddPostView extends React.Component {
       onSave: this.onSave,
     })
     this.fetchTags()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (!isEqual(prevState.post, this.state.post)) {
+      this.unsavedChanges = true
+    }
   }
 
   componentWillUnmount() {
@@ -189,8 +195,7 @@ export default class AddPostView extends React.Component {
 
   onUnsavedDismiss = () => {
     const { navigation } = this.props
-    const { unsavedChanges } = this.state
-    if (unsavedChanges) {
+    if (this.unsavedChanges) {
       Alert.alert(
         strings.add.discardUnsaved, null,
         [
@@ -209,54 +214,38 @@ export default class AddPostView extends React.Component {
   }
 
   onHrefChange = (evt) => {
-    const { text } = evt.nativeEvent
-    this.setState(state => {
-      state.post.href = text.trim()
-      state.unsavedChanges = true
-      return state
-    })
+    const post = { ...this.state.post }
+    post.href = evt.nativeEvent.text.trim()
+    this.setState({ post })
   }
 
   onDescriptionChange = (evt) => {
-    const { text } = evt.nativeEvent
-    this.setState(state => {
-      state.post.description = text
-      state.unsavedChanges = true
-      return state
-    })
+    const post = { ...this.state.post }
+    post.description = evt.nativeEvent.text
+    this.setState({ post })
   }
 
   onExtendedChange = (evt) => {
-    const { text } = evt.nativeEvent
-    this.setState(state => {
-      state.post.extended = text
-      state.unsavedChanges = true
-      return state
-    })
+    const post = { ...this.state.post }
+    post.extended = evt.nativeEvent.text
+    this.setState({ post })
   }
 
   onShared = (value) => {
-    this.setState(state => {
-      state.post.shared = !value
-      state.unsavedChanges = true
-      return state
-    })
+    const post = { ...this.state.post }
+    post.shared = !value
+    this.setState({ post })
   }
 
   onToread = (value) => {
-    this.setState(state => {
-      state.post.toread = value
-      state.unsavedChanges = true
-      return state
-    })
+    const post = { ...this.state.post }
+    post.toread = value
+    this.setState({ post })
   }
 
   onTagsChange = (evt) => {
     const { text } = evt.nativeEvent
-    this.setState({
-      searchQuery: text.trim(),
-      unsavedChanges: true,
-    })
+    this.setState({ searchQuery: text.trim() })
     this.filterSearchResults(text)
   }
 
@@ -266,37 +255,38 @@ export default class AddPostView extends React.Component {
     const userTagsResults = filter(difference(userTags, flattenDeep([post.tags, suggestedTags])), tag => tag.includes(text))
     const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
     const searchVisible = !isEmpty(searchResults) && !isEmpty(text)
-    this.setState(state => {
-      state.searchVisible = searchVisible,
-      state.scrollEnabled = !searchVisible,
-      state.searchResults.suggested = suggestedTagsResults
-      state.searchResults.user = userTagsResults
-      return state
+    this.setState({
+      searchVisible: searchVisible,
+      scrollEnabled: !searchVisible,
+      searchResults: {
+        suggested: suggestedTagsResults,
+        user: userTagsResults,
+      },
     })
   }
 
   removeTag = (tagToRemove) => {
-    const { post } = this.state
+    const post = { ...this.state.post }
     const updatedTags = filter(post.tags, tag =>  tag !== tagToRemove)
-    this.setState(state => (state.post.tags = updatedTags, state))
+    post.tags = updatedTags
+    this.setState({ post })
   }
 
   selectTag = (tag) => {
-    const { post } = this.state
+    const post = { ...this.state.post }
     post.tags.push(tag)
-    this.setState(state => {
-      state.post.tags = post.tags
-      state.searchVisible = false
-      state.scrollEnabled = true
-      state.searchQuery = ''
-      return state
+    this.setState({
+      searchVisible: false,
+      scrollEnabled: true,
+      searchQuery: '',
+      post,
     })
   }
 
   onSave = () => {
     const { navigation } = this.props
-    const { post } = this.state
     const tags = compact(post.tags)
+    const post = { ...this.state.post }
     if (!this.isValidPost(post.href, post.description)) { return }
     post.description = post.description.trim()
     post.extended = post.extended.trim()
