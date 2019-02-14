@@ -9,7 +9,7 @@ export const reviver = (key, value) => {
     case 'time':
       return new Date(value)
     case 'tags':
-      return value !== '' ? value.split(' ') : null
+      return value !== '' ? value.split(' ') : []
     default:
       return value
   }
@@ -24,7 +24,7 @@ export const replacer = (key, value) => {
     case 'time':
       return value.toISOString().split('.')[0] + 'Z'
     case 'tags':
-      return value ? value.join(' ') : ''
+      return value.join(' ')
     default:
       return value
   }

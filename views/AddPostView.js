@@ -285,12 +285,11 @@ export default class AddPostView extends React.Component {
 
   onSave = () => {
     const { navigation } = this.props
-    const tags = compact(post.tags)
     const post = { ...this.state.post }
     if (!this.isValidPost(post.href, post.description)) { return }
     post.description = post.description.trim()
     post.extended = post.extended.trim()
-    post.tags = !isEmpty(tags) ? tags : null
+    post.tags = compact(post.tags)
     post.meta = Math.random().toString(36) // PostCell change detection
     navigation.state.params.onSubmit(post)
     navigation.dismiss()
