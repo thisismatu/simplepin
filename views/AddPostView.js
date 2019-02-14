@@ -18,7 +18,7 @@ import { handleResponseError } from 'app/util/ErrorUtils'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
-import { color, padding, font, line, row, radius, icons } from 'app/style/style'
+import { color, padding, font, line, row, radius, icons, shadow } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
@@ -537,11 +537,7 @@ const s = StyleSheet.create({
     margin: padding.small,
     backgroundColor: color.white,
     borderRadius: radius.medium,
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
+    ...shadow,
   },
   resultsList: {
     paddingVertical: padding.small,

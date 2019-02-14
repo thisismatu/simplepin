@@ -2,7 +2,7 @@ import React from 'react'
 import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions, StatusBar } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
-import { color, padding, font, row, radius } from 'app/style/style'
+import { color, padding, font, row, radius, shadow } from 'app/style/style'
 
 const dimensions = Dimensions.get('screen')
 const portraitWidth = Math.min(dimensions.width, dimensions.height)
@@ -129,13 +129,9 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
     borderTopLeftRadius: radius.large,
     borderTopRightRadius: radius.large,
-    elevation: 8,
     paddingBottom: Math.max(getBottomSpace(), padding.small),
     paddingTop: padding.small,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
+    ...shadow,
   },
   cell: {
     alignItems: 'center',

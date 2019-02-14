@@ -47,6 +47,14 @@ export const radius = {
   large: 8,
 }
 
+export const shadow = {
+  elevation: 6,
+  shadowColor: '#000',
+  shadowOffset: { width: 0, height: 0 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+}
+
 export const icons = {
   add: require('app/assets/ic-add.png'),
   all: require('app/assets/ic-all.png'),
