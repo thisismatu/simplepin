@@ -8,15 +8,15 @@ import { color, padding, font, line, radius, icons } from 'app/style/style'
 class Tag extends React.PureComponent {
   render() {
     const { tag, index, onTagPress } = this.props
-    const isPrivateTag = startsWith(tag, '.')
+    const isPrivate = startsWith(tag, '.')
     return(
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onTagPress(tag)}
         style={[s.tagContainer, index === 0 && s.firstTag]}
         >
-        <View style={[s.tag, isPrivateTag && s.privateTag]}>
-          <Text style={[s.tagText, isPrivateTag && s.privateTagText]}>{tag}</Text>
+        <View style={[s.tag, isPrivate && s.privateTag]}>
+          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
         </View>
       </TouchableOpacity>
     )
@@ -32,7 +32,7 @@ Tag.propTypes = {
 export default class PostCell extends React.PureComponent {
   render() {
     const { post, tagOrder, exactDate, onTagPress, onCellPress, onCellLongPress } = this.props
-    const tags = post.tags && tagOrder  ? post.tags.sort() : post.tags
+    const tags = post.tags && tagOrder ? post.tags.sort() : post.tags
     return (
       <TouchableOpacity
         activeOpacity={0.5}

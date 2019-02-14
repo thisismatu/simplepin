@@ -48,8 +48,7 @@ ResultItem.propTypes = {
 class Tag extends React.PureComponent {
   render() {
     const { tag, onPress } = this.props
-    const isPrivateTag = startsWith(tag, '.')
-    const tint = isPrivateTag ? color.gray3 : color.blue2
+    const isPrivate = startsWith(tag, '.')
     return (
       <TouchableOpacity
         key={tag}
@@ -57,9 +56,9 @@ class Tag extends React.PureComponent {
         onPress={() => onPress(tag)}
         style={s.tagCell}
         >
-        <View style={[s.tag, isPrivateTag && s.privateTag]}>
-          <Text style={[s.tagText, isPrivateTag && s.privateTagText]}>{tag}</Text>
-          <Image source={icons.closeSmall} style={s.tagIcon} tintColor={tint} />
+        <View style={[s.tag, isPrivate && s.privateTag]}>
+          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
+          <Image source={icons.closeSmall} style={[s.tagIcon, isPrivate && s.privateTagIcon]} />
         </View>
       </TouchableOpacity>
     )
@@ -519,17 +518,21 @@ const s = StyleSheet.create({
     fontSize: font.small,
     lineHeight: line.small,
   },
+  tagIcon: {
+    resizeMode: 'contain',
+    width: 12,
+    height: 12,
+    marginLeft: 4,
+    tintColor: color.blue2,
+  },
   privateTag: {
     backgroundColor: color.gray1,
   },
   privateTagText: {
     color: color.gray3,
   },
-  tagIcon: {
-    resizeMode: 'contain',
-    width: 12,
-    height: 12,
-    marginLeft: 4,
+  privateTagIcon: {
+    tintColor: color.gray3,
   },
   resultsOverlay: {
     position: 'absolute',
