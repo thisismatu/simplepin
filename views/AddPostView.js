@@ -254,7 +254,10 @@ export default class AddPostView extends React.Component {
 
   onTagsChange = (evt) => {
     const { text } = evt.nativeEvent
-    this.setState({ searchQuery: text.trim() })
+    this.setState({
+      searchQuery: text.trim(),
+      unsavedChanges: true,
+    })
     this.filterSearchResults(text)
   }
 
