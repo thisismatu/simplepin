@@ -5,6 +5,7 @@ const strings = {
     ok: 'OK',
     delete: 'Delete',
     deletePost: 'Delte bookmark?',
+    discard: 'Discard',
     edit: 'Edit',
     markAs: 'Mark as',
     search: 'Search…',
@@ -59,8 +60,7 @@ const strings = {
   add: {
     titleAdd: 'Add bookmark',
     titleEdit: 'Edit bookmark',
-    discardAdd: 'Discard this bookmark?',
-    discardEdit: 'Discard unsaved changes to this bookmark?',
+    discardUnsaved: 'Discard unsaved changes?',
     placeholderHref: 'URL (required)',
     placeholderDescription: 'Title (required)',
     placeholderExtended: 'Description',

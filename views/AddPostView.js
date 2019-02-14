@@ -87,8 +87,7 @@ export default class AddPostView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      changes: 0,
-      isEditing: false,
+      unsavedChanges: false,
       suggestedTags: [],
       userTags: [],
       scrollEnabled: true,
@@ -96,7 +95,6 @@ export default class AddPostView extends React.Component {
       searchResults: {},
       searchHeight: 200,
       searchVisible: false,
-      initialState: {},
       post: {
         description: '',
         extended: '',
@@ -115,18 +113,12 @@ export default class AddPostView extends React.Component {
     const { navigation } = this.props
     const post = navigation.getParam('post')
     if (post) {
-      this.setState(state => {
-        state.isEditing = true
-        state.initialState = post
-        state.post = post
-        return state
-      })
+      this.setState({ post: post })
     } else {
       Storage.userPreferences().then(prefs => {
         this.setState(state => {
           state.post.shared = !prefs.privateByDefault
           state.post.toread = prefs.unreadByDefault
-          state.initialState = state.post
           return state
         })
       })
@@ -166,20 +158,23 @@ export default class AddPostView extends React.Component {
     }
   }
 
+  isValidPost = (href, description) => {
+    return isUrl(href) && !isEmpty(description)
+  }
+
   onUnsavedDismiss = () => {
     const { navigation } = this.props
-    const { changes, isEditing } = this.state
-    if (changes === 0) {
-      navigation.dismiss()
-    } else {
+    const { unsavedChanges } = this.state
+    if (unsavedChanges) {
       Alert.alert(
-        isEditing ? strings.add.discardEdit : strings.add.discardAdd,
-        null,
+        strings.add.discardUnsaved, null,
         [
           { text: strings.common.cancel, style: 'cancel' },
-          { text: strings.common.ok, onPress: () => navigation.dismiss() },
+          { text: strings.common.discard, onPress: () => navigation.dismiss() },
         ]
       )
+    } else {
+      navigation.dismiss()
     }
   }
 
@@ -188,15 +183,11 @@ export default class AddPostView extends React.Component {
     return true
   }
 
-  isValidPost = (href, description) => {
-    return isUrl(href) && !isEmpty(description)
-  }
-
   onHrefChange = (evt) => {
     const { text } = evt.nativeEvent
     this.setState(state => {
       state.post.href = text.trim()
-      state.changes += 1
+      state.unsavedChanges = true
       return state
     })
   }
@@ -205,7 +196,7 @@ export default class AddPostView extends React.Component {
     const { text } = evt.nativeEvent
     this.setState(state => {
       state.post.description = text
-      state.changes += 1
+      state.unsavedChanges = true
       return state
     })
   }
@@ -214,7 +205,7 @@ export default class AddPostView extends React.Component {
     const { text } = evt.nativeEvent
     this.setState(state => {
       state.post.extended = text
-      state.changes += 1
+      state.unsavedChanges = true
       return state
     })
   }
@@ -222,7 +213,7 @@ export default class AddPostView extends React.Component {
   onShared = (value) => {
     this.setState(state => {
       state.post.shared = !value
-      state.changes += 1
+      state.unsavedChanges = true
       return state
     })
   }
@@ -230,7 +221,7 @@ export default class AddPostView extends React.Component {
   onToread = (value) => {
     this.setState(state => {
       state.post.toread = value
-      state.changes += 1
+      state.unsavedChanges = true
       return state
     })
   }
