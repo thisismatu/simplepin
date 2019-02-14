@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList } from 'react-native'
+import { View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList, Animated } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -11,6 +11,7 @@ import filter from 'lodash/filter'
 import keys from 'lodash/keys'
 import map from 'lodash/map'
 import difference from 'lodash/difference'
+import startsWith from 'lodash/startsWith'
 import isUrl from 'is-url'
 import Api from 'app/Api'
 import { handleResponseError } from 'app/util/ErrorUtils'
@@ -47,6 +48,8 @@ ResultItem.propTypes = {
 class Tag extends React.PureComponent {
   render() {
     const { tag, onPress } = this.props
+    const isPrivateTag = startsWith(tag, '.')
+    const tint = isPrivateTag ? color.gray3 : color.blue2
     return (
       <TouchableOpacity
         key={tag}
@@ -54,9 +57,9 @@ class Tag extends React.PureComponent {
         onPress={() => onPress(tag)}
         style={s.tagCell}
         >
-        <View style={s.tag}>
-          <Text style={s.tagText}>{tag}</Text>
-          <Image source={icons.closeSmall} style={s.tagIcon} />
+        <View style={[s.tag, isPrivateTag && s.privateTag]}>
+          <Text style={[s.tagText, isPrivateTag && s.privateTagText]}>{tag}</Text>
+          <Image source={icons.closeSmall} style={s.tagIcon} tintColor={tint} />
         </View>
       </TouchableOpacity>
     )
@@ -86,7 +89,18 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.shakeAnim = new Animated.Value(0)
+    this.shakeStyle = {
+      transform: [{
+        translateX: this.shakeAnim.interpolate({
+          inputRange: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
+          outputRange: [0, 3, -3, 3, -3, 0, 3, -3, 3, -3, 0],
+        }),
+      }],
+    }
     this.state = {
+      validHref: false,
+      validDescription: false,
       unsavedChanges: false,
       suggestedTags: [],
       userTags: [],
@@ -158,8 +172,20 @@ export default class AddPostView extends React.Component {
     }
   }
 
+  animate = () => {
+    this.shakeAnim.setValue(0)
+    Animated.timing(this.shakeAnim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start()
+  }
+
   isValidPost = (href, description) => {
-    return isUrl(href) && !isEmpty(description)
+    const validHref = isUrl(href)
+    const validDescription = !isEmpty(description)
+    this.setState({ validHref, validDescription }, () => this.animate())
+    return validHref && validDescription
   }
 
   onUnsavedDismiss = () => {
@@ -228,33 +254,23 @@ export default class AddPostView extends React.Component {
 
   onTagsChange = (evt) => {
     const { text } = evt.nativeEvent
-    this.setState({
-      searchQuery: text.trim(),
-      searchVisible: true,
-      scrollEnabled: false,
+    this.setState({ searchQuery: text.trim() })
+    this.filterSearchResults(text)
+  }
+
+  filterSearchResults = text => {
+    const { post, userTags, suggestedTags } = this.state
+    const suggestedTagsResults = filter(difference(suggestedTags, post.tags), tag => tag.includes(text))
+    const userTagsResults = filter(difference(userTags, flattenDeep([post.tags, suggestedTags])), tag => tag.includes(text))
+    const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
+    const searchVisible = !isEmpty(searchResults) && !isEmpty(text)
+    this.setState(state => {
+      state.searchVisible = searchVisible,
+      state.scrollEnabled = !searchVisible,
+      state.searchResults.suggested = suggestedTagsResults
+      state.searchResults.user = userTagsResults
+      return state
     })
-    if (!isEmpty(text)) {
-      const { post, userTags, suggestedTags } = this.state
-      const suggestedTagsResults = filter(difference(suggestedTags, post.tags), tag => tag.includes(text))
-      const userTagsResults = filter(difference(userTags, flattenDeep([post.tags, suggestedTags])), tag => tag.includes(text))
-      this.setState(state => {
-        state.searchResults.suggested = suggestedTagsResults
-        state.searchResults.user = userTagsResults
-        return state
-      })
-      const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
-      if (isEmpty(searchResults)) {
-        this.setState({
-          searchVisible: false,
-          scrollEnabled: true,
-        })
-      }
-    } else {
-      this.setState({
-        searchVisible: false,
-        scrollEnabled: true,
-      })
-    }
   }
 
   removeTag = (tagToRemove) => {
@@ -289,22 +305,31 @@ export default class AddPostView extends React.Component {
   }
 
   renderSearchResults = () => {
-    const { searchResults, searchHeight } = this.state
+    const { searchResults, searchHeight, contentOffset = 0 } = this.state
+    const containerHeight = { height: searchHeight - contentOffset - padding.small }
+    const topOffset = { top: contentOffset }
     return (
-      <SectionList
-        sections={[{
-          data: searchResults.suggested,
-          renderItem: ({ item }) => <ResultItem tag={item} suggested={true} onPress={this.selectTag} />,
-        }, {
-          data: searchResults.user,
-          renderItem: ({ item }) => <ResultItem tag={item} suggested={false} onPress={this.selectTag} />,
-        }]}
-        keyExtractor={(item, index) => item + index}
-        keyboardShouldPersistTaps="always"
-        keyboardDismissMode="none"
-        style={[s.resultList, { height: searchHeight - 1 }]}
-        contentContainerStyle={{ paddingVertical: padding.small }}
-      />
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[s.resultsOverlay, topOffset]}
+        onPress={() => this.setState({ searchVisible: false, scrollEnabled: true })}
+      >
+        <View style={[s.resultsContainer, containerHeight]}>
+          <SectionList
+            sections={[{
+              data: searchResults.suggested,
+              renderItem: ({ item }) => <ResultItem tag={item} suggested={true} onPress={this.selectTag} />,
+            }, {
+              data: searchResults.user,
+              renderItem: ({ item }) => <ResultItem tag={item} suggested={false} onPress={this.selectTag} />,
+            }]}
+            keyExtractor={(item, index) => item + index}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="none"
+            contentContainerStyle={s.resultsList}
+          />
+        </View>
+      </TouchableOpacity>
     )
   }
 
@@ -318,7 +343,7 @@ export default class AddPostView extends React.Component {
   }
 
   render() {
-    const { post, scrollEnabled, searchQuery, searchVisible } = this.state
+    const { post, scrollEnabled, searchQuery, searchVisible, validHref, validDescription } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
     const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
 
@@ -328,38 +353,45 @@ export default class AddPostView extends React.Component {
         contentContainerStyle={s.container}
         contentInsetAdjustmentBehavior="always"
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="none"
         style={s.list}
+        onScroll={evt => this.setState({ contentOffset: evt.nativeEvent.contentOffset.y })}
         >
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          onChange={this.onHrefChange}
-          onSubmitEditing={() => { this.descriptionRef.focus() }}
-          placeholder={strings.add.placeholderHref}
-          placeholderTextColor = {color.gray2}
-          returnKeyType="next"
-          style={s.textInput}
-          underlineColorAndroid="transparent"
-          value={post.href}
-        />
+        <Animated.View style={!validHref && this.shakeStyle}>
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            keyboardType="url"
+            onChange={this.onHrefChange}
+            onSubmitEditing={() => { this.descriptionRef.focus() }}
+            placeholder={strings.add.placeholderHref}
+            placeholderTextColor = {color.gray2}
+            returnKeyType="next"
+            style={s.textInput}
+            underlineColorAndroid="transparent"
+            value={post.href}
+          />
+        </Animated.View>
         <Separator />
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          onChange={this.onDescriptionChange}
-          onSubmitEditing={() => { this.extendedRef.focus() }}
-          placeholder={strings.add.placeholderDescription}
-          placeholderTextColor = {color.gray2}
-          ref={input => this.descriptionRef = input}
-          returnKeyType="next"
-          style={s.textInput}
-          underlineColorAndroid="transparent"
-          value={post.description}
-        />
+        <Animated.View style={!validDescription && this.shakeStyle}>
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onDescriptionChange}
+            onSubmitEditing={() => { this.extendedRef.focus() }}
+            placeholder={strings.add.placeholderDescription}
+            placeholderTextColor = {color.gray2}
+            ref={input => this.descriptionRef = input}
+            returnKeyType="next"
+            style={s.textInput}
+            underlineColorAndroid="transparent"
+            value={post.description}
+          />
+        </Animated.View>
         <Separator />
         <TextInput
           autoCapitalize="none"
@@ -378,8 +410,7 @@ export default class AddPostView extends React.Component {
           underlineColorAndroid="transparent"
           value={post.extended}
         />
-        <Separator />
-        { !isEmpty(post.tags) && this.renderTags() }
+        <Separator onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })} />
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
@@ -387,7 +418,6 @@ export default class AddPostView extends React.Component {
           enablesReturnKeyAutomatically={true}
           onChange={this.onTagsChange}
           onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
-          onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })}
           placeholder={strings.add.placeholderTags}
           placeholderTextColor = {color.gray2}
           ref={input => this.tagsRef = input}
@@ -396,6 +426,7 @@ export default class AddPostView extends React.Component {
           underlineColorAndroid="transparent"
           value={searchQuery}
         />
+        {!isEmpty(post.tags) && this.renderTags()}
         <Separator />
         <View style={s.cell}>
           <Text style={s.text}>{strings.posts.private}</Text>
@@ -467,7 +498,7 @@ const s = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: 12,
-    paddingTop: padding.small,
+    paddingBottom: padding.small,
   },
   tagCell: {
     padding: 4,
@@ -485,19 +516,35 @@ const s = StyleSheet.create({
     fontSize: font.small,
     lineHeight: line.small,
   },
+  privateTag: {
+    backgroundColor: color.gray1,
+  },
+  privateTagText: {
+    color: color.gray3,
+  },
   tagIcon: {
     resizeMode: 'contain',
     width: 12,
     height: 12,
-    tintColor: color.blue2,
     marginLeft: 4,
   },
-  resultList: {
+  resultsOverlay: {
     position: 'absolute',
-    top: 0, left: 0,
-    width: '100%',
-    backgroundColor: color.white,
+    top: 0, right: 0, bottom: 0, left: 0,
     zIndex: 9999,
+  },
+  resultsContainer: {
+    margin: padding.small,
+    backgroundColor: color.white,
+    borderRadius: radius.medium,
+    elevation: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 0 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+  },
+  resultsList: {
+    paddingVertical: padding.small,
   },
   resultCell: {
     flexDirection: 'row',
