@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, TextInput, Image, Clipboard, AppState, Linking, Dimensions, Animated } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TextInput, Clipboard, AppState, Linking, Dimensions, Animated } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
@@ -51,14 +51,14 @@ export default class LoginView extends React.Component {
     AppState.removeEventListener('change', this.onAppStateChange)
   }
 
-  onAppStateChange = (nextAppState) => {
+  onAppStateChange = nextAppState => {
     if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
       this.checkClipboardForApiToken()
     }
     this.setState({ appState: nextAppState })
   }
 
-  onChange = (evt) => {
+  onChange = evt => {
     this.setState({ apiToken: evt.nativeEvent.text })
   }
 

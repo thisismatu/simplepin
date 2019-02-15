@@ -14,7 +14,7 @@ export default class TimeAgo extends React.PureComponent {
     return `${number} ${string}s ago`
   }
 
-  format = (date) => {
+  format = date => {
     if (!date) { return null }
 
     const today = new Date()

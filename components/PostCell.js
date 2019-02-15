@@ -9,11 +9,12 @@ class Tag extends React.PureComponent {
   render() {
     const { tag, index, onTagPress } = this.props
     const isPrivate = startsWith(tag, '.')
+    const isFirst = index === 0
     return(
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={onTagPress(tag)}
-        style={[s.tagContainer, index === 0 && s.firstTag]}
+        style={[s.tagContainer, isFirst && s.firstTag]}
         >
         <View style={[s.tag, isPrivate && s.privateTag]}>
           <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
@@ -39,17 +40,9 @@ export default class PostCell extends React.PureComponent {
         onPress={onCellPress(post)}
         onLongPress={onCellLongPress(post)}
         >
-        {
-          post.toread
-          ? <View style={s.unread} />
-          : null
-        }
+        {!!post.toread && <View style={s.unread} />}
         <Text style={[s.title, post.toread && s.titleUnread]}>{post.description}</Text>
-        {
-          post.extended
-          ? <Text style={s.description}>{post.extended}</Text>
-          : null
-        }
+        {!!post.extended && <Text style={s.description}>{post.extended}</Text>}
         <FlatList
           bounces={false}
           data={tags}

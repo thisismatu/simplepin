@@ -2,7 +2,7 @@ import { Alert } from 'react-native'
 import Storage from 'app/util/Storage'
 import strings from 'app/style/strings'
 
-const logout = (navigation) => {
+export const logout = (navigation) => {
   Storage.clear()
   navigation.navigate('AuthLoading')
 }

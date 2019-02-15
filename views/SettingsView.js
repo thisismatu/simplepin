@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
+import { logout } from 'app/util/ErrorUtils'
 import NavigationButton from 'app/components/NavigationButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
@@ -32,35 +33,35 @@ export default class SettingsView extends React.Component {
   }
 
   componentDidMount() {
-    Storage.userPreferences().then((prefs) => this.setState(prefs))
+    Storage.userPreferences().then(prefs => this.setState(prefs))
   }
 
-  onMarkAsRead = (value) => {
+  onMarkAsRead = value => {
     Storage.setMarkAsRead(value)
     this.setState({ markAsRead: value })
   }
 
-  onExactDate = (value) => {
+  onExactDate = value => {
     Storage.setExactDate(value)
     this.setState({ exactDate: value })
   }
 
-  onTagOrder = (value) => {
+  onTagOrder = value => {
     Storage.setTagOrder(value)
     this.setState({ tagOrder: value })
   }
 
-  onPrivateByDefault = (value) => {
+  onPrivateByDefault = value => {
     Storage.setPrivateByDefault(value)
     this.setState({ privateByDefault: value })
   }
 
-  onUnreadByDefault = (value) => {
+  onUnreadByDefault = value => {
     Storage.setUnreadByDefault(value)
     this.setState({ unreadByDefault: value })
   }
 
-  onOpenLinksExternal = (value) => {
+  onOpenLinksExternal = value => {
     Storage.setOpenLinksExternal(value)
     this.setState({ openLinksExternal: value })
   }
@@ -71,17 +72,15 @@ export default class SettingsView extends React.Component {
       null,
       [
         { text: strings.common.cancel, style: 'cancel' },
-        { text: strings.settings.logout, onPress: () => {
-          Storage.clear()
-          this.props.navigation.navigate('AuthLoading')
-        }, style: 'destructive' },
+        { text: strings.settings.logout, onPress: () => logout(this.props.navigation), style: 'destructive' },
       ]
     )
   }
 
   render() {
+    const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, exactDate, tagOrder } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
-    const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
+    const thumb = isEnabled => isAndroid && isEnabled && color.blue2
     return (
       <ScrollView
         contentContainerStyle={s.container}
@@ -97,10 +96,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.privateByDefault}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.privateByDefault)}
+            thumbColor={thumb(privateByDefault)}
             trackColor={{ true: track }}
             onValueChange={this.onPrivateByDefault}
-            value={this.state.privateByDefault}
+            value={privateByDefault}
           />
         </View>
         <Separator />
@@ -108,10 +107,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.unreadByDefault}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.unreadByDefault)}
+            thumbColor={thumb(unreadByDefault)}
             trackColor={{ true: track }}
             onValueChange={this.onUnreadByDefault}
-            value={this.state.unreadByDefault}
+            value={unreadByDefault}
           />
         </View>
         <Separator />
@@ -119,10 +118,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.markAsReadWhenOpened}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.markAsRead)}
+            thumbColor={thumb(markAsRead)}
             trackColor={{ true: track }}
             onValueChange={this.onMarkAsRead}
-            value={this.state.markAsRead}
+            value={markAsRead}
           />
         </View>
         <Separator />
@@ -130,10 +129,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.openLinksExternal}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.openLinksExternal)}
+            thumbColor={thumb(openLinksExternal)}
             trackColor={{ true: track }}
             onValueChange={this.onOpenLinksExternal}
-            value={this.state.openLinksExternal}
+            value={openLinksExternal}
           />
         </View>
         <Separator />
@@ -146,10 +145,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.exactDates}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.exactDate)}
+            thumbColor={thumb(exactDate)}
             trackColor={{ true: track }}
             onValueChange={this.onExactDate}
-            value={this.state.exactDate}
+            value={exactDate}
           />
         </View>
         <Separator />
@@ -157,10 +156,10 @@ export default class SettingsView extends React.Component {
           <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
           <Switch
             style={s.switch}
-            thumbColor={thumb(this.state.tagOrder)}
+            thumbColor={thumb(tagOrder)}
             trackColor={{ true: track }}
             onValueChange={this.onTagOrder}
-            value={this.state.tagOrder}
+            value={tagOrder}
           />
         </View>
         <Separator />

@@ -49,7 +49,7 @@ const strings = {
     privateByDefault: 'Private by default',
     unreadByDefault: 'Unread by default',
     markAsReadWhenOpened: 'Mark as read when opened',
-    openLinksExternal: 'Open links with external browser',
+    openLinksExternal: 'Open links in external browser',
     display: 'Display',
     exactDates: 'Exact dates',
     sortTagsAlphabetically: 'Sort tags alphabetically',

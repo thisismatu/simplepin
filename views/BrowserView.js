@@ -39,7 +39,7 @@ export default class BrowserView extends React.Component {
     }
   }
 
-  onNavigationStateChange = (navState) => {
+  onNavigationStateChange = navState => {
     //Todo: this isn't called on SPA sites, need to inject some JS for that…
     this.setState({
       canGoBack: navState.canGoBack,

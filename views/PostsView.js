@@ -30,7 +30,7 @@ import EmptyState from 'app/components/EmptyState'
 import { color, padding, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
-const filterPosts = (obj) => {
+const filterPosts = obj => {
   return {
     allPosts: obj,
     unreadPosts: filter(obj, ['toread', true]),
@@ -40,7 +40,7 @@ const filterPosts = (obj) => {
   }
 }
 
-const postsCount = (obj) => {
+const postsCount = obj => {
   return {
     allCount: obj.allPosts.length,
     unreadCount: obj.unreadPosts.length,
@@ -90,12 +90,12 @@ export default class PostsView extends React.Component {
     this.props.navigation.setParams({ onSubmit: this.onSubmitAddPost })
     this.props.navigation.setParams({ openDrawer: this.openDrawer })
     Storage.userPreferences()
-      .then((prefs) => this.setState({ preferences: prefs }))
+      .then(prefs => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
   }
 
   componentDidUpdate(prevProps, prevState) {
-    Storage.userPreferences().then((prefs) => {
+    Storage.userPreferences().then(prefs => {
       if (!isEqual(prevState.preferences, prefs)) {
         this.setState({ preferences: prefs })
       }
@@ -149,7 +149,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  addPost = async (post) => {
+  addPost = async post => {
     const { apiToken } = this.state.preferences
     const index = findIndex(this.state.allPosts, ['hash', post.hash])
     const newCollection = this.state.allPosts
@@ -169,7 +169,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  deletePost = async (post) => {
+  deletePost = async post => {
     const { apiToken } = this.state.preferences
     const newCollection = reject(this.state.allPosts, { href: post.href })
     const newData = filterPosts(newCollection)
@@ -207,7 +207,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  currentList = (shouldFilter) => {
+  currentList = shouldFilter => {
     const current = this.props.navigation.getParam('list', 'allPosts')
     if (shouldFilter) {
       return this.filterSearchResults(this.state.searchQuery)
@@ -261,7 +261,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  onSubmitAddPost = (post) => {
+  onSubmitAddPost = post => {
     this.addPost(post)
   }
 
@@ -337,7 +337,7 @@ export default class PostsView extends React.Component {
     )
   }
 
-  renderPostCell = (item) => {
+  renderPostCell = item => {
     return (
       <PostCell
         post={item}

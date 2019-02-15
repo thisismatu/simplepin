@@ -26,7 +26,7 @@ export default class DrawerView extends React.PureComponent {
   }
 
   componentDidMount() {
-    Storage.apiToken().then((value) => {
+    Storage.apiToken().then(value => {
       const username = value ? value.split(':')[0] : null
       this.setState({ username: username })
     })
@@ -43,7 +43,7 @@ export default class DrawerView extends React.PureComponent {
     return isEqual(route, focusedRoute)
   }
 
-  routeCount = (title) => {
+  routeCount = title => {
     const { state } = this.props.navigation
     return get(state.routes, ['0', 'routes', '0', 'params', title])
   }
@@ -57,7 +57,7 @@ export default class DrawerView extends React.PureComponent {
     this.props.navigation.navigate(route, params)
   }
 
-  openUrl = (url) => {
+  openUrl = url => {
     Linking.canOpenURL(url).then(() => {
       Linking.openURL(url)
     })

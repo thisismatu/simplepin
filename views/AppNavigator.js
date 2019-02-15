@@ -32,7 +32,7 @@ const MainStack = createStackNavigator(
     initialRouteParams: { title: strings.posts.all, list: 'allPosts' },
     navigationOptions: headerStyles,
     transitionConfig: () => ({
-      screenInterpolator: (sceneProps) => {
+      screenInterpolator: sceneProps => {
         return StackViewStyleInterpolator.forFade(sceneProps)
       },
     }),

@@ -23,6 +23,7 @@ import { color, padding, font, line, row, radius, icons, shadow } from 'app/styl
 import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
+const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 
 class ResultItem extends React.PureComponent {
   render() {
@@ -89,10 +90,10 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.shakeAnim = new Animated.Value(0)
+    this.shakeValue = new Animated.Value(0)
     this.shakeStyle = {
       transform: [{
-        translateX: this.shakeAnim.interpolate({
+        translateX: this.shakeValue.interpolate({
           inputRange: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0],
           outputRange: [0, 3, -3, 3, -3, 0, 3, -3, 3, -3, 0],
         }),
@@ -181,8 +182,8 @@ export default class AddPostView extends React.Component {
   }
 
   animate = () => {
-    this.shakeAnim.setValue(0)
-    Animated.timing(this.shakeAnim, {
+    this.shakeValue.setValue(0)
+    Animated.timing(this.shakeValue, {
       toValue: 1,
       duration: 1000,
       useNativeDriver: true,
@@ -216,37 +217,37 @@ export default class AddPostView extends React.Component {
     return true
   }
 
-  onHrefChange = (evt) => {
+  onHrefChange = evt => {
     const post = { ...this.state.post }
     post.href = evt.nativeEvent.text.trim()
     this.setState({ post })
   }
 
-  onDescriptionChange = (evt) => {
+  onDescriptionChange = evt => {
     const post = { ...this.state.post }
     post.description = evt.nativeEvent.text
     this.setState({ post })
   }
 
-  onExtendedChange = (evt) => {
+  onExtendedChange = evt => {
     const post = { ...this.state.post }
     post.extended = evt.nativeEvent.text
     this.setState({ post })
   }
 
-  onShared = (value) => {
+  onShared = value => {
     const post = { ...this.state.post }
     post.shared = !value
     this.setState({ post })
   }
 
-  onToread = (value) => {
+  onToread = value => {
     const post = { ...this.state.post }
     post.toread = value
     this.setState({ post })
   }
 
-  onTagsChange = (evt) => {
+  onTagsChange = evt => {
     const { text } = evt.nativeEvent
     this.setState({ searchQuery: text.trim() })
     this.filterSearchResults(text)
@@ -268,14 +269,14 @@ export default class AddPostView extends React.Component {
     })
   }
 
-  removeTag = (tagToRemove) => {
+  removeTag = tagToRemove => {
     const post = { ...this.state.post }
     const updatedTags = filter(post.tags, tag =>  tag !== tagToRemove)
     post.tags = updatedTags
     this.setState({ post })
   }
 
-  selectTag = (tag) => {
+  selectTag = tag => {
     const post = { ...this.state.post }
     post.tags.push(tag)
     this.setState({
@@ -289,7 +290,7 @@ export default class AddPostView extends React.Component {
   onSave = () => {
     const { navigation } = this.props
     const post = { ...this.state.post }
-    if (!this.isValidPost(post.href, post.description)) { return }
+    if (!this.isValidPost(post.href, post.description)) return
     post.description = post.description.trim()
     post.extended = post.extended.trim()
     post.tags = compact(post.tags)
@@ -331,7 +332,7 @@ export default class AddPostView extends React.Component {
     const { post } = this.state
     return (
       <View style={s.tagContainer}>
-        {map(post.tags, (item) => <Tag key={item} tag={item} onPress={this.removeTag} />)}
+        {map(post.tags, item => <Tag key={item} tag={item} onPress={this.removeTag} />)}
       </View>
     )
   }
@@ -339,8 +340,7 @@ export default class AddPostView extends React.Component {
   render() {
     const { post, scrollEnabled, searchQuery, searchVisible, validHref, validDescription } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
-    const thumb = (isEnabled) => isAndroid && isEnabled ? color.blue2 : null
-
+    const thumb = isEnabled => isAndroid && isEnabled && color.blue2
     return (
       <KeyboardAwareScrollView
         scrollEnabled={scrollEnabled}
@@ -351,41 +351,37 @@ export default class AddPostView extends React.Component {
         style={s.list}
         onScroll={evt => this.setState({ contentOffset: evt.nativeEvent.contentOffset.y })}
         >
-        <Animated.View style={!validHref && this.shakeStyle}>
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            keyboardType="url"
-            onChange={this.onHrefChange}
-            onSubmitEditing={() => { this.descriptionRef.focus() }}
-            placeholder={strings.add.placeholderHref}
-            placeholderTextColor = {color.gray2}
-            returnKeyType="next"
-            style={s.textInput}
-            underlineColorAndroid="transparent"
-            value={post.href}
-          />
-        </Animated.View>
+        <AnimatedTextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          keyboardType="url"
+          onChange={this.onHrefChange}
+          onSubmitEditing={() => this.descriptionRef.focus()}
+          placeholder={strings.add.placeholderHref}
+          placeholderTextColor={color.gray2}
+          returnKeyType="next"
+          style={[s.textInput, !validHref && this.shakeStyle]}
+          underlineColorAndroid="transparent"
+          value={post.href}
+        />
         <Separator />
-        <Animated.View style={!validDescription && this.shakeStyle}>
-          <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
-            blurOnSubmit={false}
-            enablesReturnKeyAutomatically={true}
-            onChange={this.onDescriptionChange}
-            onSubmitEditing={() => { this.extendedRef.focus() }}
-            placeholder={strings.add.placeholderDescription}
-            placeholderTextColor = {color.gray2}
-            ref={input => this.descriptionRef = input}
-            returnKeyType="next"
-            style={s.textInput}
-            underlineColorAndroid="transparent"
-            value={post.description}
-          />
-        </Animated.View>
+        <AnimatedTextInput
+          autoCapitalize="none"
+          autoCorrect={false}
+          blurOnSubmit={false}
+          enablesReturnKeyAutomatically={true}
+          onChange={this.onDescriptionChange}
+          onSubmitEditing={() => this.extendedRef.focus()}
+          placeholder={strings.add.placeholderDescription}
+          placeholderTextColor={color.gray2}
+          ref={input => this.descriptionRef = input}
+          returnKeyType="next"
+          style={[s.textInput, !validDescription && this.shakeStyle]}
+          underlineColorAndroid="transparent"
+          value={post.description}
+        />
         <Separator />
         <TextInput
           autoCapitalize="none"
@@ -396,7 +392,7 @@ export default class AddPostView extends React.Component {
           onChange={this.onExtendedChange}
           onSubmitEditing={() => { this.tagsRef.focus() }}
           placeholder={strings.add.placeholderExtended}
-          placeholderTextColor = {color.gray2}
+          placeholderTextColor={color.gray2}
           ref={input => this.extendedRef = input}
           returnKeyType="next"
           style={[s.textInput, s.textArea]}
@@ -413,7 +409,7 @@ export default class AddPostView extends React.Component {
           onChange={this.onTagsChange}
           onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
           placeholder={strings.add.placeholderTags}
-          placeholderTextColor = {color.gray2}
+          placeholderTextColor={color.gray2}
           ref={input => this.tagsRef = input}
           returnKeyType="done"
           style={s.textInput}
