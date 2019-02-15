@@ -20,7 +20,6 @@ export default class LoginView extends React.Component {
     this.state = {
       appState: AppState.currentState,
       apiToken: null,
-      clipboardContent: null,
       loading: false,
     }
   }
@@ -46,14 +45,15 @@ export default class LoginView extends React.Component {
   }
 
   onSubmit = async () => {
+    const { apiToken } = this.state
     this.setState({ loading: true })
-    const response = await Api.userToken(this.state.apiToken)
+    const response = await Api.userToken(apiToken)
     if (response.ok === 0) {
       this.setState({ loading: false })
       handleLoginResponseError(response.error)
     } else {
       this.setState({ loading: false })
-      Storage.setApiToken(this.state.apiToken)
+      Storage.setApiToken(apiToken)
       this.props.navigation.navigate('App')
     }
   }
@@ -66,18 +66,24 @@ export default class LoginView extends React.Component {
 
   checkClipboardForApiToken = async () => {
     const clipboardContent = await Clipboard.getString()
-    this.setState({ clipboardContent: clipboardContent.trim() })
     const regex = /[A-Z,0-9]/g
-    const tokenLatterPart = this.state.clipboardContent.split(':')[1]
+    const tokenLatterPart = clipboardContent.trim().split(':')[1]
     if (regex.test(tokenLatterPart) && tokenLatterPart.length === 20) {
-      this.setState({ apiToken: this.state.clipboardContent })
+      this.setState({ apiToken: clipboardContent.trim() })
     }
   }
 
   render() {
+    const { apiToken, loading } = this.state
     return (
       <KeyboardAvoidingView style={s.container} behavior="padding">
-        <Image source={icons.simplepin} style={s.icon} />
+        <View style={s.header}>
+          {
+            loading
+            ? <ActivityIndicator animating={loading} color={color.blue2} />
+            : <Image source={icons.simplepin} style={s.icon} />
+          }
+        </View>
         <View style={{ width: '100%' }}>
           <Text style={s.title}>{strings.login.title}</Text>
           <Text style={s.text}>{strings.login.text}</Text>
@@ -88,19 +94,19 @@ export default class LoginView extends React.Component {
           enablesReturnKeyAutomatically={true}
           placeholder={strings.login.placeholder}
           placeholderTextColor = {color.gray2}
+          keyboardType="email-address"
           returnKeyType="done"
           secureTextEntry={true}
           style={s.input}
           textContentType="password"
           underlineColorAndroid="transparent"
-          value={this.state.apiToken}
+          value={apiToken}
           onChange={this.onChange}
           onSubmitEditing={this.onSubmit}
         />
         <TouchableOpacity
           activeOpacity={0.5}
-          disabled={!this.state.apiToken}
-          style={[s.loginButton, !this.state.apiToken && s.disabled]}
+          style={s.loginButton}
           onPress={this.onSubmit}
         >
           <Text style={s.loginButtonText}>{strings.login.button}</Text>
@@ -112,7 +118,6 @@ export default class LoginView extends React.Component {
         >
           <Text style={s.tokenButtonText}>{strings.login.token}</Text>
         </TouchableOpacity>
-        <ActivityIndicator style={{ opacity: this.state.loading ? 1 : 0 }} />
       </KeyboardAvoidingView>
     )
   }
@@ -129,6 +134,11 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     padding: padding.huge,
     backgroundColor: color.white,
+  },
+  header: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 48,
   },
   icon: {
     marginBottom: padding.medium,
@@ -163,7 +173,7 @@ const s = StyleSheet.create({
   loginButton: {
     backgroundColor: color.blue2,
     borderRadius: radius.medium,
-    marginBottom: padding.large,
+    marginBottom: padding.medium,
     paddingHorizontal: padding.medium,
     width: '100%',
   },
@@ -184,8 +194,5 @@ const s = StyleSheet.create({
     fontSize: font.medium,
     lineHeight: row.medium,
     textAlign: 'center',
-  },
-  disabled: {
-    opacity: 0.3,
   },
 })
