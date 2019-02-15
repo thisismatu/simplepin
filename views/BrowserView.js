@@ -18,7 +18,6 @@ export default class BrowserView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.webViewRef = React.createRef()
     this.state = {
       title: this.props.navigation.getParam('title', ''),
       url: this.props.navigation.getParam('url', ''),
@@ -95,7 +94,7 @@ export default class BrowserView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           disabled={!this.state.canGoForward}
-          onPress={() => this.webview.goForward()}
+          onPress={() => this.webViewRef.goForward()}
           style={s.button}
         >
           <Image
@@ -112,7 +111,7 @@ export default class BrowserView extends React.Component {
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
           <WebView
-            ref={this.webViewRef}
+            ref={ref => this.webViewRef = ref}
             source={{ uri: this.state.url }}
             startInLoadingState={true}
             onNavigationStateChange={this.onNavigationStateChange}

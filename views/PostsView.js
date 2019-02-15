@@ -61,7 +61,6 @@ export default class PostsView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.listRef = React.createRef()
     this.state = {
       isLoading: false,
       allPosts: null,
@@ -401,7 +400,7 @@ export default class PostsView extends React.Component {
       <View style={s.root}>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
           <FlatList
-            ref={this.listRef}
+            ref={(ref) => this.listRef = ref}
             contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
             data={data}
             initialNumToRender={8}
