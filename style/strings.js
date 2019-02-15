@@ -31,7 +31,7 @@ const strings = {
   login: {
     title: 'Welcome!',
     text: 'Simplepin makes reading and managing your Pinboard bookmarks easy',
-    placeholder: 'Enter your API token',
+    placeholder: 'Pinboard API token',
     button: 'Log in',
     token: 'Show API token',
   },

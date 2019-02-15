@@ -1,5 +1,6 @@
 import React from 'react'
-import { StyleSheet, Text, KeyboardAvoidingView, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking, Dimensions } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtils'
@@ -8,6 +9,8 @@ import { color, padding, font, line, row, radius, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const pinboardUrl = 'https://m.pinboard.in/settings/password'
+const { height } = Dimensions.get('window')
+const smallDevice = height < 640
 
 export default class LoginView extends React.Component {
   static navigationOptions = {
@@ -76,7 +79,11 @@ export default class LoginView extends React.Component {
   render() {
     const { apiToken, loading } = this.state
     return (
-      <KeyboardAvoidingView style={s.container} behavior="padding">
+      <KeyboardAwareScrollView
+        alwaysBounceVertical={false}
+        contentContainerStyle={s.container}
+        style={s.list}
+        >
         <View style={s.header}>
           {
             loading
@@ -84,10 +91,8 @@ export default class LoginView extends React.Component {
             : <Image source={icons.simplepin} style={s.icon} />
           }
         </View>
-        <View style={{ width: '100%' }}>
-          <Text style={s.title}>{strings.login.title}</Text>
-          <Text style={s.text}>{strings.login.text}</Text>
-        </View>
+        <Text style={s.title}>{strings.login.title}</Text>
+        <Text style={s.text}>{strings.login.text}</Text>
         <TextInput
           autoCapitalize="none"
           autoCorrect={false}
@@ -118,7 +123,7 @@ export default class LoginView extends React.Component {
         >
           <Text style={s.tokenButtonText}>{strings.login.token}</Text>
         </TouchableOpacity>
-      </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
     )
   }
 }
@@ -132,30 +137,33 @@ const s = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: padding.huge,
+    paddingHorizontal: smallDevice ? padding.large : padding.huge,
+    backgroundColor: color.white,
+  },
+  list: {
     backgroundColor: color.white,
   },
   header: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 48,
+    marginBottom: padding.medium,
   },
   icon: {
-    marginBottom: padding.medium,
     tintColor: color.blue2,
   },
   title: {
     color: color.gray4,
     fontSize: font.huge,
     fontWeight: font.bold,
-    marginBottom: padding.medium,
+    marginBottom: padding.small,
     textAlign: 'center',
   },
   text: {
     color: color.gray3,
     fontSize: font.medium,
     lineHeight: line.medium,
-    marginBottom: padding.large,
+    marginBottom: 20,
     textAlign: 'center',
   },
   input: {
@@ -164,9 +172,9 @@ const s = StyleSheet.create({
     borderRadius: radius.medium,
     borderWidth: 1,
     color: color.gray4,
-    fontSize: font.medium,
-    height: row.medium,
-    marginBottom: padding.large,
+    fontSize: font.large,
+    height: smallDevice ? 44 : row.medium,
+    marginBottom: padding.medium,
     textAlign: 'center',
     width: '100%',
   },
@@ -181,7 +189,7 @@ const s = StyleSheet.create({
     color: color.white,
     fontSize: font.large,
     fontWeight: font.bold,
-    lineHeight: row.medium,
+    lineHeight: smallDevice ? 44 : row.medium,
     textAlign: 'center',
   },
   tokenButton: {
@@ -192,7 +200,7 @@ const s = StyleSheet.create({
   tokenButtonText: {
     color: color.gray3,
     fontSize: font.medium,
-    lineHeight: row.medium,
+    lineHeight: smallDevice ? 44 : row.medium,
     textAlign: 'center',
   },
 })
