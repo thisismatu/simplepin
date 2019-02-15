@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Clipboard, AppState, ActivityIndicator, Linking, Dimensions } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, TextInput, Image, Clipboard, AppState, Linking, Dimensions, Animated } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import Storage from 'app/util/Storage'
@@ -20,10 +20,25 @@ export default class LoginView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.spinValue = new Animated.Value(0)
+    this.spinAnimation = Animated.loop(
+      Animated.timing(this.spinValue, {
+        toValue: 1,
+        duration: 600,
+        useNativeDriver: true,
+      })
+    )
+    this.iconStyle = StyleSheet.flatten([s.icon, {
+      transform: [{
+        rotate: this.spinValue.interpolate({
+          inputRange: [0, 0.2, 0.8, 1],
+          outputRange: ['0deg', '45deg', '315deg', '360deg'],
+        }),
+      }],
+    }])
     this.state = {
       appState: AppState.currentState,
       apiToken: null,
-      loading: false,
     }
   }
 
@@ -49,13 +64,13 @@ export default class LoginView extends React.Component {
 
   onSubmit = async () => {
     const { apiToken } = this.state
-    this.setState({ loading: true })
+    this.animate(true)
     const response = await Api.userToken(apiToken)
     if (response.ok === 0) {
-      this.setState({ loading: false })
+      this.animate(false)
       handleLoginResponseError(response.error)
     } else {
-      this.setState({ loading: false })
+      this.animate(false)
       Storage.setApiToken(apiToken)
       this.props.navigation.navigate('App')
     }
@@ -65,6 +80,15 @@ export default class LoginView extends React.Component {
     Linking.canOpenURL(pinboardUrl).then(() => {
       Linking.openURL(pinboardUrl)
     })
+  }
+
+  animate = loading => {
+    this.spinValue.setValue(0)
+    if (loading) {
+      this.spinAnimation.start()
+    } else {
+      this.spinAnimation.stop()
+    }
   }
 
   checkClipboardForApiToken = async () => {
@@ -77,20 +101,14 @@ export default class LoginView extends React.Component {
   }
 
   render() {
-    const { apiToken, loading } = this.state
+    const { apiToken } = this.state
     return (
       <KeyboardAwareScrollView
         alwaysBounceVertical={false}
         contentContainerStyle={s.container}
         style={s.list}
         >
-        <View style={s.header}>
-          {
-            loading
-            ? <ActivityIndicator animating={loading} color={color.blue2} />
-            : <Image source={icons.simplepin} style={s.icon} />
-          }
-        </View>
+        <Animated.Image source={icons.simplepin} style={this.iconStyle} />
         <Text style={s.title}>{strings.login.title}</Text>
         <Text style={s.text}>{strings.login.text}</Text>
         <TextInput
@@ -99,7 +117,6 @@ export default class LoginView extends React.Component {
           enablesReturnKeyAutomatically={true}
           placeholder={strings.login.placeholder}
           placeholderTextColor = {color.gray2}
-          keyboardType="email-address"
           returnKeyType="done"
           secureTextEntry={true}
           style={s.input}
@@ -143,14 +160,9 @@ const s = StyleSheet.create({
   list: {
     backgroundColor: color.white,
   },
-  header: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 48,
-    marginBottom: padding.medium,
-  },
   icon: {
     tintColor: color.blue2,
+    marginBottom: padding.medium,
   },
   title: {
     color: color.gray4,
