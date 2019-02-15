@@ -147,7 +147,10 @@ export default class AddPostView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (!isEqual(prevState.post, this.state.post)) {
+    const post = this.props.navigation.getParam('post')
+    if (isEmpty(post) && !isEqual(prevState.post, this.state.post)) {
+      this.unsavedChanges = true
+    } else if (!isEmpty(post) && !isEqual(prevState.post, this.state.post)) {
       this.unsavedChanges = true
     }
   }
