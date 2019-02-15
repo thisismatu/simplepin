@@ -10,7 +10,7 @@ import Storage from 'app/util/Storage'
 import DrawerHeader from 'app/components/DrawerHeader'
 import HeaderCell from 'app/components/HeaderCell'
 import DrawerCell from 'app/components/DrawerCell'
-import { color, icons } from 'app/style/style'
+import { color, icons, padding } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
@@ -141,6 +141,7 @@ DrawerView.propTypes = {
 const s = StyleSheet.create({
   container: {
     marginTop: isAndroid ? Constants.statusBarHeight : 0,
+    paddingBottom: padding.medium,
   },
   list: {
     backgroundColor: color.white,
