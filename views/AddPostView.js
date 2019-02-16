@@ -219,7 +219,7 @@ export default class AddPostView extends React.Component {
 
   onHrefChange = evt => {
     const post = { ...this.state.post }
-    post.href = evt.nativeEvent.text.trim()
+    post.href = evt.nativeEvent.text.trim().replace(/\s+/g, '')
     this.setState({ post })
   }
 
