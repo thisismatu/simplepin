@@ -19,8 +19,6 @@ export default class BrowserView extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      title: this.props.navigation.getParam('title', ''),
-      url: this.props.navigation.getParam('url', ''),
       canGoBack: false,
       canGoForward: false,
     }
@@ -55,12 +53,15 @@ export default class BrowserView extends React.Component {
   }
 
   onShare = () => {
+    const { navigation } = this.props
+    const title = navigation.getParam('title')
+    const url = navigation.getParam('url')
     Share.share({
       ...Platform.select({
-        ios: { url: this.state.url },
-        android: { message: this.state.url },
+        ios: { url: url },
+        android: { message: url },
       }),
-      title: this.state.title,
+      title: title,
     },
     {
       dialogTitle: 'Share',
@@ -68,17 +69,18 @@ export default class BrowserView extends React.Component {
   }
 
   renderToolbar() {
+    const { canGoBack, canGoForward } = this.state
     return (
       <View style={s.toolbar}>
         <TouchableOpacity
           activeOpacity={0.5}
-          disabled={!this.state.canGoBack}
+          disabled={!canGoBack}
           onPress={() => this.webview.goBack()}
           style={s.button}
         >
           <Image
             source={icons.left}
-            style={[s.icon, !this.state.canGoBack && s.iconDisabled]}
+            style={[s.icon, !canGoBack && s.iconDisabled]}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -93,13 +95,13 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          disabled={!this.state.canGoForward}
+          disabled={!canGoForward}
           onPress={() => this.webViewRef.goForward()}
           style={s.button}
         >
           <Image
             source={icons.right}
-            style={[s.icon, !this.state.canGoForward && s.iconDisabled]}
+            style={[s.icon, !canGoForward && s.iconDisabled]}
           />
         </TouchableOpacity>
       </View>
@@ -107,12 +109,14 @@ export default class BrowserView extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props
+    const url = navigation.getParam('url')
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
           <WebView
             ref={ref => this.webViewRef = ref}
-            source={{ uri: this.state.url }}
+            source={{ uri: url }}
             startInLoadingState={true}
             onNavigationStateChange={this.onNavigationStateChange}
             originWhitelist={['*']}
