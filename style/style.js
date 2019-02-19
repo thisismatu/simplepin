@@ -68,6 +68,8 @@ export const icons = {
   private: require('app/assets/ic-private.png'),
   privateSmall: require('app/assets/ic-private-small.png'),
   public: require('app/assets/ic-public.png'),
+  readerMode: require('app/assets/ic-reader-mode.png'),
+  readerModeInactive: require('app/assets/ic-reader-mode-inactive.png'),
   right: require('app/assets/ic-right.png'),
   search: require('app/assets/ic-search.png'),
   searchLarge: require('app/assets/ic-search-large.png'),

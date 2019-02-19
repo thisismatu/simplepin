@@ -43,6 +43,7 @@ export default class BrowserView extends React.Component {
   fetchUrl = async () => {
     const { navigation } = this.props
     const url = navigation.getParam('url')
+    const title = navigation.getParam('title')
     try {
       const response = await fetch(url)
       const html = await response.text()
@@ -50,7 +51,7 @@ export default class BrowserView extends React.Component {
       if (!article) {
         this.setState({ cleanHtml: false })
       } else {
-        this.setState({ cleanHtml: Readability.cleanHtmlTemplate(article.title, article.content) })
+        this.setState({ cleanHtml: Readability.cleanHtmlTemplate(title || article.title, article.content) })
       }
     } catch (e) {
       console.warn(e)
@@ -89,8 +90,12 @@ export default class BrowserView extends React.Component {
     })
   }
 
+  toggleReaderMode = () => {
+    this.setState({ readerMode: !this.state.readerMode })
+  }
+
   renderToolbar() {
-    const { canGoBack, canGoForward } = this.state
+    const { canGoBack, canGoForward, readerMode } = this.state
     return (
       <View style={s.toolbar}>
         <TouchableOpacity
@@ -106,12 +111,21 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          // onPress={this.onShare}
-          onPress={() => this.setState({ readerMode: !this.state.readerMode })}
+          onPress={this.onShare}
           style={s.button}
         >
           <Image
             source={icons.share}
+            style={s.icon}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={this.toggleReaderMode}
+          style={s.button}
+        >
+          <Image
+            source={readerMode ? icons.readerMode : icons.readerModeInactive}
             style={s.icon}
           />
         </TouchableOpacity>
