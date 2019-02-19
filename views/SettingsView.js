@@ -29,6 +29,7 @@ export default class SettingsView extends React.Component {
       privateByDefault: false,
       unreadByDefault: false,
       openLinksExternal: false,
+      readerMode: true,
     }
   }
 
@@ -66,6 +67,11 @@ export default class SettingsView extends React.Component {
     this.setState({ openLinksExternal: value })
   }
 
+  onReaderMode = value => {
+    Storage.setReaderMode(value)
+    this.setState({ readerMode: value })
+  }
+
   logout = () => {
     Alert.alert(
       strings.settings.logout + '?',
@@ -78,7 +84,7 @@ export default class SettingsView extends React.Component {
   }
 
   render() {
-    const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, exactDate, tagOrder } = this.state
+    const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, readerMode, exactDate, tagOrder } = this.state
     const track = isAndroid ? color.blue2 + '88' : color.blue2
     const thumb = isEnabled => isAndroid && isEnabled && color.blue2
     return (
@@ -133,6 +139,17 @@ export default class SettingsView extends React.Component {
             trackColor={{ true: track }}
             onValueChange={this.onOpenLinksExternal}
             value={openLinksExternal}
+          />
+        </View>
+        <Separator />
+        <View style={s.cell}>
+          <Text style={s.text}>{strings.settings.readerMode}</Text>
+          <Switch
+            style={s.switch}
+            thumbColor={thumb(readerMode)}
+            trackColor={{ true: track }}
+            onValueChange={this.onReaderMode}
+            value={readerMode}
           />
         </View>
         <Separator />

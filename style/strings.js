@@ -50,6 +50,7 @@ const strings = {
     unreadByDefault: 'Unread by default',
     markAsReadWhenOpened: 'Mark as read when opened',
     openLinksExternal: 'Open links in external browser',
+    readerMode: 'Automatic reader mode',
     display: 'Display',
     exactDates: 'Exact dates',
     sortTagsAlphabetically: 'Sort tags alphabetically',

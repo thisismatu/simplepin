@@ -8,6 +8,7 @@ const keys = {
   privateByDefault: '@Simplepin:privateByDefault',
   unreadByDefault: '@Simplepin:unreadByDefault',
   openLinksExternal: '@Simplepin:openLinksExternal',
+  readerMode: '@Simplepin:readerMode',
 }
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
@@ -76,6 +77,16 @@ const setOpenLinksExternal = async (openLinksExternal) => {
   await AsyncStorage.setItem(keys.openLinksExternal, value)
 }
 
+const readerMode = async () => {
+  const value = await AsyncStorage.getItem(keys.readerMode)
+  return JSON.parse(value) || true
+}
+
+const setReaderMode = async (readerMode) => {
+  const value = JSON.stringify(readerMode)
+  await AsyncStorage.setItem(keys.readerMode, value)
+}
+
 const userPreferences = async () => {
   const obj = {
     apiToken: await apiToken(),
@@ -85,6 +96,7 @@ const userPreferences = async () => {
     privateByDefault: await privateByDefault(),
     unreadByDefault: await unreadByDefault(),
     openLinksExternal: await openLinksExternal(),
+    readerMode: await readerMode(),
   }
   return obj
 }
@@ -106,6 +118,8 @@ export default {
   setUnreadByDefault,
   openLinksExternal,
   setOpenLinksExternal,
+  readerMode,
+  setReaderMode,
   userPreferences,
   clear,
 }

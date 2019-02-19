@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Readability from 'app/util/Readability'
+import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import { color, padding, row, icons } from 'app/style/style'
 
@@ -31,6 +32,7 @@ export default class BrowserView extends React.Component {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
+    Storage.readerMode().then(value => this.setState({ readerMode: value }))
     this.fetchUrl()
   }
 
