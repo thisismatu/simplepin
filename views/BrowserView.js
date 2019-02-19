@@ -3,6 +3,7 @@ import { View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandl
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import Readability from 'app/util/Readability'
 import NavigationButton from 'app/components/NavigationButton'
 import { color, padding, row, icons } from 'app/style/style'
 
@@ -21,6 +22,8 @@ export default class BrowserView extends React.Component {
     this.state = {
       canGoBack: false,
       canGoForward: false,
+      cleanHtml: undefined,
+      readerMode: true,
     }
   }
 
@@ -28,11 +31,29 @@ export default class BrowserView extends React.Component {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
+    this.fetchUrl()
   }
 
   componentWillUnmount() {
     if (isAndroid) {
       BackHandler.removeEventListener('hardwareBackPress')
+    }
+  }
+
+  fetchUrl = async () => {
+    const { navigation } = this.props
+    const url = navigation.getParam('url')
+    try {
+      const response = await fetch(url)
+      const html = await response.text()
+      const article = await Readability.cleanHtml(html, url)
+      if (!article) {
+        this.setState({ cleanHtml: false })
+      } else {
+        this.setState({ cleanHtml: Readability.cleanHtmlTemplate(article.title, article.content) })
+      }
+    } catch (e) {
+      console.warn(e)
     }
   }
 
@@ -46,7 +67,7 @@ export default class BrowserView extends React.Component {
 
   onAndroidBack = () => {
     if (this.state.canGoBack) {
-      this.webview.goBack()
+      this.webViewRef.goBack()
       return true
     }
     return false
@@ -75,7 +96,7 @@ export default class BrowserView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           disabled={!canGoBack}
-          onPress={() => this.webview.goBack()}
+          onPress={() => this.webViewRef.goBack()}
           style={s.button}
         >
           <Image
@@ -85,7 +106,8 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this.onShare}
+          // onPress={this.onShare}
+          onPress={() => this.setState({ readerMode: !this.state.readerMode })}
           style={s.button}
         >
           <Image
@@ -110,17 +132,20 @@ export default class BrowserView extends React.Component {
 
   render() {
     const { navigation } = this.props
+    const { cleanHtml, readerMode } = this.state
     const url = navigation.getParam('url')
+    const props = {
+      ref: ref => this.webViewRef = ref,
+      startInLoadingState: true,
+      onNavigationStateChange: this.onNavigationStateChange,
+      originWhitelist: ['*'],
+      useWebKit: true,
+    }
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
-          <WebView
-            ref={ref => this.webViewRef = ref}
-            source={{ uri: url }}
-            startInLoadingState={true}
-            onNavigationStateChange={this.onNavigationStateChange}
-            originWhitelist={['*']}
-          />
+          {readerMode && <WebView source={{ html: cleanHtml, baseUrl: url }} {...props} />}
+          {!readerMode && <WebView source={{ url: url }} {...props} />}
           { this.renderToolbar() }
         </View>
       </SafeAreaView>
