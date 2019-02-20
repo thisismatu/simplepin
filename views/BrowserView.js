@@ -6,7 +6,9 @@ import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Readability from 'app/util/Readability'
 import Storage from 'app/util/Storage'
 import NavigationButton from 'app/components/NavigationButton'
+import EmptyState from 'app/components/EmptyState'
 import { color, padding, row, icons } from 'app/style/style'
+import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -27,6 +29,7 @@ export default class BrowserView extends React.Component {
       canGoForward: false,
       cleanHtml: undefined,
       readerMode: true,
+      error: false,
     }
   }
 
@@ -58,6 +61,7 @@ export default class BrowserView extends React.Component {
         this.setState({ cleanHtml: Readability.cleanHtmlTemplate(this.title || article.title, article.content) })
       }
     } catch (e) {
+      this.setState({ error: true })
       console.warn(e)
     }
   }
@@ -90,6 +94,11 @@ export default class BrowserView extends React.Component {
     {
       dialogTitle: 'Share',
     })
+  }
+
+  onReload = () => {
+    this.setState({ error: false })
+    this.fetchUrl()
   }
 
   toggleReaderMode = () => {
@@ -146,8 +155,20 @@ export default class BrowserView extends React.Component {
     )
   }
 
+  renderError = () => {
+    return (
+      <View style={s.errorContainer}>
+        <EmptyState
+          action={ this.onReload }
+          actionText={strings.common.tryAgain}
+          subtitle={strings.error.tryAgainLater}
+          title={strings.error.somethingWrong} />
+      </View>
+    )
+  }
+
   render() {
-    const { cleanHtml, readerMode } = this.state
+    const { cleanHtml, readerMode, error } = this.state
     const props = {
       startInLoadingState: true,
       onNavigationStateChange: this.onNavigationStateChange,
@@ -159,6 +180,7 @@ export default class BrowserView extends React.Component {
         <View style={s.container}>
           {readerMode && <WebView source={{ html: cleanHtml, baseUrl: this.url }} {...props} />}
           {!readerMode && <WebView ref={ref => this.webViewRef = ref} source={{ uri: this.url }} {...props} />}
+          {!!error && this.renderError()}
           { this.renderToolbar() }
         </View>
       </SafeAreaView>
@@ -177,6 +199,9 @@ const s = StyleSheet.create({
   },
   container: {
     flex: 1,
+  },
+  errorContainer: {
+    height: '100%',
   },
   toolbar: {
     flexDirection: 'row',
