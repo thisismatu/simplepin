@@ -20,6 +20,8 @@ export default class BrowserView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.url = null
+    this.title = null
     this.state = {
       canGoBack: false,
       canGoForward: false,
@@ -29,10 +31,13 @@ export default class BrowserView extends React.Component {
   }
 
   componentDidMount() {
+    const { navigation } = this.props
+    this.url = navigation.getParam('url')
+    this.title = navigation.getParam('title')
+    Storage.readerMode().then(value => this.setState({ readerMode: value }))
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
-    Storage.readerMode().then(value => this.setState({ readerMode: value }))
     this.fetchUrl()
   }
 
@@ -43,17 +48,14 @@ export default class BrowserView extends React.Component {
   }
 
   fetchUrl = async () => {
-    const { navigation } = this.props
-    const url = navigation.getParam('url')
-    const title = navigation.getParam('title')
     try {
-      const response = await fetch(url)
+      const response = await fetch(this.url)
       const html = await response.text()
-      const article = await Readability.cleanHtml(html, url)
+      const article = await Readability.cleanHtml(html, this.url)
       if (!article) {
         this.setState({ cleanHtml: false })
       } else {
-        this.setState({ cleanHtml: Readability.cleanHtmlTemplate(title || article.title, article.content) })
+        this.setState({ cleanHtml: Readability.cleanHtmlTemplate(this.title || article.title, article.content) })
       }
     } catch (e) {
       console.warn(e)
@@ -62,10 +64,10 @@ export default class BrowserView extends React.Component {
 
   onNavigationStateChange = navState => {
     //Todo: this isn't called on SPA sites, need to inject some JS for that…
-    if (!this.state.readerMode) return
+    const { readerMode } = this.state
     this.setState({
-      canGoBack: navState.canGoBack,
-      canGoForward: navState.canGoForward,
+      canGoBack: !readerMode && navState.canGoBack,
+      canGoForward: !readerMode && navState.canGoForward,
     })
   }
 
@@ -78,15 +80,12 @@ export default class BrowserView extends React.Component {
   }
 
   onShare = () => {
-    const { navigation } = this.props
-    const url = navigation.getParam('url')
-    const title = navigation.getParam('title')
     Share.share({
       ...Platform.select({
-        ios: { url: url },
-        android: { message: url },
+        ios: { url: this.url },
+        android: { message: this.url },
       }),
-      title: title,
+      title: this.title,
     },
     {
       dialogTitle: 'Share',
@@ -103,13 +102,13 @@ export default class BrowserView extends React.Component {
       <View style={s.toolbar}>
         <TouchableOpacity
           activeOpacity={0.5}
-          disabled={!canGoBack || readerMode}
+          disabled={!canGoBack}
           onPress={() => this.webViewRef.goBack()}
           style={s.button}
         >
           <Image
             source={icons.left}
-            style={[s.icon, !canGoBack || readerMode && s.iconDisabled]}
+            style={[s.icon, !canGoBack && s.iconDisabled]}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -134,13 +133,13 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
-          disabled={!canGoForward || readerMode}
+          disabled={!canGoForward}
           onPress={() => this.webViewRef.goForward()}
           style={s.button}
         >
           <Image
             source={icons.right}
-            style={[s.icon, !canGoForward || readerMode && s.iconDisabled]}
+            style={[s.icon, !canGoForward && s.iconDisabled]}
           />
         </TouchableOpacity>
       </View>
@@ -149,7 +148,6 @@ export default class BrowserView extends React.Component {
 
   render() {
     const { cleanHtml, readerMode } = this.state
-    const url = this.props.navigation.getParam('url')
     const props = {
       startInLoadingState: true,
       onNavigationStateChange: this.onNavigationStateChange,
@@ -159,8 +157,8 @@ export default class BrowserView extends React.Component {
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
-          {readerMode && <WebView source={{ html: cleanHtml, baseUrl: url }} {...props} />}
-          {!readerMode && <WebView ref={ref => this.webViewRef = ref} source={{ uri: url }} {...props} />}
+          {readerMode && <WebView source={{ html: cleanHtml, baseUrl: this.url }} {...props} />}
+          {!readerMode && <WebView ref={ref => this.webViewRef = ref} source={{ uri: this.url }} {...props} />}
           { this.renderToolbar() }
         </View>
       </SafeAreaView>
