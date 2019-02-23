@@ -1,5 +1,5 @@
 import { Alert } from 'react-native'
-import Storage from 'app/util/Storage'
+import Storage from 'app/Storage'
 import strings from 'app/style/strings'
 
 export const logout = (navigation) => {

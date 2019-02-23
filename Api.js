@@ -1,5 +1,5 @@
 import queryString from 'query-string'
-import { replacer } from 'app/util/JsonUtils'
+import { replacer } from 'app/util/JsonUtil'
 
 const server = 'https://api.pinboard.in/v1'
 
