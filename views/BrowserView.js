@@ -11,6 +11,27 @@ import { color, padding, row, icons } from 'app/style/style'
 
 const isAndroid = Platform.OS === 'android'
 
+const ToolbarButton = ({ disabled, onPress, icon }) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      disabled={disabled}
+      onPress={onPress}
+      style={s.button}>
+      <Image
+        source={icon}
+        style={[s.icon, disabled && s.iconDisabled]}
+      />
+    </TouchableOpacity>
+  )
+}
+
+ToolbarButton.propTypes = {
+  disabled: PropTypes.bool.isRequired,
+  onPress: PropTypes.func.isRequired,
+  icon: PropTypes.number.isRequired,
+}
+
 export default class BrowserView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -111,49 +132,26 @@ export default class BrowserView extends React.Component {
     const { canGoBack, canGoForward, readerMode, cleanHtml } = this.state
     return (
       <View style={s.toolbar}>
-        <TouchableOpacity
-          activeOpacity={0.5}
+        <ToolbarButton
           disabled={!canGoBack}
           onPress={() => this.webViewRef.goBack()}
-          style={s.button}
-        >
-          <Image
-            source={icons.left}
-            style={[s.icon, !canGoBack && s.iconDisabled]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
+          icon={icons.left}
+        />
+        <ToolbarButton
+          disabled={false}
           onPress={this.onShare}
-          style={s.button}
-        >
-          <Image
-            source={icons.share}
-            style={s.icon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
+          icon={icons.share}
+        />
+        <ToolbarButton
           disabled={!cleanHtml}
           onPress={this.toggleReaderMode}
-          style={s.button}
-        >
-          <Image
-            source={readerMode ? icons.readerMode : icons.readerModeInactive}
-            style={[s.icon, !cleanHtml && s.iconDisabled]}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.5}
+          icon={readerMode ? icons.readerMode : icons.readerModeInactive}
+        />
+        <ToolbarButton
           disabled={!canGoForward}
           onPress={() => this.webViewRef.goForward()}
-          style={s.button}
-        >
-          <Image
-            source={icons.right}
-            style={[s.icon, !canGoForward && s.iconDisabled]}
-          />
-        </TouchableOpacity>
+          icon={icons.right}
+        />
       </View>
     )
   }
