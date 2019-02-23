@@ -7,9 +7,7 @@ import { fetchWithErrorHandling } from 'app/util/FetchUtil'
 import Readability from 'app/util/Readability'
 import Storage from 'app/Storage'
 import NavigationButton from 'app/components/NavigationButton'
-import EmptyState from 'app/components/EmptyState'
 import { color, padding, row, icons } from 'app/style/style'
-import strings from 'app/style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
@@ -30,19 +28,20 @@ export default class BrowserView extends React.Component {
       canGoForward: false,
       cleanHtml: undefined,
       readerMode: true,
-      error: false,
     }
   }
 
   componentDidMount() {
     const { navigation } = this.props
-    this.url = navigation.getParam('url')
+    this.url = navigation.getParam('url') + '3uy2'
     this.title = navigation.getParam('title')
     Storage.readerMode().then(value => this.setState({ readerMode: value }))
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
-    this.fetchCleanHtml()
+    if (this.state.readerMode) {
+      this.fetchHtmlSource()
+    }
   }
 
   componentWillUnmount() {
@@ -51,28 +50,36 @@ export default class BrowserView extends React.Component {
     }
   }
 
-  fetchCleanHtml = async () => {
-    console.log('fetchCleanHtml')
-    const response = await fetchWithErrorHandling(this.url, true)
-    if (response.ok === 0) {
-      this.setState({ cleanHtml: false })
-    } else {
-      const article = await Readability.cleanHtml(response, this.url)
+  getCleanHtml = async html => {
+    try {
+      const article = await Readability.cleanHtml('html', this.url)
       if (!article) {
-        this.setState({ cleanHtml: false })
+        this.setState({ cleanHtml: undefined, readerMode: false })
       } else {
         this.setState({ cleanHtml: Readability.cleanHtmlTemplate(this.title || article.title, article.content) })
       }
+    } catch(e) {
+      this.setState({ cleanHtml: undefined, readerMode: false })
+    }
+  }
+
+  fetchHtmlSource = async () => {
+    const response = await fetchWithErrorHandling(this.url, true)
+    if (response.ok === 0) {
+      this.setState({ cleanHtml: undefined, readerMode: false })
+    } else {
+      this.getCleanHtml(response)
     }
   }
 
   onNavigationStateChange = navState => {
     //Todo: this isn't called on SPA sites, need to inject some JS for that…
-    const { readerMode } = this.state
-    this.setState({
-      canGoBack: !readerMode && navState.canGoBack,
-      canGoForward: !readerMode && navState.canGoForward,
-    })
+    if (!this.state.readerMode) {
+      this.setState({
+        canGoBack: navState.canGoBack,
+        canGoForward: navState.canGoForward,
+      })
+    }
   }
 
   onAndroidBack = () => {
@@ -96,17 +103,12 @@ export default class BrowserView extends React.Component {
     })
   }
 
-  onReload = () => {
-    this.setState({ error: false })
-    this.fetchCleanHtml()
-  }
-
   toggleReaderMode = () => {
     this.setState({ readerMode: !this.state.readerMode })
   }
 
   renderToolbar() {
-    const { canGoBack, canGoForward, readerMode } = this.state
+    const { canGoBack, canGoForward, readerMode, cleanHtml } = this.state
     return (
       <View style={s.toolbar}>
         <TouchableOpacity
@@ -132,12 +134,13 @@ export default class BrowserView extends React.Component {
         </TouchableOpacity>
         <TouchableOpacity
           activeOpacity={0.5}
+          disabled={!cleanHtml}
           onPress={this.toggleReaderMode}
           style={s.button}
         >
           <Image
             source={readerMode ? icons.readerMode : icons.readerModeInactive}
-            style={s.icon}
+            style={[s.icon, !cleanHtml && s.iconDisabled]}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -155,20 +158,8 @@ export default class BrowserView extends React.Component {
     )
   }
 
-  renderError = () => {
-    return (
-      <View style={s.errorContainer}>
-        <EmptyState
-          action={ this.onReload }
-          actionText={strings.common.tryAgain}
-          subtitle={strings.error.tryAgainLater}
-          title={strings.error.somethingWrong} />
-      </View>
-    )
-  }
-
   render() {
-    const { cleanHtml, readerMode, error } = this.state
+    const { cleanHtml, readerMode } = this.state
     const props = {
       startInLoadingState: true,
       onNavigationStateChange: this.onNavigationStateChange,
@@ -178,9 +169,12 @@ export default class BrowserView extends React.Component {
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
-          {readerMode && <WebView source={{ html: cleanHtml, baseUrl: this.url }} {...props} />}
-          {!readerMode && <WebView ref={ref => this.webViewRef = ref} source={{ uri: this.url }} {...props} />}
-          {!!error && this.renderError()}
+          {readerMode &&
+            <WebView source={{ html: cleanHtml, baseUrl: this.url }} {...props} />
+          }
+          {!readerMode &&
+            <WebView ref={ref => this.webViewRef = ref} source={{ uri: this.url }} {...props} />
+          }
           { this.renderToolbar() }
         </View>
       </SafeAreaView>
@@ -199,9 +193,6 @@ const s = StyleSheet.create({
   },
   container: {
     flex: 1,
-  },
-  errorContainer: {
-    height: '100%',
   },
   toolbar: {
     flexDirection: 'row',
