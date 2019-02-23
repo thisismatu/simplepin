@@ -5,11 +5,11 @@ import { color, font } from 'app/style/style'
 
 export default class NavigationButton extends React.PureComponent {
   render() {
-    const { icon, text } = this.props
+    const { icon, text, onPress } = this.props
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={this.props.onPress}
+        onPress={onPress}
         style={s.button}
         >
         {!!icon && <Image source={icon} style={s.icon} />}
@@ -20,9 +20,9 @@ export default class NavigationButton extends React.PureComponent {
 }
 
 NavigationButton.propTypes = {
+  onPress: PropTypes.func,
   icon: PropTypes.number,
   text: PropTypes.string,
-  onPress: PropTypes.func,
 }
 
 const s = StyleSheet.create({
