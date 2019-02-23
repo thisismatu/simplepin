@@ -3,6 +3,7 @@ import { View, Image, WebView, StyleSheet, TouchableOpacity, Platform, BackHandl
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { fetchWithErrorHandling } from 'app/util/FetchUtil'
 import Readability from 'app/util/Readability'
 import Storage from 'app/Storage'
 import NavigationButton from 'app/components/NavigationButton'
@@ -41,7 +42,7 @@ export default class BrowserView extends React.Component {
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }
-    this.fetchUrl()
+    this.fetchCleanHtml()
   }
 
   componentWillUnmount() {
@@ -50,19 +51,18 @@ export default class BrowserView extends React.Component {
     }
   }
 
-  fetchUrl = async () => {
-    try {
-      const response = await fetch(this.url)
-      const html = await response.text()
-      const article = await Readability.cleanHtml(html, this.url)
+  fetchCleanHtml = async () => {
+    console.log('fetchCleanHtml')
+    const response = await fetchWithErrorHandling(this.url, true)
+    if (response.ok === 0) {
+      this.setState({ cleanHtml: false })
+    } else {
+      const article = await Readability.cleanHtml(response, this.url)
       if (!article) {
         this.setState({ cleanHtml: false })
       } else {
         this.setState({ cleanHtml: Readability.cleanHtmlTemplate(this.title || article.title, article.content) })
       }
-    } catch (e) {
-      this.setState({ error: true })
-      console.warn(e)
     }
   }
 
@@ -98,7 +98,7 @@ export default class BrowserView extends React.Component {
 
   onReload = () => {
     this.setState({ error: false })
-    this.fetchUrl()
+    this.fetchCleanHtml()
   }
 
   toggleReaderMode = () => {
