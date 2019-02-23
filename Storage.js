@@ -79,7 +79,7 @@ const setOpenLinksExternal = async (openLinksExternal) => {
 
 const readerMode = async () => {
   const value = await AsyncStorage.getItem(keys.readerMode)
-  return JSON.parse(value) || true
+  return JSON.parse(value) !== false
 }
 
 const setReaderMode = async (readerMode) => {
