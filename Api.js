@@ -1,5 +1,6 @@
 import queryString from 'query-string'
 import { replacer } from 'app/util/JsonUtil'
+import { fetchWithErrorHandling } from 'app/util/FetchUtil'
 
 const server = 'https://api.pinboard.in/v1'
 
@@ -13,54 +14,44 @@ const postsStarredUrl = (secret, username) => `https://feeds.pinboard.in/rss/sec
 const tagsAllUrl = (parameters) => `${server}/tags/get/?${parameters}`
 const tagsSuggestedUrl = (parameters) => `${server}/posts/suggest/?${parameters}`
 
-const handleResponse = (response, rss = false) => {
-  if (!response.ok) {
-    console.warn(response.status)
-    return Promise.resolve({ ok: 0, error: response.status })
-  }
-  return rss ? response.text() : response.json()
-}
-
-const fetchWithErrorHandling = (url) => {
-  return fetch(url)
-    .catch(e => ({ ok: 0, error: e }))
-    .then(handleResponse)
-}
-
-const userToken = (token) => {
+const userToken = token => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(userTokenUrl(params))
+  const url = userTokenUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
-const userSecret = (token) => {
+const userSecret = token => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(userSecretUrl(params))
+  const url = userSecretUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
-const postsUpdate = (token) => {
+const postsUpdate = token => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(postsUpdateUrl(params))
+  const url = postsUpdateUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
-const postsAll = (token) => {
+const postsAll = token => {
   const data = {
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(postsAllUrl(params))
+  const url = postsAllUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
 const postsAdd = (post, token) => {
@@ -75,27 +66,28 @@ const postsAdd = (post, token) => {
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(postsAddUrl(params))
+  const url = postsAddUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
-const postsDelete = (url, token) => {
+const postsDelete = (href, token) => {
   const data = {
-    url: url,
+    url: href,
     format: 'json',
     auth_token: token,
   }
   const params = queryString.stringify(data)
-  return fetchWithErrorHandling(postsDeleteUrl(params))
+  const url = postsDeleteUrl(params)
+  return fetchWithErrorHandling(url)
 }
 
 const postsStarred = (secret, token) => {
   const username = token.split(':')[0]
-  return fetch(postsStarredUrl(secret, username))
-    .catch(e => ({ ok: 0, error: e }))
-    .then(response => handleResponse(response, true))
+  const url = postsStarredUrl(secret, username)
+  return fetchWithErrorHandling(url, true)
 }
 
-const tagsAll = (token) => {
+const tagsAll = token => {
   const data = {
     format: 'json',
     auth_token: token,
