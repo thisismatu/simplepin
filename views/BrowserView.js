@@ -33,7 +33,7 @@ export default class BrowserView extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props
-    this.url = navigation.getParam('url') + '3uy2'
+    this.url = navigation.getParam('url')
     this.title = navigation.getParam('title')
     Storage.readerMode().then(value => this.setState({ readerMode: value }))
     if (isAndroid) {
@@ -52,7 +52,7 @@ export default class BrowserView extends React.Component {
 
   getCleanHtml = async html => {
     try {
-      const article = await Readability.cleanHtml('html', this.url)
+      const article = await Readability.cleanHtml(html, this.url)
       if (!article) {
         this.setState({ cleanHtml: undefined, readerMode: false })
       } else {
