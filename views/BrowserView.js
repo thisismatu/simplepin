@@ -160,20 +160,28 @@ export default class BrowserView extends React.Component {
 
   render() {
     const { cleanHtml, readerMode } = this.state
-    const props = {
-      startInLoadingState: true,
-      onNavigationStateChange: this.onNavigationStateChange,
-      originWhitelist: ['*'],
-      useWebKit: true,
-    }
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
         <View style={s.container}>
           {readerMode &&
-            <WebView source={{ html: cleanHtml, baseUrl: this.url }} {...props} />
+            <WebView
+              source={{ html: cleanHtml, baseUrl: this.url }}
+              mixedContentMode="compatibility"
+              startInLoadingState={true}
+              onNavigationStateChange={this.onNavigationStateChange}
+              originWhitelist={['*']}
+              useWebKit={true}
+            />
           }
           {!readerMode &&
-            <WebView ref={ref => this.webViewRef = ref} source={{ uri: this.url }} {...props} />
+            <WebView
+              ref={ref => this.webViewRef = ref}
+              source={{ uri: this.url }}
+              startInLoadingState={true}
+              onNavigationStateChange={this.onNavigationStateChange}
+              originWhitelist={['*']}
+              useWebKit={true}
+            />
           }
           { this.renderToolbar() }
         </View>
