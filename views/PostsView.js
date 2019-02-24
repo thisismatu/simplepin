@@ -62,6 +62,7 @@ export default class PostsView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.keyboardHeight = 0
     this.state = {
       isLoading: false,
       allPosts: null,
@@ -93,6 +94,8 @@ export default class PostsView extends React.Component {
     Storage.userPreferences()
       .then(prefs => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -101,6 +104,19 @@ export default class PostsView extends React.Component {
         this.setState({ preferences: prefs })
       }
     })
+  }
+
+  componentWillUnmount() {
+    this.keyboardDidShowListener.remove()
+    this.keyboardDidHideListener.remove()
+  }
+
+  keyboardDidShow = evt => {
+    this.keyboardHeight = evt && evt.endCoordinates.height
+  }
+
+  keyboardDidHide = evt => {
+    this.keyboardHeight = evt && evt.endCoordinates.height
   }
 
   checkForUpdates = async () => {
@@ -382,7 +398,8 @@ export default class PostsView extends React.Component {
         actionText={`Show results for “${similarResults.searchQuery}”`}
         icon={icons.searchLarge}
         subtitle={`“${searchQuery}“`}
-        title={strings.common.noResults} />
+        title={strings.common.noResults}
+        paddingBottom={this.keyboardHeight} />
     }
     if (pinboardDown) {
       return <EmptyState
@@ -390,7 +407,8 @@ export default class PostsView extends React.Component {
         actionText={strings.common.tryAgain}
         icon={icons.offlineLarge}
         subtitle={strings.error.pinboardDown}
-        title={strings.error.troubleConnecting} />
+        title={strings.error.troubleConnecting}
+        paddingBottom={this.keyboardHeight} />
     }
     if (isEmpty(this.currentList()) && !isLoading) {
       const { navigation } = this.props
@@ -399,7 +417,8 @@ export default class PostsView extends React.Component {
         actionText={strings.add.titleAdd}
         icon={icons.simplepin}
         subtitle={strings.common.noPostsMessage}
-        title={strings.common.noPosts} />
+        title={strings.common.noPosts}
+        paddingBottom={this.keyboardHeight} />
     }
     return null
   }
@@ -407,13 +426,12 @@ export default class PostsView extends React.Component {
   render() {
     const { selectedPost } = this.state
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
-    const hasData = data && data.length
     return (
       <View style={s.root}>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
           <FlatList
             ref={(ref) => this.listRef = ref}
-            contentContainerStyle={[s.container, !hasData && { flex: 1 }]}
+            contentContainerStyle={s.container}
             data={data}
             initialNumToRender={8}
             keyExtractor={(item, index) => index.toString()}
@@ -454,6 +472,7 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
   },
   container : {
+    flexGrow: 1,
     paddingTop: padding.medium,
     paddingBottom: padding.large,
   },

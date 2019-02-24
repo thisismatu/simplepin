@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, TouchableOpacity, Platform } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, line, row } from 'app/style/style'
+
+const isIOS = Platform.OS === 'ios'
 
 export default class EmptyState extends React.PureComponent {
   constructor (props) {
@@ -28,16 +30,13 @@ export default class EmptyState extends React.PureComponent {
   }
 
   render() {
-    const { icon, title, subtitle, action } = this.props
-    const offset = icon ? this.state.topOffset + 64 : this.state.topOffset
+    const { icon, title, subtitle, action, paddingBottom } = this.props
     return (
-      <View style={[s.empty, { paddingBottom: offset }]} onLayout={this.onLayout}>
+      <View style={[s.empty, isIOS && { paddingBottom }]} onLayout={this.onLayout}>
         {!!icon && <Image source={icon} style={s.icon} />}
         <Text style={s.title}>{title}</Text>
         {!!subtitle && <Text style={s.subtitle}>{subtitle}</Text>}
-        <View style={s.buttonRow}>
-          {!!action && this.renderAction()}
-        </View>
+        {!!action && this.renderAction()}
       </View>
     )
   }
@@ -49,6 +48,11 @@ EmptyState.propTypes = {
   icon: PropTypes.number,
   action: PropTypes.func,
   actionText: PropTypes.string,
+  paddingBottom: PropTypes.number,
+}
+
+EmptyState.defaultProps = {
+  paddingBottom: 0,
 }
 
 const s = StyleSheet.create({
@@ -74,9 +78,6 @@ const s = StyleSheet.create({
     marginTop: padding.small,
     lineHeight: line.medium,
     textAlign: 'center',
-  },
-  buttonRow:  {
-    height: row.medium,
   },
   button: {
     backgroundColor: color.white,
