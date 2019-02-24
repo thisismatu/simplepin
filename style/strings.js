@@ -16,6 +16,7 @@ const strings = {
     showSimilar: 'Show similar',
     giveFeedback: 'Give feedback',
     rateTheApp: 'Rate the app',
+    share: 'Share',
   },
   error: {
     loginFailed: 'Login failed',

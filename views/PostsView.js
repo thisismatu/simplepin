@@ -21,6 +21,7 @@ import Api from 'app/Api'
 import Storage from 'app/Storage'
 import { reviver } from 'app/util/JsonUtil'
 import { handleResponseError } from 'app/util/ErrorUtil'
+import { openShareDialog } from 'app/util/ShareUtil'
 import NavigationButton from 'app/components/NavigationButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
@@ -86,8 +87,9 @@ export default class PostsView extends React.Component {
   }
 
   componentDidMount() {
-    this.props.navigation.setParams({ onSubmit: this.onSubmitAddPost })
-    this.props.navigation.setParams({ openDrawer: this.openDrawer })
+    const { navigation } = this.props
+    navigation.setParams({ onSubmit: this.onSubmitAddPost })
+    navigation.setParams({ openDrawer: this.openDrawer })
     Storage.userPreferences()
       .then(prefs => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
@@ -306,6 +308,16 @@ export default class PostsView extends React.Component {
     navigation.navigate('Add', { post: post, onSubmit: navigation.getParam('onSubmit') })
   }
 
+  onSharePost = () => {
+    const post = this.state.selectedPost
+    this.setState({ modalVisible: false }, () => {
+      // Timeout needed to fix opening share dialog from modal
+      setTimeout(() => {
+        openShareDialog(post.href, post.description)
+      }, 500)
+    })
+  }
+
   onDeletePost = () => {
     const post = this.state.selectedPost
     Alert.alert(
@@ -419,6 +431,7 @@ export default class PostsView extends React.Component {
           <BottomSheet.Title title={selectedPost.description} />
           <BottomSheet.Option title={`${strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
           <BottomSheet.Option title={strings.common.edit} onPress={this.onEditPost} />
+          <BottomSheet.Option title={strings.common.share} onPress={this.onSharePost} />
           <BottomSheet.Option title={strings.common.delete} onPress={this.onDeletePost} />
           <BottomSheet.Option title={strings.common.cancel} onPress={this.toggleModal} />
         </BottomSheet>
