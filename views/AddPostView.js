@@ -91,6 +91,7 @@ export default class AddPostView extends React.Component {
 
   constructor(props) {
     super(props)
+    this.initDone = false
     this.shakeValue = new Animated.Value(0)
     this.shakeStyle = {
       transform: [{
@@ -129,13 +130,13 @@ export default class AddPostView extends React.Component {
     const { navigation } = this.props
     const post = navigation.getParam('post')
     if (post) {
-      this.setState({ post: post })
+      this.setState({ post: post }, () => this.initDone = true)
     } else {
       Storage.userPreferences().then(prefs => {
         const post = { ...this.state.post }
         post.shared = !prefs.privateByDefault
         post.toread = prefs.unreadByDefault
-        this.setState({ post })
+        this.setState({ post }, () => this.initDone = true)
       })
     }
     if (isAndroid) {
@@ -149,6 +150,7 @@ export default class AddPostView extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
+    if (!this.initDone) return
     const post = this.props.navigation.getParam('post')
     if (isEmpty(post) && !isEqual(prevState.post, this.state.post)) {
       this.unsavedChanges = true
