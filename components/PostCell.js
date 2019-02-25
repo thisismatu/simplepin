@@ -159,7 +159,7 @@ const s = StyleSheet.create({
   },
   tagContainer: {
     paddingHorizontal: padding.tiny,
-    paddingVertical: 6,
+    paddingVertical: padding.small,
   },
   tag: {
     backgroundColor: color.blue1,
