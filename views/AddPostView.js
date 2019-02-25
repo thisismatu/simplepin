@@ -358,7 +358,7 @@ export default class AddPostView extends React.Component {
           enablesReturnKeyAutomatically={true}
           keyboardType="url"
           onChange={this.onHrefChange}
-          onSubmitEditing={() => this.descriptionRef.focus()}
+          onSubmitEditing={() => this.descriptionRef.getNode().focus()}
           placeholder={strings.add.placeholderHref}
           placeholderTextColor={color.gray2}
           returnKeyType="next"
@@ -390,7 +390,7 @@ export default class AddPostView extends React.Component {
           enablesReturnKeyAutomatically={true}
           multiline={true}
           onChange={this.onExtendedChange}
-          onSubmitEditing={() => { this.tagsRef.focus() }}
+          onSubmitEditing={() => this.tagsRef.focus()}
           placeholder={strings.add.placeholderExtended}
           placeholderTextColor={color.gray2}
           ref={input => this.extendedRef = input}
