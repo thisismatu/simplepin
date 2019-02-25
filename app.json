@@ -30,7 +30,7 @@
     "android": {
       "package": "ml.simplepin",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon.png",
+        "foregroundImage": "./assets/icon_adaptive.png",
         "backgroundColor": "#0066CC",
       },
     },
