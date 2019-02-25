@@ -91,11 +91,11 @@ export default class PostsView extends React.Component {
     const { navigation } = this.props
     navigation.setParams({ onSubmit: this.onSubmitAddPost })
     navigation.setParams({ openDrawer: this.openDrawer })
+    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
+    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
     Storage.userPreferences()
       .then(prefs => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
-    this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
-    this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
   }
 
   componentDidUpdate(prevProps, prevState) {

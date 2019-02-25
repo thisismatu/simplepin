@@ -308,7 +308,7 @@ export default class AddPostView extends React.Component {
         activeOpacity={1}
         style={[s.resultsOverlay, topOffset]}
         onPress={() => this.setState({ searchVisible: false, scrollEnabled: true })}
-      >
+        >
         <View style={[s.resultsContainer, containerHeight]}>
           <SectionList
             sections={[{

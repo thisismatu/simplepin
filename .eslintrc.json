@@ -84,7 +84,7 @@
     "max-len": [
       2,
       {
-        "code": 120
+        "code": 150
       }
     ],
     "no-lonely-if": 1,

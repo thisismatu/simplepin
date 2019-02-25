@@ -1,6 +1,6 @@
 export const handleResponse = (response, text) => {
   if (!response.ok) {
-    console.warn(response.status)
+    console.warn(response.status) // eslint-disable-line no-console
     return Promise.resolve({ ok: 0, error: response.status })
   }
   return text ? response.text() : response.json()

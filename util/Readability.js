@@ -34,7 +34,7 @@ const createReadabilityUrl = sourceUrl => {
     host: sourceUrlParsed.host,
     scheme: sourceUrlParsed.protocol.slice(0, -1),
     prePath: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}`,
-    pathBase: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}${sourceUrlParsed.pathname.substring(0, sourceUrlParsed.pathname.lastIndexOf('/') + 1)}`,
+    pathBase: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}${sourceUrlParsed.pathname.substring(0, sourceUrlParsed.pathname.lastIndexOf('/') + 1)}`,  // eslint-disable-line max-len
   }
 }
 
