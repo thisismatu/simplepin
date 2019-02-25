@@ -24,7 +24,11 @@
       "assets/*"
     ],
     "ios": {
-      "supportsTablet": true
-    }
+      "supportsTablet": true,
+      "bundleIdentifier": "ml.simplepin"
+    },
+    "android": {
+      "package": "ml.simplepin",
+    },
   }
 }
