@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Platform, Image, Text, TextInput, Switch, TouchableOpacity, Alert, BackHandler, SectionList, Animated } from 'react-native'
+import { View, StyleSheet, Platform, Image, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -19,6 +19,7 @@ import { handleResponseError } from 'app/util/ErrorUtil'
 import Storage from 'app/Storage'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
+import Switch from 'app/components/SimpleSwitch'
 import { color, padding, font, line, row, radius, icons, shadow } from 'app/style/style'
 import strings from 'app/style/strings'
 
@@ -339,8 +340,6 @@ export default class AddPostView extends React.Component {
 
   render() {
     const { post, scrollEnabled, searchQuery, searchVisible, validHref, validDescription } = this.state
-    const track = isAndroid ? color.blue2 + '88' : color.blue2
-    const thumb = isEnabled => isAndroid && isEnabled && color.blue2
     return (
       <KeyboardAwareScrollView
         scrollEnabled={scrollEnabled}
@@ -421,9 +420,6 @@ export default class AddPostView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.posts.private}</Text>
           <Switch
-            style={s.switch}
-            trackColor={{ true: track }}
-            thumbColor={thumb(!post.shared)}
             onValueChange={this.onShared}
             value={!post.shared}
           />
@@ -432,9 +428,6 @@ export default class AddPostView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.add.readLater}</Text>
           <Switch
-            style={s.switch}
-            trackColor={{ true: track }}
-            thumbColor={thumb(post.toread)}
             onValueChange={this.onToread}
             value={post.toread}
           />
@@ -480,9 +473,6 @@ const s = StyleSheet.create({
   textArea: {
     height: 100,
     marginVertical: 9,
-  },
-  switch: {
-    marginRight: isAndroid ? 12 : padding.medium,
   },
   tagContainer: {
     flexDirection: 'row',

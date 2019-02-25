@@ -1,15 +1,15 @@
 import React from 'react'
-import { StyleSheet, Text, View, Switch, ScrollView, Platform, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import PropTypes from 'prop-types'
 import Storage from 'app/Storage'
 import { logout } from 'app/util/ErrorUtil'
 import NavigationButton from 'app/components/NavigationButton'
 import HeaderCell from 'app/components/HeaderCell'
 import Separator from 'app/components/Separator'
+import Switch from 'app/components/SimpleSwitch'
 import { color, padding, font, row, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
-const isAndroid = Platform.OS === 'android'
 const { expo } = require('app/app.json')
 
 export default class SettingsView extends React.Component {
@@ -85,8 +85,6 @@ export default class SettingsView extends React.Component {
 
   render() {
     const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, readerMode, exactDate, tagOrder } = this.state
-    const track = isAndroid ? color.blue2 + '88' : color.blue2
-    const thumb = isEnabled => isAndroid && isEnabled && color.blue2
     return (
       <ScrollView
         contentContainerStyle={s.container}
@@ -101,9 +99,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.privateByDefault}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(privateByDefault)}
-            trackColor={{ true: track }}
             onValueChange={this.onPrivateByDefault}
             value={privateByDefault}
           />
@@ -112,9 +107,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.unreadByDefault}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(unreadByDefault)}
-            trackColor={{ true: track }}
             onValueChange={this.onUnreadByDefault}
             value={unreadByDefault}
           />
@@ -123,9 +115,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.markAsReadWhenOpened}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(markAsRead)}
-            trackColor={{ true: track }}
             onValueChange={this.onMarkAsRead}
             value={markAsRead}
           />
@@ -134,9 +123,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.openLinksExternal}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(openLinksExternal)}
-            trackColor={{ true: track }}
             onValueChange={this.onOpenLinksExternal}
             value={openLinksExternal}
           />
@@ -145,9 +131,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.readerMode}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(readerMode)}
-            trackColor={{ true: track }}
             onValueChange={this.onReaderMode}
             value={readerMode}
           />
@@ -161,9 +144,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.exactDates}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(exactDate)}
-            trackColor={{ true: track }}
             onValueChange={this.onExactDate}
             value={exactDate}
           />
@@ -172,9 +152,6 @@ export default class SettingsView extends React.Component {
         <View style={s.cell}>
           <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
           <Switch
-            style={s.switch}
-            thumbColor={thumb(tagOrder)}
-            trackColor={{ true: track }}
             onValueChange={this.onTagOrder}
             value={tagOrder}
           />
@@ -225,9 +202,6 @@ const s = StyleSheet.create({
     color: color.gray4,
     fontSize: font.large,
     paddingLeft: padding.medium,
-  },
-  switch: {
-    marginRight: isAndroid ? 12 : padding.medium,
   },
   secondary: {
     color: color.gray3,
