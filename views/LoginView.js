@@ -104,9 +104,10 @@ export default class LoginView extends React.Component {
     const { apiToken } = this.state
     return (
       <KeyboardAwareScrollView
+        extraHeight={80}
         alwaysBounceVertical={false}
         contentContainerStyle={s.container}
-        style={s.list}
+        keyboardShouldPersistTaps="handled"
         >
         <Animated.Image source={icons.simplepin} style={this.iconStyle} />
         <Text style={s.title}>{strings.login.title}</Text>
@@ -155,9 +156,6 @@ const s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: smallDevice ? padding.large : padding.huge,
-    backgroundColor: color.white,
-  },
-  list: {
     backgroundColor: color.white,
   },
   icon: {
