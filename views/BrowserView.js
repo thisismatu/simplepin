@@ -195,23 +195,23 @@ const s = StyleSheet.create({
   toolbar: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    alignItems: 'center',
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: color.black12,
     backgroundColor: color.white,
     paddingHorizontal: padding.medium,
     ...ifIphoneX({
-      paddingTop: 12,
-    }, {
-      height: row.medium,
+      marginBottom: -padding.small,
     }),
   },
   button: {
+    width: '25%',
+    height: row.medium,
     justifyContent: 'center',
-    alignItems: 'stretch',
+    alignItems: 'center',
   },
   icon: {
     tintColor: color.blue2,
+    resizeMode: 'contain',
   },
   iconDisabled: {
     tintColor: color.gray1,
