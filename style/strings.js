@@ -28,6 +28,9 @@ const strings = {
     troubleConnecting: 'Trouble connecting to Pinboard',
     pinboardDown: 'Pinboard might be down, please try again later',
     somethingWrong: 'Something went wrong',
+    emptyUrlDescription: 'URL and Title can‘t be empty',
+    invalidUrl: 'Invalid URL',
+    emptyTitle: 'Title can‘t be empty',
   },
   login: {
     title: 'Welcome!',

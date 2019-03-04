@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Platform, Image, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated } from 'react-native'
+import { View, StyleSheet, Platform, Image, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated, ToastAndroid } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -196,6 +196,9 @@ export default class AddPostView extends React.Component {
   isValidPost = (href, description) => {
     const validHref = isUrl(href)
     const validDescription = !isEmpty(description)
+    if (isEmpty(href) && !validDescription) ToastAndroid.show(strings.error.emptyUrlDescription, ToastAndroid.SHORT)
+    if (!isEmpty(href) && !validHref) ToastAndroid.show(strings.error.invalidUrl, ToastAndroid.SHORT)
+    if (validHref && !validDescription) ToastAndroid.show(strings.error.emptyTitle, ToastAndroid.SHORT)
     this.setState({ validHref, validDescription }, () => this.animate())
     return validHref && validDescription
   }
