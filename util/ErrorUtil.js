@@ -3,8 +3,9 @@ import Storage from 'app/Storage'
 import strings from 'app/style/strings'
 
 export const logout = (navigation) => {
-  Storage.clear()
-  navigation.navigate('AuthLoading')
+  Storage.clear().then(() => {
+    navigation.navigate('AuthLoading')
+  })
 }
 
 export const handleLoginResponseError = (error) => {
