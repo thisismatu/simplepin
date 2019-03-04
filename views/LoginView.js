@@ -24,7 +24,7 @@ export default class LoginView extends React.Component {
     this.spinAnimation = Animated.loop(
       Animated.timing(this.spinValue, {
         toValue: 1,
-        duration: 600,
+        duration: 750,
         useNativeDriver: true,
       })
     )
