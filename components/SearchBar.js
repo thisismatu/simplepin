@@ -81,5 +81,6 @@ const s = StyleSheet.create({
   icon: {
     marginLeft: - horizontalMargin / 4,
     tintColor: color.black36,
+    resizeMode: 'contain',
   },
 })

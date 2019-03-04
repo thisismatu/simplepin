@@ -45,6 +45,7 @@ const s = StyleSheet.create({
     tintColor: color.black36,
     width: 24,
     marginRight: padding.medium,
+    resizeMode: 'contain',
   },
   text: {
     flexGrow: 1,

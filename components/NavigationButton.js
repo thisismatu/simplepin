@@ -31,12 +31,13 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
+    minWidth: 46,
   },
   icon: {
     tintColor: color.blue2,
-    resizeMode: 'center',
-    height: '100%',
-    width: 46,
+    resizeMode: 'contain',
+    height: 24,
+    width: 24,
   },
   text: {
     alignSelf: 'center',

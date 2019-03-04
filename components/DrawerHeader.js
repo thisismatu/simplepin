@@ -44,6 +44,7 @@ const s = StyleSheet.create({
     height: 32,
     tintColor: color.white,
     width: 32,
+    resizeMode: 'contain',
   },
   title: {
     color: color.gray5,

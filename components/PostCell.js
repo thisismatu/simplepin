@@ -64,8 +64,8 @@ export default class PostCell extends React.PureComponent {
           exactDate={exactDate}
         />
         <View style={s.statusContainer}>
-          {!!post.starred && <Image source={icons.starredSmall} style={s.starred} />}
-          {!post.shared ? <Image source={icons.privateSmall} style={s.private} /> : null}
+          {!!post.starred && <Image source={icons.starredSmall} style={s.icon} />}
+          {!post.shared ? <Image source={icons.privateSmall} style={s.icon} /> : null}
         </View>
       </TouchableOpacity>
     )
@@ -102,17 +102,12 @@ const s = StyleSheet.create({
     top: 19,
     width: 9,
   },
-  private: {
+  icon: {
     height: 18,
     tintColor: color.black36,
     width: 18,
-    marginLeft: 2,
-  },
-  starred: {
-    height: 18,
-    tintColor: color.black36,
-    width: 18,
-    marginRight: 2,
+    marginLeft: 4,
+    resizeMode: 'contain',
   },
   statusContainer: {
     bottom: 13,
@@ -121,7 +116,7 @@ const s = StyleSheet.create({
     justifyContent: 'flex-end',
     height: 18,
     position: 'absolute',
-    right: 14,
+    right: padding.medium,
     width: 40,
   },
   title: {

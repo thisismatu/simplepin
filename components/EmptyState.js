@@ -65,6 +65,7 @@ const s = StyleSheet.create({
   icon: {
     marginBottom: padding.medium,
     tintColor: color.black36,
+    resizeMode: 'contain',
   },
   title: {
     color: color.gray4,
