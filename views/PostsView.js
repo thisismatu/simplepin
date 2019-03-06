@@ -427,7 +427,7 @@ export default class PostsView extends React.Component {
     const { selectedPost } = this.state
     const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
     return (
-      <View style={s.root}>
+      <React.Fragment>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
           <FlatList
             ref={(ref) => this.listRef = ref}
@@ -453,7 +453,7 @@ export default class PostsView extends React.Component {
           <BottomSheet.Option title={strings.common.delete} onPress={this.onDeletePost} />
           <BottomSheet.Option title={strings.common.cancel} onPress={this.toggleModal} />
         </BottomSheet>
-      </View>
+      </React.Fragment>
     )
   }
 }

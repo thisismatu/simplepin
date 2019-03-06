@@ -2,13 +2,13 @@ import { Alert } from 'react-native'
 import Storage from 'app/Storage'
 import strings from 'app/style/strings'
 
-export const logout = (navigation) => {
+export const logout = navigation => {
   Storage.clear().then(() => {
     navigation.navigate('AuthLoading')
   })
 }
 
-export const handleLoginResponseError = (error) => {
+export const handleLoginResponseError = error => {
   switch (error) {
     case 401:
     case 500:
