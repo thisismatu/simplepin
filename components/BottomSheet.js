@@ -2,15 +2,16 @@ import React from 'react'
 import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions, StatusBar } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
-import { color, padding, font, row, radius, shadow } from 'app/style/style'
+import { color, padding, font, row, radius, shadow, isLandscape } from 'app/style/style'
 
 const dimensions = Dimensions.get('screen')
 const portraitWidth = Math.min(dimensions.width, dimensions.height)
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
 const ModalTitle = ({ title }) => {
+  const cellHeight = { height: isLandscape() ? row.medium : row.large }
   return (
-    <View style={s.cell}>
+    <View style={[s.cell, cellHeight]}>
       <Text
         style={s.title}
         numberOfLines={1}
@@ -25,10 +26,11 @@ const ModalTitle = ({ title }) => {
 ModalTitle.propTypes = { title: PropTypes.string }
 
 const ModalOption = ({ title, onPress }) => {
+  const cellHeight = { height: isLandscape() ? row.medium : row.large }
   return (
     <TouchableOpacity
       activeOpacity={0.5}
-      style={s.cell}
+      style={[s.cell, cellHeight]}
       onPress={onPress}
       >
       <Text style={s.text}>{title}</Text>
@@ -136,7 +138,6 @@ const s = StyleSheet.create({
   cell: {
     alignItems: 'center',
     flexDirection: 'row',
-    height: row.large,
     paddingHorizontal: padding.medium,
   },
   text: {

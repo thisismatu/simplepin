@@ -1,3 +1,10 @@
+import { Dimensions } from 'react-native'
+
+export const isLandscape = () => {
+  const { width, height } = Dimensions.get('window')
+  return width > height
+}
+
 export const color = {
   blue1: '#E0F0FF',
   blue2: '#0066CC',
