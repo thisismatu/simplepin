@@ -151,7 +151,7 @@ export default class BrowserView extends React.Component {
   render() {
     const { cleanHtml, readerMode } = this.state
     return (
-      <SafeAreaView style={s.safeArea} forceInset={{ horizontal: 'never' }}>
+      <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never', horizontal: 'never' }}>
         <View style={s.container}>
           {readerMode &&
             <WebView
@@ -200,7 +200,7 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
     paddingHorizontal: padding.medium,
     ...ifIphoneX({
-      marginBottom: -padding.small,
+      marginBottom: padding.medium,
     }),
   },
   button: {

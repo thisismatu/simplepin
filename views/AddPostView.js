@@ -1,5 +1,6 @@
 import React from 'react'
 import { View, StyleSheet, Platform, Image, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated, ToastAndroid } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import lodash from 'lodash/lodash'
@@ -346,100 +347,101 @@ export default class AddPostView extends React.Component {
   render() {
     const { post, scrollEnabled, searchQuery, searchVisible, validHref, validDescription } = this.state
     return (
-      <KeyboardAwareScrollView
-        scrollEnabled={scrollEnabled}
-        contentContainerStyle={s.container}
-        contentInsetAdjustmentBehavior="always"
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="none"
-        style={s.list}
-        onScroll={evt => this.setState({ contentOffset: evt.nativeEvent.contentOffset.y })}
-        >
-        <AnimatedTextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          keyboardType="url"
-          onChange={this.onHrefChange}
-          onSubmitEditing={() => this.descriptionRef.getNode().focus()}
-          placeholder={strings.add.placeholderHref}
-          placeholderTextColor={color.gray2}
-          returnKeyType="next"
-          style={[s.textInput, !validHref && this.shakeStyle]}
-          underlineColorAndroid="transparent"
-          value={post.href}
-        />
-        <Separator />
-        <AnimatedTextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          onChange={this.onDescriptionChange}
-          onSubmitEditing={() => this.extendedRef.focus()}
-          placeholder={strings.add.placeholderDescription}
-          placeholderTextColor={color.gray2}
-          ref={input => this.descriptionRef = input}
-          returnKeyType="next"
-          style={[s.textInput, !validDescription && this.shakeStyle]}
-          underlineColorAndroid="transparent"
-          value={post.description}
-        />
-        <Separator />
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          multiline={true}
-          onChange={this.onExtendedChange}
-          onSubmitEditing={() => this.tagsRef.focus()}
-          placeholder={strings.add.placeholderExtended}
-          placeholderTextColor={color.gray2}
-          ref={input => this.extendedRef = input}
-          returnKeyType="next"
-          style={[s.textInput, s.textArea]}
-          textAlignVertical="top"
-          underlineColorAndroid="transparent"
-          value={post.extended}
-        />
-        <Separator onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })} />
-        <TextInput
-          autoCapitalize="none"
-          autoCorrect={false}
-          blurOnSubmit={false}
-          enablesReturnKeyAutomatically={true}
-          onChange={this.onTagsChange}
-          onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
-          placeholder={strings.add.placeholderTags}
-          placeholderTextColor={color.gray2}
-          ref={input => this.tagsRef = input}
-          returnKeyType="done"
-          style={s.textInput}
-          underlineColorAndroid="transparent"
-          value={searchQuery}
-        />
-        {!isEmpty(post.tags) && this.renderTags()}
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.posts.private}</Text>
-          <Switch
-            onValueChange={this.onShared}
-            value={!post.shared}
+      <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
+        <KeyboardAwareScrollView
+          scrollEnabled={scrollEnabled}
+          contentContainerStyle={s.container}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="none"
+          style={s.list}
+          onScroll={evt => this.setState({ contentOffset: evt.nativeEvent.contentOffset.y })}
+          >
+          <AnimatedTextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            keyboardType="url"
+            onChange={this.onHrefChange}
+            onSubmitEditing={() => this.descriptionRef.getNode().focus()}
+            placeholder={strings.add.placeholderHref}
+            placeholderTextColor={color.gray2}
+            returnKeyType="next"
+            style={[s.textInput, !validHref && this.shakeStyle]}
+            underlineColorAndroid="transparent"
+            value={post.href}
           />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.add.readLater}</Text>
-          <Switch
-            onValueChange={this.onToread}
-            value={post.toread}
+          <Separator />
+          <AnimatedTextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onDescriptionChange}
+            onSubmitEditing={() => this.extendedRef.focus()}
+            placeholder={strings.add.placeholderDescription}
+            placeholderTextColor={color.gray2}
+            ref={input => this.descriptionRef = input}
+            returnKeyType="next"
+            style={[s.textInput, !validDescription && this.shakeStyle]}
+            underlineColorAndroid="transparent"
+            value={post.description}
           />
-        </View>
-        <Separator />
-        { searchVisible && this.renderSearchResults() }
-      </KeyboardAwareScrollView>
+          <Separator />
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            multiline={true}
+            onChange={this.onExtendedChange}
+            onSubmitEditing={() => this.tagsRef.focus()}
+            placeholder={strings.add.placeholderExtended}
+            placeholderTextColor={color.gray2}
+            ref={input => this.extendedRef = input}
+            returnKeyType="next"
+            style={[s.textInput, s.textArea]}
+            textAlignVertical="top"
+            underlineColorAndroid="transparent"
+            value={post.extended}
+          />
+          <Separator onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })} />
+          <TextInput
+            autoCapitalize="none"
+            autoCorrect={false}
+            blurOnSubmit={false}
+            enablesReturnKeyAutomatically={true}
+            onChange={this.onTagsChange}
+            onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
+            placeholder={strings.add.placeholderTags}
+            placeholderTextColor={color.gray2}
+            ref={input => this.tagsRef = input}
+            returnKeyType="done"
+            style={s.textInput}
+            underlineColorAndroid="transparent"
+            value={searchQuery}
+          />
+          {!isEmpty(post.tags) && this.renderTags()}
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.posts.private}</Text>
+            <Switch
+              onValueChange={this.onShared}
+              value={!post.shared}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.add.readLater}</Text>
+            <Switch
+              onValueChange={this.onToread}
+              value={post.toread}
+            />
+          </View>
+          <Separator />
+          { searchVisible && this.renderSearchResults() }
+        </KeyboardAwareScrollView>
+      </SafeAreaView>
     )
   }
 }
@@ -449,6 +451,10 @@ AddPostView.propTypes = {
 }
 
 const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
   container: {
     paddingVertical: padding.medium,
   },

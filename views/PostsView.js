@@ -463,10 +463,6 @@ PostsView.propTypes = {
 }
 
 const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
   safeArea: {
     flex: 1,
     backgroundColor: color.white,

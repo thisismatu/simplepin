@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
+import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import Storage from 'app/Storage'
 import { logout } from 'app/util/ErrorUtil'
@@ -86,96 +87,97 @@ export default class SettingsView extends React.Component {
   render() {
     const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, readerMode, exactDate, tagOrder } = this.state
     return (
-      <ScrollView
-        contentContainerStyle={s.container}
-        contentInsetAdjustmentBehavior="always"
-        style={s.list}
-        >
-        <HeaderCell
-          text={strings.settings.general}
-          style={{ marginTop: padding.medium }}
-        />
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.privateByDefault}</Text>
-          <Switch
-            onValueChange={this.onPrivateByDefault}
-            value={privateByDefault}
+      <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
+        <ScrollView
+          contentContainerStyle={s.container}
+          style={s.list}
+          >
+          <HeaderCell
+            text={strings.settings.general}
+            style={{ marginTop: padding.medium }}
           />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.unreadByDefault}</Text>
-          <Switch
-            onValueChange={this.onUnreadByDefault}
-            value={unreadByDefault}
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.privateByDefault}</Text>
+            <Switch
+              onValueChange={this.onPrivateByDefault}
+              value={privateByDefault}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.unreadByDefault}</Text>
+            <Switch
+              onValueChange={this.onUnreadByDefault}
+              value={unreadByDefault}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.markAsReadWhenOpened}</Text>
+            <Switch
+              onValueChange={this.onMarkAsRead}
+              value={markAsRead}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.openLinksExternal}</Text>
+            <Switch
+              onValueChange={this.onOpenLinksExternal}
+              value={openLinksExternal}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.readerMode}</Text>
+            <Switch
+              onValueChange={this.onReaderMode}
+              value={readerMode}
+            />
+          </View>
+          <Separator />
+          <HeaderCell
+            text={strings.settings.display}
+            style={{ marginTop: padding.medium }}
           />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.markAsReadWhenOpened}</Text>
-          <Switch
-            onValueChange={this.onMarkAsRead}
-            value={markAsRead}
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.exactDates}</Text>
+            <Switch
+              onValueChange={this.onExactDate}
+              value={exactDate}
+            />
+          </View>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
+            <Switch
+              onValueChange={this.onTagOrder}
+              value={tagOrder}
+            />
+          </View>
+          <Separator />
+          <HeaderCell
+            text={strings.settings.other}
+            style={{ marginTop: padding.medium }}
           />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.openLinksExternal}</Text>
-          <Switch
-            onValueChange={this.onOpenLinksExternal}
-            value={openLinksExternal}
-          />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.readerMode}</Text>
-          <Switch
-            onValueChange={this.onReaderMode}
-            value={readerMode}
-          />
-        </View>
-        <Separator />
-        <HeaderCell
-          text={strings.settings.display}
-          style={{ marginTop: padding.medium }}
-        />
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.exactDates}</Text>
-          <Switch
-            onValueChange={this.onExactDate}
-            value={exactDate}
-          />
-        </View>
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
-          <Switch
-            onValueChange={this.onTagOrder}
-            value={tagOrder}
-          />
-        </View>
-        <Separator />
-        <HeaderCell
-          text={strings.settings.other}
-          style={{ marginTop: padding.medium }}
-        />
-        <Separator />
-        <View style={s.cell}>
-          <Text style={s.text}>{strings.settings.version}</Text>
-          <Text style={s.secondary}>{expo.version}</Text>
-        </View>
-        <Separator />
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={s.cell}
-          onPress={() => this.logout()}
-        >
-          <Text style={s.text}>{strings.settings.logout}</Text>
-        </TouchableOpacity>
-        <Separator />
-      </ScrollView>
+          <Separator />
+          <View style={s.cell}>
+            <Text style={s.text}>{strings.settings.version}</Text>
+            <Text style={s.secondary}>{expo.version}</Text>
+          </View>
+          <Separator />
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={s.cell}
+            onPress={() => this.logout()}
+          >
+            <Text style={s.text}>{strings.settings.logout}</Text>
+          </TouchableOpacity>
+          <Separator />
+        </ScrollView>
+      </SafeAreaView>
     )
   }
 }
@@ -185,6 +187,10 @@ SettingsView.propTypes = {
 }
 
 const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
   container: {
     paddingBottom: padding.large,
   },
