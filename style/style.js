@@ -1,7 +1,7 @@
 import { Dimensions } from 'react-native'
 
 export const isLandscape = () => {
-  const { width, height } = Dimensions.get('window')
+  const { width, height } = Dimensions.get('screen')
   return width > height
 }
 

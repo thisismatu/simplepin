@@ -9,7 +9,7 @@ import { color, padding, font, line, row, radius, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 const pinboardUrl = 'https://m.pinboard.in/settings/password'
-const { height } = Dimensions.get('window')
+const { height } = Dimensions.get('screen')
 const smallDevice = height < 640
 
 export default class LoginView extends React.Component {
