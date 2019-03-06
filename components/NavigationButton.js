@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, TouchableOpacity, Image, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, font } from 'app/style/style'
+import { color, font, padding } from 'app/style/style'
 
 export default class NavigationButton extends React.PureComponent {
   render() {
@@ -31,19 +31,19 @@ const s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: '100%',
-    minWidth: 46,
   },
   icon: {
     tintColor: color.blue2,
+    marginHorizontal: 12,
     resizeMode: 'contain',
     height: 24,
     width: 24,
   },
   text: {
-    alignSelf: 'center',
     color: color.blue2,
     fontSize: 16,
     fontWeight: font.bold,
-    marginHorizontal: 15,
+    marginHorizontal: padding.medium,
+    textAlign: 'right',
   },
 })
