@@ -13,7 +13,7 @@ const keys = {
 
 const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
 
-const setApiToken = async (apiToken) => {
+const setApiToken = async apiToken => {
   await AsyncStorage.setItem(keys.apiToken, apiToken)
 }
 
@@ -22,7 +22,7 @@ const markAsRead = async () => {
   return !!JSON.parse(value)
 }
 
-const setMarkAsRead = async (markAsRead) => {
+const setMarkAsRead = async markAsRead => {
   const value = JSON.stringify(markAsRead)
   await AsyncStorage.setItem(keys.markAsRead, value)
 }
@@ -32,7 +32,7 @@ const exactDate = async () => {
   return !!JSON.parse(value)
 }
 
-const setExactDate = async (exactDate) => {
+const setExactDate = async exactDate => {
   const value = JSON.stringify(exactDate)
   await AsyncStorage.setItem(keys.exactDate, value)
 }
@@ -42,7 +42,7 @@ const tagOrder = async () => {
   return !!JSON.parse(value)
 }
 
-const setTagOrder = async (tagOrder) => {
+const setTagOrder = async tagOrder => {
   const value = JSON.stringify(tagOrder)
   await AsyncStorage.setItem(keys.tagOrder, value)
 }
@@ -52,7 +52,7 @@ const privateByDefault = async () => {
   return !!JSON.parse(value)
 }
 
-const setPrivateByDefault = async (privateByDefault) => {
+const setPrivateByDefault = async privateByDefault => {
   const value = JSON.stringify(privateByDefault)
   await AsyncStorage.setItem(keys.privateByDefault, value)
 }
@@ -62,7 +62,7 @@ const unreadByDefault = async () => {
   return !!JSON.parse(value)
 }
 
-const setUnreadByDefault = async (unreadByDefault) => {
+const setUnreadByDefault = async unreadByDefault => {
   const value = JSON.stringify(unreadByDefault)
   await AsyncStorage.setItem(keys.unreadByDefault, value)
 }
@@ -72,7 +72,7 @@ const openLinksExternal = async () => {
   return !!JSON.parse(value)
 }
 
-const setOpenLinksExternal = async (openLinksExternal) => {
+const setOpenLinksExternal = async openLinksExternal => {
   const value = JSON.stringify(openLinksExternal)
   await AsyncStorage.setItem(keys.openLinksExternal, value)
 }
@@ -82,13 +82,13 @@ const readerMode = async () => {
   return JSON.parse(value) !== false
 }
 
-const setReaderMode = async (readerMode) => {
+const setReaderMode = async readerMode => {
   const value = JSON.stringify(readerMode)
   await AsyncStorage.setItem(keys.readerMode, value)
 }
 
 const userPreferences = async () => {
-  const obj = {
+  return {
     apiToken: await apiToken(),
     exactDate: await exactDate(),
     markAsRead: await markAsRead(),
@@ -98,7 +98,6 @@ const userPreferences = async () => {
     openLinksExternal: await openLinksExternal(),
     readerMode: await readerMode(),
   }
-  return obj
 }
 
 const clear = async () => await AsyncStorage.clear()
