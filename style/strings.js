@@ -20,6 +20,8 @@ const strings = {
   },
   error: {
     appOffline: 'Simplepin is offline',
+    yourOffline: 'You’re offline',
+    tryAgainOffline: 'Please connect to the internet and try again',
     loginFailed: 'Login failed',
     incorrectToken: 'Incorrect API token',
     invalidToken: 'Invalid API token',

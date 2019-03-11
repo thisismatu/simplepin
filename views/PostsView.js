@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, View, Alert, Linking, Vibration, Keyboard } from 'react-native'
+import { StyleSheet, FlatList, RefreshControl, Alert, Linking, Vibration, Keyboard, NetInfo } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
@@ -63,6 +63,7 @@ export default class PostsView extends React.Component {
   constructor(props) {
     super(props)
     this.keyboardHeight = 0
+    this.isConnected = true
     this.state = {
       isLoading: false,
       allPosts: null,
@@ -96,6 +97,7 @@ export default class PostsView extends React.Component {
     Storage.userPreferences()
       .then(prefs => this.setState({ preferences: prefs }))
       .then(() => this.onRefresh())
+    NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -109,6 +111,7 @@ export default class PostsView extends React.Component {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove()
     this.keyboardDidHideListener.remove()
+    NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange)
   }
 
   keyboardDidShow = evt => {
@@ -117,6 +120,10 @@ export default class PostsView extends React.Component {
 
   keyboardDidHide = evt => {
     this.keyboardHeight = evt && evt.endCoordinates.height
+  }
+
+  handleConnectivityChange = isConnected => {
+    this.isConnected = isConnected
   }
 
   checkForUpdates = async () => {
@@ -401,7 +408,7 @@ export default class PostsView extends React.Component {
         title={strings.common.noResults}
         paddingBottom={this.keyboardHeight} />
     }
-    if (pinboardDown) {
+    if (pinboardDown && this.isConnected) {
       return <EmptyState
         action={this.onRefresh}
         actionText={strings.common.tryAgain}
@@ -410,7 +417,7 @@ export default class PostsView extends React.Component {
         title={strings.error.troubleConnecting}
         paddingBottom={this.keyboardHeight} />
     }
-    if (isEmpty(this.currentList()) && !isLoading) {
+    if (isEmpty(this.currentList()) && !isLoading && this.isConnected) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
@@ -418,6 +425,15 @@ export default class PostsView extends React.Component {
         icon={icons.simplepin}
         subtitle={strings.common.noPostsMessage}
         title={strings.common.noPosts}
+        paddingBottom={this.keyboardHeight} />
+    }
+    if (isEmpty(this.currentList()) && !isLoading && !this.isConnected) {
+      return <EmptyState
+        action={this.onRefresh}
+        actionText={strings.common.tryAgain}
+        icon={icons.offlineLarge}
+        subtitle={strings.error.tryAgainOffline}
+        title={strings.error.yourOffline}
         paddingBottom={this.keyboardHeight} />
     }
     return null
