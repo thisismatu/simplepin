@@ -16,11 +16,7 @@ export const handleLoginResponseError = error => {
         strings.error.loginFailed,
         strings.error.incorrectToken,
       )
-    default:
-      return Alert.alert(
-        strings.error.somethingWrong,
-        strings.error.tryAgainLater,
-      )
+    default: return
   }
 }
 
@@ -44,10 +40,6 @@ export const handleResponseError = (error, navigation) => {
         strings.error.troubleConnecting,
         strings.error.pinboardDown,
       )
-    default:
-      return Alert.alert(
-        strings.error.somethingWrong,
-        strings.error.tryAgainLater,
-      )
+    default: return
   }
 }
