@@ -19,6 +19,7 @@ const strings = {
     share: 'Share',
   },
   error: {
+    appOffline: 'Simplepin is offline',
     loginFailed: 'Login failed',
     incorrectToken: 'Incorrect API token',
     invalidToken: 'Invalid API token',

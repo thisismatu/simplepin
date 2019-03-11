@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, StatusBar } from 'react-native'
 import AppNavigator from 'app/views/AppNavigator'
+import OfflineNotification from 'app/components/OfflineNotification'
 
 export default class App extends React.Component {
   render() {
@@ -13,6 +14,7 @@ export default class App extends React.Component {
           translucent={true}
         />
         <AppNavigator />
+        <OfflineNotification />
       </View>
     )
   }
