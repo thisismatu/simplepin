@@ -64,19 +64,19 @@ export default class PostsView extends React.Component {
     super(props)
     this.keyboardHeight = 0
     this.isConnected = true
+    this.searchQueryCounts = [],
     this.state = {
       isLoading: false,
-      allPosts: null,
-      unreadPosts: null,
-      privatePosts: null,
-      publicPosts: null,
+      allPosts: [],
+      unreadPosts: [],
+      privatePosts: [],
+      publicPosts: [],
       lastUpdateTime: null,
       modalVisible: false,
       selectedPost: {},
       isSearchActive: false,
       searchQuery: '',
-      searchQueryCounts: null,
-      searchResults: null,
+      searchResults: [],
       pinboardDown: false,
       preferences: {
         apiToken: null,
@@ -127,12 +127,12 @@ export default class PostsView extends React.Component {
   }
 
   checkForUpdates = async () => {
-    const { apiToken } = this.state.preferences
-    const response = await Api.postsUpdate(apiToken)
+    const { preferences, lastUpdateTime } = this.state
+    const response = await Api.postsUpdate(preferences.apiToken)
     if (response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
-    } else if (response.update_time !== this.state.lastUpdateTime) {
+    } else if (response.update_time !== lastUpdateTime) {
       this.setState({ lastUpdateTime: response.update_time })
       return true
     }
@@ -174,9 +174,9 @@ export default class PostsView extends React.Component {
   }
 
   addPost = async post => {
-    const { apiToken } = this.state.preferences
-    const index = findIndex(this.state.allPosts, ['hash', post.hash])
-    const newCollection = this.state.allPosts
+    const { preferences, allPosts } = this.state
+    const index = findIndex(allPosts, ['hash', post.hash])
+    const newCollection = allPosts
     if (index === -1) {
       newCollection.unshift(post)
     } else {
@@ -186,7 +186,7 @@ export default class PostsView extends React.Component {
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const response = await Api.postsAdd(post, apiToken)
+    const response = await Api.postsAdd(post, preferences.apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -194,13 +194,13 @@ export default class PostsView extends React.Component {
   }
 
   deletePost = async post => {
-    const { apiToken } = this.state.preferences
-    const newCollection = reject(this.state.allPosts, { href: post.href })
+    const { preferences, allPosts } = this.state
+    const newCollection = reject(allPosts, { href: post.href })
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
     this.setState({ ...newData, searchResults: this.currentList(true) })
     this.props.navigation.setParams(newDataCount)
-    const response = await Api.postsDelete(post.href, apiToken)
+    const response = await Api.postsDelete(post.href, preferences.apiToken)
     if(response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
@@ -222,8 +222,7 @@ export default class PostsView extends React.Component {
   }
 
   similarSearchResults = () => {
-    const { searchQueryCounts } = this.state
-    const similarQuery = maxBy(Object.keys(searchQueryCounts), o => searchQueryCounts[o])
+    const similarQuery = maxBy(Object.keys(this.searchQueryCounts), o => this.searchQueryCounts[o])
     const similarResults = this.filterSearchResults(similarQuery)
     return {
       searchResults: similarResults,
@@ -258,23 +257,24 @@ export default class PostsView extends React.Component {
     this.setState({ isLoading: false })
   }
 
-  onSearchChange = (evt, tags) => {
-    const searchQuery = evt.nativeEvent ? evt.nativeEvent.text : evt
-    const searchQueryArray = searchQuery.toLowerCase().split(' ')
-    this.setState({
-      searchQuery: searchQuery,
-      isSearchActive: searchQuery === '' ? false : true,
-    })
-    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
-    const queryCounts = lodash(allResults)
-      .map((res, i) => [searchQueryArray[i], res.length])
+  getSearchQueryCounts = (results, query) => {
+    return lodash(results)
+      .map((res, i) => [query[i], res.length])
       .fromPairs()
       .omit('')
       .value()
+  }
+
+  onSearchChange = (evt, tags) => {
+    const searchQuery = evt.nativeEvent ? evt.nativeEvent.text : evt
+    const searchQueryArray = searchQuery.toLowerCase().split(' ')
+    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
     const uniqueResults = intersection(...allResults)
+    this.searchQueryCounts = this.getSearchQueryCounts(allResults, searchQueryArray)
     this.setState({
+      searchQuery: searchQuery,
+      isSearchActive: !isEmpty(searchQuery),
       searchResults: uniqueResults,
-      searchQueryCounts: queryCounts,
     })
   }
 
@@ -317,61 +317,67 @@ export default class PostsView extends React.Component {
   }
 
   onToggleToread = () => {
-    const post = this.state.selectedPost
+    const { selectedPost } = this.state
     this.toggleModal()
-    post.toread = !post.toread
-    post.meta = Math.random().toString(36) // PostCell change detection
-    this.addPost(post)
+    selectedPost.toread = !selectedPost.toread
+    selectedPost.meta = Math.random().toString(36) // PostCell change detection
+    this.addPost(selectedPost)
   }
 
   onEditPost = () => {
     const { navigation } = this.props
-    const post = this.state.selectedPost
+    const { selectedPost } = this.state
     this.toggleModal()
-    navigation.navigate('Add', { post: post, onSubmit: navigation.getParam('onSubmit') })
+    navigation.navigate('Add', { post: selectedPost, onSubmit: navigation.getParam('onSubmit') })
   }
 
   onSharePost = () => {
-    const post = this.state.selectedPost
+    const { selectedPost } = this.state
     this.setState({ modalVisible: false }, () => {
       // Timeout needed to fix opening share dialog from modal
-      setTimeout(() => {
-        openShareDialog(post.href, post.description)
-      }, 500)
+      setTimeout(() => openShareDialog(selectedPost.href, selectedPost.description), 500)
     })
   }
 
-  onDeletePost = () => {
-    const post = this.state.selectedPost
+  openDeleteAlert = () => {
+    const { selectedPost } = this.state
     Alert.alert(
       strings.common.deletePost,
-      post.description,
+      selectedPost.description,
       [
         { text: strings.common.cancel, style: 'cancel' },
-        { text: strings.common.delete,
-          onPress: () => {
-            this.toggleModal()
-            this.deletePost(post)
-          },
-          style: 'destructive',
-        },
+        { text: strings.common.delete, onPress: () => this.deletePost(selectedPost), style: 'destructive' },
       ]
     )
   }
 
+  onDeletePost = () => {
+    this.setState({ modalVisible: false }, () => {
+      // Timeout needed to fix opening alert from modal
+      setTimeout(() => this.openDeleteAlert(), 500)
+    })
+  }
+
+  renderRefreshControl = () => {
+    return <RefreshControl refreshing={this.state.isLoading} onRefresh={this.onRefresh} />
+  }
+
   renderListHeader = () => {
-    if (!this.currentList()) { return null }
+    const isCurrentListEmpty = isEmpty(this.currentList())
+    if (isCurrentListEmpty) return null
+    const { isSearchActive, searchQuery, searchResults } = this.state
     return (
       <SearchBar
-        isSearchActive={this.state.isSearchActive}
-        searchQuery={this.state.searchQuery}
+        isSearchActive={isSearchActive}
+        searchQuery={searchQuery}
         onSearchChange={this.onSearchChange}
-        count={this.state.searchResults.length}
+        count={searchResults.length}
       />
     )
   }
 
   renderPostCell = item => {
+    const { preferences } = this.state
     return (
       <PostCell
         post={item}
@@ -379,29 +385,21 @@ export default class PostsView extends React.Component {
         onTagPress={this.onTagPress}
         onCellPress={this.onCellPress}
         onCellLongPress={this.onCellLongPress}
-        exactDate={this.state.preferences.exactDate}
-        tagOrder={this.state.preferences.tagOrder}
-      />
-    )
-  }
-
-  renderRefreshControl = () => {
-    return (
-      <RefreshControl
-        refreshing={this.state.isLoading}
-        onRefresh={this.onRefresh}
+        exactDate={preferences.exactDate}
+        tagOrder={preferences.tagOrder}
       />
     )
   }
 
   renderEmptyState = () => {
-    const { isLoading, pinboardDown, isSearchActive, searchQuery } = this.state
-    const { apiToken } = this.state.preferences
-    if (!apiToken) { return null }
+    const { isLoading, pinboardDown, isSearchActive, preferences, searchQuery } = this.state
+    const isCurrentListEmpty = isEmpty(this.currentList())
+    if (!preferences.apiToken) { return null }
     if (isSearchActive) {
       const similarResults = this.similarSearchResults()
+      const hasSimilarResults = similarResults.searchResults.length > 0
       return <EmptyState
-        action={ similarResults.searchResults.length > 0 ? this.onShowSimilarResults : undefined }
+        action={hasSimilarResults ? this.onShowSimilarResults : undefined}
         actionText={`Show results for “${similarResults.searchQuery}”`}
         icon={icons.searchLarge}
         subtitle={`“${searchQuery}“`}
@@ -417,7 +415,7 @@ export default class PostsView extends React.Component {
         title={strings.error.troubleConnecting}
         paddingBottom={this.keyboardHeight} />
     }
-    if (isEmpty(this.currentList()) && !isLoading && this.isConnected) {
+    if (isCurrentListEmpty && !isLoading && this.isConnected) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
@@ -427,7 +425,7 @@ export default class PostsView extends React.Component {
         title={strings.common.noPosts}
         paddingBottom={this.keyboardHeight} />
     }
-    if (isEmpty(this.currentList()) && !isLoading && !this.isConnected) {
+    if (isCurrentListEmpty && !isLoading && !this.isConnected) {
       return <EmptyState
         action={this.onRefresh}
         actionText={strings.common.tryAgain}
@@ -440,8 +438,8 @@ export default class PostsView extends React.Component {
   }
 
   render() {
-    const { selectedPost } = this.state
-    const data = this.state.isSearchActive ? this.state.searchResults : this.currentList()
+    const { isSearchActive, searchResults, selectedPost, modalVisible } = this.state
+    const data = isSearchActive ? searchResults : this.currentList()
     return (
       <React.Fragment>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
@@ -461,7 +459,7 @@ export default class PostsView extends React.Component {
             ListHeaderComponent={this.renderListHeader()}
           />
         </SafeAreaView>
-        <BottomSheet visible={this.state.modalVisible} onClose={this.toggleModal}>
+        <BottomSheet visible={modalVisible} onClose={this.toggleModal}>
           <BottomSheet.Title title={selectedPost.description} />
           <BottomSheet.Option title={`${strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
           <BottomSheet.Option title={strings.common.edit} onPress={this.onEditPost} />

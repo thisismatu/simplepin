@@ -11,9 +11,9 @@ export default class EmptyState extends React.PureComponent {
     this.state = { topOffset: 0 }
   }
 
-  onLayout = event => {
+  onLayout = evt => {
     if (this.state.topOffset) return // layout was already called
-    this.setState({ topOffset: event.nativeEvent.layout.y })
+    this.setState({ topOffset: evt.nativeEvent.layout.y })
   }
 
   renderAction() {
