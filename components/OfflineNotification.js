@@ -4,6 +4,7 @@ import { isIphoneX } from 'react-native-iphone-x-helper'
 import { color, font, row } from 'app/style/style'
 import strings from 'app/style/strings'
 
+const hidden = 9999
 const height = isIphoneX() ? row.large : row.tiny
 
 class OfflineNotification extends React.PureComponent {
@@ -13,8 +14,8 @@ class OfflineNotification extends React.PureComponent {
     this.containerStyle = StyleSheet.flatten([s.container, {
       transform: [{
         translateY: this.animation.interpolate({
-          inputRange: [0, 1],
-          outputRange: [height, 0],
+          inputRange: [0, 0.001, 1],
+          outputRange: [hidden, height, 0],
           extrapolate: 'clamp',
         }),
       }],
