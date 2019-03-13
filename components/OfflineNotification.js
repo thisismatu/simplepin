@@ -52,7 +52,7 @@ const s = StyleSheet.create({
     position: 'absolute',
     bottom: 0, left: 0, right: 0,
     width: '100%',
-    backgroundColor: color.blue2,
+    backgroundColor: color.gray3,
     height,
   },
   text: {
