@@ -197,9 +197,9 @@ export default class AddPostView extends React.Component {
   isValidPost = (href, description) => {
     const validHref = isUrl(href)
     const validDescription = !isEmpty(description)
-    if (isEmpty(href) && !validDescription) ToastAndroid.show(strings.error.emptyUrlDescription, ToastAndroid.SHORT)
-    if (!isEmpty(href) && !validHref) ToastAndroid.show(strings.error.invalidUrl, ToastAndroid.SHORT)
-    if (validHref && !validDescription) ToastAndroid.show(strings.error.emptyTitle, ToastAndroid.SHORT)
+    if (isEmpty(href) && !validDescription) ToastAndroid.showWithGravity(strings.error.emptyUrlDescription, ToastAndroid.SHORT, ToastAndroid.CENTER)
+    if (!isEmpty(href) && !validHref) ToastAndroid.showWithGravity(strings.error.invalidUrl, ToastAndroid.SHORT, ToastAndroid.CENTER)
+    if (validHref && !validDescription) ToastAndroid.showWithGravity(strings.error.emptyTitle, ToastAndroid.SHORT, ToastAndroid.CENTER)
     this.setState({ validHref, validDescription }, () => this.animate())
     return validHref && validDescription
   }
