@@ -77,16 +77,12 @@ Tag.propTypes = {
 export default class AddPostView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     const post = navigation.getParam('post')
+    const title = post ? strings.add.titleEdit : strings.add.titleAdd
+    const saveText = navigation.getParam('post') ? strings.add.buttonSave : strings.add.buttonAdd
     return {
-      title: post ? strings.add.titleEdit : strings.add.titleAdd,
-      headerLeft: <NavigationButton
-        onPress={navigation.getParam('onDismiss')}
-        icon={icons.close}
-      />,
-      headerRight: <NavigationButton
-        onPress={navigation.getParam('onSave')}
-        text={post ? strings.add.buttonSave : strings.add.buttonAdd}
-      />,
+      title,
+      headerLeft: <NavigationButton onPress={navigation.getParam('onDismiss')} icon={icons.close} />,
+      headerRight: <NavigationButton onPress={navigation.getParam('onSave')} text={saveText} />,
     }
   }
 
@@ -103,15 +99,16 @@ export default class AddPostView extends React.Component {
       }],
     }
     this.unsavedChanges = false,
+    this.contentOffset = 0
+    this.searchHeight = 200
+    this.suggestedTags = []
+    this.userTags = []
     this.state = {
       validHref: false,
       validDescription: false,
-      suggestedTags: [],
-      userTags: [],
       scrollEnabled: true,
       searchQuery: '',
       searchResults: {},
-      searchHeight: 200,
       searchVisible: false,
       post: {
         description: '',
@@ -178,10 +175,8 @@ export default class AddPostView extends React.Component {
         .compact()
         .uniq()
         .value()
-      this.setState({
-        suggestedTags: suggestedTags,
-        userTags: keys(response),
-      })
+      this.suggestedTags = suggestedTags
+      this.userTags = keys(response)
     }
   }
 
@@ -261,9 +256,9 @@ export default class AddPostView extends React.Component {
   }
 
   filterSearchResults = text => {
-    const { post, userTags, suggestedTags } = this.state
-    const suggestedTagsResults = filter(difference(suggestedTags, post.tags), tag => tag.includes(text))
-    const userTagsResults = filter(difference(userTags, flattenDeep([post.tags, suggestedTags])), tag => tag.includes(text))
+    const { tags } = this.state.post
+    const suggestedTagsResults = filter(difference(this.suggestedTags, tags), tag => tag.includes(text))
+    const userTagsResults = filter(difference(this.userTags, flattenDeep([tags, this.suggestedTags])), tag => tag.includes(text))
     const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
     const searchVisible = !isEmpty(searchResults) && !isEmpty(text)
     this.setState({
@@ -307,9 +302,9 @@ export default class AddPostView extends React.Component {
   }
 
   renderSearchResults = () => {
-    const { searchResults, searchHeight, contentOffset = 0 } = this.state
-    const containerHeight = { height: searchHeight - contentOffset - padding.small }
-    const topOffset = { top: contentOffset }
+    const { searchResults } = this.state
+    const containerHeight = { height: this.searchHeight - this.contentOffset - padding.small }
+    const topOffset = { top: this.contentOffset }
     return (
       <TouchableOpacity
         activeOpacity={1}
@@ -354,7 +349,7 @@ export default class AddPostView extends React.Component {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="none"
           style={s.list}
-          onScroll={evt => this.setState({ contentOffset: evt.nativeEvent.contentOffset.y })}
+          onScroll={evt => this.contentOffset = evt.nativeEvent.contentOffset.y}
           >
           <AnimatedTextInput
             autoCapitalize="none"
@@ -405,7 +400,7 @@ export default class AddPostView extends React.Component {
             underlineColorAndroid="transparent"
             value={post.extended}
           />
-          <Separator onLayout={evt => this.setState({ searchHeight: evt.nativeEvent.layout.y })} />
+          <Separator onLayout={evt => this.searchHeight = evt.nativeEvent.layout.y} />
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
