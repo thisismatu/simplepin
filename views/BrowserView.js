@@ -68,7 +68,7 @@ export default class BrowserView extends React.Component {
 
   componentWillUnmount() {
     if (isAndroid) {
-      BackHandler.removeEventListener('hardwareBackPress')
+      BackHandler.removeEventListener('hardwareBackPress', this.onAndroidBack)
     }
   }
 

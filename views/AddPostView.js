@@ -162,7 +162,7 @@ export default class AddPostView extends React.Component {
 
   componentWillUnmount() {
     if (isAndroid) {
-      BackHandler.removeEventListener('hardwareBackPress')
+      BackHandler.removeEventListener('hardwareBackPress', this.onAndroidBack)
     }
   }
 
