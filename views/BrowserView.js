@@ -12,6 +12,12 @@ import { color, padding, row, icons } from 'app/style/style'
 
 const isAndroid = Platform.OS === 'android'
 
+const isBlackListed = url => {
+  const blackList = ['youtube.com', 'vimeo.com']
+  const domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
+  return blackList.includes(domain)
+}
+
 const ToolbarButton = ({ disabled, onPress, icon }) => {
   return (
     <TouchableOpacity
@@ -57,7 +63,7 @@ export default class BrowserView extends React.Component {
     const { navigation } = this.props
     this.url = navigation.getParam('url')
     this.title = navigation.getParam('title')
-    Storage.readerMode().then(value => this.setState({ readerMode: value }))
+    Storage.readerMode().then(value => this.setState({ readerMode: value && !isBlackListed(this.url) }))
     if (isAndroid) {
       BackHandler.addEventListener('hardwareBackPress', this.onAndroidBack)
     }

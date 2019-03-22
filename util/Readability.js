@@ -45,13 +45,9 @@ const cleanHtml = (html, sourceUrl) => {
   })
 
   return new Promise(resolve => {
-    if (!html || html.length === 0) {
-      throw new Error('Invalid or no html provided')
-    }
+    if (!html || html.length === 0) throw new Error('Invalid or no html provided')
+    if (!sourceUrl || sourceUrl.length === 0) throw new Error('Invalid or no source url provided')
 
-    if (!sourceUrl || sourceUrl.length === 0) {
-      throw new Error('Invalid or no source url provided')
-    }
     const readabilityUrl = createReadabilityUrl(sourceUrl)
     const xhtml = convertHtmlToXhtml(html)
     const doc = createJsDomDocument(xhtml)
