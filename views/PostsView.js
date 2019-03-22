@@ -65,13 +65,13 @@ export default class PostsView extends React.Component {
     this.keyboardHeight = 0
     this.isConnected = true
     this.searchQueryCounts = [],
+    this.lastUpdateTime = null,
     this.state = {
       isLoading: false,
       allPosts: [],
       unreadPosts: [],
       privatePosts: [],
       publicPosts: [],
-      lastUpdateTime: null,
       modalVisible: false,
       selectedPost: {},
       isSearchActive: false,
@@ -127,13 +127,13 @@ export default class PostsView extends React.Component {
   }
 
   checkForUpdates = async () => {
-    const { preferences, lastUpdateTime } = this.state
+    const { preferences } = this.state
     const response = await Api.postsUpdate(preferences.apiToken)
     if (response.ok === 0) {
       if ( response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
-    } else if (response.update_time !== lastUpdateTime) {
-      this.setState({ lastUpdateTime: response.update_time })
+    } else if (response.update_time !== this.lastUpdateTime) {
+      this.lastUpdateTime = response.update_time
       return true
     }
     return false
