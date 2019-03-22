@@ -279,6 +279,7 @@ export default class AddPostView extends React.Component {
   }
 
   selectTag = tag => {
+    if (isEmpty(tag)) return
     const post = { ...this.state.post }
     post.tags.push(tag)
     this.setState({
