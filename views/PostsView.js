@@ -14,7 +14,6 @@ import reject from 'lodash/reject'
 import uniqBy from 'lodash/uniqBy'
 import findIndex from 'lodash/findIndex'
 import get from 'lodash/get'
-import includes from 'lodash/includes'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
 import Api from 'app/Api'
@@ -162,7 +161,7 @@ export default class PostsView extends React.Component {
       const uniqPostsStarred = lodash(jsonObject)
         .uniqBy('hash')
         .map(o => {
-          o.starred = includes(starredLinks, o.href)
+          o.starred = starredLinks.includes(o.href)
           return o
         })
         .value()
@@ -296,7 +295,7 @@ export default class PostsView extends React.Component {
 
   onCellPress = post => () => {
     const { openLinksExternal, markAsRead } = this.state.preferences
-    if (openLinksExternal || includes(post.href, '.pdf')) {
+    if (openLinksExternal || post.href.includes('.pdf')) {
       Linking.canOpenURL(post.href).then(() => {
         Linking.openURL(post.href)
       })
