@@ -193,11 +193,14 @@ export default class PostsView extends React.Component {
   }
 
   deletePost = async post => {
-    const { preferences, allPosts } = this.state
+    const { preferences, allPosts, searchQuery, isSearchActive } = this.state
     const newCollection = reject(allPosts, { href: post.href })
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
-    this.setState({ ...newData, searchResults: this.currentList(true) })
+    this.setState({ ...newData })
+    if (isSearchActive) {
+      this.onSearchChange(searchQuery)
+    }
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsDelete(post.href, preferences.apiToken)
     if(response.ok === 0) {
