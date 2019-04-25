@@ -369,7 +369,7 @@ export default class AddPostView extends React.Component {
           />
           <Separator />
           <AnimatedTextInput
-            autoCapitalize="none"
+            autoCapitalize="words"
             autoCorrect={false}
             blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
@@ -385,8 +385,8 @@ export default class AddPostView extends React.Component {
           />
           <Separator />
           <TextInput
-            autoCapitalize="none"
-            autoCorrect={false}
+            autoCapitalize="words"
+            autoCorrect={true}
             blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             multiline={true}
