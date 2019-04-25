@@ -408,8 +408,8 @@ export default class AddPostView extends React.Component {
             blurOnSubmit={false}
             enablesReturnKeyAutomatically={true}
             onChange={this.onTagsChange}
-            onSubmitEditing={evt => this.selectTag(evt.nativeEvent.text)}
-            onBlur={evt => this.selectTag(evt.nativeEvent.text)}
+            onSubmitEditing={() => this.selectTag(searchQuery)}
+            onBlur={() => this.selectTag(searchQuery)}
             placeholder={strings.add.placeholderTags}
             placeholderTextColor={color.gray2}
             ref={input => this.tagsRef = input}
