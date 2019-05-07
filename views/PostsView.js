@@ -20,7 +20,7 @@ import Api from 'app/Api'
 import Storage from 'app/Storage'
 import { reviver } from 'app/util/JsonUtil'
 import { handleResponseError } from 'app/util/ErrorUtil'
-import { openShareDialog } from 'app/util/ShareUtil'
+import { showSharePostDialog } from 'app/util/ShareUtil'
 import NavigationButton from 'app/components/NavigationButton'
 import PostCell from 'app/components/PostCell'
 import Separator from 'app/components/Separator'
@@ -86,8 +86,10 @@ export default class PostsView extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props
-    navigation.setParams({ onSubmit: this.onSubmitAddPost })
-    navigation.setParams({ openDrawer: this.openDrawer })
+    navigation.setParams({
+      onSubmit: this.onSubmitAddPost,
+      openDrawer: this.openDrawer,
+    })
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow)
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
     Storage.userPreferences()
@@ -102,13 +104,10 @@ export default class PostsView extends React.Component {
         this.setState({ preferences: prefs })
       }
     })
-
     const previousList = prevProps.navigation.getParam('list')
     const currentList = this.props.navigation.getParam('list')
     if (previousList !== currentList) {
-      this.setState({
-        data: this.dataHolder[currentList]
-      })
+      this.setState({ data: this.dataHolder[currentList] })
     }
   }
 
@@ -128,11 +127,6 @@ export default class PostsView extends React.Component {
 
   handleConnectivityChange = isConnected => {
     this.isConnected = isConnected
-  }
-
-  getCurrentList = () => {
-    const currentList = this.props.navigation.getParam('list', 'allPosts')
-    return this.dataHolder[currentList]
   }
 
   isSearchActive = () => !isEmpty(this.searchQuery)
@@ -229,6 +223,11 @@ export default class PostsView extends React.Component {
     }
   }
 
+  getCurrentList = () => {
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
+    return this.dataHolder[currentList]
+  }
+
   filterSearchResults = (text, tags = false) => {
     const currentList = this.getCurrentList()
     return filter(currentList, post => {
@@ -285,9 +284,7 @@ export default class PostsView extends React.Component {
     this.props.navigation.openDrawer()
   }
 
-  toggleModal = () => {
-    this.setState({ modalVisible: !this.state.modalVisible })
-  }
+  toggleModal = () => this.setState({ modalVisible: !this.state.modalVisible })
 
   onRefresh = async () => {
     this.setState({ isLoading: true })
@@ -298,9 +295,7 @@ export default class PostsView extends React.Component {
     this.setState({ isLoading: false })
   }
 
-  onSubmitAddPost = post => {
-    this.addPost(post)
-  }
+  onSubmitAddPost = post => this.addPost(post)
 
   onTagPress = tag => () => {
     this.onSearchChange(tag, true)
@@ -348,11 +343,11 @@ export default class PostsView extends React.Component {
     const { selectedPost } = this.state
     this.setState({ modalVisible: false }, () => {
       // Timeout needed to fix opening share dialog from modal
-      setTimeout(() => openShareDialog(selectedPost.href, selectedPost.description), 500)
+      setTimeout(() => showSharePostDialog(selectedPost.href, selectedPost.description), 500)
     })
   }
 
-  openDeleteAlert = () => {
+  showDeletePostAlert = () => {
     const { selectedPost } = this.state
     Alert.alert(
       strings.common.deletePost,
@@ -450,6 +445,7 @@ export default class PostsView extends React.Component {
 
   render() {
     const { selectedPost, modalVisible, data } = this.state
+    const toreadText = selectedPost.toread ? 'read' : 'unread'
     return (
       <React.Fragment>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
@@ -465,13 +461,13 @@ export default class PostsView extends React.Component {
             keyboardDismissMode="on-drag"
             style={s.list}
             ItemSeparatorComponent={() => <Separator left={padding.large} />}
-            ListEmptyComponent={this.renderEmptyState()}
-            ListHeaderComponent={this.renderListHeader()}
+            ListEmptyComponent={this.renderEmptyState}
+            ListHeaderComponent={this.renderListHeader}
           />
         </SafeAreaView>
         <BottomSheet visible={modalVisible} onClose={this.toggleModal}>
           <BottomSheet.Title title={selectedPost.description} />
-          <BottomSheet.Option title={`${strings.common.markAs} ${selectedPost.toread ? 'read' : 'unread'}`} onPress={this.onToggleToread} />
+          <BottomSheet.Option title={`${strings.common.markAs} ${toreadText}`} onPress={this.onToggleToread} />
           <BottomSheet.Option title={strings.common.edit} onPress={this.onEditPost} />
           <BottomSheet.Option title={strings.common.share} onPress={this.onSharePost} />
           <BottomSheet.Option title={strings.common.delete} onPress={this.onDeletePost} />

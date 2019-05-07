@@ -4,7 +4,7 @@ import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import { fetchWithErrorHandling } from 'app/util/FetchUtil'
-import { openShareDialog } from 'app/util/ShareUtil'
+import { showSharePostDialog } from 'app/util/ShareUtil'
 import Readability from 'app/util/Readability'
 import Storage from 'app/Storage'
 import NavigationButton from 'app/components/NavigationButton'
@@ -119,7 +119,7 @@ export default class BrowserView extends React.Component {
   }
 
   onShare = () => {
-    openShareDialog(this.url, this.title)
+    showSharePostDialog(this.url, this.title)
   }
 
   toggleReaderMode = () => {
