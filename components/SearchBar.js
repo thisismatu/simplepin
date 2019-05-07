@@ -1,12 +1,33 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, Text, TouchableOpacity, Image } from 'react-native'
 import PropTypes from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 import { color, padding, font, row, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 export default class SearchBar extends React.PureComponent {
+  constructor(props) {
+    super(props)
+    this.state = { text: null }
+  }
+
+  reset = () => this.setState({ text: null })
+
+  setText = text => this.setState({ text })
+
+  onChange = text => {
+    this.setText(text)
+    this.props.onSearchChange(text)
+  }
+
+  onClear = () => {
+    this.reset()
+    this.props.onClearSearch()
+  }
+
   render() {
-    const { isSearchActive, searchQuery, onSearchChange, count } = this.props
+    const { text } = this.state
+    const isSearchActive = !isEmpty(text)
     const icon = isSearchActive ? icons.closeSmall : icons.searchSmall
     return (
       <View style={s.container}>
@@ -15,20 +36,20 @@ export default class SearchBar extends React.PureComponent {
           autoCorrect={false}
           clearButtonMode="never"
           enablesReturnKeyAutomatically={true}
-          onChange={onSearchChange}
+          onChangeText={this.onChange}
           placeholder={strings.common.search}
           placeholderTextColor = {color.gray2}
           returnKeyType="done"
           style={s.textField}
           underlineColorAndroid="transparent"
-          value={searchQuery}
+          value={text}
         />
-        {isSearchActive > 0 && <Text style={s.count}>{count}</Text>}
+        {isSearchActive && <Text style={s.matches}>{this.props.matches}</Text>}
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={() => onSearchChange('')}
+          onPress={this.onClear}
           style={s.button}
-          disabled={!searchQuery}
+          disabled={!text}
         >
           <Image source={icon} style={s.icon} />
         </TouchableOpacity>
@@ -38,10 +59,9 @@ export default class SearchBar extends React.PureComponent {
 }
 
 SearchBar.propTypes = {
-  isSearchActive: PropTypes.bool.isRequired,
-  searchQuery: PropTypes.string.isRequired,
   onSearchChange: PropTypes.func.isRequired,
-  count: PropTypes.number,
+  onClearSearch: PropTypes.func.isRequired,
+  matches: PropTypes.number,
 }
 
 const barHeight = row.tiny
@@ -61,7 +81,7 @@ const s = StyleSheet.create({
     height: barHeight,
     paddingHorizontal: padding.medium,
   },
-  count: {
+  matches: {
     color: color.black36,
     fontSize: font.small,
     lineHeight: barHeight,

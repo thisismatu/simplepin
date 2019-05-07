@@ -63,19 +63,16 @@ export default class PostsView extends React.Component {
     super(props)
     this.keyboardHeight = 0
     this.isConnected = true
-    this.searchQueryCounts = [],
-    this.lastUpdateTime = null,
+    this.lastUpdateTime = null
+    this.dataHolder = []
+    this.searchQuery = ''
+    this.similarSearchQuery = ''
+    this.similarSearchResults = []
     this.state = {
+      data: [],
       isLoading: false,
-      allPosts: [],
-      unreadPosts: [],
-      privatePosts: [],
-      publicPosts: [],
       modalVisible: false,
       selectedPost: {},
-      isSearchActive: false,
-      searchQuery: '',
-      searchResults: [],
       pinboardDown: false,
       preferences: {
         apiToken: null,
@@ -105,6 +102,14 @@ export default class PostsView extends React.Component {
         this.setState({ preferences: prefs })
       }
     })
+
+    const previousList = prevProps.navigation.getParam('list')
+    const currentList = this.props.navigation.getParam('list')
+    if (previousList !== currentList) {
+      this.setState({
+        data: this.dataHolder[currentList]
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -124,6 +129,13 @@ export default class PostsView extends React.Component {
   handleConnectivityChange = isConnected => {
     this.isConnected = isConnected
   }
+
+  getCurrentList = () => {
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
+    return this.dataHolder[currentList]
+  }
+
+  isSearchActive = () => !isEmpty(this.searchQuery)
 
   checkForUpdates = async () => {
     const { preferences } = this.state
@@ -151,7 +163,8 @@ export default class PostsView extends React.Component {
       const jsonObject = JSON.parse(jsonString, reviver)
       const newData = filterPosts(uniqBy(jsonObject, 'hash'))
       const newDataCount = postsCount(newData)
-      this.setState({ ...newData, searchResults: this.currentList(true) })
+      this.setState({ data: newData.allPosts })
+      this.dataHolder = newData
       this.props.navigation.setParams(newDataCount)
     } else {
       const rssObject = await rssParser.parse(starred)
@@ -167,13 +180,16 @@ export default class PostsView extends React.Component {
         .value()
       const newData = filterPosts(uniqPostsStarred)
       const newDataCount = postsCount(newData)
-      this.setState({ ...newData, searchResults: this.currentList(true) })
+      this.setState({ data: newData.allPosts })
+      this.dataHolder = newData
       this.props.navigation.setParams(newDataCount)
     }
   }
 
   addPost = async post => {
-    const { preferences, allPosts } = this.state
+    const { preferences } = this.state
+    const { allPosts } = this.dataHolder
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
     const index = findIndex(allPosts, ['hash', post.hash])
     const newCollection = allPosts
     if (index === -1) {
@@ -183,7 +199,8 @@ export default class PostsView extends React.Component {
     }
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
-    this.setState({ ...newData, searchResults: this.currentList(true) })
+    this.setState({ data: newData[currentList] })
+    this.dataHolder = newData
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsAdd(post, preferences.apiToken)
     if(response.ok === 0) {
@@ -193,13 +210,16 @@ export default class PostsView extends React.Component {
   }
 
   deletePost = async post => {
-    const { preferences, allPosts, searchQuery, isSearchActive } = this.state
+    const { preferences } = this.state
+    const { allPosts } = this.dataHolder
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
     const newCollection = reject(allPosts, { href: post.href })
     const newData = filterPosts(newCollection)
     const newDataCount = postsCount(newData)
-    this.setState({ ...newData })
-    if (isSearchActive) {
-      this.onSearchChange(searchQuery)
+    this.setState({ data: newData[currentList] })
+    this.dataHolder = newData
+    if (this.isSearchActive()) {
+      this.onSearchChange(this.searchQuery)
     }
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsDelete(post.href, preferences.apiToken)
@@ -210,7 +230,8 @@ export default class PostsView extends React.Component {
   }
 
   filterSearchResults = (text, tags = false) => {
-    return filter(this.currentList(), post => {
+    const currentList = this.getCurrentList()
+    return filter(currentList, post => {
       const tagData = post.tags ? post.tags.join(' ').toLowerCase() : ''
       const postData = `
         ${post.href.toLowerCase()}
@@ -223,26 +244,44 @@ export default class PostsView extends React.Component {
     })
   }
 
-  similarSearchResults = () => {
-    const similarQuery = maxBy(Object.keys(this.searchQueryCounts), o => this.searchQueryCounts[o])
-    const similarResults = this.filterSearchResults(similarQuery)
-    return {
-      searchResults: similarResults,
-      searchQuery: similarQuery,
-    }
+  showSimilarSearchResults = () => {
+    this.setState({ data: this.similarSearchResults })
+    this.searchQuery = this.similarSearchQuery
+    this.searchBarRef.setText(this.similarSearchQuery)
   }
 
-  currentList = shouldFilter => {
-    const current = this.props.navigation.getParam('list', 'allPosts')
-    if (shouldFilter) {
-      return this.filterSearchResults(this.state.searchQuery)
-    }
-    return this.state[current]
+  getsearchQueryMatches = (results, query) => {
+    return lodash(results)
+      .map((res, i) => [query[i], res.length])
+      .fromPairs()
+      .omit('')
+      .value()
+  }
+
+  onSearchChange = (query, tags = false) => {
+    const searchQueryArray = query.toLowerCase().split(' ')
+    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
+    const uniqueResults = intersection(...allResults)
+    const matches = this.getsearchQueryMatches(allResults, searchQueryArray)
+    const similarQuery = maxBy(Object.keys(matches), o => matches[o])
+    const similarResults = this.filterSearchResults(similarQuery)
+    this.setState({ data: uniqueResults })
+    this.searchQuery = query
+    this.similarSearchResults = similarResults
+    this.similarSearchQuery = similarQuery
+  }
+
+  clearSearch = () => {
+    this.setState({ data: this.getCurrentList() })
+    this.searchQuery = ''
   }
 
   openDrawer = () => {
     Keyboard.dismiss()
-    this.onSearchChange('')
+    if (this.isSearchActive()) {
+      this.clearSearch()
+      this.searchBarRef.reset()
+    }
     this.props.navigation.openDrawer()
   }
 
@@ -257,34 +296,6 @@ export default class PostsView extends React.Component {
       await this.fetchPosts()
     }
     this.setState({ isLoading: false })
-  }
-
-  getSearchQueryCounts = (results, query) => {
-    return lodash(results)
-      .map((res, i) => [query[i], res.length])
-      .fromPairs()
-      .omit('')
-      .value()
-  }
-
-  onSearchChange = (evt, tags) => {
-    const searchQuery = evt.nativeEvent ? evt.nativeEvent.text : evt
-    const searchQueryArray = searchQuery.toLowerCase().split(' ')
-    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
-    const uniqueResults = intersection(...allResults)
-    this.searchQueryCounts = this.getSearchQueryCounts(allResults, searchQueryArray)
-    this.setState({
-      searchQuery: searchQuery,
-      isSearchActive: !isEmpty(searchQuery),
-      searchResults: uniqueResults,
-    })
-  }
-
-  onShowSimilarResults = () => {
-    const similarResults = this.similarSearchResults()
-    if (similarResults.searchResults.length > 0) {
-      this.setState(similarResults)
-    }
   }
 
   onSubmitAddPost = post => {
@@ -356,25 +367,23 @@ export default class PostsView extends React.Component {
   onDeletePost = () => {
     this.setState({ modalVisible: false }, () => {
       // Timeout needed to fix opening alert from modal
-      setTimeout(() => this.openDeleteAlert(), 500)
+      setTimeout(() => this.showDeletePostAlert(), 500)
     })
   }
 
   renderRefreshControl = () => {
-    if (this.state.isSearchActive) return null
+    if (this.isSearchActive()) return null
     return <RefreshControl refreshing={this.state.isLoading} onRefresh={this.onRefresh} />
   }
 
   renderListHeader = () => {
-    const isCurrentListEmpty = isEmpty(this.currentList())
-    if (isCurrentListEmpty) return null
-    const { isSearchActive, searchQuery, searchResults } = this.state
+    if (isEmpty(this.getCurrentList())) return null
     return (
       <SearchBar
-        isSearchActive={isSearchActive}
-        searchQuery={searchQuery}
+        ref={ref => this.searchBarRef = ref}
         onSearchChange={this.onSearchChange}
-        count={searchResults.length}
+        onClearSearch={this.clearSearch}
+        matches={this.state.data.length}
       />
     )
   }
@@ -395,17 +404,16 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { isLoading, pinboardDown, isSearchActive, preferences, searchQuery } = this.state
-    const isCurrentListEmpty = isEmpty(this.currentList())
+    const { isLoading, pinboardDown, preferences } = this.state
+    const isCurrentListEmpty = isEmpty(this.getCurrentList())
     if (!preferences.apiToken) { return null }
-    if (isSearchActive) {
-      const similarResults = this.similarSearchResults()
-      const hasSimilarResults = similarResults.searchResults.length > 0
+    if (this.isSearchActive()) {
+      const hasSimilarSearchResults = this.similarSearchResults.length > 0
       return <EmptyState
-        action={hasSimilarResults ? this.onShowSimilarResults : undefined}
-        actionText={`Show results for “${similarResults.searchQuery}”`}
+        action={hasSimilarSearchResults ? this.showSimilarSearchResults : undefined}
+        actionText={`Show results for “${this.similarSearchQuery}”`}
         icon={icons.searchLarge}
-        subtitle={`“${searchQuery}“`}
+        subtitle={`“${this.searchQuery}“`}
         title={strings.common.noResults}
         paddingBottom={this.keyboardHeight} />
     }
@@ -441,8 +449,7 @@ export default class PostsView extends React.Component {
   }
 
   render() {
-    const { isSearchActive, searchResults, selectedPost, modalVisible } = this.state
-    const data = isSearchActive ? searchResults : this.currentList()
+    const { selectedPost, modalVisible, data } = this.state
     return (
       <React.Fragment>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
