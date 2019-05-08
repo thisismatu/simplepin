@@ -61,7 +61,6 @@ export default class PostsView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.keyboardHeight = 0
     this.isConnected = true
     this.lastUpdateTime = null
     this.dataHolder = []
@@ -74,6 +73,7 @@ export default class PostsView extends React.Component {
       modalVisible: false,
       selectedPost: {},
       pinboardDown: false,
+      keyboardHeight: 0,
       preferences: {
         apiToken: null,
         exactDate: false,
@@ -106,7 +106,7 @@ export default class PostsView extends React.Component {
     })
     const previousList = prevProps.navigation.getParam('list')
     const currentList = this.props.navigation.getParam('list')
-    if (previousList !== currentList) {
+    if (!isEqual(previousList, currentList)) {
       this.setState({ data: this.dataHolder[currentList] })
     }
   }
@@ -118,11 +118,16 @@ export default class PostsView extends React.Component {
   }
 
   keyboardDidShow = evt => {
-    this.keyboardHeight = evt && evt.endCoordinates.height
+    const keyboardHeight = evt && evt.endCoordinates.height
+    if (this.state.keyboardHeight !== keyboardHeight) {
+      this.setState({ keyboardHeight })
+    }
   }
 
-  keyboardDidHide = evt => {
-    this.keyboardHeight = evt && evt.endCoordinates.height
+  keyboardDidHide = () => {
+    if (this.state.keyboardHeight !== 0) {
+      this.setState({ keyboardHeight: 0 })
+    }
   }
 
   handleConnectivityChange = isConnected => {
@@ -395,7 +400,7 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { isLoading, pinboardDown, preferences } = this.state
+    const { isLoading, pinboardDown, preferences, keyboardHeight } = this.state
     if (!preferences.apiToken) { return null }
     if (this.isSearchActive()) {
       const hasSimilarSearchResults = this.similarSearchResults.length > 0
@@ -405,7 +410,7 @@ export default class PostsView extends React.Component {
         icon={icons.searchLarge}
         subtitle={`“${this.searchQuery}“`}
         title={strings.common.noResults}
-        paddingBottom={this.keyboardHeight} />
+        paddingBottom={keyboardHeight} />
     }
     if (pinboardDown && this.isConnected) {
       return <EmptyState
@@ -414,7 +419,7 @@ export default class PostsView extends React.Component {
         icon={icons.offlineLarge}
         subtitle={strings.error.pinboardDown}
         title={strings.error.troubleConnecting}
-        paddingBottom={this.keyboardHeight} />
+        paddingBottom={keyboardHeight} />
     }
     if (this.isCurrentListEmpty() && !isLoading && this.isConnected) {
       const { navigation } = this.props
@@ -424,7 +429,7 @@ export default class PostsView extends React.Component {
         icon={icons.simplepin}
         subtitle={strings.common.noPostsMessage}
         title={strings.common.noPosts}
-        paddingBottom={this.keyboardHeight} />
+        paddingBottom={keyboardHeight} />
     }
     if (this.isCurrentListEmpty() && !isLoading && !this.isConnected) {
       return <EmptyState
@@ -433,7 +438,7 @@ export default class PostsView extends React.Component {
         icon={icons.offlineLarge}
         subtitle={strings.error.tryAgainOffline}
         title={strings.error.yourOffline}
-        paddingBottom={this.keyboardHeight} />
+        paddingBottom={keyboardHeight} />
     }
     return null
   }
