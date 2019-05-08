@@ -367,8 +367,10 @@ export default class PostsView extends React.Component {
   }
 
   renderRefreshControl = () => {
-    if (this.isSearchActive()) return null
-    return <RefreshControl refreshing={this.state.isLoading} onRefresh={this.onRefresh} />
+    return <RefreshControl
+      enabled={this.isSearchActive()}
+      refreshing={this.state.isLoading}
+      onRefresh={this.onRefresh} />
   }
 
   renderListHeader = () => {
