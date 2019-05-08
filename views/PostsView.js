@@ -68,8 +68,9 @@ export default class PostsView extends React.Component {
     this.similarSearchQuery = ''
     this.similarSearchResults = []
     this.state = {
+      init: false,
       data: [],
-      isLoading: false,
+      isLoading: true,
       modalVisible: false,
       selectedPost: {},
       pinboardDown: false,
@@ -132,6 +133,11 @@ export default class PostsView extends React.Component {
 
   handleConnectivityChange = isConnected => {
     this.isConnected = isConnected
+  }
+
+  getCurrentList = () => {
+    const currentList = this.props.navigation.getParam('list', 'allPosts')
+    return this.dataHolder[currentList]
   }
 
   isSearchActive = () => !isEmpty(this.searchQuery)
@@ -229,11 +235,6 @@ export default class PostsView extends React.Component {
     }
   }
 
-  getCurrentList = () => {
-    const currentList = this.props.navigation.getParam('list', 'allPosts')
-    return this.dataHolder[currentList]
-  }
-
   filterSearchResults = (text, tagOnly = false) => {
     const currentList = this.getCurrentList()
     return filter(currentList, post => {
@@ -296,7 +297,10 @@ export default class PostsView extends React.Component {
     if (hasUpdates) {
       await this.fetchPosts()
     }
-    this.setState({ isLoading: false })
+    this.setState({
+      init: true,
+      isLoading: false,
+    })
   }
 
   onSubmitAddPost = post => this.addPost(post)
@@ -377,8 +381,8 @@ export default class PostsView extends React.Component {
   }
 
   renderListHeader = () => {
-    if (this.isCurrentListEmpty()) return null
-    const { data } = this.state
+    const { data, init } = this.state
+    if (!init) return null
     return <SearchBar
       searchQuery={this.searchQuery}
       onSearchChange={this.onSearchChange}
