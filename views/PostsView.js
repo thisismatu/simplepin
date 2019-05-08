@@ -230,7 +230,7 @@ export default class PostsView extends React.Component {
     return this.dataHolder[currentList]
   }
 
-  filterSearchResults = (text, tags = false) => {
+  filterSearchResults = (text, tagOnly = false) => {
     const currentList = this.getCurrentList()
     return filter(currentList, post => {
       const tagData = post.tags ? post.tags.join(' ').toLowerCase() : ''
@@ -238,9 +238,9 @@ export default class PostsView extends React.Component {
         ${post.href.toLowerCase()}
         ${post.description.toLowerCase()}
         ${post.extended.toLowerCase()}
-        ${post.tags ? post.tags.join(' ').toLowerCase() : ''}
+        ${tagData}
       `
-      const returnData = tags ? tagData : postData
+      const returnData = tagOnly ? tagData : postData
       return returnData.includes(text)
     })
   }
@@ -258,9 +258,9 @@ export default class PostsView extends React.Component {
       .value()
   }
 
-  onSearchChange = (query, tags = false) => {
+  onSearchChange = (query, tagOnly = false) => {
     const searchQueryArray = query.toLowerCase().split(' ')
-    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tags))
+    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tagOnly))
     const uniqueResults = intersection(...allResults)
     const matches = this.getsearchQueryMatches(allResults, searchQueryArray)
     const similarQuery = maxBy(Object.keys(matches), o => matches[o])
@@ -297,11 +297,6 @@ export default class PostsView extends React.Component {
 
   onSubmitAddPost = post => this.addPost(post)
 
-  onTagPress = tag => () => {
-    this.onSearchChange(tag, true)
-    this.listRef.scrollToOffset({ offset: 0, animated: false })
-  }
-
   onCellPress = post => () => {
     const { openLinksExternal, markAsRead } = this.state.preferences
     if (openLinksExternal || post.href.includes('.pdf')) {
@@ -316,6 +311,11 @@ export default class PostsView extends React.Component {
       post.meta = Math.random().toString(36) // PostCell change detection
       this.addPost(post)
     }
+  }
+
+  onTagPress = tag => () => {
+    this.onSearchChange(tag, true)
+    this.listRef.scrollToOffset({ offset: 0, animated: false })
   }
 
   onCellLongPress = post => () => {
@@ -384,22 +384,18 @@ export default class PostsView extends React.Component {
 
   renderPostCell = item => {
     const { preferences } = this.state
-    return (
-      <PostCell
-        post={item}
-        changeDetection={item.meta}
-        onTagPress={this.onTagPress}
-        onCellPress={this.onCellPress}
-        onCellLongPress={this.onCellLongPress}
-        exactDate={preferences.exactDate}
-        tagOrder={preferences.tagOrder}
-      />
-    )
+    return <PostCell
+      post={item}
+      changeDetection={item.meta}
+      onTagPress={this.onTagPress}
+      onCellPress={this.onCellPress}
+      onCellLongPress={this.onCellLongPress}
+      exactDate={preferences.exactDate}
+      tagOrder={preferences.tagOrder} />
   }
 
   renderEmptyState = () => {
     const { isLoading, pinboardDown, preferences } = this.state
-    const isCurrentListEmpty = isEmpty(this.getCurrentList())
     if (!preferences.apiToken) { return null }
     if (this.isSearchActive()) {
       const hasSimilarSearchResults = this.similarSearchResults.length > 0
@@ -420,7 +416,7 @@ export default class PostsView extends React.Component {
         title={strings.error.troubleConnecting}
         paddingBottom={this.keyboardHeight} />
     }
-    if (isCurrentListEmpty && !isLoading && this.isConnected) {
+    if (this.isCurrentListEmpty() && !isLoading && this.isConnected) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
@@ -430,7 +426,7 @@ export default class PostsView extends React.Component {
         title={strings.common.noPosts}
         paddingBottom={this.keyboardHeight} />
     }
-    if (isCurrentListEmpty && !isLoading && !this.isConnected) {
+    if (this.isCurrentListEmpty() && !isLoading && !this.isConnected) {
       return <EmptyState
         action={this.onRefresh}
         actionText={strings.common.tryAgain}
