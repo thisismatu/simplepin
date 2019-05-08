@@ -131,6 +131,8 @@ export default class PostsView extends React.Component {
 
   isSearchActive = () => !isEmpty(this.searchQuery)
 
+  isCurrentListEmpty = () => isEmpty(this.getCurrentList())
+
   checkForUpdates = async () => {
     const { preferences } = this.state
     const response = await Api.postsUpdate(preferences.apiToken)
@@ -246,7 +248,6 @@ export default class PostsView extends React.Component {
   showSimilarSearchResults = () => {
     this.setState({ data: this.similarSearchResults })
     this.searchQuery = this.similarSearchQuery
-    this.searchBarRef.setText(this.similarSearchQuery)
   }
 
   getsearchQueryMatches = (results, query) => {
@@ -279,7 +280,6 @@ export default class PostsView extends React.Component {
     Keyboard.dismiss()
     if (this.isSearchActive()) {
       this.clearSearch()
-      this.searchBarRef.reset()
     }
     this.props.navigation.openDrawer()
   }
@@ -372,15 +372,12 @@ export default class PostsView extends React.Component {
   }
 
   renderListHeader = () => {
-    if (isEmpty(this.getCurrentList())) return null
-    return (
-      <SearchBar
-        ref={ref => this.searchBarRef = ref}
-        onSearchChange={this.onSearchChange}
-        onClearSearch={this.clearSearch}
-        matches={this.state.data.length}
-      />
-    )
+    if (this.isCurrentListEmpty()) return null
+    return <SearchBar
+      searchQuery={this.searchQuery}
+      onSearchChange={this.onSearchChange}
+      onClearSearch={this.clearSearch}
+      matches={this.state.data.length} />
   }
 
   renderPostCell = item => {

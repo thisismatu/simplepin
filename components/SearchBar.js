@@ -6,28 +6,9 @@ import { color, padding, font, row, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
 export default class SearchBar extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = { text: null }
-  }
-
-  reset = () => this.setState({ text: null })
-
-  setText = text => this.setState({ text })
-
-  onChange = text => {
-    this.setText(text)
-    this.props.onSearchChange(text)
-  }
-
-  onClear = () => {
-    this.reset()
-    this.props.onClearSearch()
-  }
-
   render() {
-    const { text } = this.state
-    const isSearchActive = !isEmpty(text)
+    const { searchQuery, onSearchChange, onClearSearch } = this.props
+    const isSearchActive = !isEmpty(searchQuery)
     const icon = isSearchActive ? icons.closeSmall : icons.searchSmall
     return (
       <View style={s.container}>
@@ -36,20 +17,20 @@ export default class SearchBar extends React.PureComponent {
           autoCorrect={false}
           clearButtonMode="never"
           enablesReturnKeyAutomatically={true}
-          onChangeText={this.onChange}
+          onChangeText={onSearchChange}
           placeholder={strings.common.search}
           placeholderTextColor = {color.gray2}
           returnKeyType="done"
           style={s.textField}
           underlineColorAndroid="transparent"
-          value={text}
+          value={searchQuery}
         />
         {isSearchActive && <Text style={s.matches}>{this.props.matches}</Text>}
         <TouchableOpacity
           activeOpacity={0.5}
-          onPress={this.onClear}
+          onPress={onClearSearch}
           style={s.button}
-          disabled={!text}
+          disabled={!searchQuery}
         >
           <Image source={icon} style={s.icon} />
         </TouchableOpacity>
@@ -61,6 +42,7 @@ export default class SearchBar extends React.PureComponent {
 SearchBar.propTypes = {
   onSearchChange: PropTypes.func.isRequired,
   onClearSearch: PropTypes.func.isRequired,
+  searchQuery: PropTypes.string,
   matches: PropTypes.number,
 }
 
