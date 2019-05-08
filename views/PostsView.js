@@ -313,7 +313,7 @@ export default class PostsView extends React.Component {
     }
   }
 
-  onTagPress = tag => () => {
+  onTagPress = tag => {
     this.onSearchChange(tag, true)
     this.listRef.scrollToOffset({ offset: 0, animated: false })
   }

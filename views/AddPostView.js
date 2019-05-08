@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet, Platform, Image, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated, ToastAndroid } from 'react-native'
+import { View, StyleSheet, Platform, Text, TextInput, TouchableOpacity, Alert, BackHandler, SectionList, Animated, ToastAndroid } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
@@ -11,13 +11,12 @@ import flattenDeep from 'lodash/flattenDeep'
 import uniq from 'lodash/uniq' // eslint-disable-line no-unused-vars
 import filter from 'lodash/filter'
 import keys from 'lodash/keys'
-import map from 'lodash/map'
 import difference from 'lodash/difference'
-import startsWith from 'lodash/startsWith'
 import isUrl from 'is-url'
 import Api from 'app/Api'
 import { handleResponseError } from 'app/util/ErrorUtil'
 import Storage from 'app/Storage'
+import Tag from 'app/components/Tag'
 import NavigationButton from 'app/components/NavigationButton'
 import Separator from 'app/components/Separator'
 import Switch from 'app/components/SimpleSwitch'
@@ -46,31 +45,6 @@ class ResultItem extends React.PureComponent {
 ResultItem.propTypes = {
   tag: PropTypes.string.isRequired,
   suggested: PropTypes.bool.isRequired,
-  onPress: PropTypes.func.isRequired,
-}
-
-class Tag extends React.PureComponent {
-  render() {
-    const { tag, onPress } = this.props
-    const isPrivate = startsWith(tag, '.')
-    return (
-      <TouchableOpacity
-        key={tag}
-        activeOpacity={0.5}
-        onPress={() => onPress(tag)}
-        style={s.tagCell}
-        >
-        <View style={[s.tag, isPrivate && s.privateTag]}>
-          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
-          <Image source={icons.closeSmall} style={[s.tagIcon, isPrivate && s.privateTagIcon]} />
-        </View>
-      </TouchableOpacity>
-    )
-  }
-}
-
-Tag.propTypes = {
-  tag: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 }
 
@@ -335,7 +309,9 @@ export default class AddPostView extends React.Component {
     const { post } = this.state
     return (
       <View style={s.tagContainer}>
-        {map(post.tags, item => <Tag key={item} tag={item} onPress={this.removeTag} />)}
+        {post.tags.map(item => {
+          return <Tag key={item} tag={item} onPress={this.removeTag} icon />
+        })}
       </View>
     )
   }
@@ -487,38 +463,6 @@ const s = StyleSheet.create({
     flexWrap: 'wrap',
     paddingHorizontal: 12,
     paddingBottom: padding.small,
-  },
-  tagCell: {
-    padding: 4,
-  },
-  tag: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: color.blue1,
-    borderRadius: radius.small,
-    paddingHorizontal: padding.small,
-    paddingVertical: padding.tiny,
-  },
-  tagText: {
-    color: color.blue2,
-    fontSize: font.small,
-    lineHeight: line.small,
-  },
-  tagIcon: {
-    resizeMode: 'contain',
-    width: 12,
-    height: 12,
-    marginLeft: 4,
-    tintColor: color.blue2,
-  },
-  privateTag: {
-    backgroundColor: color.gray1,
-  },
-  privateTagText: {
-    color: color.gray3,
-  },
-  privateTagIcon: {
-    tintColor: color.gray3,
   },
   resultsOverlay: {
     position: 'absolute',

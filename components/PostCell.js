@@ -1,38 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
 import PropTypes from 'prop-types'
-import startsWith from 'lodash/startsWith'
+import Tag from 'app/components/Tag'
 import TimeAgo from 'app/components/TimeAgo'
 import { color, padding, font, line, radius, icons } from 'app/style/style'
 
-class Tag extends React.PureComponent {
-  render() {
-    const { tag, index, onTagPress } = this.props
-    const isPrivate = startsWith(tag, '.')
-    const isFirst = index === 0
-    return(
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={onTagPress(tag)}
-        style={[s.tagContainer, isFirst && s.firstTag]}
-        >
-        <View style={[s.tag, isPrivate && s.privateTag]}>
-          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
-        </View>
-      </TouchableOpacity>
-    )
-  }
-}
-
-Tag.propTypes = {
-  tag: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  onTagPress: PropTypes.func.isRequired,
-}
-
 export default class PostCell extends React.PureComponent {
+  renderTag = (tag, index) => {
+    const firstTagStyle = index === 0 ? { marginLeft: 20 } : null
+    return <Tag
+      tag={tag}
+      onPress={this.props.onTagPress}
+      style={firstTagStyle} />
+  }
+
   render() {
-    const { post, tagOrder, exactDate, onTagPress, onCellPress, onCellLongPress } = this.props
+    const { post, tagOrder, exactDate, onCellPress, onCellLongPress } = this.props
     const tags = post.tags && tagOrder ? post.tags.sort() : post.tags
     return (
       <TouchableOpacity
@@ -47,15 +30,9 @@ export default class PostCell extends React.PureComponent {
           bounces={false}
           data={tags}
           horizontal={true}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={index => index.toString()}
           ListEmptyComponent={() => <View style={s.emptyTagList} />}
-          renderItem={({ item, index }) =>
-            <Tag
-              tag={item}
-              index={index}
-              onTagPress={onTagPress}
-            />
-          }
+          renderItem={({ item, index }) => this.renderTag(item, index)}
           showsHorizontalScrollIndicator={false}
         />
         <TimeAgo
@@ -148,29 +125,5 @@ const s = StyleSheet.create({
   },
   emptyTagList: {
     height: 4,
-  },
-  firstTag: {
-    marginLeft: padding.large - padding.tiny,
-  },
-  tagContainer: {
-    paddingHorizontal: padding.tiny,
-    paddingVertical: padding.small,
-  },
-  tag: {
-    backgroundColor: color.blue1,
-    borderRadius: radius.small,
-    paddingHorizontal: padding.small,
-    paddingVertical: padding.tiny,
-  },
-  tagText: {
-    color: color.blue2,
-    fontSize: font.small,
-    lineHeight: line.small,
-  },
-  privateTag: {
-    backgroundColor: color.gray1,
-  },
-  privateTagText: {
-    color: color.gray3,
   },
 })
