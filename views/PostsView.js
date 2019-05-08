@@ -297,7 +297,7 @@ export default class PostsView extends React.Component {
 
   onSubmitAddPost = post => this.addPost(post)
 
-  onCellPress = post => () => {
+  onCellPress = post => {
     const { openLinksExternal, markAsRead } = this.state.preferences
     if (openLinksExternal || post.href.includes('.pdf')) {
       Linking.canOpenURL(post.href).then(() => {
@@ -313,15 +313,15 @@ export default class PostsView extends React.Component {
     }
   }
 
-  onTagPress = tag => {
-    this.onSearchChange(tag, true)
-    this.listRef.scrollToOffset({ offset: 0, animated: false })
-  }
-
-  onCellLongPress = post => () => {
+  onCellLongPress = post => {
     Vibration.vibrate(5)
     this.toggleModal()
     this.setState({ selectedPost: post })
+  }
+
+  onTagPress = tag => {
+    this.onSearchChange(tag, true)
+    this.listRef.scrollToOffset({ offset: 0, animated: false })
   }
 
   onToggleToread = () => {

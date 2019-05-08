@@ -3,7 +3,7 @@ import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react
 import PropTypes from 'prop-types'
 import Tag from 'app/components/Tag'
 import TimeAgo from 'app/components/TimeAgo'
-import { color, padding, font, line, radius, icons } from 'app/style/style'
+import { color, padding, font, line, icons } from 'app/style/style'
 
 export default class PostCell extends React.PureComponent {
   renderTag = (tag, index) => {
@@ -20,8 +20,8 @@ export default class PostCell extends React.PureComponent {
     return (
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={onCellPress(post)}
-        onLongPress={onCellLongPress(post)}
+        onPress={() => onCellPress(post)}
+        onLongPress={() => onCellLongPress(post)}
         >
         {!!post.toread && <View style={s.unread} />}
         <Text style={[s.title, post.toread && s.titleUnread]}>{post.description}</Text>
