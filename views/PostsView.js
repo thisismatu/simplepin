@@ -108,6 +108,7 @@ export default class PostsView extends React.Component {
     const previousList = prevProps.navigation.getParam('list')
     const currentList = this.props.navigation.getParam('list')
     if (!isEqual(previousList, currentList)) {
+      this.searchQuery = ''
       this.setState({ data: this.dataHolder[currentList] })
     }
   }
@@ -277,15 +278,12 @@ export default class PostsView extends React.Component {
   }
 
   clearSearch = () => {
-    this.setState({ data: this.getCurrentList() })
     this.searchQuery = ''
+    this.setState({ data: this.getCurrentList() })
   }
 
   openDrawer = () => {
     Keyboard.dismiss()
-    if (this.isSearchActive()) {
-      this.clearSearch()
-    }
     this.props.navigation.openDrawer()
   }
 
