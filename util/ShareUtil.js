@@ -5,7 +5,7 @@ export const showSharePostDialog = (url, title) => {
   Share.share({
     ...Platform.select({
       ios: { url: url },
-      android: { message: title },
+      android: { message: url },
     }),
     title: title,
   },
