@@ -1,10 +1,10 @@
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, TextInput, Clipboard, AppState, Linking, Dimensions, Animated } from 'react-native'
+import { Animated, AppState, Clipboard, Dimensions, Linking, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
+import Api from 'app/Api'
 import Storage from 'app/Storage'
 import { handleLoginResponseError } from 'app/util/ErrorUtil'
-import Api from 'app/Api'
 import { color, padding, font, line, row, radius, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 

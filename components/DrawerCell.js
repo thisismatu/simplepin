@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native'
+import { StyleSheet, Image, Text, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, row } from 'app/style/style'
 

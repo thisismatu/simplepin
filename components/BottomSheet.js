@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Modal, TouchableOpacity, View, Text, Animated, Dimensions, StatusBar } from 'react-native'
+import { Animated, Dimensions, Modal, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 import PropTypes from 'prop-types'
 import { color, padding, font, row, radius, shadow, isLandscape } from 'app/style/style'

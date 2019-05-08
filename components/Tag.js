@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, Image, View, TouchableOpacity } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
 import { color, padding, font, line, radius, icons } from 'app/style/style'

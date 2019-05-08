@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Platform, Switch } from 'react-native'
+import { Platform, StyleSheet, Switch } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding } from 'app/style/style'
 

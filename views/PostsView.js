@@ -1,32 +1,32 @@
 import React from 'react'
-import { StyleSheet, FlatList, RefreshControl, Alert, Linking, Vibration, Keyboard, NetInfo } from 'react-native'
+import { Alert, FlatList, Keyboard, Linking, NetInfo, RefreshControl, StyleSheet, Vibration } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
-import fromPairs from 'lodash/fromPairs' // eslint-disable-line no-unused-vars
-import omit from 'lodash/omit' // eslint-disable-line no-unused-vars
-import intersection from 'lodash/intersection'
-import lodash from 'lodash/lodash'
-import map from 'lodash/map'
-import maxBy from 'lodash/maxBy'
-import reject from 'lodash/reject'
-import uniqBy from 'lodash/uniqBy'
 import findIndex from 'lodash/findIndex'
+import fromPairs from 'lodash/fromPairs' // eslint-disable-line no-unused-vars
 import get from 'lodash/get'
+import intersection from 'lodash/intersection'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
+import lodash from 'lodash/lodash'
+import map from 'lodash/map' // eslint-disable-line no-unused-vars
+import maxBy from 'lodash/maxBy'
+import omit from 'lodash/omit' // eslint-disable-line no-unused-vars
+import reject from 'lodash/reject'
+import uniqBy from 'lodash/uniqBy'
 import Api from 'app/Api'
 import Storage from 'app/Storage'
 import { reviver } from 'app/util/JsonUtil'
 import { handleResponseError } from 'app/util/ErrorUtil'
 import { showSharePostDialog } from 'app/util/ShareUtil'
+import BottomSheet from 'app/components/BottomSheet'
+import EmptyState from 'app/components/EmptyState'
 import NavigationButton from 'app/components/NavigationButton'
 import PostCell from 'app/components/PostCell'
-import Separator from 'app/components/Separator'
-import BottomSheet from 'app/components/BottomSheet'
 import SearchBar from 'app/components/SearchBar'
-import EmptyState from 'app/components/EmptyState'
+import Separator from 'app/components/Separator'
 import { color, padding, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
@@ -171,13 +171,12 @@ export default class PostsView extends React.Component {
       const rssObject = await rssParser.parse(starred)
       const jsonString = JSON.stringify(response)
       const jsonObject = JSON.parse(jsonString, reviver)
-      const starredLinks = map(rssObject.items, item => get(item.links, ['0', 'url']))
+      const starredLinks = rssObject.items.map(item => get(item.links, ['0', 'url']))
       const uniqPostsStarred = lodash(jsonObject)
         .uniqBy('hash')
         .map(o => {
           o.starred = starredLinks.includes(o.href)
-          return o
-        })
+          return o })
         .value()
       const newData = filterPosts(uniqPostsStarred)
       const newDataCount = postsCount(newData)
@@ -265,12 +264,12 @@ export default class PostsView extends React.Component {
 
   onSearchChange = (query, tagOnly = false) => {
     const searchQueryArray = query.toLowerCase().split(' ')
-    const allResults = map(searchQueryArray, text => this.filterSearchResults(text, tagOnly))
-    const uniqueResults = intersection(...allResults)
+    const allResults = searchQueryArray.map(text => this.filterSearchResults(text, tagOnly))
+    const uniqResults = intersection(...allResults)
     const matches = this.getsearchQueryMatches(allResults, searchQueryArray)
     const similarQuery = maxBy(Object.keys(matches), o => matches[o])
     const similarResults = this.filterSearchResults(similarQuery)
-    this.setState({ data: uniqueResults })
+    this.setState({ data: uniqResults })
     this.searchQuery = query
     this.similarSearchResults = similarResults
     this.similarSearchQuery = similarQuery

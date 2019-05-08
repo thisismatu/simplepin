@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StatusBar } from 'react-native'
+import { StatusBar, View } from 'react-native'
 import AppNavigator from 'app/views/AppNavigator'
 import OfflineNotification from 'app/components/OfflineNotification'
 

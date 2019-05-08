@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image } from 'react-native'
+import { Image, StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, icons } from 'app/style/style'
 import strings from 'app/style/strings'

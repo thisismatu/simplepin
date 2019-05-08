@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, Image, View, TouchableOpacity, FlatList } from 'react-native'
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import Tag from 'app/components/Tag'
 import TimeAgo from 'app/components/TimeAgo'
