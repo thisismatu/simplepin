@@ -378,11 +378,12 @@ export default class PostsView extends React.Component {
 
   renderListHeader = () => {
     if (this.isCurrentListEmpty()) return null
+    const { data } = this.state
     return <SearchBar
       searchQuery={this.searchQuery}
       onSearchChange={this.onSearchChange}
       onClearSearch={this.clearSearch}
-      matches={this.state.data.length} />
+      matches={data && data.length} />
   }
 
   renderPostCell = item => {

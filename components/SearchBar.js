@@ -7,7 +7,7 @@ import strings from 'app/style/strings'
 
 export default class SearchBar extends React.PureComponent {
   render() {
-    const { searchQuery, onSearchChange, onClearSearch } = this.props
+    const { searchQuery, onSearchChange, onClearSearch, matches } = this.props
     const isSearchActive = !isEmpty(searchQuery)
     const icon = isSearchActive ? icons.closeSmall : icons.searchSmall
     return (
@@ -25,7 +25,7 @@ export default class SearchBar extends React.PureComponent {
           underlineColorAndroid="transparent"
           value={searchQuery}
         />
-        {isSearchActive && <Text style={s.matches}>{this.props.matches}</Text>}
+        {isSearchActive && <Text style={s.matches}>{matches}</Text>}
         <TouchableOpacity
           activeOpacity={0.5}
           onPress={onClearSearch}
