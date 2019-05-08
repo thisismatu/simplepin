@@ -303,7 +303,10 @@ export default class PostsView extends React.Component {
     })
   }
 
-  onSubmitAddPost = post => this.addPost(post)
+  onSubmitAddPost = post => {
+    this.searchQuery = ''
+    this.addPost(post)
+  }
 
   onCellPress = post => {
     const { openLinksExternal, markAsRead } = this.state.preferences
