@@ -1,8 +1,8 @@
 import React from 'react'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, padding, font, icons } from 'app/style/style'
-import strings from 'app/style/strings'
+import { color, padding, font, icons } from '../style/style'
+import strings from '../style/strings'
 
 export default class DrawerHeader extends React.PureComponent {
   render() {

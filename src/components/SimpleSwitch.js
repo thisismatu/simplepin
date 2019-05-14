@@ -1,7 +1,7 @@
 import React from 'react'
 import { Platform, StyleSheet, Switch } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, padding } from 'app/style/style'
+import { color, padding } from '../style/style'
 
 const isAndroid = Platform.OS === 'android'
 

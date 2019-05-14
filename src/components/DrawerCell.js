@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Image, Text, TouchableOpacity } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, padding, font, row } from 'app/style/style'
+import { color, padding, font, row } from '../style/style'
 
 export default class DrawerCell extends React.PureComponent {
   render() {

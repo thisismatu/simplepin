@@ -561,13 +561,6 @@
     pirates "^4.0.0"
     source-map-support "^0.5.9"
 
-"@babel/runtime@^7.0.0":
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.4.tgz#dc2e34982eb236803aa27a07fea6857af1b9171d"
-  integrity sha512-w0+uT71b6Yi7i5SE0co4NioIpSYS6lLiXvCzWzGSKvpK5vdQtCbICHMj+gbAKAOtxiV6HsVh/MBdaF9EQ6faSg==
-  dependencies:
-    regenerator-runtime "^0.13.2"
-
 "@babel/template@^7.0.0", "@babel/template@^7.1.0", "@babel/template@^7.1.2", "@babel/template@^7.2.2":
   version "7.2.2"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.2.2.tgz#005b3fdf0ed96e88041330379e0da9a708eb2907"
@@ -1389,10 +1382,10 @@ babel-plugin-check-es2015-constants@^6.5.0, babel-plugin-check-es2015-constants@
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-react-transform@2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-2.0.2.tgz#515bbfa996893981142d90b1f9b1635de2995109"
-  integrity sha1-UVu/qZaJOYEULZCx+bFjXeKZUQk=
+babel-plugin-react-transform@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-react-transform/-/babel-plugin-react-transform-3.0.0.tgz#402f25137b7bb66e9b54ead75557dfbc7ecaaa74"
+  integrity sha512-4vJGddwPiHAOgshzZdGwYy4zRjjIr5SMY7gkOaCyIASjgpcsyLTlZNuB5rHOFoaTvGlhfo8/g4pobXPyHqm/3w==
   dependencies:
     lodash "^4.6.1"
 
@@ -1401,45 +1394,25 @@ babel-plugin-syntax-async-functions@^6.5.0:
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-async-functions/-/babel-plugin-syntax-async-functions-6.13.0.tgz#cad9cad1191b5ad634bf30ae0872391e0647be95"
   integrity sha1-ytnK0RkbWtY0vzCuCHI5HgZHvpU=
 
-babel-plugin-syntax-class-constructor-call@^6.18.0:
-  version "6.18.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-constructor-call/-/babel-plugin-syntax-class-constructor-call-6.18.0.tgz#9cb9d39fe43c8600bec8146456ddcbd4e1a76416"
-  integrity sha1-nLnTn+Q8hgC+yBRkVt3L1OGnZBY=
-
 babel-plugin-syntax-class-properties@^6.5.0, babel-plugin-syntax-class-properties@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-class-properties/-/babel-plugin-syntax-class-properties-6.13.0.tgz#d7eb23b79a317f8543962c505b827c7d6cac27de"
   integrity sha1-1+sjt5oxf4VDlixQW4J8fWysJ94=
 
-babel-plugin-syntax-decorators@^6.1.18:
-  version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-decorators/-/babel-plugin-syntax-decorators-6.13.0.tgz#312563b4dbde3cc806cee3e416cceeaddd11ac0b"
-  integrity sha1-MSVjtNvePMgGzuPkFszurd0RrAs=
-
-babel-plugin-syntax-do-expressions@^6.8.0:
-  version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-do-expressions/-/babel-plugin-syntax-do-expressions-6.13.0.tgz#5747756139aa26d390d09410b03744ba07e4796d"
-  integrity sha1-V0d1YTmqJtOQ0JQQsDdEugfkeW0=
+babel-plugin-syntax-dynamic-import@^6.18.0:
+  version "6.18.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-dynamic-import/-/babel-plugin-syntax-dynamic-import-6.18.0.tgz#8d6a26229c83745a9982a441051572caa179b1da"
+  integrity sha1-jWomIpyDdFqZgqRBBRVyyqF5sdo=
 
 babel-plugin-syntax-exponentiation-operator@^6.8.0:
   version "6.13.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-exponentiation-operator/-/babel-plugin-syntax-exponentiation-operator-6.13.0.tgz#9ee7e8337290da95288201a6a57f4170317830de"
   integrity sha1-nufoM3KQ2pUoggGmpX9BcDF4MN4=
 
-babel-plugin-syntax-export-extensions@^6.8.0:
-  version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-export-extensions/-/babel-plugin-syntax-export-extensions-6.13.0.tgz#70a1484f0f9089a4e84ad44bac353c95b9b12721"
-  integrity sha1-cKFITw+QiaToStRLrDU8lbmxJyE=
-
 babel-plugin-syntax-flow@^6.18.0, babel-plugin-syntax-flow@^6.5.0, babel-plugin-syntax-flow@^6.8.0:
   version "6.18.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-flow/-/babel-plugin-syntax-flow-6.18.0.tgz#4c3ab20a2af26aa20cd25995c398c4eb70310c8d"
   integrity sha1-TDqyCiryaqIM0lmVw5jE63AxDI0=
-
-babel-plugin-syntax-function-bind@^6.8.0:
-  version "6.13.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-syntax-function-bind/-/babel-plugin-syntax-function-bind-6.13.0.tgz#48c495f177bdf31a981e732f55adc0bdd2601f46"
-  integrity sha1-SMSV8Xe98xqYHnMvVa3AvdJgH0Y=
 
 babel-plugin-syntax-jsx@^6.5.0, babel-plugin-syntax-jsx@^6.8.0:
   version "6.18.0"
@@ -1456,15 +1429,6 @@ babel-plugin-syntax-trailing-function-commas@^6.5.0, babel-plugin-syntax-trailin
   resolved "https://registry.yarnpkg.com/babel-plugin-syntax-trailing-function-commas/-/babel-plugin-syntax-trailing-function-commas-6.22.0.tgz#ba0360937f8d06e40180a43fe0d5616fff532cf3"
   integrity sha1-ugNgk3+NBuQBgKQ/4NVhb/9TLPM=
 
-babel-plugin-transform-class-constructor-call@^6.6.5:
-  version "6.24.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-class-constructor-call/-/babel-plugin-transform-class-constructor-call-6.24.1.tgz#80dc285505ac067dcb8d6c65e2f6f11ab7765ef9"
-  integrity sha1-gNwoVQWsBn3LjWxl4vbxGrd2Xvk=
-  dependencies:
-    babel-plugin-syntax-class-constructor-call "^6.18.0"
-    babel-runtime "^6.22.0"
-    babel-template "^6.24.1"
-
 babel-plugin-transform-class-properties@^6.5.0, babel-plugin-transform-class-properties@^6.8.0:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-class-properties/-/babel-plugin-transform-class-properties-6.24.1.tgz#6a79763ea61d33d36f37b611aa9def81a81b46ac"
@@ -1474,23 +1438,6 @@ babel-plugin-transform-class-properties@^6.5.0, babel-plugin-transform-class-pro
     babel-plugin-syntax-class-properties "^6.8.0"
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
-
-babel-plugin-transform-decorators-legacy@^1.3.4:
-  version "1.3.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-decorators-legacy/-/babel-plugin-transform-decorators-legacy-1.3.5.tgz#0e492dffa0edd70529072887f8aa86d4dd8b40a1"
-  integrity sha512-jYHwjzRXRelYQ1uGm353zNzf3QmtdCfvJbuYTZ4gKveK7M9H1fs3a5AKdY1JUDl0z97E30ukORW1dzhWvsabtA==
-  dependencies:
-    babel-plugin-syntax-decorators "^6.1.18"
-    babel-runtime "^6.2.0"
-    babel-template "^6.3.0"
-
-babel-plugin-transform-do-expressions@^6.5.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-do-expressions/-/babel-plugin-transform-do-expressions-6.22.0.tgz#28ccaf92812d949c2cd1281f690c8fdc468ae9bb"
-  integrity sha1-KMyvkoEtlJws0SgfaQyP3EaK6bs=
-  dependencies:
-    babel-plugin-syntax-do-expressions "^6.8.0"
-    babel-runtime "^6.22.0"
 
 babel-plugin-transform-es2015-arrow-functions@^6.5.0, babel-plugin-transform-es2015-arrow-functions@^6.8.0:
   version "6.22.0"
@@ -1645,28 +1592,12 @@ babel-plugin-transform-exponentiation-operator@^6.5.0:
     babel-plugin-syntax-exponentiation-operator "^6.8.0"
     babel-runtime "^6.22.0"
 
-babel-plugin-transform-export-extensions@^6.5.0:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-export-extensions/-/babel-plugin-transform-export-extensions-6.22.0.tgz#53738b47e75e8218589eea946cbbd39109bbe653"
-  integrity sha1-U3OLR+deghhYnuqUbLvTkQm75lM=
-  dependencies:
-    babel-plugin-syntax-export-extensions "^6.8.0"
-    babel-runtime "^6.22.0"
-
 babel-plugin-transform-flow-strip-types@^6.22.0, babel-plugin-transform-flow-strip-types@^6.5.0, babel-plugin-transform-flow-strip-types@^6.8.0:
   version "6.22.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-flow-strip-types/-/babel-plugin-transform-flow-strip-types-6.22.0.tgz#84cb672935d43714fdc32bce84568d87441cf7cf"
   integrity sha1-hMtnKTXUNxT9wyvOhFaNh0Qc988=
   dependencies:
     babel-plugin-syntax-flow "^6.18.0"
-    babel-runtime "^6.22.0"
-
-babel-plugin-transform-function-bind@^6.5.2:
-  version "6.22.0"
-  resolved "https://registry.yarnpkg.com/babel-plugin-transform-function-bind/-/babel-plugin-transform-function-bind-6.22.0.tgz#c6fb8e96ac296a310b8cf8ea401462407ddf6a97"
-  integrity sha1-xvuOlqwpajELjPjqQBRiQH3fapc=
-  dependencies:
-    babel-plugin-syntax-function-bind "^6.8.0"
     babel-runtime "^6.22.0"
 
 babel-plugin-transform-object-assign@^6.5.0:
@@ -1773,29 +1704,16 @@ babel-preset-flow@^6.23.0:
   dependencies:
     babel-plugin-transform-flow-strip-types "^6.22.0"
 
-babel-preset-react-native-stage-0@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-react-native-stage-0/-/babel-preset-react-native-stage-0-1.0.1.tgz#d5f5f685575471ef756a49f191b193269f74306e"
-  integrity sha1-1fX2hVdUce91aknxkbGTJp90MG4=
-  dependencies:
-    babel-plugin-syntax-trailing-function-commas "^6.5.0"
-    babel-plugin-transform-class-constructor-call "^6.6.5"
-    babel-plugin-transform-decorators-legacy "^1.3.4"
-    babel-plugin-transform-do-expressions "^6.5.0"
-    babel-plugin-transform-exponentiation-operator "^6.5.0"
-    babel-plugin-transform-export-extensions "^6.5.0"
-    babel-plugin-transform-function-bind "^6.5.2"
-    babel-preset-react-native "^1.5.6"
-
-babel-preset-react-native@^1.5.6:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-1.9.2.tgz#b22addd2e355ff3b39671b79be807e52dfa145f2"
-  integrity sha1-sird0uNV/zs5Zxt5voB+Ut+hRfI=
+babel-preset-react-native@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-4.0.1.tgz#14ff07bdb6c8df9408082c0c18b2ce8e3392e76a"
+  integrity sha512-uhFXnl1WbEWNG4W8QB/jeQaVXkd0a0AD+wh4D2VqtdRnEyvscahqyHExnwKLU9N0sXRYwDyed4JfbiBtiOSGgA==
   dependencies:
     babel-plugin-check-es2015-constants "^6.5.0"
-    babel-plugin-react-transform "2.0.2"
+    babel-plugin-react-transform "^3.0.0"
     babel-plugin-syntax-async-functions "^6.5.0"
     babel-plugin-syntax-class-properties "^6.5.0"
+    babel-plugin-syntax-dynamic-import "^6.18.0"
     babel-plugin-syntax-flow "^6.5.0"
     babel-plugin-syntax-jsx "^6.5.0"
     babel-plugin-syntax-trailing-function-commas "^6.5.0"
@@ -1813,6 +1731,7 @@ babel-preset-react-native@^1.5.6:
     babel-plugin-transform-es2015-shorthand-properties "^6.5.0"
     babel-plugin-transform-es2015-spread "^6.5.0"
     babel-plugin-transform-es2015-template-literals "^6.5.0"
+    babel-plugin-transform-exponentiation-operator "^6.5.0"
     babel-plugin-transform-flow-strip-types "^6.5.0"
     babel-plugin-transform-object-assign "^6.5.0"
     babel-plugin-transform-object-rest-spread "^6.5.0"
@@ -1820,6 +1739,7 @@ babel-preset-react-native@^1.5.6:
     babel-plugin-transform-react-jsx "^6.5.0"
     babel-plugin-transform-react-jsx-source "^6.5.0"
     babel-plugin-transform-regenerator "^6.5.0"
+    babel-template "^6.24.1"
     react-transform-hmr "^1.0.4"
 
 babel-register@^6.26.0:
@@ -1835,7 +1755,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.22.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   integrity sha1-llxwWGaOgrVde/4E/yM3vItWR/4=
@@ -1843,7 +1763,7 @@ babel-runtime@6.26.0, babel-runtime@^6.18.0, babel-runtime@^6.2.0, babel-runtime
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-babel-template@^6.24.1, babel-template@^6.26.0, babel-template@^6.3.0:
+babel-template@^6.24.1, babel-template@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.26.0.tgz#de03e2d16396b069f46dd9fff8521fb1a0e35e02"
   integrity sha1-3gPi0WOWsGn0bdn/+FIfsaDjXgI=
@@ -6670,11 +6590,6 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha512-MguG95oij0fC3QV3URf4V2SDYGJhJnJGqvIIgdECeODCT98wSWDAJ94SSuVpYQUoTcGUIL6L4yNB7j1DFFHSBg==
-
-regenerator-runtime@^0.13.2:
-  version "0.13.2"
-  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
-  integrity sha512-S/TQAZJO+D3m9xeN1WTI8dLKBBiRgXBlTJvbWjCThHWZj9EvHK70Ff50/tYj2J/fvBY6JtFVwRuazHN2E7M9BA==
 
 regenerator-transform@^0.10.0:
   version "0.10.1"

@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
-import { color, padding, font, line, radius, icons } from 'app/style/style'
+import { color, padding, font, line, radius, icons } from '../style/style'
 
 export default class Tag extends React.PureComponent {
   render() {

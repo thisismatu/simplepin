@@ -2,8 +2,8 @@ import React from 'react'
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import isEmpty from 'lodash/isEmpty'
-import { color, padding, font, row, icons } from 'app/style/style'
-import strings from 'app/style/strings'
+import { color, padding, font, row, icons } from '../style/style'
+import strings from '../style/strings'
 
 export default class SearchBar extends React.PureComponent {
   render() {

@@ -1,10 +1,9 @@
 import React from 'react'
 import { Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { Localization } from 'expo-localization'
 import moment from 'moment'
 
-moment.locale(Localization.locale)
+moment.locale('en-US')
 
 export default class TimeAgo extends React.PureComponent {
   pluralize = (number, string) => {

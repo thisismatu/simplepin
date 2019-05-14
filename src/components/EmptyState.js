@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, padding, font, line, row } from 'app/style/style'
+import { color, padding, font, line, row } from '../style/style'
 
 const isIOS = Platform.OS === 'ios'
 

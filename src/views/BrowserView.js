@@ -3,12 +3,12 @@ import { BackHandler, Image, Platform, StyleSheet, TouchableOpacity, View, WebVi
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
-import Storage from 'app/Storage'
-import Readability from 'app/util/Readability'
-import { fetchWithErrorHandling } from 'app/util/FetchUtil'
-import { showSharePostDialog } from 'app/util/ShareUtil'
-import NavigationButton from 'app/components/NavigationButton'
-import { color, padding, row, icons } from 'app/style/style'
+import Storage from '../Storage'
+import Readability from '../util/Readability'
+import { fetchWithErrorHandling } from '../util/FetchUtil'
+import { showSharePostDialog } from '../util/ShareUtil'
+import NavigationButton from '../components/NavigationButton'
+import { color, padding, row, icons } from '../style/style'
 
 const isAndroid = Platform.OS === 'android'
 

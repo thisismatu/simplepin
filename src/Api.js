@@ -1,6 +1,6 @@
 import queryString from 'query-string'
-import { replacer } from 'app/util/JsonUtil'
-import { fetchWithErrorHandling } from 'app/util/FetchUtil'
+import { replacer } from './util/JsonUtil'
+import { fetchWithErrorHandling } from './util/FetchUtil'
 
 const server = 'https://api.pinboard.in/v1'
 

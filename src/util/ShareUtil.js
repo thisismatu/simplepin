@@ -1,5 +1,5 @@
 import { Platform, Share } from 'react-native'
-import strings from 'app/style/strings'
+import strings from '../style/strings'
 
 export const showSharePostDialog = (url, title) => {
   Share.share({

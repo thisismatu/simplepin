@@ -1,9 +1,9 @@
 import React from 'react'
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Tag from 'app/components/Tag'
-import TimeAgo from 'app/components/TimeAgo'
-import { color, padding, font, line, icons } from 'app/style/style'
+import Tag from '../components/Tag'
+import TimeAgo from '../components/TimeAgo'
+import { color, padding, font, line, icons } from '../style/style'
 
 export default class PostCell extends React.PureComponent {
   renderTag = (tag, index) => {

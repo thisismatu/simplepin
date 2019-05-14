@@ -1,8 +1,8 @@
 import React from 'react'
 import { Animated, NetInfo, StyleSheet, Text } from 'react-native'
 import { isIphoneX } from 'react-native-iphone-x-helper'
-import { color, font, row } from 'app/style/style'
-import strings from 'app/style/strings'
+import { color, font, row } from '../style/style'
+import strings from '../style/strings'
 
 const hidden = 9999
 const height = isIphoneX() ? row.large : row.tiny

@@ -1,7 +1,7 @@
 import React from 'react'
 import { StatusBar, View } from 'react-native'
-import AppNavigator from 'app/views/AppNavigator'
-import OfflineNotification from 'app/components/OfflineNotification'
+import AppNavigator from './AppNavigator'
+import OfflineNotification from './components/OfflineNotification'
 
 export default class App extends React.Component {
   render() {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import PropTypes from 'prop-types'
-import { color, font, padding } from 'app/style/style'
+import { color, font, padding } from '../style/style'
 
 export default class NavigationButton extends React.PureComponent {
   render() {

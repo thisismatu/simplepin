@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import PropTypes from 'prop-types'
-import Storage from 'app/Storage'
+import Storage from '../Storage'
 
 export default class AuthLoadingView extends React.Component {
   constructor(props) {

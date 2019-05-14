@@ -1,14 +1,14 @@
 import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
-import AddPostView from 'app/views/AddPostView'
-import AuthLoadingView from 'app/views/AuthLoadingView'
-import BrowserView from 'app/views/BrowserView'
-import DrawerView from 'app/views/DrawerView'
-import LoginView from 'app/views/LoginView'
-import PostsView from 'app/views/PostsView'
-import SettingsView from 'app/views/SettingsView'
-import { color } from 'app/style/style'
-import strings from 'app/style/strings'
+import AddPostView from './views/AddPostView'
+import AuthLoadingView from './views/AuthLoadingView'
+import BrowserView from './views/BrowserView'
+import DrawerView from './views/DrawerView'
+import LoginView from './views/LoginView'
+import PostsView from './views/PostsView'
+import SettingsView from './views/SettingsView'
+import { color } from './style/style'
+import strings from './style/strings'
 
 const headerStyles = {
   headerStyle: {
