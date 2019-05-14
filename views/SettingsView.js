@@ -11,8 +11,6 @@ import Switch from 'app/components/SimpleSwitch'
 import { color, padding, font, row, icons } from 'app/style/style'
 import strings from 'app/style/strings'
 
-const { expo } = require('app/app.json')
-
 export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -165,7 +163,7 @@ export default class SettingsView extends React.Component {
           <Separator />
           <View style={s.cell}>
             <Text style={s.text}>{strings.settings.version}</Text>
-            <Text style={s.secondary}>{expo.version}</Text>
+            <Text style={s.secondary}>2.0.0</Text>
           </View>
           <Separator />
           <TouchableOpacity

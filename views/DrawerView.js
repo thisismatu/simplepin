@@ -2,7 +2,6 @@ import React from 'react'
 import { Linking, Platform, StyleSheet, ScrollView } from 'react-native'
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
-import { Constants } from 'expo'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import isEqual from 'lodash/isEqual'
@@ -146,7 +145,7 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
   },
   container: {
-    marginTop: isAndroid ? Constants.statusBarHeight : 0,
+    marginTop: isAndroid ? 24 : 0,
     paddingBottom: padding.medium,
   },
   list: {
