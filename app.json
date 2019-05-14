@@ -31,8 +31,8 @@
       "package": "ml.simplepin",
       "adaptiveIcon": {
         "foregroundImage": "./assets/icon_adaptive.png",
-        "backgroundColor": "#0066CC",
-      },
-    },
+        "backgroundColor": "#0066CC"
+      }
+    }
   }
 }
