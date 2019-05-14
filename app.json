@@ -1,38 +1,4 @@
 {
-  "expo": {
-    "name": "Simplepin",
-    "description": "A simple app for your Pinboard bookmarks",
-    "slug": "simplepin",
-    "privacy": "unlisted",
-    "sdkVersion": "31.0.0",
-    "platforms": ["ios", "android"],
-    "version": "2.0.0",
-    "primaryColor": "#0066CC",
-    "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "androidStatusBar": {
-      "backgroundColor": "#ffffff"
-    },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "assets/*"
-    ],
-    "ios": {
-      "supportsTablet": true,
-      "bundleIdentifier": "ml.simplepin"
-    },
-    "android": {
-      "package": "ml.simplepin",
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/icon_adaptive.png",
-        "backgroundColor": "#0066CC"
-      }
-    }
-  }
+  "displayName": "Simplepin",
+  "name": "app"
 }
