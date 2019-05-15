@@ -1,5 +1,6 @@
 import React from 'react'
-import { Alert, FlatList, Keyboard, Linking, NetInfo, RefreshControl, StyleSheet, Vibration } from 'react-native'
+import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration } from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
 import { SafeAreaView } from 'react-navigation'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'

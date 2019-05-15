@@ -1,4 +1,4 @@
-import { createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
+import { createAppContainer, createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
 import AddPostView from './views/AddPostView'
 import AuthLoadingView from './views/AuthLoadingView'
@@ -92,4 +92,6 @@ const AppNavigator = createSwitchNavigator(
   },
 )
 
-export default AppNavigator
+const AppContainer = createAppContainer(AppNavigator)
+
+export default AppContainer

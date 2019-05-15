@@ -1,5 +1,6 @@
 import React from 'react'
-import { Animated, NetInfo, StyleSheet, Text } from 'react-native'
+import { Animated, StyleSheet, Text } from 'react-native'
+import NetInfo from '@react-native-community/netinfo'
 import { isIphoneX } from 'react-native-iphone-x-helper'
 import { color, font, row } from '../style/style'
 import strings from '../style/strings'
