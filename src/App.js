@@ -8,10 +8,8 @@ export default class App extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <StatusBar
-          animated={true}
           backgroundColor="transparent"
           barStyle="dark-content"
-          translucent={true}
         />
         <AppNavigator />
         <OfflineNotification />

@@ -53,7 +53,7 @@ class BottomSheet extends React.PureComponent {
       transform: [{
         translateY: this.animation.interpolate({
           inputRange: [0, 1],
-          outputRange: [Dimensions.get('screen').height, 0],
+          outputRange: [dimensions.height, 0],
           extrapolate: 'clamp',
         }),
       }],
