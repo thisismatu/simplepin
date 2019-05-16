@@ -10,6 +10,7 @@ export default class App extends React.Component {
         <StatusBar
           backgroundColor="transparent"
           barStyle="dark-content"
+          translucent={true}
         />
         <AppNavigator />
         <OfflineNotification />

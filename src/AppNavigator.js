@@ -1,3 +1,4 @@
+import { Platform, StatusBar } from 'react-native'
 import { createAppContainer, createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
 import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
 import AddPostView from './views/AddPostView'
@@ -10,10 +11,14 @@ import SettingsView from './views/SettingsView'
 import { color } from './style/style'
 import strings from './style/strings'
 
+const isAndroid = Platform.OS === 'android'
+
 const headerStyles = {
   headerStyle: {
     backgroundColor: color.white,
     borderBottomColor: color.black12,
+    paddingTop: isAndroid && StatusBar.currentHeight,
+    height: isAndroid && StatusBar.currentHeight + 56,
   },
   headerTintColor: color.blue2,
   headerTitleStyle: { color: color.gray4 },
@@ -27,7 +32,7 @@ const MainStack = createStackNavigator(
   {
     initialRouteName: 'Posts',
     initialRouteParams: { title: strings.posts.all, list: 'allPosts' },
-    navigationOptions: headerStyles,
+    defaultNavigationOptions: headerStyles,
     transitionConfig: () => ({
       screenInterpolator: sceneProps => {
         return StackViewStyleInterpolator.forFade(sceneProps)

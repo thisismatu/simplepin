@@ -1,5 +1,5 @@
 import React from 'react'
-import { Linking, Platform, StyleSheet, ScrollView } from 'react-native'
+import { Linking, Platform, StatusBar, StyleSheet, ScrollView } from 'react-native'
 import SafeAreaView from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
@@ -67,7 +67,7 @@ export default class DrawerView extends React.PureComponent {
     const postsRoute = 'Posts'
     const settingsRoute = 'Settings'
     return (
-      <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never', left: 'always', right: 'never' }}>
+      <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never', left: 'always', right: 'never', top: 'always' }}>
         <ScrollView
           bounces={false}
           contentContainerStyle={s.container}
@@ -145,7 +145,7 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
   },
   container: {
-    marginTop: isAndroid ? 24 : 0,
+    marginTop: isAndroid && StatusBar.currentHeight,
     paddingBottom: padding.medium,
   },
   list: {
