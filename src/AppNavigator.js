@@ -46,7 +46,7 @@ const BrowserStack = createStackNavigator(
     Browser: BrowserView,
   },
   {
-    navigationOptions: headerStyles,
+    defaultNavigationOptions: headerStyles,
   }
 )
 
@@ -55,7 +55,7 @@ const AddStack = createStackNavigator(
     Add: AddPostView,
   },
   {
-    navigationOptions: headerStyles,
+    defaultNavigationOptions: headerStyles,
   }
 )
 
