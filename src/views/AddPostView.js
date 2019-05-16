@@ -72,7 +72,7 @@ export default class AddPostView extends React.Component {
         }),
       }],
     }
-    this.unsavedChanges = false,
+    this.unsavedChanges = false
     this.contentOffset = 0
     this.searchHeight = 200
     this.suggestedTags = []
@@ -100,12 +100,12 @@ export default class AddPostView extends React.Component {
 
   componentDidMount() {
     const { navigation } = this.props
-    const post = navigation.getParam('post')
-    if (post) {
-      this.setState({ post }, () => this.initDone = true)
+    const passedPost = navigation.getParam('post')
+    if (passedPost) {
+      this.setState({ passedPost }, () => this.initDone = true)
     } else {
       Storage.userPreferences().then(prefs => {
-        const post = { ...this.state.post }
+        const { post } = this.state
         post.shared = !prefs.privateByDefault
         post.toread = prefs.unreadByDefault
         this.setState({ post }, () => this.initDone = true)
@@ -194,31 +194,31 @@ export default class AddPostView extends React.Component {
   }
 
   onHrefChange = evt => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     post.href = evt.nativeEvent.text.trim().replace(/\s+/g, '')
     this.setState({ post })
   }
 
   onDescriptionChange = evt => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     post.description = evt.nativeEvent.text
     this.setState({ post })
   }
 
   onExtendedChange = evt => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     post.extended = evt.nativeEvent.text
     this.setState({ post })
   }
 
   onShared = value => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     post.shared = !value
     this.setState({ post })
   }
 
   onToread = value => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     post.toread = value
     this.setState({ post })
   }
@@ -246,14 +246,14 @@ export default class AddPostView extends React.Component {
   }
 
   removeTag = tagToRemove => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     const updatedTags = filter(post.tags, tag => tag !== tagToRemove)
     post.tags = updatedTags
     this.setState({ post })
   }
 
   selectTag = tag => {
-    const post = { ...this.state.post }
+    const { post } = this.state
     if (isEmpty(tag) || post.tags.includes(tag)) return
     post.tags.push(tag)
     this.setState({
@@ -266,7 +266,7 @@ export default class AddPostView extends React.Component {
 
   onSave = () => {
     const { navigation } = this.props
-    const post = { ...this.state.post }
+    const { post } = this.state
     if (!this.isValidPost(post.href, post.description)) return
     post.description = post.description.trim()
     post.extended = post.extended.trim()
@@ -326,7 +326,7 @@ export default class AddPostView extends React.Component {
           keyboardShouldPersistTaps="handled"
           keyboardDismissMode="none"
           style={s.list}
-          onScroll={evt => this.contentOffset = evt.nativeEvent.contentOffset.y}
+          onScroll={evt => { this.contentOffset = evt.nativeEvent.contentOffset.y }}
         >
           <AnimatedTextInput
             autoCapitalize="none"
@@ -353,7 +353,7 @@ export default class AddPostView extends React.Component {
             onSubmitEditing={() => this.extendedRef.focus()}
             placeholder={strings.add.placeholderDescription}
             placeholderTextColor={color.gray2}
-            ref={input => this.descriptionRef = input}
+            ref={input => { this.descriptionRef = input }}
             returnKeyType="next"
             style={[s.textInput, !validDescription && this.shakeStyle]}
             underlineColorAndroid="transparent"
@@ -370,14 +370,14 @@ export default class AddPostView extends React.Component {
             onSubmitEditing={() => this.tagsRef.focus()}
             placeholder={strings.add.placeholderExtended}
             placeholderTextColor={color.gray2}
-            ref={input => this.extendedRef = input}
+            ref={input => { this.extendedRef = input }}
             returnKeyType="next"
             style={[s.textInput, s.textArea]}
             textAlignVertical="top"
             underlineColorAndroid="transparent"
             value={post.extended}
           />
-          <Separator onLayout={evt => this.searchHeight = evt.nativeEvent.layout.y} />
+          <Separator onLayout={evt => { this.searchHeight = evt.nativeEvent.layout.y }} />
           <TextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -388,7 +388,7 @@ export default class AddPostView extends React.Component {
             onBlur={() => this.selectTag(searchQuery)}
             placeholder={strings.add.placeholderTags}
             placeholderTextColor={color.gray2}
-            ref={input => this.tagsRef = input}
+            ref={input => { this.tagsRef = input }}
             returnKeyType="done"
             style={s.textInput}
             underlineColorAndroid="transparent"

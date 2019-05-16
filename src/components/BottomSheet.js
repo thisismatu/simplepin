@@ -63,7 +63,7 @@ class BottomSheet extends React.PureComponent {
 
   componentDidUpdate(prevProps) {
     if (!prevProps.visible && this.props.visible) {
-      this.setState({ visible: true }, () => {
+      this.setState({ visible: true }, () => { // eslint-disable-line react/no-did-update-set-state
         this.animate(1)
       })
     } else if (prevProps.visible && !this.props.visible) {

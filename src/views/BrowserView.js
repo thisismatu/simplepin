@@ -125,7 +125,8 @@ export default class BrowserView extends React.Component {
   }
 
   toggleReaderMode = () => {
-    this.setState({ readerMode: !this.state.readerMode })
+    const { readerMode } = this.state
+    this.setState({ readerMode: !readerMode })
   }
 
   renderToolbar() {
@@ -173,7 +174,7 @@ export default class BrowserView extends React.Component {
           }
           {!readerMode &&
             <WebView
-              ref={ref => this.webViewRef = ref}
+              ref={ref => { this.webViewRef = ref }}
               source={{ uri: this.url }}
               startInLoadingState={true}
               onNavigationStateChange={this.onNavigationStateChange}

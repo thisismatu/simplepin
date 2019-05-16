@@ -16,7 +16,7 @@ export const handleLoginResponseError = error => {
         strings.error.loginFailed,
         strings.error.incorrectToken,
       )
-    default:
+    default: return null
   }
 }
 
@@ -40,6 +40,6 @@ export const handleResponseError = (error, navigation) => {
         strings.error.troubleConnecting,
         strings.error.pinboardDown,
       )
-    default:
+    default: return null
   }
 }

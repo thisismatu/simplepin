@@ -39,17 +39,17 @@ const createReadabilityUrl = sourceUrl => {
 }
 
 const cleanHtml = (html, sourceUrl) => {
-  html = SanitizeHtml(html, {
+  const sanitizedHtml = SanitizeHtml(html, {
     allowedTags: ['html', 'body', 'p', 'strong', 'em', 'h1', 'h2', 'h3', 'h4', 'section', 'div', 'span', 'blockquote', 'img', 'hr'],
     nonTextTags: ['style', 'script', 'textarea', 'noscript', 'html', 'body', 'div', 'span', 'h1'],
   })
 
   return new Promise(resolve => {
-    if (!html || html.length === 0) throw new Error('Invalid or no html provided')
+    if (!sanitizedHtml || sanitizedHtml.length === 0) throw new Error('Invalid or no html provided')
     if (!sourceUrl || sourceUrl.length === 0) throw new Error('Invalid or no source url provided')
 
     const readabilityUrl = createReadabilityUrl(sourceUrl)
-    const xhtml = convertHtmlToXhtml(html)
+    const xhtml = convertHtmlToXhtml(sanitizedHtml)
     const doc = createJsDomDocument(xhtml)
     let cleanedHtml
     try {

@@ -11,10 +11,10 @@ const keys = {
   readerMode: '@Simplepin:readerMode',
 }
 
-const apiToken = async () => await AsyncStorage.getItem(keys.apiToken)
+const apiToken = async () => AsyncStorage.getItem(keys.apiToken)
 
-const setApiToken = async apiToken => {
-  await AsyncStorage.setItem(keys.apiToken, apiToken)
+const setApiToken = async value => {
+  await AsyncStorage.setItem(keys.apiToken, value)
 }
 
 const markAsRead = async () => {
@@ -22,9 +22,9 @@ const markAsRead = async () => {
   return !!JSON.parse(value)
 }
 
-const setMarkAsRead = async markAsRead => {
-  const value = JSON.stringify(markAsRead)
-  await AsyncStorage.setItem(keys.markAsRead, value)
+const setMarkAsRead = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.markAsRead, strValue)
 }
 
 const exactDate = async () => {
@@ -32,9 +32,9 @@ const exactDate = async () => {
   return !!JSON.parse(value)
 }
 
-const setExactDate = async exactDate => {
-  const value = JSON.stringify(exactDate)
-  await AsyncStorage.setItem(keys.exactDate, value)
+const setExactDate = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.exactDate, strValue)
 }
 
 const tagOrder = async () => {
@@ -42,9 +42,9 @@ const tagOrder = async () => {
   return !!JSON.parse(value)
 }
 
-const setTagOrder = async tagOrder => {
-  const value = JSON.stringify(tagOrder)
-  await AsyncStorage.setItem(keys.tagOrder, value)
+const setTagOrder = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.tagOrder, strValue)
 }
 
 const privateByDefault = async () => {
@@ -52,9 +52,9 @@ const privateByDefault = async () => {
   return !!JSON.parse(value)
 }
 
-const setPrivateByDefault = async privateByDefault => {
-  const value = JSON.stringify(privateByDefault)
-  await AsyncStorage.setItem(keys.privateByDefault, value)
+const setPrivateByDefault = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.privateByDefault, strValue)
 }
 
 const unreadByDefault = async () => {
@@ -62,9 +62,9 @@ const unreadByDefault = async () => {
   return !!JSON.parse(value)
 }
 
-const setUnreadByDefault = async unreadByDefault => {
-  const value = JSON.stringify(unreadByDefault)
-  await AsyncStorage.setItem(keys.unreadByDefault, value)
+const setUnreadByDefault = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.unreadByDefault, strValue)
 }
 
 const openLinksExternal = async () => {
@@ -72,9 +72,9 @@ const openLinksExternal = async () => {
   return !!JSON.parse(value)
 }
 
-const setOpenLinksExternal = async openLinksExternal => {
-  const value = JSON.stringify(openLinksExternal)
-  await AsyncStorage.setItem(keys.openLinksExternal, value)
+const setOpenLinksExternal = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.openLinksExternal, strValue)
 }
 
 const readerMode = async () => {
@@ -82,9 +82,9 @@ const readerMode = async () => {
   return JSON.parse(value) !== false
 }
 
-const setReaderMode = async readerMode => {
-  const value = JSON.stringify(readerMode)
-  await AsyncStorage.setItem(keys.readerMode, value)
+const setReaderMode = async value => {
+  const strValue = JSON.stringify(value)
+  await AsyncStorage.setItem(keys.readerMode, strValue)
 }
 
 const userPreferences = async () => {
@@ -100,7 +100,7 @@ const userPreferences = async () => {
   }
 }
 
-const clear = async () => await AsyncStorage.clear()
+const clear = async () => AsyncStorage.clear()
 
 export default {
   apiToken,
