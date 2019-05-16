@@ -32,7 +32,7 @@ const ModalOption = ({ title, onPress }) => {
       activeOpacity={0.5}
       style={[s.cell, cellHeight]}
       onPress={onPress}
-      >
+    >
       <Text style={s.text}>{title}</Text>
     </TouchableOpacity>
   )
@@ -90,7 +90,7 @@ class BottomSheet extends React.PureComponent {
         onRequestClose={this.props.onClose}
         hardwareAccelerated={true}
         supportedOrientations={['portrait', 'landscape']}
-        >
+      >
         <StatusBar backgroundColor={color.black36} />
         <View style={s.root}>
           <AnimatedTouchableOpacity

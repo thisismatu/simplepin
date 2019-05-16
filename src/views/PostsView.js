@@ -150,7 +150,7 @@ export default class PostsView extends React.Component {
     const { preferences } = this.state
     const response = await Api.postsUpdate(preferences.apiToken)
     if (response.ok === 0) {
-      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
+      if (response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     } else if (response.update_time !== this.lastUpdateTime) {
       this.lastUpdateTime = response.update_time
@@ -164,8 +164,8 @@ export default class PostsView extends React.Component {
     const response = await Api.postsAll(apiToken)
     const secret = await Api.userSecret(apiToken)
     const starred = await Api.postsStarred(secret.result, apiToken)
-    if(response.ok === 0) {
-      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
+    if (response.ok === 0) {
+      if (response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     } else if (secret.ok === 0 || starred.ok === 0) {
       const jsonString = JSON.stringify(response)
@@ -184,7 +184,8 @@ export default class PostsView extends React.Component {
         .uniqBy('hash')
         .map(o => {
           o.starred = starredLinks.includes(o.href)
-          return o })
+          return o
+        })
         .value()
       const newData = filterPosts(uniqPostsStarred)
       const newDataCount = postsCount(newData)
@@ -211,8 +212,8 @@ export default class PostsView extends React.Component {
     this.dataHolder = newData
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsAdd(post, preferences.apiToken)
-    if(response.ok === 0) {
-      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
+    if (response.ok === 0) {
+      if (response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     }
   }
@@ -231,8 +232,8 @@ export default class PostsView extends React.Component {
     }
     this.props.navigation.setParams(newDataCount)
     const response = await Api.postsDelete(post.href, preferences.apiToken)
-    if(response.ok === 0) {
-      if ( response.error === 503) { this.setState({ pinboardDown: true }) }
+    if (response.ok === 0) {
+      if (response.error === 503) { this.setState({ pinboardDown: true }) }
       handleResponseError(response.error, this.props.navigation)
     }
   }
@@ -364,7 +365,7 @@ export default class PostsView extends React.Component {
       selectedPost.description,
       [
         { text: strings.common.cancel, style: 'cancel' },
-        { text: strings.common.delete, onPress: () => this.deletePost(selectedPost), style: 'destructive' },
+        { text: strings.common.delete, onPress: () => this.deletePost(selectedPost), style: 'destructive' }
       ]
     )
   }
@@ -379,7 +380,8 @@ export default class PostsView extends React.Component {
   renderRefreshControl = () => {
     return <RefreshControl
       refreshing={this.state.isLoading}
-      onRefresh={this.onRefresh} />
+      onRefresh={this.onRefresh}
+    />
   }
 
   renderListHeader = () => {
@@ -389,7 +391,8 @@ export default class PostsView extends React.Component {
       searchQuery={this.searchQuery}
       onSearchChange={this.onSearchChange}
       onClearSearch={this.clearSearch}
-      matches={data && data.length} />
+      matches={data && data.length}
+    />
   }
 
   renderPostCell = item => {
@@ -401,7 +404,8 @@ export default class PostsView extends React.Component {
       onCellPress={this.onCellPress}
       onCellLongPress={this.onCellLongPress}
       exactDate={preferences.exactDate}
-      tagOrder={preferences.tagOrder} />
+      tagOrder={preferences.tagOrder}
+    />
   }
 
   renderEmptyState = () => {
@@ -415,7 +419,8 @@ export default class PostsView extends React.Component {
         icon={icons.searchLarge}
         subtitle={`“${this.searchQuery}“`}
         title={strings.common.noResults}
-        paddingBottom={keyboardHeight} />
+        paddingBottom={keyboardHeight}
+      />
     }
     if (pinboardDown && this.isConnected) {
       return <EmptyState
@@ -424,7 +429,8 @@ export default class PostsView extends React.Component {
         icon={icons.offlineLarge}
         subtitle={strings.error.pinboardDown}
         title={strings.error.troubleConnecting}
-        paddingBottom={keyboardHeight} />
+        paddingBottom={keyboardHeight}
+      />
     }
     if (this.isCurrentListEmpty() && !isLoading && this.isConnected) {
       const { navigation } = this.props
@@ -434,7 +440,8 @@ export default class PostsView extends React.Component {
         icon={icons.simplepin}
         subtitle={strings.common.noPostsMessage}
         title={strings.common.noPosts}
-        paddingBottom={keyboardHeight} />
+        paddingBottom={keyboardHeight}
+      />
     }
     if (this.isCurrentListEmpty() && !isLoading && !this.isConnected) {
       return <EmptyState
@@ -443,7 +450,8 @@ export default class PostsView extends React.Component {
         icon={icons.offlineLarge}
         subtitle={strings.error.tryAgainOffline}
         title={strings.error.yourOffline}
-        paddingBottom={keyboardHeight} />
+        paddingBottom={keyboardHeight}
+      />
     }
     return null
   }
@@ -492,7 +500,7 @@ const s = StyleSheet.create({
     flex: 1,
     backgroundColor: color.white,
   },
-  container : {
+  container: {
     flexGrow: 1,
     paddingTop: padding.medium,
     paddingBottom: padding.large,

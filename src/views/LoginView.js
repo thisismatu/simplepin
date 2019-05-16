@@ -108,7 +108,7 @@ export default class LoginView extends React.Component {
         alwaysBounceVertical={false}
         contentContainerStyle={s.container}
         keyboardShouldPersistTaps="handled"
-        >
+      >
         <Animated.Image source={icons.simplepin} style={this.iconStyle} />
         <Text style={s.title}>{strings.login.title}</Text>
         <Text style={s.text}>{strings.login.text}</Text>
@@ -117,7 +117,7 @@ export default class LoginView extends React.Component {
           autoCorrect={false}
           enablesReturnKeyAutomatically={true}
           placeholder={strings.login.placeholder}
-          placeholderTextColor = {color.gray2}
+          placeholderTextColor={color.gray2}
           returnKeyType="done"
           secureTextEntry={true}
           style={s.input}

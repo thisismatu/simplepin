@@ -8,7 +8,7 @@ const isAndroid = Platform.OS === 'android'
 export default class SimpleSwitch extends React.PureComponent {
   render() {
     const { value, onValueChange } = this.props
-    const track = isAndroid ? color.blue2 + '88' : color.blue2
+    const track = isAndroid ? `${color.blue2}88` : color.blue2
     const thumb = isAndroid && value ? color.blue2 : null
     return (
       <Switch

@@ -15,7 +15,7 @@ const isAndroid = Platform.OS === 'android'
 
 const isBlackListed = url => {
   const blackList = ['youtube.com', 'vimeo.com']
-  const domain = url.replace('http://','').replace('https://','').replace('www.','').split(/[/?#]/)[0]
+  const domain = url.replace('http://', '').replace('https://', '').replace('www.', '').split(/[/?#]/)[0]
   return blackList.includes(domain)
 }
 
@@ -25,7 +25,8 @@ const ToolbarButton = ({ disabled, onPress, icon }) => {
       activeOpacity={0.5}
       disabled={disabled}
       onPress={onPress}
-      style={s.button}>
+      style={s.button}
+    >
       <Image
         source={icon}
         style={[s.icon, disabled && s.iconDisabled]}
@@ -87,7 +88,7 @@ export default class BrowserView extends React.Component {
       } else {
         this.setState({ cleanHtml: Readability.cleanHtmlTemplate(this.title || article.title, article.content) })
       }
-    } catch(e) {
+    } catch (e) {
       this.setState({ cleanHtml: undefined, readerMode: false })
     }
   }
@@ -102,7 +103,7 @@ export default class BrowserView extends React.Component {
   }
 
   onNavigationStateChange = navState => {
-    //Todo: this isn't called on SPA sites, need to inject some JS for that…
+    // Todo: this isn't called on SPA sites, need to inject some JS for that…
     if (!this.state.readerMode) {
       this.setState({
         canGoBack: navState.canGoBack,

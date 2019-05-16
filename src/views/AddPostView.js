@@ -34,7 +34,7 @@ class ResultItem extends React.PureComponent {
         activeOpacity={0.5}
         onPress={() => onPress(tag)}
         style={s.resultCell}
-        >
+      >
         <Text style={s.resultText}>{tag}</Text>
         {!!suggested && <Text style={s.suggestedText}>Suggested</Text>}
       </TouchableOpacity>
@@ -102,7 +102,7 @@ export default class AddPostView extends React.Component {
     const { navigation } = this.props
     const post = navigation.getParam('post')
     if (post) {
-      this.setState({ post: post }, () => this.initDone = true)
+      this.setState({ post }, () => this.initDone = true)
     } else {
       Storage.userPreferences().then(prefs => {
         const post = { ...this.state.post }
@@ -141,7 +141,7 @@ export default class AddPostView extends React.Component {
     const apiToken = await Storage.apiToken()
     const response = await Api.tagsAll(apiToken)
     const suggested = await Api.tagsSuggested(this.state.post.href, apiToken)
-    if(response.ok === 0) {
+    if (response.ok === 0) {
       handleResponseError(response.error, this.props.navigation)
     } else {
       const suggestedTags = lodash([suggested[0].popular, suggested[1].recommended])
@@ -180,7 +180,7 @@ export default class AddPostView extends React.Component {
         strings.add.discardUnsaved, null,
         [
           { text: strings.common.cancel, style: 'cancel' },
-          { text: strings.common.discard, onPress: () => navigation.dismiss() },
+          { text: strings.common.discard, onPress: () => navigation.dismiss() }
         ]
       )
     } else {
@@ -236,7 +236,7 @@ export default class AddPostView extends React.Component {
     const searchResults = flattenDeep([suggestedTagsResults, userTagsResults])
     const searchVisible = !isEmpty(searchResults) && !isEmpty(text)
     this.setState({
-      searchVisible: searchVisible,
+      searchVisible,
       scrollEnabled: !searchVisible,
       searchResults: {
         suggested: suggestedTagsResults,
@@ -247,7 +247,7 @@ export default class AddPostView extends React.Component {
 
   removeTag = tagToRemove => {
     const post = { ...this.state.post }
-    const updatedTags = filter(post.tags, tag =>  tag !== tagToRemove)
+    const updatedTags = filter(post.tags, tag => tag !== tagToRemove)
     post.tags = updatedTags
     this.setState({ post })
   }
@@ -285,7 +285,7 @@ export default class AddPostView extends React.Component {
         activeOpacity={1}
         style={[s.resultsOverlay, topOffset]}
         onPress={() => this.setState({ searchVisible: false, scrollEnabled: true })}
-        >
+      >
         <View style={[s.resultsContainer, containerHeight]}>
           <SectionList
             sections={[{
@@ -327,7 +327,7 @@ export default class AddPostView extends React.Component {
           keyboardDismissMode="none"
           style={s.list}
           onScroll={evt => this.contentOffset = evt.nativeEvent.contentOffset.y}
-          >
+        >
           <AnimatedTextInput
             autoCapitalize="none"
             autoCorrect={false}

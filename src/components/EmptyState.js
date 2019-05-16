@@ -6,7 +6,7 @@ import { color, padding, font, line, row } from '../style/style'
 const isIOS = Platform.OS === 'ios'
 
 export default class EmptyState extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = { topOffset: 0 }
   }
@@ -23,7 +23,7 @@ export default class EmptyState extends React.PureComponent {
         activeOpacity={0.5}
         style={s.button}
         onPress={action}
-        >
+      >
         <Text style={s.buttonText}>{actionText}</Text>
       </TouchableOpacity>
     )

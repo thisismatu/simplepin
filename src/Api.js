@@ -98,7 +98,7 @@ const tagsAll = token => {
 
 const tagsSuggested = (url, token) => {
   const data = {
-    url: url,
+    url,
     format: 'json',
     auth_token: token,
   }
@@ -108,7 +108,7 @@ const tagsSuggested = (url, token) => {
 
 const mockUpdate = () => {
   const now = new Date()
-  return { 'update_time': now.toISOString() }
+  return { update_time: now.toISOString() }
 }
 
 const mockPostsAll = () => {

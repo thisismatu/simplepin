@@ -40,7 +40,7 @@ const s = StyleSheet.create({
     marginRight: padding.medium,
     padding: 12,
   },
-  icon:  {
+  icon: {
     height: 32,
     tintColor: color.white,
     width: 32,

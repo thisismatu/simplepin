@@ -11,7 +11,7 @@ export default class NavigationButton extends React.PureComponent {
         activeOpacity={0.5}
         onPress={onPress}
         style={s.button}
-        >
+      >
         {!!icon && <Image source={icon} style={s.icon} />}
         {!!text && <Text style={s.text}>{text}</Text>}
       </TouchableOpacity>

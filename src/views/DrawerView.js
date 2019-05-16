@@ -28,7 +28,7 @@ export default class DrawerView extends React.PureComponent {
   componentDidMount() {
     Storage.apiToken().then(value => {
       const username = value ? value.split(':')[0] : null
-      this.setState({ username: username })
+      this.setState({ username })
     })
   }
 
@@ -38,7 +38,7 @@ export default class DrawerView extends React.PureComponent {
     const focusedRoute = get(state.routes, ['0', 'routes', index, 'routeName'])
     const focusedTitle = get(state.routes, ['0', 'routes', index, 'params', 'title'])
     if (title) {
-      return isEqual([route, title],[focusedRoute, focusedTitle])
+      return isEqual([route, title], [focusedRoute, focusedTitle])
     }
     return isEqual(route, focusedRoute)
   }
@@ -49,7 +49,7 @@ export default class DrawerView extends React.PureComponent {
   }
 
   navigateTo = (route, title = null, list = null) => () => {
-    const params = omitBy({ title: title, list: list }, isEmpty)
+    const params = omitBy({ title, list }, isEmpty)
     if (this.isRouteFocused(route, title)) {
       return this.props.navigation.closeDrawer()
     }
@@ -74,7 +74,7 @@ export default class DrawerView extends React.PureComponent {
           showsHorizontalScrollIndicator={false}
           showsVerticalScrollIndicator={false}
           style={s.list}
-          >
+        >
           <DrawerHeader text={this.state.username} />
           <HeaderCell text={strings.posts.title} />
           <DrawerCell

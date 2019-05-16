@@ -4,10 +4,10 @@ import strings from '../style/strings'
 export const showSharePostDialog = (url, title) => {
   Share.share({
     ...Platform.select({
-      ios: { url: url },
+      ios: { url },
       android: { message: url },
     }),
-    title: title,
+    title,
   },
   {
     dialogTitle: strings.common.share,

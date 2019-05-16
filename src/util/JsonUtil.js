@@ -22,7 +22,7 @@ export const replacer = (key, value) => {
     case 'toread':
       return value ? 'yes' : 'no'
     case 'time':
-      return value.toISOString().split('.')[0] + 'Z'
+      return `${value.toISOString().split('.')[0]}Z`
     case 'tags':
       return value.join(' ')
     default:

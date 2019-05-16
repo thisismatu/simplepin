@@ -11,7 +11,7 @@ export default class DrawerCell extends React.PureComponent {
         style={[s.cell, isFocused && s.active]}
         activeOpacity={0.5}
         onPress={onPress}
-        >
+      >
         <Image source={icon} style={s.icon} />
         <Text style={s.text}>{title}</Text>
         {!!count && <Text style={s.secondary}>{count}</Text>}

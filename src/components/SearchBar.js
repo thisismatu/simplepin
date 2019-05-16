@@ -19,7 +19,7 @@ export default class SearchBar extends React.PureComponent {
           enablesReturnKeyAutomatically={true}
           onChangeText={onSearchChange}
           placeholder={strings.common.search}
-          placeholderTextColor = {color.gray2}
+          placeholderTextColor={color.gray2}
           returnKeyType="done"
           style={s.textField}
           underlineColorAndroid="transparent"
@@ -81,7 +81,7 @@ const s = StyleSheet.create({
     width: barHeight,
   },
   icon: {
-    marginLeft: - horizontalMargin / 4,
+    marginLeft: -horizontalMargin / 4,
     tintColor: color.black36,
     resizeMode: 'contain',
   },

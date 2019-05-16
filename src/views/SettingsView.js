@@ -73,11 +73,11 @@ export default class SettingsView extends React.Component {
 
   logout = () => {
     Alert.alert(
-      strings.settings.logout + '?',
+      `${strings.settings.logout}?`,
       null,
       [
         { text: strings.common.cancel, style: 'cancel' },
-        { text: strings.settings.logout, onPress: () => logout(this.props.navigation), style: 'destructive' },
+        { text: strings.settings.logout, onPress: () => logout(this.props.navigation), style: 'destructive' }
       ]
     )
   }
@@ -89,7 +89,7 @@ export default class SettingsView extends React.Component {
         <ScrollView
           contentContainerStyle={s.container}
           style={s.list}
-          >
+        >
           <HeaderCell
             text={strings.settings.general}
             style={{ marginTop: padding.medium }}

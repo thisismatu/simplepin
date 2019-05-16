@@ -1,8 +1,8 @@
 import React from 'react'
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
-import Tag from '../components/Tag'
-import TimeAgo from '../components/TimeAgo'
+import Tag from './Tag'
+import TimeAgo from './TimeAgo'
 import { color, padding, font, line, icons } from '../style/style'
 
 export default class PostCell extends React.PureComponent {
@@ -11,7 +11,8 @@ export default class PostCell extends React.PureComponent {
     return <Tag
       tag={tag}
       onPress={this.props.onTagPress}
-      style={firstTagStyle} />
+      style={firstTagStyle}
+    />
   }
 
   render() {
@@ -22,7 +23,7 @@ export default class PostCell extends React.PureComponent {
         activeOpacity={0.5}
         onPress={() => onCellPress(post)}
         onLongPress={() => onCellLongPress(post)}
-        >
+      >
         {!!post.toread && <View style={s.unread} />}
         <Text style={[s.title, post.toread && s.titleUnread]}>{post.description}</Text>
         {!!post.extended && <Text style={s.description}>{post.extended}</Text>}

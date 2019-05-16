@@ -1,6 +1,6 @@
 import { Platform, StatusBar } from 'react-native'
 import { createAppContainer, createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
-import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator'
+import StackViewStyleInterpolator from 'react-navigation-stack/dist/views/StackView/StackViewStyleInterpolator' // eslint-disable-line import/no-extraneous-dependencies
 import AddPostView from './views/AddPostView'
 import AuthLoadingView from './views/AuthLoadingView'
 import BrowserView from './views/BrowserView'
@@ -61,7 +61,7 @@ const AddStack = createStackNavigator(
 
 const AppDrawer = createDrawerNavigator(
   {
-    MainStack: MainStack,
+    MainStack,
   },
   {
     contentComponent: DrawerView,
@@ -70,9 +70,9 @@ const AppDrawer = createDrawerNavigator(
 
 const AppStack = createStackNavigator(
   {
-    AppDrawer: AppDrawer,
-    BrowserStack: BrowserStack,
-    AddStack: AddStack,
+    AppDrawer,
+    BrowserStack,
+    AddStack,
   },
   {
     mode: 'modal',

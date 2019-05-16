@@ -8,12 +8,12 @@ export default class Tag extends React.PureComponent {
   render() {
     const { tag, onPress, icon, style } = this.props
     const isPrivate = startsWith(tag, '.')
-    return(
+    return (
       <TouchableOpacity
         activeOpacity={0.5}
         onPress={() => onPress(tag)}
         style={[s.tagContainer, style]}
-        >
+      >
         <View style={[s.tag, isPrivate && s.privateTag]}>
           <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
           {icon && <Image source={icons.closeSmall} style={[s.tagIcon, isPrivate && s.privateTagIcon]} />}

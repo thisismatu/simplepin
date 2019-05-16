@@ -8,7 +8,7 @@ const convertHtmlToXhtml = html => {
   const xhtmlDocument = new DOMParser({
     errorHandler: (level, msg) => {
       if (level === 'error') {
-        throw new Error('Unable to convert HTML to XHTML: ' + msg)
+        throw new Error(`Unable to convert HTML to XHTML: ${msg}`)
       }
     },
   }).parseFromString(html, 'text/html')
@@ -19,7 +19,7 @@ const createJsDomDocument = xhtml => {
   const jsDomParser = new JSDOMParser()
   const doc = jsDomParser.parse(xhtml.trim())
   if (jsDomParser.errorState) {
-    throw new Error('Unable to parse XHTML into JsDom' + jsDomParser.errorState)
+    throw new Error(`Unable to parse XHTML into JsDom${jsDomParser.errorState}`)
   }
   return doc
 }
@@ -34,14 +34,14 @@ const createReadabilityUrl = sourceUrl => {
     host: sourceUrlParsed.host,
     scheme: sourceUrlParsed.protocol.slice(0, -1),
     prePath: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}`,
-    pathBase: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}${sourceUrlParsed.pathname.substring(0, sourceUrlParsed.pathname.lastIndexOf('/') + 1)}`,  // eslint-disable-line max-len
+    pathBase: `${sourceUrlParsed.protocol}//${sourceUrlParsed.host}${sourceUrlParsed.pathname.substring(0, sourceUrlParsed.pathname.lastIndexOf('/') + 1)}`, // eslint-disable-line max-len
   }
 }
 
 const cleanHtml = (html, sourceUrl) => {
   html = SanitizeHtml(html, {
-    allowedTags: [ 'html','body', 'p', 'strong', 'em', 'h1', 'h2', 'h3', 'h4', 'section', 'div', 'span', 'blockquote', 'img', 'hr'],
-    nonTextTags: [ 'style', 'script', 'textarea', 'noscript', 'html', 'body', 'div', 'span', 'h1'],
+    allowedTags: ['html', 'body', 'p', 'strong', 'em', 'h1', 'h2', 'h3', 'h4', 'section', 'div', 'span', 'blockquote', 'img', 'hr'],
+    nonTextTags: ['style', 'script', 'textarea', 'noscript', 'html', 'body', 'div', 'span', 'h1'],
   })
 
   return new Promise(resolve => {
@@ -54,7 +54,7 @@ const cleanHtml = (html, sourceUrl) => {
     let cleanedHtml
     try {
       const readability = new Readability(readabilityUrl, doc)
-      if(readability) {
+      if (readability) {
         cleanedHtml = readability.parse()
       }
     } catch (error) {
