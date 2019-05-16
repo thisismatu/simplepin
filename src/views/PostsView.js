@@ -1,7 +1,7 @@
 import React from 'react'
 import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration } from 'react-native'
 import NetInfo from '@react-native-community/netinfo'
-import { SafeAreaView } from 'react-navigation'
+import SafeAreaView from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'

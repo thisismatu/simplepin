@@ -1,5 +1,6 @@
 import React from 'react'
 import { Text } from 'react-native'
+import DeviceInfo from 'react-native-device-info'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 

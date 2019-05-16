@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, Animated, BackHandler, Platform, SectionList, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
+import SafeAreaView from 'react-native-safe-area-view'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import isUrl from 'is-url'
 import PropTypes from 'prop-types'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-navigation'
+import SafeAreaView from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
 import Storage from '../Storage'
 import { logout } from '../util/ErrorUtil'

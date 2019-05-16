@@ -1,7 +1,7 @@
 import React from 'react'
 import { BackHandler, Image, Platform, StyleSheet, TouchableOpacity, View } from 'react-native'
 import { WebView } from 'react-native-webview'
-import { SafeAreaView } from 'react-navigation'
+import SafeAreaView from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Storage from '../Storage'
