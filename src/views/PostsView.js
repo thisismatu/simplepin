@@ -110,7 +110,7 @@ export default class PostsView extends React.Component {
     const currentList = this.props.navigation.getParam('list')
     if (!isEqual(previousList, currentList)) {
       this.searchQuery = ''
-      this.setState({ data: this.dataHolder[currentList] })
+      this.setState({ data: this.dataHolder[currentList] }) // eslint-disable-line react/no-did-update-set-state
     }
   }
 
@@ -289,7 +289,10 @@ export default class PostsView extends React.Component {
     this.props.navigation.openDrawer()
   }
 
-  toggleModal = () => this.setState({ modalVisible: !this.state.modalVisible })
+  toggleModal = () => {
+    const { modalVisible } = this.state
+    this.setState({ modalVisible: !modalVisible })
+  }
 
   onRefresh = async () => {
     this.setState({ isLoading: true })
@@ -318,9 +321,10 @@ export default class PostsView extends React.Component {
       this.props.navigation.navigate('Browser', { title: post.description, url: post.href })
     }
     if (markAsRead && post.toread) {
-      post.toread = !post.toread
-      post.meta = Math.random().toString(36) // PostCell change detection
-      this.addPost(post)
+      const unreadPost = post
+      unreadPost.toread = !post.toread
+      unreadPost.meta = Math.random().toString(36) // PostCell change detection
+      this.addPost(unreadPost)
     }
   }
 
@@ -463,7 +467,7 @@ export default class PostsView extends React.Component {
       <React.Fragment>
         <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
           <FlatList
-            ref={(ref) => this.listRef = ref}
+            ref={(ref) => { this.listRef = ref }}
             contentContainerStyle={s.container}
             data={data}
             initialNumToRender={8}

@@ -17,7 +17,7 @@
   "globals": {
   },
   "rules": {
-    "no-use-before-define": 0,
+    "no-use-before-define": 1,
     "react/prop-types": 0,
     "react/forbid-prop-types": [1, { "forbid": ["any", "array"]}],
     "function-paren-newline": 0,

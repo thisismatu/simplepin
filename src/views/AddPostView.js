@@ -102,13 +102,13 @@ export default class AddPostView extends React.Component {
     const { navigation } = this.props
     const passedPost = navigation.getParam('post')
     if (passedPost) {
-      this.setState({ passedPost }, () => this.initDone = true)
+      this.setState({ post: passedPost }, () => { this.initDone = true })
     } else {
       Storage.userPreferences().then(prefs => {
         const { post } = this.state
         post.shared = !prefs.privateByDefault
         post.toread = prefs.unreadByDefault
-        this.setState({ post }, () => this.initDone = true)
+        this.setState({ post }, () => { this.initDone = true })
       })
     }
     if (isAndroid) {
