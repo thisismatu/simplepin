@@ -4,7 +4,10 @@ import DeviceInfo from 'react-native-device-info'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
-moment.locale('en-US')
+const deviceLocale = DeviceInfo.getDeviceLocale()
+const preferredLocales = DeviceInfo.getPreferredLocales()
+const locale = preferredLocales.length > 0 ? preferredLocales[0] : deviceLocale
+moment.locale(locale)
 
 export default class TimeAgo extends React.PureComponent {
   pluralize = (number, string) => {
