@@ -3,18 +3,23 @@
     "node": true, // this is the best starting point
     "browser": true, // for react web
     "es6": true, // enables es6 features
+    "jest/globals": true
   },
   "parser": "babel-eslint",
   "extends": [
     "airbnb",
+    "plugin:jest/recommended"
   ],
   "plugins": [
     "react-native",
+    "jest"
   ],
   "globals": {
   },
   "rules": {
+    "no-use-before-define": 0,
     "react/prop-types": 0,
+    "react/forbid-prop-types": [1, { "forbid": ["any", "array"]}],
     "function-paren-newline": 0,
     "object-property-newline": 0,
     "no-mixed-operators": 0,
