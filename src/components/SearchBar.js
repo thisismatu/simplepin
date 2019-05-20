@@ -46,7 +46,7 @@ SearchBar.propTypes = {
   matches: PropTypes.number,
 }
 
-const barHeight = row.tiny
+const barHeight = row.small
 const horizontalMargin = 12
 const iconSize = 18
 
@@ -58,7 +58,7 @@ const s = StyleSheet.create({
   },
   textField: {
     backgroundColor: color.gray0,
-    borderRadius: 100,
+    borderRadius: barHeight / 2,
     color: color.gray4,
     height: barHeight,
     paddingHorizontal: padding.medium,
