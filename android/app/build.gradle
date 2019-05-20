@@ -108,6 +108,16 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    signingConfigs {
+        release {
+            storeFile file(SIMPLEPIN_RELEASE_STORE_FILE)
+            storePassword SIMPLEPIN_RELEASE_STORE_PASSWORD
+            keyAlias SIMPLEPIN_RELEASE_KEY_ALIAS
+            keyPassword SIMPLEPIN_RELEASE_KEY_PASSWORD
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
     splits {
         abi {
             reset()
@@ -120,6 +130,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
