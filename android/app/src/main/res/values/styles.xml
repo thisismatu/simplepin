@@ -7,4 +7,7 @@
         <item name="android:windowLayoutInDisplayCutoutMode">default</item>
         <item name="android:statusBarColor">@color/transparent</item>
     </style>
+    <style name="AppTheme.Launcher">
+        <item name="android:windowBackground">@drawable/launch_screen</item>
+    </style>
 </resources>
