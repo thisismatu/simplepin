@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, AppState, Clipboard, Dimensions, Linking, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
+import { Animated, AppState, Clipboard, Dimensions, Keyboard, Linking, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import PropTypes from 'prop-types'
 import Api from '../Api'
@@ -20,17 +20,17 @@ export default class LoginView extends React.Component {
 
   constructor(props) {
     super(props)
-    this.spinValue = new Animated.Value(0)
-    this.spinAnimation = Animated.loop(
-      Animated.timing(this.spinValue, {
+    this.rotateValue = new Animated.Value(0)
+    this.rotateAnimation = Animated.loop(
+      Animated.timing(this.rotateValue, {
         toValue: 1,
-        duration: 750,
+        duration: 1000,
         useNativeDriver: true,
       })
     )
     this.iconStyle = StyleSheet.flatten([s.icon, {
       transform: [{
-        rotate: this.spinValue.interpolate({
+        rotate: this.rotateValue.interpolate({
           inputRange: [0, 0.2, 0.8, 1],
           outputRange: ['0deg', '45deg', '315deg', '360deg'],
         }),
@@ -64,6 +64,7 @@ export default class LoginView extends React.Component {
 
   onSubmit = async () => {
     const { apiToken } = this.state
+    Keyboard.dismiss()
     this.animate(true)
     const response = await Api.userToken(apiToken)
     if (response.ok === 0) {
@@ -83,11 +84,11 @@ export default class LoginView extends React.Component {
   }
 
   animate = loading => {
-    this.spinValue.setValue(0)
+    this.rotateValue.setValue(0)
     if (loading) {
-      this.spinAnimation.start()
+      this.rotateAnimation.start()
     } else {
-      this.spinAnimation.stop()
+      this.rotateAnimation.stop()
     }
   }
 
@@ -104,7 +105,7 @@ export default class LoginView extends React.Component {
     const { apiToken } = this.state
     return (
       <KeyboardAwareScrollView
-        extraHeight={80}
+        extraHeight={smallDevice ? 80 : 140}
         alwaysBounceVertical={false}
         contentContainerStyle={s.container}
         keyboardShouldPersistTaps="handled"
