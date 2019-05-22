@@ -145,7 +145,7 @@ const s = StyleSheet.create({
     backgroundColor: color.white,
   },
   container: {
-    marginTop: isAndroid && StatusBar.currentHeight,
+    marginTop: isAndroid ? StatusBar.currentHeight : 0,
     paddingBottom: padding.medium,
   },
   list: {
