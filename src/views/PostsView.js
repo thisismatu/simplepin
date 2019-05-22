@@ -69,9 +69,9 @@ export default class PostsView extends React.Component {
     this.similarSearchQuery = ''
     this.similarSearchResults = []
     this.state = {
-      init: false,
       data: [],
-      isLoading: true,
+      loading: true,
+      isRefreshing: false,
       modalVisible: false,
       selectedPost: {},
       pinboardDown: false,
@@ -96,7 +96,7 @@ export default class PostsView extends React.Component {
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide)
     Storage.userPreferences()
       .then(prefs => this.setState({ preferences: prefs }))
-      .then(() => this.onRefresh())
+      .then(() => this.onRefresh('loading'))
     NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange)
   }
 
@@ -294,16 +294,13 @@ export default class PostsView extends React.Component {
     this.setState({ modalVisible: !modalVisible })
   }
 
-  onRefresh = async () => {
-    this.setState({ isLoading: true })
+  onRefresh = async (key = 'isRefreshing') => {
+    this.setState({ [key]: true })
     const hasUpdates = await this.checkForUpdates()
     if (hasUpdates) {
       await this.fetchPosts()
     }
-    this.setState({
-      init: true,
-      isLoading: false,
-    })
+    this.setState({ [key]: false })
   }
 
   onSubmitAddPost = post => {
@@ -383,14 +380,14 @@ export default class PostsView extends React.Component {
 
   renderRefreshControl = () => {
     return <RefreshControl
-      refreshing={this.state.isLoading}
+      refreshing={this.state.isRefreshing}
       onRefresh={this.onRefresh}
     />
   }
 
   renderListHeader = () => {
-    const { data, init } = this.state
-    if (!init) return null
+    const { data, loading } = this.state
+    if (isEmpty(data) && loading) return null
     return <SearchBar
       searchQuery={this.searchQuery}
       onSearchChange={this.onSearchChange}
@@ -413,7 +410,7 @@ export default class PostsView extends React.Component {
   }
 
   renderEmptyState = () => {
-    const { isLoading, pinboardDown, preferences, keyboardHeight } = this.state
+    const { loading, isRefreshing, pinboardDown, preferences, keyboardHeight } = this.state
     if (!preferences.apiToken) { return null }
     if (this.isSearchActive()) {
       const hasSimilarSearchResults = this.similarSearchResults.length > 0
@@ -421,9 +418,9 @@ export default class PostsView extends React.Component {
         action={hasSimilarSearchResults ? this.showSimilarSearchResults : undefined}
         actionText={`Show results for “${this.similarSearchQuery}”`}
         icon={icons.searchLarge}
-        subtitle={`“${this.searchQuery}“`}
         title={strings.common.noResults}
-        paddingBottom={keyboardHeight}
+        subtitle={`“${this.searchQuery}“`}
+        keyboardHeight={keyboardHeight}
       />
     }
     if (pinboardDown && this.isConnected) {
@@ -431,30 +428,30 @@ export default class PostsView extends React.Component {
         action={this.onRefresh}
         actionText={strings.common.tryAgain}
         icon={icons.offlineLarge}
-        subtitle={strings.error.pinboardDown}
         title={strings.error.troubleConnecting}
-        paddingBottom={keyboardHeight}
+        subtitle={strings.error.pinboardDown}
+        keyboardHeight={keyboardHeight}
       />
     }
-    if (this.isCurrentListEmpty() && !isLoading && this.isConnected) {
+    if (this.isCurrentListEmpty() && !isRefreshing && this.isConnected) {
       const { navigation } = this.props
       return <EmptyState
         action={() => navigation.navigate('Add', { onSubmit: navigation.getParam('onSubmit') })}
         actionText={strings.add.titleAdd}
         icon={icons.simplepin}
-        subtitle={strings.common.noPostsMessage}
         title={strings.common.noPosts}
-        paddingBottom={keyboardHeight}
+        subtitle={strings.common.noPostsMessage}
+        keyboardHeight={keyboardHeight}
       />
     }
-    if (this.isCurrentListEmpty() && !isLoading && !this.isConnected) {
+    if (this.isCurrentListEmpty() && !isRefreshing && !this.isConnected) {
       return <EmptyState
         action={this.onRefresh}
         actionText={strings.common.tryAgain}
         icon={icons.offlineLarge}
-        subtitle={strings.error.tryAgainOffline}
         title={strings.error.yourOffline}
-        paddingBottom={keyboardHeight}
+        subtitle={strings.error.tryAgainOffline}
+        keyboardHeight={keyboardHeight}
       />
     }
     return null
