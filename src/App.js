@@ -1,6 +1,6 @@
 import React from 'react'
 import { StatusBar, View } from 'react-native'
-import AppNavigator from './AppNavigator'
+import AppContainer from './Navigator'
 import OfflineNotification from './components/OfflineNotification'
 
 export default class App extends React.Component {
@@ -12,7 +12,7 @@ export default class App extends React.Component {
           barStyle="dark-content"
           translucent={true}
         />
-        <AppNavigator />
+        <AppContainer />
         <OfflineNotification />
       </View>
     )
