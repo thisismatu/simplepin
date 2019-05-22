@@ -13,13 +13,19 @@ import strings from './style/strings'
 
 const isAndroid = Platform.OS === 'android'
 
+const defaultHeaderStyle = {
+  backgroundColor: color.white,
+  borderBottomColor: color.black12,
+}
+
+const androidHeaderStyle = {
+  ...defaultHeaderStyle,
+  paddingTop: StatusBar.currentHeight,
+  height: StatusBar.currentHeight + 56,
+}
+
 const headerStyles = {
-  headerStyle: {
-    backgroundColor: color.white,
-    borderBottomColor: color.black12,
-    paddingTop: isAndroid && StatusBar.currentHeight,
-    height: isAndroid && StatusBar.currentHeight + 56,
-  },
+  headerStyle: isAndroid ? androidHeaderStyle : defaultHeaderStyle,
   headerTintColor: color.blue2,
   headerTitleStyle: { color: color.gray4 },
 }
