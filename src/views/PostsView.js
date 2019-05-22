@@ -412,6 +412,14 @@ export default class PostsView extends React.Component {
   renderEmptyState = () => {
     const { loading, isRefreshing, pinboardDown, preferences, keyboardHeight } = this.state
     if (!preferences.apiToken) { return null }
+    if (loading) {
+      return <EmptyState
+        icon={icons.simplepin}
+        rotateIcon={true}
+        subtitle={strings.common.fetchingPosts}
+        keyboardHeight={keyboardHeight}
+      />
+    }
     if (this.isSearchActive()) {
       const hasSimilarSearchResults = this.similarSearchResults.length > 0
       return <EmptyState

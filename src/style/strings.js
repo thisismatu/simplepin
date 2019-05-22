@@ -17,6 +17,7 @@ const strings = {
     giveFeedback: 'Give feedback',
     rateTheApp: 'Rate the app',
     share: 'Share',
+    fetchingPosts: 'Fetching bookmarks…',
   },
   error: {
     appOffline: 'Simplepin is offline',
