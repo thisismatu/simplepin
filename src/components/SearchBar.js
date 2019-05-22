@@ -53,8 +53,9 @@ const iconSize = 18
 const s = StyleSheet.create({
   container: {
     backgroundColor: color.white,
-    paddingBottom: padding.tiny,
-    paddingHorizontal: horizontalMargin,
+    marginTop: padding.medium,
+    marginBottom: padding.tiny,
+    marginHorizontal: horizontalMargin,
   },
   textField: {
     backgroundColor: color.gray0,
@@ -76,7 +77,7 @@ const s = StyleSheet.create({
     height: barHeight,
     padding: (barHeight - iconSize) / 2,
     position: 'absolute',
-    right: horizontalMargin,
+    right: 0,
     top: 0,
     width: barHeight,
   },

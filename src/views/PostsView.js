@@ -1,7 +1,7 @@
 import React from 'react'
-import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration } from 'react-native'
+import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration, View } from 'react-native'
 import NetInfo from '@react-native-community/netinfo'
-import SafeAreaView from 'react-native-safe-area-view'
+import SafeAreaView, { getInset } from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
 import rssParser from 'react-native-rss-parser'
 import filter from 'lodash/filter'
@@ -396,6 +396,11 @@ export default class PostsView extends React.Component {
     />
   }
 
+  renderListFooter = () => {
+    const bottomInset = Math.max(getInset('bottom'), padding.large)
+    return <View style={{ height: bottomInset }} />
+  }
+
   renderPostCell = item => {
     const { preferences } = this.state
     return <PostCell
@@ -485,6 +490,7 @@ export default class PostsView extends React.Component {
             ItemSeparatorComponent={() => <Separator left={padding.large} />}
             ListEmptyComponent={this.renderEmptyState}
             ListHeaderComponent={this.renderListHeader}
+            ListFooterComponent={this.renderListFooter}
           />
         </SafeAreaView>
         <BottomSheet visible={modalVisible} onClose={this.toggleModal}>
@@ -511,8 +517,6 @@ const s = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    paddingTop: padding.medium,
-    paddingBottom: padding.large,
   },
   list: {
     backgroundColor: color.white,
