@@ -31,6 +31,8 @@ import Separator from '../components/Separator'
 import { color, padding, icons } from '../style/style'
 import strings from '../style/strings'
 
+const bottomInset = Math.max(getInset('bottom'), padding.large)
+
 const filterPosts = obj => {
   return {
     allPosts: obj,
@@ -396,11 +398,6 @@ export default class PostsView extends React.Component {
     />
   }
 
-  renderListFooter = () => {
-    const bottomInset = Math.max(getInset('bottom'), padding.large)
-    return <View style={{ height: bottomInset }} />
-  }
-
   renderPostCell = item => {
     const { preferences } = this.state
     return <PostCell
@@ -423,6 +420,7 @@ export default class PostsView extends React.Component {
         rotateIcon={true}
         subtitle={strings.common.fetchingPosts}
         keyboardHeight={keyboardHeight}
+        bottomInset={bottomInset}
       />
     }
     if (this.isSearchActive()) {
@@ -434,6 +432,7 @@ export default class PostsView extends React.Component {
         title={strings.common.noResults}
         subtitle={`“${this.searchQuery}“`}
         keyboardHeight={keyboardHeight}
+        bottomInset={bottomInset}
       />
     }
     if (pinboardDown && this.isConnected) {
@@ -444,6 +443,7 @@ export default class PostsView extends React.Component {
         title={strings.error.troubleConnecting}
         subtitle={strings.error.pinboardDown}
         keyboardHeight={keyboardHeight}
+        bottomInset={bottomInset}
       />
     }
     if (this.isCurrentListEmpty() && !isRefreshing && this.isConnected) {
@@ -455,6 +455,7 @@ export default class PostsView extends React.Component {
         title={strings.common.noPosts}
         subtitle={strings.common.noPostsMessage}
         keyboardHeight={keyboardHeight}
+        bottomInset={bottomInset}
       />
     }
     if (this.isCurrentListEmpty() && !isRefreshing && !this.isConnected) {
@@ -465,6 +466,7 @@ export default class PostsView extends React.Component {
         title={strings.error.yourOffline}
         subtitle={strings.error.tryAgainOffline}
         keyboardHeight={keyboardHeight}
+        bottomInset={bottomInset}
       />
     }
     return null
@@ -490,7 +492,6 @@ export default class PostsView extends React.Component {
             ItemSeparatorComponent={() => <Separator left={padding.large} />}
             ListEmptyComponent={this.renderEmptyState}
             ListHeaderComponent={this.renderListHeader}
-            ListFooterComponent={this.renderListFooter}
           />
         </SafeAreaView>
         <BottomSheet visible={modalVisible} onClose={this.toggleModal}>
@@ -517,6 +518,7 @@ const s = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
+    paddingBottom: bottomInset,
   },
   list: {
     backgroundColor: color.white,

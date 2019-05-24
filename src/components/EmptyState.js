@@ -1,8 +1,9 @@
 import React from 'react'
-import { Animated, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { getInset } from 'react-native-safe-area-view'
+import { Animated, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, line, row } from '../style/style'
+
+const isIOS = Platform.OS === 'ios'
 
 export default class EmptyState extends React.PureComponent {
   constructor(props) {
@@ -56,12 +57,11 @@ export default class EmptyState extends React.PureComponent {
   }
 
   render() {
-    const { icon, title, subtitle, action, keyboardHeight, rotateIcon } = this.props
+    const { icon, title, subtitle, action, keyboardHeight, bottomInset, rotateIcon } = this.props
     const iconStyle = rotateIcon ? this.iconStyle : s.icon
-    const bottomInset = getInset('bottom')
-    const paddingBottom = keyboardHeight - Math.max(bottomInset, padding.large)
+    const bottomMarginStyle = isIOS ? { paddingBottom: keyboardHeight - bottomInset} : { paddingTop: bottomInset}
     return (
-      <View style={[s.empty, {paddingBottom: paddingBottom}]}>
+      <View style={[s.container, bottomMarginStyle]}>
         {!!icon && <Animated.Image source={icon} style={iconStyle} />}
         {!!title && <Text style={s.title}>{title}</Text>}
         {!!subtitle && <Text style={s.subtitle}>{subtitle}</Text>}
@@ -78,19 +78,21 @@ EmptyState.propTypes = {
   action: PropTypes.func,
   actionText: PropTypes.string,
   keyboardHeight: PropTypes.number,
+  bottomInset: PropTypes.number,
   rotateIcon: PropTypes.bool,
 }
 
 EmptyState.defaultProps = {
   keyboardHeight: 0,
+  bottomInset: 0,
   rotateIcon: false,
 }
 
 const s = StyleSheet.create({
-  empty: {
+  container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingHorizontal: padding.large,
   },
   icon: {
