@@ -82,7 +82,7 @@ export default class PostsView extends React.Component {
         apiToken: null,
         exactDate: false,
         markAsRead: false,
-        tagOrder: false,
+        sortTags: false,
         openLinksExternal: true,
       },
     }
@@ -408,7 +408,7 @@ export default class PostsView extends React.Component {
       onCellPress={this.onCellPress}
       onCellLongPress={this.onCellLongPress}
       exactDate={preferences.exactDate}
-      tagOrder={preferences.tagOrder}
+      sortTags={preferences.sortTags}
     />
   }
 

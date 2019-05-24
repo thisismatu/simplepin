@@ -24,7 +24,7 @@ export default class SettingsView extends React.Component {
     this.state = {
       markAsRead: false,
       exactDate: false,
-      tagOrder: false,
+      sortTags: false,
       privateByDefault: false,
       unreadByDefault: false,
       openLinksExternal: false,
@@ -46,9 +46,9 @@ export default class SettingsView extends React.Component {
     this.setState({ exactDate: value })
   }
 
-  onTagOrder = value => {
-    Storage.setTagOrder(value)
-    this.setState({ tagOrder: value })
+  onSortTags = value => {
+    Storage.setSortTags(value)
+    this.setState({ sortTags: value })
   }
 
   onPrivateByDefault = value => {
@@ -83,7 +83,7 @@ export default class SettingsView extends React.Component {
   }
 
   render() {
-    const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, readerMode, exactDate, tagOrder } = this.state
+    const { privateByDefault, unreadByDefault, markAsRead, openLinksExternal, readerMode, exactDate, sortTags } = this.state
     return (
       <SafeAreaView style={s.safeArea} forceInset={{ bottom: 'never' }}>
         <ScrollView
@@ -151,8 +151,8 @@ export default class SettingsView extends React.Component {
           <View style={s.cell}>
             <Text style={s.text}>{strings.settings.sortTagsAlphabetically}</Text>
             <Switch
-              onValueChange={this.onTagOrder}
-              value={tagOrder}
+              onValueChange={this.onSortTags}
+              value={sortTags}
             />
           </View>
           <Separator />

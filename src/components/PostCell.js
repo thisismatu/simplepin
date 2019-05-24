@@ -16,8 +16,9 @@ export default class PostCell extends React.PureComponent {
   }
 
   render() {
-    const { post, tagOrder, exactDate, onCellPress, onCellLongPress } = this.props
-    const tags = post.tags && tagOrder ? post.tags.sort() : post.tags
+    const { post, sortTags, exactDate, onCellPress, onCellLongPress } = this.props
+    const sortedTags = post.tags.concat().sort()
+    const tags = post.tags && sortTags ? sortedTags : post.tags
     return (
       <TouchableOpacity
         activeOpacity={0.5}
@@ -55,7 +56,7 @@ PostCell.propTypes = {
   onCellPress: PropTypes.func.isRequired,
   onCellLongPress: PropTypes.func.isRequired,
   exactDate: PropTypes.bool.isRequired,
-  tagOrder: PropTypes.bool.isRequired,
+  sortTags: PropTypes.bool.isRequired,
   post: PropTypes.shape({
     description: PropTypes.string.isRequired,
     extended: PropTypes.string,
