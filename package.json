@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "eslint": "./node_modules/.bin/eslint src"
+    "eslint": "./node_modules/.bin/eslint '*/**/*.js'"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.4.0",
@@ -35,20 +35,20 @@
     "xmldom-silent": "^0.1.19"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/runtime": "^7.4.5",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.8.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",
-    "eslint-plugin-jest": "^22.5.1",
+    "eslint-plugin-jest": "^22.6.4",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.13.0",
     "eslint-plugin-react-native": "^3.7.0",
     "jest": "^24.8.0",
     "metro-react-native-babel-preset": "^0.54.1",
-    "react-test-renderer": "16.8.6"
+    "react-test-renderer": "16.8.3"
   },
   "jest": {
     "preset": "react-native"
