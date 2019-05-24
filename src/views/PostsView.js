@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration, View } from 'react-native'
+import { Alert, FlatList, Keyboard, Linking, RefreshControl, StyleSheet, Vibration } from 'react-native'
 import NetInfo from '@react-native-community/netinfo'
 import SafeAreaView, { getInset } from 'react-native-safe-area-view'
 import PropTypes from 'prop-types'
@@ -185,8 +185,9 @@ export default class PostsView extends React.Component {
       const uniqPostsStarred = lodash(jsonObject)
         .uniqBy('hash')
         .map(o => {
-          o.starred = starredLinks.includes(o.href)
-          return o
+          const post = o
+          post.starred = starredLinks.includes(post.href)
+          return post
         })
         .value()
       const newData = filterPosts(uniqPostsStarred)

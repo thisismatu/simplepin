@@ -1,5 +1,5 @@
 import React from 'react'
-import { Animated, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Animated, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, padding, font, line, row } from '../style/style'
 
@@ -59,7 +59,7 @@ export default class EmptyState extends React.PureComponent {
   render() {
     const { icon, title, subtitle, action, keyboardHeight, bottomInset, rotateIcon } = this.props
     const iconStyle = rotateIcon ? this.iconStyle : s.icon
-    const bottomMarginStyle = isIOS ? { paddingBottom: keyboardHeight - bottomInset} : { paddingTop: bottomInset}
+    const bottomMarginStyle = isIOS ? { paddingBottom: keyboardHeight - bottomInset } : { paddingTop: bottomInset }
     return (
       <View style={[s.container, bottomMarginStyle]}>
         {!!icon && <Animated.Image source={icon} style={iconStyle} />}
