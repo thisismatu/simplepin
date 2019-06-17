@@ -19,7 +19,7 @@ const setApiToken = async value => {
 
 const markAsRead = async () => {
   const value = await AsyncStorage.getItem(keys.markAsRead)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setMarkAsRead = async value => {
@@ -29,7 +29,7 @@ const setMarkAsRead = async value => {
 
 const exactDate = async () => {
   const value = await AsyncStorage.getItem(keys.exactDate)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setExactDate = async value => {
@@ -39,7 +39,7 @@ const setExactDate = async value => {
 
 const sortTags = async () => {
   const value = await AsyncStorage.getItem(keys.sortTags)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setSortTags = async value => {
@@ -49,7 +49,7 @@ const setSortTags = async value => {
 
 const privateByDefault = async () => {
   const value = await AsyncStorage.getItem(keys.privateByDefault)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setPrivateByDefault = async value => {
@@ -59,7 +59,7 @@ const setPrivateByDefault = async value => {
 
 const unreadByDefault = async () => {
   const value = await AsyncStorage.getItem(keys.unreadByDefault)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setUnreadByDefault = async value => {
@@ -69,7 +69,7 @@ const setUnreadByDefault = async value => {
 
 const openLinksExternal = async () => {
   const value = await AsyncStorage.getItem(keys.openLinksExternal)
-  return !!JSON.parse(value)
+  return !!value
 }
 
 const setOpenLinksExternal = async value => {
@@ -79,7 +79,7 @@ const setOpenLinksExternal = async value => {
 
 const readerMode = async () => {
   const value = await AsyncStorage.getItem(keys.readerMode)
-  return JSON.parse(value) !== false
+  return value !== false
 }
 
 const setReaderMode = async value => {
