@@ -26,26 +26,17 @@ import strings from '../style/strings'
 const isAndroid = Platform.OS === 'android'
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 
-class ResultItem extends React.PureComponent {
-  render() {
-    const { tag, suggested, onPress } = this.props
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={() => onPress(tag)}
-        style={s.resultCell}
-      >
-        <Text style={s.resultText}>{tag}</Text>
-        {!!suggested && <Text style={s.suggestedText}>Suggested</Text>}
-      </TouchableOpacity>
-    )
-  }
-}
-
-ResultItem.propTypes = {
-  tag: PropTypes.string.isRequired,
-  suggested: PropTypes.bool.isRequired,
-  onPress: PropTypes.func.isRequired,
+const ResultItem = ({ tag, suggested, onPress }) => {
+  return (
+    <TouchableOpacity
+      activeOpacity={0.5}
+      onPress={() => onPress(tag)}
+      style={s.resultCell}
+    >
+      <Text style={s.resultText}>{tag}</Text>
+      {!!suggested && <Text style={s.suggestedText}>Suggested</Text>}
+    </TouchableOpacity>
+  )
 }
 
 export default class AddPostView extends React.Component {
