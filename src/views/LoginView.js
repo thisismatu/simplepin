@@ -123,7 +123,7 @@ export default class LoginView extends React.Component {
     this.setState({ appState: nextAppState })
   }
 
-  onChange = evt => {
+  onTokenChange = evt => {
     this.setState({ apiToken: evt.nativeEvent.text })
   }
 
@@ -142,9 +142,9 @@ export default class LoginView extends React.Component {
     }
   }
 
-  onShowToken = () => {
-    Linking.canOpenURL(pinboardUrl).then(() => {
-      Linking.openURL(pinboardUrl)
+  openUrl = url => {
+    Linking.canOpenURL(url).then(() => {
+      Linking.openURL(url)
     })
   }
 
@@ -190,7 +190,7 @@ export default class LoginView extends React.Component {
           textContentType="password"
           underlineColorAndroid="transparent"
           value={apiToken}
-          onChange={this.onChange}
+          onChange={this.onTokenChange}
           onSubmitEditing={this.onSubmit}
         />
         <TouchableOpacity
@@ -203,7 +203,7 @@ export default class LoginView extends React.Component {
         <TouchableOpacity
           activeOpacity={0.5}
           style={s.tokenButton}
-          onPress={this.onShowToken}
+          onPress={() => this.openURL(pinboardUrl)}
         >
           <Text style={s.tokenButtonText}>{strings.login.token}</Text>
         </TouchableOpacity>

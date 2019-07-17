@@ -1,7 +1,7 @@
 import { Platform, Share } from 'react-native'
 import strings from '../style/strings'
 
-export const showSharePostDialog = (url, title) => {
+const showSharePostDialog = (url, title) => {
   Share.share({
     ...Platform.select({
       ios: { url },
@@ -13,3 +13,5 @@ export const showSharePostDialog = (url, title) => {
     dialogTitle: strings.common.share,
   })
 }
+
+export default showSharePostDialog

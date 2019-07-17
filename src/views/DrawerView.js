@@ -62,19 +62,20 @@ export default class DrawerView extends React.PureComponent {
     return get(state.routes, ['0', 'routes', '0', 'params', title])
   }
 
-  navigateTo = (route, title = null, list = null) => {
-    const params = omitBy({ title, list }, isEmpty)
-    if (this.isRouteFocused(route, title)) {
-      return this.props.navigation.closeDrawer()
-    }
-    this.props.navigation.closeDrawer()
-    this.props.navigation.navigate(route, params)
-  }
-
   openUrl = url => {
     Linking.canOpenURL(url).then(() => {
       Linking.openURL(url)
     })
+  }
+
+  navigateTo(route, title = null, list = null) {
+    const { navigation } = this.props
+    const params = omitBy({ title, list }, isEmpty)
+    if (this.isRouteFocused(route, title)) {
+      navigation.closeDrawer()
+    }
+    navigation.closeDrawer()
+    navigation.navigate(route, params)
   }
 
   render() {

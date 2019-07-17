@@ -7,7 +7,7 @@ import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Storage from '../Storage'
 import Readability from '../util/Readability'
 import { fetchWithErrorHandling } from '../util/FetchUtil'
-import { showSharePostDialog } from '../util/ShareUtil'
+import showSharePostDialog from '../util/ShareUtil'
 import NavigationButton from '../components/NavigationButton'
 import { color, padding, row, icons } from '../style/style'
 
