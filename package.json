@@ -20,7 +20,7 @@
     "query-string": "^6.5.0",
     "react": "16.8.6",
     "react-native": "0.59.8",
-    "react-native-device-info": "^2.0.1",
+    "react-native-device-info": "^2.2.2",
     "react-native-gesture-handler": "^1.2.1",
     "react-native-iphone-x-helper": "^1.2.0",
     "react-native-keyboard-aware-scroll-view": "^0.8.0",
