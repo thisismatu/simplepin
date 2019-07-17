@@ -4,32 +4,6 @@ import PropTypes from 'prop-types'
 import startsWith from 'lodash/startsWith'
 import { color, padding, font, line, radius, icons } from '../style/style'
 
-export default class Tag extends React.PureComponent {
-  render() {
-    const { tag, onPress, icon, style } = this.props
-    const isPrivate = startsWith(tag, '.')
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={() => onPress(tag)}
-        style={[s.tagContainer, style]}
-      >
-        <View style={[s.tag, isPrivate && s.privateTag]}>
-          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
-          {icon && <Image source={icons.closeSmall} style={[s.tagIcon, isPrivate && s.privateTagIcon]} />}
-        </View>
-      </TouchableOpacity>
-    )
-  }
-}
-
-Tag.propTypes = {
-  tag: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired,
-  icon: PropTypes.bool,
-  style: PropTypes.object,
-}
-
 const s = StyleSheet.create({
   tagContainer: {
     paddingHorizontal: padding.tiny,
@@ -66,3 +40,29 @@ const s = StyleSheet.create({
     tintColor: color.gray3,
   },
 })
+
+export default class Tag extends React.PureComponent {
+  render() {
+    const { tag, onPress, icon, style } = this.props
+    const isPrivate = startsWith(tag, '.')
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => onPress(tag)}
+        style={[s.tagContainer, style]}
+      >
+        <View style={[s.tag, isPrivate && s.privateTag]}>
+          <Text style={[s.tagText, isPrivate && s.privateTagText]}>{tag}</Text>
+          {icon && <Image source={icons.closeSmall} style={[s.tagIcon, isPrivate && s.privateTagIcon]} />}
+        </View>
+      </TouchableOpacity>
+    )
+  }
+}
+
+Tag.propTypes = {
+  tag: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  icon: PropTypes.bool,
+  style: PropTypes.object,
+}

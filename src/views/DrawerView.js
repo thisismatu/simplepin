@@ -17,6 +17,20 @@ const isAndroid = Platform.OS === 'android'
 const storeUrl = isAndroid ? 'https://play.google.com/store' : 'itms://itunes.apple.com/us/app/simplepin/id1107506693'
 const feedbackUrl = 'mailto:mathias.lindholm@gmail.com?subject=Simplepin%20Feedback'
 
+const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
+  container: {
+    marginTop: isAndroid ? StatusBar.currentHeight : 0,
+    paddingBottom: padding.medium,
+  },
+  list: {
+    backgroundColor: color.white,
+  },
+})
+
 export default class DrawerView extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -48,7 +62,7 @@ export default class DrawerView extends React.PureComponent {
     return get(state.routes, ['0', 'routes', '0', 'params', title])
   }
 
-  navigateTo = (route, title = null, list = null) => () => {
+  navigateTo = (route, title = null, list = null) => {
     const params = omitBy({ title, list }, isEmpty)
     if (this.isRouteFocused(route, title)) {
       return this.props.navigation.closeDrawer()
@@ -82,42 +96,42 @@ export default class DrawerView extends React.PureComponent {
             title={strings.posts.all}
             count={this.routeCount('allCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.all)}
-            onPress={this.navigateTo(postsRoute, strings.posts.all, 'allPosts')}
+            onPress={() => this.navigateTo(postsRoute, strings.posts.all, 'allPosts')}
           />
           <DrawerCell
             icon={icons.unread}
             title={strings.posts.unread}
             count={this.routeCount('unreadCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.unread)}
-            onPress={this.navigateTo(postsRoute, strings.posts.unread, 'unreadPosts')}
+            onPress={() => this.navigateTo(postsRoute, strings.posts.unread, 'unreadPosts')}
           />
           <DrawerCell
             icon={icons.starred}
             title={strings.posts.starred}
             count={this.routeCount('starredCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.starred)}
-            onPress={this.navigateTo(postsRoute, strings.posts.starred, 'starredPosts')}
+            onPress={() => this.navigateTo(postsRoute, strings.posts.starred, 'starredPosts')}
           />
           <DrawerCell
             icon={icons.private}
             title={strings.posts.private}
             count={this.routeCount('privateCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.private)}
-            onPress={this.navigateTo(postsRoute, strings.posts.private, 'privatePosts')}
+            onPress={() => this.navigateTo(postsRoute, strings.posts.private, 'privatePosts')}
           />
           <DrawerCell
             icon={icons.public}
             title={strings.posts.public}
             count={this.routeCount('publicCount')}
             isFocused={this.isRouteFocused(postsRoute, strings.posts.public)}
-            onPress={this.navigateTo(postsRoute, strings.posts.public, 'publicPosts')}
+            onPress={() => this.navigateTo(postsRoute, strings.posts.public, 'publicPosts')}
           />
           <HeaderCell text={strings.common.simplepin} />
           <DrawerCell
             icon={icons.settings}
             title={strings.settings.title}
             isFocused={this.isRouteFocused(settingsRoute)}
-            onPress={this.navigateTo(settingsRoute)}
+            onPress={() => this.navigateTo(settingsRoute)}
           />
           <DrawerCell
             icon={icons.message}
@@ -138,17 +152,3 @@ export default class DrawerView extends React.PureComponent {
 DrawerView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  container: {
-    marginTop: isAndroid ? StatusBar.currentHeight : 0,
-    paddingBottom: padding.medium,
-  },
-  list: {
-    backgroundColor: color.white,
-  },
-})

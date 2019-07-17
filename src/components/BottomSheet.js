@@ -8,6 +8,44 @@ const dimensions = Dimensions.get('screen')
 const portraitWidth = Math.min(dimensions.width, dimensions.height)
 const AnimatedTouchableOpacity = Animated.createAnimatedComponent(TouchableOpacity)
 
+const s = StyleSheet.create({
+  root: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  overlay: {
+    position: 'absolute',
+    top: 0, left: 0, right: 0, bottom: 0,
+    backgroundColor: color.black36,
+  },
+  content: {
+    width: portraitWidth,
+    flexDirection: 'column',
+    backgroundColor: color.white,
+    borderTopLeftRadius: radius.large,
+    borderTopRightRadius: radius.large,
+    paddingBottom: Math.max(getBottomSpace(), padding.small),
+    paddingTop: padding.small,
+    ...shadow,
+  },
+  cell: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    paddingHorizontal: padding.medium,
+  },
+  text: {
+    color: color.gray4,
+    fontSize: font.large,
+  },
+  title: {
+    color: color.gray3,
+    fontSize: font.medium,
+    marginTop: padding.tiny,
+  },
+})
+
 const ModalTitle = ({ title }) => {
   const cellHeight = { height: isLandscape() ? row.medium : row.large }
   return (
@@ -112,44 +150,6 @@ BottomSheet.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 }
-
-const s = StyleSheet.create({
-  root: {
-    flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: color.black36,
-  },
-  content: {
-    width: portraitWidth,
-    flexDirection: 'column',
-    backgroundColor: color.white,
-    borderTopLeftRadius: radius.large,
-    borderTopRightRadius: radius.large,
-    paddingBottom: Math.max(getBottomSpace(), padding.small),
-    paddingTop: padding.small,
-    ...shadow,
-  },
-  cell: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: padding.medium,
-  },
-  text: {
-    color: color.gray4,
-    fontSize: font.large,
-  },
-  title: {
-    color: color.gray3,
-    fontSize: font.medium,
-    marginTop: padding.tiny,
-  },
-})
 
 BottomSheet.Title = ModalTitle
 BottomSheet.Option = ModalOption

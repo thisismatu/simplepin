@@ -4,27 +4,6 @@ import PropTypes from 'prop-types'
 import { color, padding, font, icons } from '../style/style'
 import strings from '../style/strings'
 
-export default class DrawerHeader extends React.PureComponent {
-  render() {
-    const { text } = this.props
-    return (
-      <View style={s.container}>
-        <View style={s.iconContainer}>
-          <Image source={icons.simplepin} style={s.icon} />
-        </View>
-        <View style={s.textContainer}>
-          <Text style={s.title}>{strings.common.simplepin}</Text>
-          {!!text && <Text style={s.subtitle}>{text}</Text>}
-        </View>
-      </View>
-    )
-  }
-}
-
-DrawerHeader.propTypes = {
-  text: PropTypes.string,
-}
-
 const s = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -57,3 +36,24 @@ const s = StyleSheet.create({
     fontSize: font.medium,
   },
 })
+
+export default class DrawerHeader extends React.PureComponent {
+  render() {
+    const { text } = this.props
+    return (
+      <View style={s.container}>
+        <View style={s.iconContainer}>
+          <Image source={icons.simplepin} style={s.icon} />
+        </View>
+        <View style={s.textContainer}>
+          <Text style={s.title}>{strings.common.simplepin}</Text>
+          {!!text && <Text style={s.subtitle}>{text}</Text>}
+        </View>
+      </View>
+    )
+  }
+}
+
+DrawerHeader.propTypes = {
+  text: PropTypes.string,
+}

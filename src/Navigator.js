@@ -1,6 +1,6 @@
 import { Platform, StatusBar } from 'react-native'
 import { createAppContainer, createSwitchNavigator, createStackNavigator, createDrawerNavigator } from 'react-navigation'
-import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator' // eslint-disable-line import/no-extraneous-dependencies
+import StackViewStyleInterpolator from 'react-navigation-stack/lib/module/views/StackView/StackViewStyleInterpolator' // eslint-disable-line
 import AddPostView from './views/AddPostView'
 import AuthLoadingView from './views/AuthLoadingView'
 import BrowserView from './views/BrowserView'

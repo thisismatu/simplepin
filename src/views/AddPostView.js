@@ -27,6 +27,78 @@ import strings from '../style/strings'
 const isAndroid = Platform.OS === 'android'
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)
 
+const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
+  container: {
+    paddingVertical: padding.medium,
+  },
+  list: {
+    backgroundColor: color.white,
+  },
+  cell: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: row.medium,
+  },
+  text: {
+    color: color.gray4,
+    fontSize: font.large,
+    paddingLeft: padding.medium,
+  },
+  textInput: {
+    backgroundColor: color.white,
+    color: color.gray4,
+    fontSize: font.large,
+    height: row.medium,
+    paddingHorizontal: padding.medium,
+    width: '100%',
+  },
+  textArea: {
+    height: 100,
+    marginVertical: 9,
+  },
+  tagContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 12,
+    paddingBottom: padding.small,
+  },
+  resultsOverlay: {
+    position: 'absolute',
+    top: 0, right: 0, bottom: 0, left: 0,
+    zIndex: 9999,
+  },
+  resultsContainer: {
+    margin: padding.small,
+    backgroundColor: color.white,
+    borderRadius: radius.medium,
+    ...shadow,
+  },
+  resultsList: {
+    paddingVertical: padding.small,
+  },
+  resultCell: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: padding.medium,
+    paddingVertical: padding.small,
+  },
+  resultText: {
+    fontSize: font.medium,
+    lineHeight: line.medium,
+  },
+  suggestedText: {
+    color: color.gray3,
+    fontSize: font.small,
+  },
+})
+
 const getPostObject = (obj) => {
   return pick(obj, 'postDescription', 'postExtended', 'postHref', 'postHash', 'postShared', 'postTags', 'postTime', 'postToread')
 }
@@ -421,75 +493,3 @@ export default class AddPostView extends React.Component {
 AddPostView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  container: {
-    paddingVertical: padding.medium,
-  },
-  list: {
-    backgroundColor: color.white,
-  },
-  cell: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: row.medium,
-  },
-  text: {
-    color: color.gray4,
-    fontSize: font.large,
-    paddingLeft: padding.medium,
-  },
-  textInput: {
-    backgroundColor: color.white,
-    color: color.gray4,
-    fontSize: font.large,
-    height: row.medium,
-    paddingHorizontal: padding.medium,
-    width: '100%',
-  },
-  textArea: {
-    height: 100,
-    marginVertical: 9,
-  },
-  tagContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingHorizontal: 12,
-    paddingBottom: padding.small,
-  },
-  resultsOverlay: {
-    position: 'absolute',
-    top: 0, right: 0, bottom: 0, left: 0,
-    zIndex: 9999,
-  },
-  resultsContainer: {
-    margin: padding.small,
-    backgroundColor: color.white,
-    borderRadius: radius.medium,
-    ...shadow,
-  },
-  resultsList: {
-    paddingVertical: padding.small,
-  },
-  resultCell: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: padding.medium,
-    paddingVertical: padding.small,
-  },
-  resultText: {
-    fontSize: font.medium,
-    lineHeight: line.medium,
-  },
-  suggestedText: {
-    color: color.gray3,
-    fontSize: font.small,
-  },
-})

@@ -3,28 +3,6 @@ import { Image, StyleSheet, TouchableOpacity, Text } from 'react-native'
 import PropTypes from 'prop-types'
 import { color, font, padding } from '../style/style'
 
-export default class NavigationButton extends React.PureComponent {
-  render() {
-    const { icon, text, onPress } = this.props
-    return (
-      <TouchableOpacity
-        activeOpacity={0.5}
-        onPress={onPress}
-        style={s.button}
-      >
-        {!!icon && <Image source={icon} style={s.icon} />}
-        {!!text && <Text style={s.text}>{text}</Text>}
-      </TouchableOpacity>
-    )
-  }
-}
-
-NavigationButton.propTypes = {
-  onPress: PropTypes.func,
-  icon: PropTypes.number,
-  text: PropTypes.string,
-}
-
 const s = StyleSheet.create({
   button: {
     flex: 1,
@@ -47,3 +25,25 @@ const s = StyleSheet.create({
     textAlign: 'right',
   },
 })
+
+export default class NavigationButton extends React.PureComponent {
+  render() {
+    const { icon, text, onPress } = this.props
+    return (
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={onPress}
+        style={s.button}
+      >
+        {!!icon && <Image source={icon} style={s.icon} />}
+        {!!text && <Text style={s.text}>{text}</Text>}
+      </TouchableOpacity>
+    )
+  }
+}
+
+NavigationButton.propTypes = {
+  onPress: PropTypes.func,
+  icon: PropTypes.number,
+  text: PropTypes.string,
+}

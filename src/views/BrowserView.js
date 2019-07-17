@@ -13,6 +13,40 @@ import { color, padding, row, icons } from '../style/style'
 
 const isAndroid = Platform.OS === 'android'
 
+const s = StyleSheet.create({
+  safeArea: {
+    backgroundColor: color.white,
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+  },
+  toolbar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: color.black12,
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
+    ...ifIphoneX({
+      marginBottom: padding.medium,
+    }),
+  },
+  button: {
+    width: '25%',
+    height: row.medium,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  icon: {
+    tintColor: color.blue2,
+    resizeMode: 'contain',
+  },
+  iconDisabled: {
+    tintColor: color.gray1,
+  },
+})
+
 const isBlackListed = url => {
   const blackList = ['youtube.com', 'vimeo.com']
   const domain = url.replace('http://', '').replace('https://', '').replace('www.', '').split(/[/?#]/)[0]
@@ -192,37 +226,3 @@ export default class BrowserView extends React.Component {
 BrowserView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  safeArea: {
-    backgroundColor: color.white,
-    flex: 1,
-  },
-  container: {
-    flex: 1,
-  },
-  toolbar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: color.black12,
-    backgroundColor: color.white,
-    paddingHorizontal: padding.medium,
-    ...ifIphoneX({
-      marginBottom: padding.medium,
-    }),
-  },
-  button: {
-    width: '25%',
-    height: row.medium,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  icon: {
-    tintColor: color.blue2,
-    resizeMode: 'contain',
-  },
-  iconDisabled: {
-    tintColor: color.gray1,
-  },
-})

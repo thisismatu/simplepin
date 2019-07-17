@@ -5,6 +5,44 @@ import { color, padding, font, line, row } from '../style/style'
 
 const isIOS = Platform.OS === 'ios'
 
+const s = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: padding.large,
+  },
+  icon: {
+    marginBottom: padding.medium,
+    tintColor: color.black36,
+    resizeMode: 'contain',
+  },
+  title: {
+    color: color.gray4,
+    fontSize: font.large,
+    fontWeight: font.bold,
+    textAlign: 'center',
+    marginBottom: padding.small,
+  },
+  subtitle: {
+    color: color.gray3,
+    fontSize: font.medium,
+    marginBottom: padding.small,
+    lineHeight: line.medium,
+    textAlign: 'center',
+  },
+  button: {
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
+  },
+  buttonText: {
+    color: color.blue2,
+    fontSize: font.medium,
+    fontWeight: '500',
+    lineHeight: row.small,
+  },
+})
+
 export default class EmptyState extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -87,41 +125,3 @@ EmptyState.defaultProps = {
   bottomInset: 0,
   rotateIcon: false,
 }
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: padding.large,
-  },
-  icon: {
-    marginBottom: padding.medium,
-    tintColor: color.black36,
-    resizeMode: 'contain',
-  },
-  title: {
-    color: color.gray4,
-    fontSize: font.large,
-    fontWeight: font.bold,
-    textAlign: 'center',
-    marginBottom: padding.small,
-  },
-  subtitle: {
-    color: color.gray3,
-    fontSize: font.medium,
-    marginBottom: padding.small,
-    lineHeight: line.medium,
-    textAlign: 'center',
-  },
-  button: {
-    backgroundColor: color.white,
-    paddingHorizontal: padding.medium,
-  },
-  buttonText: {
-    color: color.blue2,
-    fontSize: font.medium,
-    fontWeight: '500',
-    lineHeight: row.small,
-  },
-})

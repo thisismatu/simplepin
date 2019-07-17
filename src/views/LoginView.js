@@ -8,9 +8,74 @@ import { handleLoginResponseError } from '../util/ErrorUtil'
 import { color, padding, font, line, row, radius, icons } from '../style/style'
 import strings from '../style/strings'
 
-const pinboardUrl = 'https://m.pinboard.in/settings/password'
 const { height } = Dimensions.get('screen')
 const smallDevice = height < 640
+const pinboardUrl = 'https://m.pinboard.in/settings/password'
+
+const s = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: smallDevice ? padding.large : padding.huge,
+    backgroundColor: color.white,
+  },
+  icon: {
+    tintColor: color.blue2,
+    marginBottom: padding.medium,
+  },
+  title: {
+    color: color.gray4,
+    fontSize: font.huge,
+    fontWeight: font.bold,
+    marginBottom: padding.small,
+    textAlign: 'center',
+  },
+  text: {
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  input: {
+    backgroundColor: color.white,
+    borderColor: color.black12,
+    borderRadius: radius.medium,
+    borderWidth: 1,
+    color: color.gray4,
+    fontSize: font.large,
+    height: smallDevice ? 44 : row.medium,
+    marginBottom: padding.medium,
+    textAlign: 'center',
+    width: '100%',
+  },
+  loginButton: {
+    backgroundColor: color.blue2,
+    borderRadius: radius.medium,
+    marginBottom: padding.medium,
+    paddingHorizontal: padding.medium,
+    width: '100%',
+  },
+  loginButtonText: {
+    color: color.white,
+    fontSize: font.large,
+    fontWeight: font.bold,
+    lineHeight: smallDevice ? 44 : row.medium,
+    textAlign: 'center',
+  },
+  tokenButton: {
+    backgroundColor: color.white,
+    paddingHorizontal: padding.medium,
+    width: '100%',
+  },
+  tokenButtonText: {
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: smallDevice ? 44 : row.medium,
+    textAlign: 'center',
+  },
+})
 
 export default class LoginView extends React.Component {
   static navigationOptions = {
@@ -150,68 +215,3 @@ export default class LoginView extends React.Component {
 LoginView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: smallDevice ? padding.large : padding.huge,
-    backgroundColor: color.white,
-  },
-  icon: {
-    tintColor: color.blue2,
-    marginBottom: padding.medium,
-  },
-  title: {
-    color: color.gray4,
-    fontSize: font.huge,
-    fontWeight: font.bold,
-    marginBottom: padding.small,
-    textAlign: 'center',
-  },
-  text: {
-    color: color.gray3,
-    fontSize: font.medium,
-    lineHeight: line.medium,
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    backgroundColor: color.white,
-    borderColor: color.black12,
-    borderRadius: radius.medium,
-    borderWidth: 1,
-    color: color.gray4,
-    fontSize: font.large,
-    height: smallDevice ? 44 : row.medium,
-    marginBottom: padding.medium,
-    textAlign: 'center',
-    width: '100%',
-  },
-  loginButton: {
-    backgroundColor: color.blue2,
-    borderRadius: radius.medium,
-    marginBottom: padding.medium,
-    paddingHorizontal: padding.medium,
-    width: '100%',
-  },
-  loginButtonText: {
-    color: color.white,
-    fontSize: font.large,
-    fontWeight: font.bold,
-    lineHeight: smallDevice ? 44 : row.medium,
-    textAlign: 'center',
-  },
-  tokenButton: {
-    backgroundColor: color.white,
-    paddingHorizontal: padding.medium,
-    width: '100%',
-  },
-  tokenButtonText: {
-    color: color.gray3,
-    fontSize: font.medium,
-    lineHeight: smallDevice ? 44 : row.medium,
-    textAlign: 'center',
-  },
-})

@@ -33,6 +33,20 @@ import strings from '../style/strings'
 
 const bottomInset = Math.max(getInset('bottom'), padding.large)
 
+const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
+  container: {
+    flexGrow: 1,
+    paddingBottom: bottomInset,
+  },
+  list: {
+    backgroundColor: color.white,
+  },
+})
+
 const filterPosts = obj => {
   return {
     allPosts: obj,
@@ -511,17 +525,3 @@ export default class PostsView extends React.Component {
 PostsView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  container: {
-    flexGrow: 1,
-    paddingBottom: bottomInset,
-  },
-  list: {
-    backgroundColor: color.white,
-  },
-})

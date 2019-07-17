@@ -6,6 +6,12 @@ import { color, padding } from '../style/style'
 const isIOS = Platform.OS === 'ios'
 const isAndroid = Platform.OS === 'android'
 
+const s = StyleSheet.create({
+  switch: {
+    marginRight: isAndroid ? 12 : padding.medium,
+  },
+})
+
 export default class SimpleSwitch extends React.PureComponent {
   render() {
     const { value, onValueChange } = this.props
@@ -24,9 +30,3 @@ SimpleSwitch.propTypes = {
   value: PropTypes.bool.isRequired,
   onValueChange: PropTypes.func.isRequired,
 }
-
-const s = StyleSheet.create({
-  switch: {
-    marginRight: isAndroid ? 12 : padding.medium,
-  },
-})

@@ -11,6 +11,48 @@ import Switch from '../components/SimpleSwitch'
 import { color, padding, font, row, icons } from '../style/style'
 import strings from '../style/strings'
 
+const s = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: color.white,
+  },
+  container: {
+    paddingBottom: padding.large,
+  },
+  list: {
+    backgroundColor: color.white,
+  },
+  cell: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: row.medium,
+  },
+  text: {
+    color: color.gray4,
+    fontSize: font.large,
+    paddingLeft: padding.medium,
+  },
+  secondary: {
+    color: color.gray3,
+    fontSize: font.medium,
+    paddingRight: padding.medium,
+  },
+  header: {
+    color: color.gray4,
+    fontSize: font.large,
+    fontWeight: font.bold,
+    paddingHorizontal: padding.medium,
+  },
+  version: {
+    fontSize: font.small,
+    color: color.gray3,
+    paddingVertical: padding.large,
+    paddingHorizontal: padding.medium,
+  },
+})
+
 export default class SettingsView extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -183,45 +225,3 @@ export default class SettingsView extends React.Component {
 SettingsView.propTypes = {
   navigation: PropTypes.object.isRequired,
 }
-
-const s = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: color.white,
-  },
-  container: {
-    paddingBottom: padding.large,
-  },
-  list: {
-    backgroundColor: color.white,
-  },
-  cell: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: row.medium,
-  },
-  text: {
-    color: color.gray4,
-    fontSize: font.large,
-    paddingLeft: padding.medium,
-  },
-  secondary: {
-    color: color.gray3,
-    fontSize: font.medium,
-    paddingRight: padding.medium,
-  },
-  header: {
-    color: color.gray4,
-    fontSize: font.large,
-    fontWeight: font.bold,
-    paddingHorizontal: padding.medium,
-  },
-  version: {
-    fontSize: font.small,
-    color: color.gray3,
-    paddingVertical: padding.large,
-    paddingHorizontal: padding.medium,
-  },
-})

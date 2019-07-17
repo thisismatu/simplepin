@@ -5,6 +5,65 @@ import Tag from './Tag'
 import TimeAgo from './TimeAgo'
 import { color, padding, font, line, icons } from '../style/style'
 
+const s = StyleSheet.create({
+  unread: {
+    backgroundColor: color.blue2,
+    borderRadius: 5,
+    height: 9,
+    left: 8,
+    position: 'absolute',
+    top: 19,
+    width: 9,
+  },
+  icon: {
+    height: 18,
+    tintColor: color.black36,
+    width: 18,
+    marginLeft: 4,
+    resizeMode: 'contain',
+  },
+  statusContainer: {
+    bottom: 13,
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    height: 18,
+    position: 'absolute',
+    right: padding.medium,
+    width: 40,
+  },
+  title: {
+    color: color.gray4,
+    fontSize: font.large,
+    lineHeight: line.large,
+    paddingTop: 12,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
+  },
+  titleUnread: {
+    fontWeight: font.bold,
+  },
+  description: {
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
+    paddingTop: padding.tiny,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
+  },
+  time: {
+    color: color.gray3,
+    fontSize: font.medium,
+    lineHeight: line.medium,
+    paddingBottom: 12,
+    paddingLeft: padding.large,
+    paddingRight: padding.medium,
+  },
+  emptyTagList: {
+    height: 4,
+  },
+})
+
 export default class PostCell extends React.PureComponent {
   renderTag = (tag, index) => {
     const firstTagStyle = index === 0 ? { marginLeft: 20 } : null
@@ -70,62 +129,3 @@ PostCell.propTypes = {
     toread: PropTypes.bool.isRequired,
   }),
 }
-
-const s = StyleSheet.create({
-  unread: {
-    backgroundColor: color.blue2,
-    borderRadius: 5,
-    height: 9,
-    left: 8,
-    position: 'absolute',
-    top: 19,
-    width: 9,
-  },
-  icon: {
-    height: 18,
-    tintColor: color.black36,
-    width: 18,
-    marginLeft: 4,
-    resizeMode: 'contain',
-  },
-  statusContainer: {
-    bottom: 13,
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    height: 18,
-    position: 'absolute',
-    right: padding.medium,
-    width: 40,
-  },
-  title: {
-    color: color.gray4,
-    fontSize: font.large,
-    lineHeight: line.large,
-    paddingTop: 12,
-    paddingLeft: padding.large,
-    paddingRight: padding.medium,
-  },
-  titleUnread: {
-    fontWeight: font.bold,
-  },
-  description: {
-    color: color.gray3,
-    fontSize: font.medium,
-    lineHeight: line.medium,
-    paddingTop: padding.tiny,
-    paddingLeft: padding.large,
-    paddingRight: padding.medium,
-  },
-  time: {
-    color: color.gray3,
-    fontSize: font.medium,
-    lineHeight: line.medium,
-    paddingBottom: 12,
-    paddingLeft: padding.large,
-    paddingRight: padding.medium,
-  },
-  emptyTagList: {
-    height: 4,
-  },
-})
