@@ -40,8 +40,15 @@ const createReadabilityUrl = sourceUrl => {
 
 const cleanHtml = (html, sourceUrl) => {
   const sanitizedHtml = SanitizeHtml(html, {
-    allowedTags: ['html', 'body', 'p', 'strong', 'em', 'h1', 'h2', 'h3', 'h4', 'section', 'div', 'span', 'blockquote', 'img', 'hr'],
-    nonTextTags: ['style', 'script', 'textarea', 'noscript', 'html', 'body', 'div', 'span', 'h1'],
+    allowedTags: ['html', 'body', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'p',
+      'a', 'ul', 'ol', 'li', 'dl', 'dt', 'dd', 'b', 'i', 'strong', 'em', 'code', 'hr',
+      'br', 'div', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'pre', 'figure', 'img'],
+    allowedAttributes: {
+      a: ['href', 'name', 'target'],
+      img: ['src'],
+    },
+    selfClosing: ['img', 'br', 'hr'],
+    nonTextTags: ['style', 'script', 'textarea', 'noscript', 'header', 'footer', 'form', 'button', 'h1'],
   })
 
   return new Promise(resolve => {
@@ -70,76 +77,189 @@ const cleanHtmlTemplate = (title, body) => {
     <head>
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <style>
+        html {
+          box-sizing: border-box;
+          font-size: 16px;
+        }
+
         body {
-            font-family: -apple-system,BlinkMacSystemFont, roboto, noto, sans-serif;
-            background-color: #fff;
-            line-height: 1.5;
-            font-size: 16px;
-            color: #222;
-            text-rendering: optimizeLegibility;
-            padding: 16px;
-            margin: 0;
+          background-color: #fff;
+          color: #111;
+          font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+          font-size: 1rem;
+          font-weight: 400;
+          line-height: 1.5;
+          margin: 0;
+          padding: 0;
+          text-rendering: optimizeLegibility;
+          overflow-x: hidden;
         }
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.334;
+
+        .wrapper {
+          padding: 0 1rem;
+          overflow-x: hidden;
         }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+          font-weight: 700;
+          line-height: 1.375;
+          margin-top: 1.5rem;
+          margin-bottom: 1rem;
+        }
+
         h1 {
-            font-size: 1.6em;
-            line-height: 1.25;
+          font-size: 1.5rem;
+          line-height: 1.25;
         }
+
         h2 {
-            font-size: 1.4em;
+          font-size: 1.375rem;
         }
+
         h3 {
-            font-size: 1.2em;
+          font-size: 1.25rem;
         }
+
         h4 {
-          font-size: 1em;
+          font-size: 1.125rem;
         }
-        hr {
-            height: 1px;
-            background-color: #E5E5E5;
-            border: none;
-            width: 100%;
-            margin: 0px;
+
+        h5,
+        h6 {
+          font-size: 1rem;
         }
-        img {
-            max-width: 100%;
-            margin: 0.5em 0;
-        }
-        li {
-            line-height: 1.5em;
-        }
-        td {
-            border: 1px solid black;
-            padding: 3px 7px;
-        }
-        pre {
-            background-color: #E0E0E0;
-            padding: 10px;
-            overflow: auto;
-        }
+
         blockquote {
-            border-left: 4px solid;
-            margin-left: 0;
-            padding: 15px 10% 15px 8%;
-            margin: 1em 0;
-            font-size: 1.2em;
-            line-height: 1.4;
+          font-style: italic;
         }
+
         blockquote > *:first-child {
-            margin-top: 0;
+          margin-top: 0;
         }
+
         blockquote > *:last-child {
-            margin-bottom: 0;
+          margin-bottom: 0;
+        }
+
+        code {
+          background: #F0F0F0;
+          border-radius: 2px;
+          font-size: 0.875rem;
+          margin: 0 2px;
+          padding: 3px 6px;
+          white-space: normal;
+        }
+
+        pre {
+          background: #F0F0F0;
+          border-radius: .25rem;
+          overflow-y: hidden;
+        }
+
+        pre > code {
+          border-radius: 0;
+          display: block;
+          padding: 1rem;
+          white-space: pre;
+        }
+
+        hr {
+          height: 1px;
+          background-color: #E5E5E5;
+          border: none;
+          margin: 1.5rem 0;
+        }
+
+        a {
+          color: #0066CC;
+          text-decoration: none;
+        }
+
+        ol,
+        ul {
+          padding-left: 1.25rem;
+        }
+
+        dt {
+          font-weight: 700;
+        }
+
+        dd,
+        dt,
+        li {
+          margin: 1rem 0;
+        }
+
+        blockquote,
+        dl,
+        figure,
+        ol,
+        p,
+        pre,
+        table,
+        ul {
+          margin: 1.25rem 0;
+        }
+
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+          width: 100%;
+        }
+
+        td,
+        th {
+          border: none;
+          padding: 0.5rem;
+          text-align: left;
+        }
+
+        td:first-child,
+        th:first-child {
+          padding-left: 0;
+        }
+
+        td:last-child,
+        th:last-child {
+          padding-right: 0;
+        }
+
+        b,
+        strong {
+          font-weight: bold;
+        }
+
+        figure {
+          display: block;
+          margin: 1em 0;
+        }
+
+        figure > :is(p, span, div),
+        figcaption {
+         font-style: italic;
+         color: #757575;
+        }
+
+        img {
+          display: inline-block;
+          max-width: 100%;
+          height: auto;
+          border: 0;
+          vertical-align: top;
         }
       </style>
     </head>
     <body>
-      <h1>${title}</h1>
-      <hr>
-      ${body}
+      <div class="wrapper">
+        <h1>${title}</h1>
+        <hr>
+        ${body}
+      </div>
     </body>
   </html>`
 }
