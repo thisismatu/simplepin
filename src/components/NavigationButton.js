@@ -12,10 +12,9 @@ const s = StyleSheet.create({
   },
   icon: {
     tintColor: color.blue2,
-    marginHorizontal: 12,
-    resizeMode: 'contain',
-    height: 24,
-    width: 24,
+    resizeMode: 'center',
+    height: 56,
+    width: 56,
   },
   text: {
     color: color.blue2,
